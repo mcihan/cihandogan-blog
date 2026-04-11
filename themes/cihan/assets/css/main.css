@@ -109,6 +109,8 @@ h4 { font-size: 1.125rem; font-weight: 600; line-height: 1.4; }
 .btn-primary:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: #fff; }
 .btn-secondary { display: inline-block; background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, 0.4); padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; font-size: 1rem; transition: background 0.2s, border-color 0.2s; cursor: pointer; }
 .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; color: #fff; }
+.btn-outline { display: inline-block; background: transparent; color: #CBD5E1; border: 2px solid rgba(255, 255, 255, 0.25); padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; font-size: 1rem; transition: background 0.2s, border-color 0.2s, color 0.2s; cursor: pointer; }
+.btn-outline:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.5); color: #fff; }
 
 /* --- Sections --- */
 .section { padding: var(--space-3xl) 0; }
@@ -230,7 +232,7 @@ a.tag:hover { background: var(--color-primary); color: #fff; }
 .blog-post table { width: 100%; border-collapse: collapse; margin: var(--space-lg) 0; font-size: 0.95rem; display: block; overflow-x: auto; }
 .blog-post th, .blog-post td { border: 1px solid var(--color-border); padding: var(--space-sm) var(--space-md); text-align: left; }
 .blog-post th { background: var(--color-bg-alt); font-weight: 600; color: var(--color-text-dark); }
-.blog-post img { border-radius: 0.5rem; margin: var(--space-lg) 0; }
+.blog-post img { border-radius: 0.5rem; margin: var(--space-lg) 0; border: 1px solid rgba(0,0,0,0.08); }
 .blog-post figcaption { text-align: center; font-size: 0.875rem; color: var(--color-text-light); margin-top: var(--space-sm); font-style: italic; }
 .blog-post hr { border: none; border-top: 1px solid var(--color-border); margin: var(--space-xl) 0; }
 .blog-post a { text-decoration: underline; text-underline-offset: 2px; }
@@ -323,9 +325,53 @@ a.tag:hover { background: var(--color-primary); color: #fff; }
 .skill-card li::before { content: "\2022"; color: var(--color-primary); font-weight: bold; margin-right: var(--space-sm); }
 
 /* --- Education / Certs --- */
+.edu-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); max-width: 900px; margin: 0 auto; }
+@media (min-width: 768px) { .edu-grid { grid-template-columns: 1fr; } }
+.edu-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 0.75rem; padding: var(--space-xl); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.edu-card-header { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg); padding-bottom: var(--space-md); border-bottom: 2px solid var(--color-primary-light); }
+.edu-card-header h3 { margin: 0; }
+.edu-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 0.75rem; flex-shrink: 0; }
+.edu-icon-education { background: #DBEAFE; color: #1D4ED8; }
+.edu-icon-cert { background: #FEF3C7; color: #D97706; }
+.edu-item { padding: var(--space-sm) 0; color: var(--color-text); font-size: 0.95rem; border-bottom: 1px solid var(--color-border); }
+.edu-item:last-child { border-bottom: none; }
+.cert-item { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+.cert-logo { width: 36px; height: 36px; border-radius: 0.5rem; object-fit: contain; flex-shrink: 0; }
+.cert-details { flex: 1; }
+.cert-org { display: block; color: var(--color-text-light); font-size: 0.85rem; }
+.edu-degree-item { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); }
+.edu-level { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.15rem 0.5rem; border-radius: 0.25rem; margin-bottom: 0.25rem; }
+.edu-level-master { background: #EDE9FE; color: #6D28D9; }
+.edu-level-bachelor { background: #DBEAFE; color: #1D4ED8; }
+.edu-university { display: block; color: var(--color-text-light); font-size: 0.85rem; margin-top: 0.1rem; }
+.edu-years { font-size: 0.8rem; font-weight: 500; color: var(--color-primary); background: var(--color-primary-light); padding: 0.2rem 0.6rem; border-radius: 0.375rem; white-space: nowrap; }
+@media (max-width: 768px) { .edu-degree-item { flex-direction: column; align-items: flex-start; gap: var(--space-xs); } }
+.cert-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; white-space: nowrap; text-decoration: none; }
+@media (max-width: 768px) { .cert-item { flex-direction: column; align-items: flex-start; gap: var(--space-xs); } }
 .education-list h3 { margin-bottom: var(--space-md); }
 .education-list ul { list-style: disc; padding-left: var(--space-lg); margin-bottom: var(--space-xl); }
 .education-list li { margin-bottom: var(--space-sm); color: var(--color-text); }
+
+/* --- Talks --- */
+.talks-list { display: flex; flex-direction: column; gap: var(--space-xl); }
+.talk-card { display: flex; flex-direction: column; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 0.75rem; overflow: hidden; transition: box-shadow 0.2s; }
+.talk-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.talk-card-image { width: 100%; aspect-ratio: 16/9; overflow: hidden; }
+.talk-card-image img { width: 100%; height: 100%; object-fit: cover; }
+.talk-card-body { padding: var(--space-lg); }
+.talk-card-body h2 { margin-bottom: var(--space-sm); }
+.talk-card-body h2 a { color: var(--color-text-dark); text-decoration: none; }
+.talk-card-body h2 a:hover { color: var(--color-primary); }
+.talk-description { color: var(--color-text-light); font-size: 0.95rem; margin-bottom: var(--space-md); }
+.talk-event { background: var(--color-bg-alt); padding: 0.1rem 0.5rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: 500; }
+.talk-meta-items { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: var(--space-sm); }
+.talk-meta-item { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 500; padding: 0.25rem 0.6rem; border-radius: 0.375rem; }
+.talk-meta-item svg { flex-shrink: 0; }
+.talk-meta-date { background: #DBEAFE; color: #1D4ED8; }
+.talk-meta-event { background: #F3E8FF; color: #7C3AED; }
+.talk-meta-company { background: #D1FAE5; color: #065F46; }
+.talk-meta-location { background: #FEF3C7; color: #92400E; }
+@media (min-width: 768px) { .talk-card { flex-direction: row; } .talk-card-image { width: 360px; aspect-ratio: auto; min-height: 220px; flex-shrink: 0; } }
 
 /* --- RSS Link --- */
 .rss-link { margin-top: var(--space-md); font-size: 0.875rem; }

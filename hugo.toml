@@ -30,7 +30,7 @@ buildFuture = true
   tagline = "Senior Software Engineer | Payment Systems, Microservices, AI Integration"
   bio = "Senior Software Engineer with 10+ years of experience building scalable distributed systems across fintech, IoT, and gambling domains. Specializing in payment systems, wallet platforms, and high-throughput backend architectures using Java, Spring Boot, and microservices."
   avatar = "/images/profile.jpg"
-  email = "hello@cihandogan.co.uk"
+  email = "cihandoganblog@gmail.com"
   location = "London, United Kingdom"
   dateFormat = "2 January 2006"
 
@@ -48,17 +48,21 @@ buildFuture = true
     url = "/blog/"
     weight = 2
   [[menus.main]]
+    name = "Talks"
+    url = "/talks/"
+    weight = 3
+  [[menus.main]]
     name = "Projects"
     url = "/projects/"
-    weight = 3
+    weight = 4
   [[menus.main]]
     name = "About"
     url = "/about/"
-    weight = 4
+    weight = 5
   [[menus.main]]
     name = "Contact"
     url = "/contact/"
-    weight = 5
+    weight = 6
 
 [outputs]
   home = ["HTML", "RSS"]

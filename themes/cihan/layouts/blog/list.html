@@ -13,7 +13,7 @@
       <div class="articles-list">
         {{ range $paginator.Pages }}
         <article class="article-card article-card-horizontal">
-            <div class="article-card-image" aria-hidden="true">&#128196;</div>
+            <div class="article-card-image" aria-hidden="true">{{ with .Params.cover }}<img src="{{ .image }}" alt="{{ .alt | default $.Title }}" loading="lazy">{{ else }}&#128196;{{ end }}</div>
             <div class="article-card-body">
                 <p class="article-card-meta">{{ .Date.Format "January 2, 2006" }} &middot; {{ .ReadingTime }} min read</p>
                 <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
