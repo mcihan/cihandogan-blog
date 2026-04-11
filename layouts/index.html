@@ -1,0 +1,85 @@
+{{ define "main" }}
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Senior Software Engineer</h1>
+            <p>10+ years building payment systems, fintech solutions, and scalable distributed backend architectures</p>
+            <p class="location">{{ site.Params.location }}</p>
+            <div class="hero-buttons">
+                <a href="/blog/" class="btn-primary">Read Articles</a>
+                <a href="/about/" class="btn-secondary">About Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Grid -->
+    <section class="section" aria-labelledby="expertise-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="expertise-title">Areas of Expertise</h2>
+            </div>
+            <div class="expertise-grid">
+                <div class="card">
+                    <div class="card-icon" aria-hidden="true">&#127974;</div>
+                    <h3>Payment Systems</h3>
+                    <p>Building payment gateways, wallet systems, and financial infrastructure processing 10M+ daily transactions across multiple regions</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon" aria-hidden="true">&#128295;</div>
+                    <h3>Backend Engineering</h3>
+                    <p>Designing scalable distributed systems with Java, Spring Boot, microservices, event sourcing, and CQRS patterns</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon" aria-hidden="true">&#129302;</div>
+                    <h3>AI Integration</h3>
+                    <p>Leveraging AI agents and tools to automate workflows, enhance development productivity, and build intelligent systems</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon" aria-hidden="true">&#127758;</div>
+                    <h3>Multi-Regional Experience</h3>
+                    <p>Delivering solutions across 7 regions including UK, EU, and North America in fintech, IoT, and gambling domains</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Statistics -->
+    <section class="section section-alt" aria-labelledby="stats-title">
+        <div class="container">
+            <h2 id="stats-title" class="sr-only">Impact Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Daily Transactions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Regions Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Distributed Projects</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Article -->
+    {{ $posts := where site.RegularPages "Section" "blog" }}
+    {{ with $posts.ByDate.Reverse | first 1 }}
+    <section class="section" aria-labelledby="featured-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="featured-title">Latest Article</h2>
+            </div>
+            {{ range . }}
+            {{ partial "article-card.html" (dict "post" . "horizontal" true) }}
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+{{ end }}

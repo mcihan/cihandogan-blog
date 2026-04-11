@@ -1,0 +1,87 @@
+{{ define "main" }}
+    <!-- About Header -->
+    <section class="section">
+        <div class="container">
+            <div class="about-header">
+                <img src="/images/profile.jpg" alt="{{ site.Params.author }}" class="about-photo">
+                <div class="about-info">
+                    <h2>{{ site.Params.author }}</h2>
+                    <p class="subtitle">Senior Software Engineer</p>
+                    <p class="detail">{{ site.Params.location }}</p>
+                    <p class="detail"><a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Summary -->
+    <section class="section section-alt" aria-labelledby="summary-title">
+        <div class="container">
+            <h2 id="summary-title" class="section-title">Professional Summary</h2>
+            <div class="prose">
+                {{ .Content }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Timeline -->
+    <section class="section" aria-labelledby="career-title">
+        <div class="container">
+            <h2 id="career-title" class="section-title">Career Timeline</h2>
+            <div class="timeline">
+                {{ range .Params.career }}
+                <div class="timeline-item">
+                    <div class="timeline-date">{{ .date }}</div>
+                    <div class="timeline-title">{{ .title }}</div>
+                    <ul>
+                        {{ range .items }}
+                        <li>{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section class="section section-alt" aria-labelledby="skills-title">
+        <div class="container">
+            <h2 id="skills-title" class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                {{ range .Params.skills }}
+                <div class="card skill-card">
+                    <h3>{{ .category }}</h3>
+                    <ul>
+                        {{ range .items }}
+                        <li>{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certifications -->
+    <section class="section" aria-labelledby="education-title">
+        <div class="container">
+            <h2 id="education-title" class="section-title">Education &amp; Certifications</h2>
+            <div class="prose education-list">
+                <h3>Education</h3>
+                <ul>
+                    {{ range .Params.education }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+
+                <h3>Certifications</h3>
+                <ul>
+                    {{ range .Params.certifications }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+        </div>
+    </section>
+{{ end }}

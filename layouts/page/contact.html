@@ -1,0 +1,41 @@
+{{ define "main" }}
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>{{ .Title }}</h1>
+            <p>{{ .Description }}</p>
+        </div>
+    </section>
+
+    <!-- Contact Info -->
+    <section class="section" aria-labelledby="contact-title">
+        <div class="container">
+            <h2 id="contact-title" class="sr-only">Contact Information</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="contact-icon" aria-hidden="true">&#9993;</span>
+                    <div>
+                        <a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon" aria-hidden="true">&#128279;</span>
+                    <div>
+                        <a href="{{ site.Params.linkedin }}" target="_blank" rel="noopener noreferrer">linkedin.com/in/cihan-dogan</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon" aria-hidden="true">&#128025;</span>
+                    <div>
+                        <a href="{{ site.Params.github }}" target="_blank" rel="noopener noreferrer">github.com/mcihan</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon" aria-hidden="true">&#128205;</span>
+                    <div>United Kingdom</div>
+                </div>
+            </div>
+            <p class="contact-message">{{ .Params.message }}</p>
+        </div>
+    </section>
+{{ end }}

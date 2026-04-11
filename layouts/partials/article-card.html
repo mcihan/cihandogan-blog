@@ -1,0 +1,19 @@
+{{- /* Usage: {{ partial "article-card.html" (dict "post" $post "horizontal" true) }} */ -}}
+{{- $post := .post -}}
+{{- $horizontal := .horizontal | default false -}}
+<article class="article-card{{ if $horizontal }} article-card-horizontal{{ end }}">
+    <div class="article-card-image" aria-hidden="true">&#128196;</div>
+    <div class="article-card-body">
+        <p class="article-card-meta">{{ $post.Date.Format "January 2, 2006" }} &middot; {{ $post.ReadingTime }} min read</p>
+        <h3><a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a></h3>
+        <p class="article-card-excerpt">{{ $post.Description }}</p>
+        {{- with $post.Params.tags }}
+        <div class="tags">
+            {{- range . }}
+            <span class="tag">{{ . }}</span>
+            {{- end }}
+        </div>
+        {{- end }}
+        <a href="{{ $post.RelPermalink }}" class="article-card-link">Read Full Article &rarr;</a>
+    </div>
+</article>

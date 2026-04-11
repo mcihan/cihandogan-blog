@@ -1,0 +1,21 @@
+<!-- Navigation -->
+<nav class="navbar" aria-label="Main navigation">
+    <div class="container">
+        <a href="/" class="nav-logo">Cihan Dogan</a>
+        <div class="nav-links">
+            {{- range site.Menus.main }}
+            <a href="{{ .URL }}"{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} class="active"{{ end }}>{{ .Name }}</a>
+            {{- end }}
+        </div>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    <div class="nav-mobile" role="navigation" aria-label="Mobile navigation">
+        {{- range site.Menus.main }}
+        <a href="{{ .URL }}"{{ if or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }} class="active"{{ end }}>{{ .Name }}</a>
+        {{- end }}
+    </div>
+</nav>
