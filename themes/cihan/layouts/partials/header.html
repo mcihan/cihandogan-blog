@@ -1,0 +1,20 @@
+<header class="navbar" role="banner">
+  <div class="container">
+    <a href="/" class="nav-logo" aria-label="{{ .Site.Title }} - Home">Cihan Dogan</a>
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links">
+      {{- range .Site.Menus.main }}
+      <a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} class="active" aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{- end }}
+    </div>
+  </div>
+  <div class="nav-mobile" role="navigation" aria-label="Mobile navigation">
+    {{- range .Site.Menus.main }}
+    <a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} class="active" aria-current="page"{{ end }}>{{ .Name }}</a>
+    {{- end }}
+  </div>
+</header>

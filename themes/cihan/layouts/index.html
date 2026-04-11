@@ -68,17 +68,66 @@
         </div>
     </section>
 
-    <!-- Featured Article -->
+    <!-- Latest Posts -->
     {{ $posts := where site.RegularPages "Section" "blog" }}
-    {{ with $posts.ByDate.Reverse | first 1 }}
+    {{ if $posts }}
     <section class="section" aria-labelledby="featured-title">
         <div class="container">
             <div class="section-title">
-                <h2 id="featured-title">Latest Article</h2>
+                <h2 id="featured-title">Latest Posts</h2>
             </div>
-            {{ range . }}
-            {{ partial "article-card.html" (dict "post" . "horizontal" true) }}
-            {{ end }}
+            <div class="articles-list">
+                {{ range first 5 $posts }}
+                <article class="article-card article-card-horizontal">
+                    <div class="article-card-image" aria-hidden="true">&#128196;</div>
+                    <div class="article-card-body">
+                        <p class="article-card-meta">{{ .Date.Format "January 2, 2006" }} &middot; {{ .ReadingTime }} min read</p>
+                        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                        <p class="article-card-excerpt">{{ .Description }}</p>
+                        {{- with .Params.tags }}
+                        <div class="tags">
+                            {{- range . }}
+                            <span class="tag">{{ . }}</span>
+                            {{- end }}
+                        </div>
+                        {{- end }}
+                        <a href="{{ .RelPermalink }}" class="article-card-link">Read Full Article &rarr;</a>
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- Featured Projects -->
+    {{ $projects := hugo.Data.projects }}
+    {{ if $projects }}
+    <section class="section section-alt" aria-labelledby="projects-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="projects-title">Featured Projects</h2>
+            </div>
+            <div class="project-grid">
+                {{ range first 3 $projects }}
+                <article class="project-card">
+                    <h3>{{ .name }}</h3>
+                    <p>{{ .description }}</p>
+                    <div class="project-tags">
+                        {{ range .technologies }}
+                        <span class="tag">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                    <div class="project-links">
+                        {{ with .github }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">GitHub</a>{{ end }}
+                        {{ with .demo }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">Live Demo</a>{{ end }}
+                    </div>
+                </article>
+                {{ end }}
+            </div>
+            <div class="text-center" style="margin-top: var(--space-xl);">
+                <a href="/projects/" class="article-card-link">View all projects &rarr;</a>
+            </div>
         </div>
     </section>
     {{ end }}

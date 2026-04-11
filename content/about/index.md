@@ -1,17 +1,7 @@
 ---
 title: "About"
 description: "Professional background, career trajectory, and technical expertise of Cihan Dogan. 10+ years in payment systems, fintech, and distributed backend engineering."
-layout: "about"
-type: "page"
-keywords:
-  - software developer
-  - payment systems
-  - fintech
-  - Java
-  - Spring Boot
-  - microservices
-  - London
-  - UK
+type: "about"
 aliases:
   - /about.html
 career:
@@ -40,7 +30,7 @@ career:
     title: "Full-Stack Developer | Eteration, Istanbul"
     items:
       - "Developed 4 highly distributed projects in banking and airline sectors"
-      - "Awarded \"The Most Problem Solver of the Month\" for resolving critical production bugs"
+      - 'Awarded "The Most Problem Solver of the Month" for resolving critical production bugs'
 skills:
   - category: "Backend"
     items:

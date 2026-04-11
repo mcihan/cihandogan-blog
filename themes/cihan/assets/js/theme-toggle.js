@@ -14,19 +14,13 @@
 // Active nav link highlighting
 (function () {
     var path = window.location.pathname.replace(/\/$/, '') || '/';
-    var filename = path.split('/').pop() || 'index.html';
-    if (filename === '') filename = 'index.html';
-
     var links = document.querySelectorAll('.nav-links a, .nav-mobile a');
     links.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (!href) return;
-        var linkFile = href.split('/').pop() || 'index.html';
-        if (linkFile === filename || (filename === 'index.html' && (linkFile === '/' || linkFile === ''))) {
+        var href = (link.getAttribute('href') || '').replace(/\/$/, '') || '/';
+        if (href === path) {
             link.classList.add('active');
         }
-        // Mark Articles as active for individual article pages
-        if (path.indexOf('/articles/') !== -1 && linkFile === 'blog.html') {
+        if (path.indexOf('/blog/') === 0 && href === '/blog') {
             link.classList.add('active');
         }
     });

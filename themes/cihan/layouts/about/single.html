@@ -71,14 +71,14 @@
                 <h3>Education</h3>
                 <ul>
                     {{ range .Params.education }}
-                    <li>{{ . }}</li>
+                    <li>{{ . | safeHTML }}</li>
                     {{ end }}
                 </ul>
 
                 <h3>Certifications</h3>
                 <ul>
                     {{ range .Params.certifications }}
-                    <li>{{ . }}</li>
+                    <li>{{ . | safeHTML }}</li>
                     {{ end }}
                 </ul>
             </div>

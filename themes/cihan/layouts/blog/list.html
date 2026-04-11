@@ -1,0 +1,52 @@
+{{ define "main" }}
+<section class="blog-listing">
+  <div class="page-header">
+      <div class="container">
+          <h1>{{ .Title | default "Blog" }}</h1>
+          <p>{{ .Description }}</p>
+      </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      {{ $paginator := .Paginate (where .Pages "Kind" "page") }}
+      <div class="articles-list">
+        {{ range $paginator.Pages }}
+        <article class="article-card article-card-horizontal">
+            <div class="article-card-image" aria-hidden="true">&#128196;</div>
+            <div class="article-card-body">
+                <p class="article-card-meta">{{ .Date.Format "January 2, 2006" }} &middot; {{ .ReadingTime }} min read</p>
+                <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                <p class="article-card-excerpt">{{ .Description }}</p>
+                {{- with .Params.tags }}
+                <div class="tags">
+                    {{- range . }}
+                    <a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="tag">{{ . }}</a>
+                    {{- end }}
+                </div>
+                {{- end }}
+                <a href="{{ .RelPermalink }}" class="article-card-link">Read Full Article &rarr;</a>
+            </div>
+        </article>
+        {{ end }}
+      </div>
+
+      {{ if gt $paginator.TotalPages 1 }}
+      <nav class="pagination" aria-label="Blog pagination">
+        {{ if $paginator.HasPrev }}
+        <a href="{{ $paginator.Prev.URL }}" class="pagination-prev">&larr; Newer</a>
+        {{ end }}
+        <span class="pagination-info">Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }}</span>
+        {{ if $paginator.HasNext }}
+        <a href="{{ $paginator.Next.URL }}" class="pagination-next">Older &rarr;</a>
+        {{ end }}
+      </nav>
+      {{ end }}
+
+      <p class="rss-link">
+        <a href="{{ "/blog/feed.xml" | relURL }}" aria-label="RSS Feed">RSS Feed</a>
+      </p>
+    </div>
+  </div>
+</section>
+{{ end }}

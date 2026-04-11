@@ -3,20 +3,15 @@ title: "Building Payment Systems with AI Agents: A Production Case Study"
 date: 2026-05-01
 description: "Real-world case study on integrating Claude AI agents and n8n into a fintech payment system. Achieved 70% automation and £1M annual cost savings through intelligent workflow automation and a strategic database migration."
 tags:
-  - AI Agents
-  - Payment Systems
-  - Backend Architecture
+  - ai-agents
+  - payment-systems
+  - backend-architecture
   - n8n
-  - Claude AI
-keywords:
-  - AI agents
-  - payment systems
-  - Claude AI
-  - n8n
-  - fintech
-  - backend architecture
-  - case study
-slug: "building-payment-systems-with-ai-agents"
+  - claude-ai
+categories:
+  - case-study
+draft: false
+toc: true
 hero: "Architecture Diagram — Replace with article hero image"
 aliases:
   - /articles/building-payment-systems-with-ai-agents.html
