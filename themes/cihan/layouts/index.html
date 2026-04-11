@@ -1,0 +1,66 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="container">
+    <h1>{{ .Site.Params.author }}</h1>
+    <p class="tagline">{{ .Site.Params.tagline }}</p>
+    <p class="intro">{{ .Site.Params.bio }}</p>
+    <a href="/blog/" class="btn btn-primary">Read the Blog</a>
+    <div class="social-links">
+      {{ with .Site.Params.social.github }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>{{ end }}
+      {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>{{ end }}
+      {{ with .Site.Params.social.twitter }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter/X">Twitter/X</a>{{ end }}
+    </div>
+  </div>
+</section>
+
+{{ $posts := where .Site.RegularPages "Section" "blog" }}
+{{ if $posts }}
+<section class="latest-posts">
+  <div class="container">
+    <h2>Latest Posts</h2>
+    <div class="post-list">
+      {{ range first 5 $posts }}
+      <article class="post-card">
+        <a href="{{ .RelPermalink }}">
+          <h3>{{ .Title }}</h3>
+        </a>
+        <div class="post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format $.Site.Params.dateFormat }}</time>
+          <span class="reading-time">{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
+        </div>
+        <p class="excerpt">{{ .Summary | plainify | truncate 200 }}</p>
+      </article>
+      {{ end }}
+    </div>
+    <a href="/blog/" class="view-all">View all posts &rarr;</a>
+  </div>
+</section>
+{{ end }}
+
+{{ $projects := hugo.Data.projects }}
+{{ if $projects }}
+<section class="featured-projects">
+  <div class="container">
+    <h2>Featured Projects</h2>
+    <div class="project-grid">
+      {{ range first 3 $projects }}
+      <article class="project-card">
+        <h3>{{ .name }}</h3>
+        <p>{{ .description }}</p>
+        <div class="project-tags">
+          {{ range .technologies }}
+          <span class="tag">{{ . }}</span>
+          {{ end }}
+        </div>
+        <div class="project-links">
+          {{ with .github }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">GitHub</a>{{ end }}
+          {{ with .demo }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">Live Demo</a>{{ end }}
+        </div>
+      </article>
+      {{ end }}
+    </div>
+    <a href="/projects/" class="view-all">View all projects &rarr;</a>
+  </div>
+</section>
+{{ end }}
+{{ end }}

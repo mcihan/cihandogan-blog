@@ -1,0 +1,15 @@
+- name: "Event Processing Pipeline"
+  description: "A high-throughput event processing pipeline built with Go and Apache Kafka, capable of processing millions of events per second with exactly-once semantics."
+  technologies: ["Go", "Kafka", "PostgreSQL", "Docker", "Kubernetes"]
+  github: "https://github.com/cihandogan/event-pipeline"
+
+- name: "Cloud Infrastructure Toolkit"
+  description: "A collection of Terraform modules and scripts for provisioning production-ready cloud infrastructure on AWS, with built-in monitoring and alerting."
+  technologies: ["Terraform", "AWS", "Python", "CloudWatch", "Prometheus"]
+  github: "https://github.com/cihandogan/cloud-toolkit"
+  demo: ""
+
+- name: "API Gateway"
+  description: "A lightweight, high-performance API gateway with rate limiting, circuit breaking, and request transformation capabilities."
+  technologies: ["Go", "Redis", "gRPC", "OpenTelemetry"]
+  github: "https://github.com/cihandogan/api-gateway"
