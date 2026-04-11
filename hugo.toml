@@ -29,13 +29,12 @@ enableEmoji = true
   tagline = "Senior Software Engineer | Writing about distributed systems, cloud architecture, and software craftsmanship"
   bio = "I'm a software engineer passionate about building scalable, reliable systems. I write about distributed systems, cloud architecture, and the craft of software engineering."
   avatar = "/images/avatar.webp"
-  email = "hello@cihandogan.co.uk"
   dateFormat = "2 January 2006"
 
   [params.social]
-    github = "https://github.com/cihandogan"
-    linkedin = "https://linkedin.com/in/cihandogan"
-    twitter = "https://x.com/cihandogan"
+    github = "https://github.com/mcihan"
+    linkedin = "https://linkedin.com/in/cihan-dogan"
+    portfolio = "https://mcihan.github.io"
 
 [menus]
   [[menus.main]]

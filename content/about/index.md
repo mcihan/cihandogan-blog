@@ -28,6 +28,6 @@ I'm a Senior Software Engineer with a passion for building scalable, reliable sy
 
 ## Get in Touch
 
-I'm always happy to connect with fellow engineers and discuss technology. You can find me on [GitHub](https://github.com/cihandogan), [LinkedIn](https://linkedin.com/in/cihandogan), or [Twitter/X](https://x.com/cihandogan).
+I'm always happy to connect with fellow engineers and discuss technology. You can find me on [GitHub](https://github.com/mcihan), [LinkedIn](https://linkedin.com/in/cihan-dogan), or my [Portfolio](https://mcihan.github.io).
 
 [Download my CV (PDF)](/resume.pdf)
