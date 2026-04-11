@@ -1,0 +1,83 @@
+baseURL = "https://cihandogan.co.uk/"
+languageCode = "en-gb"
+title = "Cihan Dogan"
+theme = "cihan"
+paginate = 10
+enableRobotsTXT = true
+enableEmoji = true
+
+[markup]
+  [markup.highlight]
+    style = "onedark"
+    lineNos = false
+    noClasses = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[params]
+  description = "Personal blog of Cihan Dogan - Senior Software Engineer writing about distributed systems, cloud architecture, and software craftsmanship."
+  author = "Cihan Dogan"
+  tagline = "Senior Software Engineer | Writing about distributed systems, cloud architecture, and software craftsmanship"
+  bio = "I'm a software engineer passionate about building scalable, reliable systems. I write about distributed systems, cloud architecture, and the craft of software engineering."
+  avatar = "/images/avatar.webp"
+  email = "hello@cihandogan.co.uk"
+  dateFormat = "2 January 2006"
+
+  [params.social]
+    github = "https://github.com/cihandogan"
+    linkedin = "https://linkedin.com/in/cihandogan"
+    twitter = "https://x.com/cihandogan"
+
+[menus]
+  [[menus.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menus.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 2
+  [[menus.main]]
+    name = "Projects"
+    url = "/projects/"
+    weight = 3
+  [[menus.main]]
+    name = "About"
+    url = "/about/"
+    weight = 4
+  [[menus.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 5
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[outputFormats]
+  [outputFormats.RSS]
+    mediaType = "application/rss+xml"
+    baseName = "feed"
+
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "categories"
+    weight = 80
+  [[related.indices]]
+    name = "date"
+    weight = 10
