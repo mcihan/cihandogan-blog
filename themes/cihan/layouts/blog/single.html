@@ -33,9 +33,9 @@
 
       <div class="share-buttons">
         <span>Share:</span>
-        <a href="https://twitter.com/intent/tweet?text={{ .Title | urlquery }}&url={{ .Permalink | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter">Twitter/X</a>
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">LinkedIn</a>
         <a href="https://news.ycombinator.com/submitlink?u={{ .Permalink | urlquery }}&t={{ .Title | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Hacker News">Hacker News</a>
+        <a href="https://reddit.com/submit?url={{ .Permalink | urlquery }}&title={{ .Title | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit">Reddit</a>
       </div>
 
       {{ partial "author-box.html" . }}

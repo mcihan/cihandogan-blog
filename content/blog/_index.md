@@ -1,4 +1,4 @@
 ---
 title: "Blog"
-description: "Articles about distributed systems, cloud architecture, software craftsmanship, and lessons learned from building production systems."
+description: "Articles about Java, microservices, distributed systems, cloud architecture, and lessons learned from building production systems."
 ---

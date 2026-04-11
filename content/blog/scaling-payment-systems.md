@@ -2,7 +2,7 @@
 title: "Scaling Payment Systems: Lessons from Processing Millions of Transactions"
 date: 2026-04-10
 description: "A deep dive into the architecture decisions, trade-offs, and hard-won lessons from building a payment processing system that handles millions of transactions daily."
-tags: ["distributed-systems", "payments", "scalability", "architecture"]
+tags: ["distributed-systems", "payments", "scalability", "java", "event-sourcing"]
 categories: ["deep-dive"]
 draft: false
 toc: true

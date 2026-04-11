@@ -24,10 +24,10 @@ enableEmoji = true
   category = "categories"
 
 [params]
-  description = "Personal blog of Cihan Dogan - Senior Software Engineer writing about distributed systems, cloud architecture, and software craftsmanship."
+  description = "Personal blog of Cihan Dogan - Senior Software Engineer writing about Java, microservices, distributed systems, and cloud architecture."
   author = "Cihan Dogan"
-  tagline = "Senior Software Engineer | Writing about distributed systems, cloud architecture, and software craftsmanship"
-  bio = "I'm a software engineer passionate about building scalable, reliable systems. I write about distributed systems, cloud architecture, and the craft of software engineering."
+  tagline = "Senior Software Engineer | Java, Spring, Microservices, AWS"
+  bio = "Senior Software Engineer with 7+ years of experience building scalable distributed systems across fintech, IoT, and gambling domains. OCP certified Java developer passionate about event-driven architectures, cloud-native solutions, and writing clean, maintainable code."
   avatar = "/images/avatar.webp"
   dateFormat = "2 January 2006"
 
