@@ -1,0 +1,13 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-content">
+      <p>&copy; {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
+      <div class="footer-links">
+        {{ with .Site.Params.social.github }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>{{ end }}
+        {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>{{ end }}
+        {{ with .Site.Params.social.portfolio }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Portfolio">Portfolio</a>{{ end }}
+        <a href="{{ "/blog/feed.xml" | relURL }}" aria-label="RSS Feed">RSS</a>
+      </div>
+    </div>
+  </div>
+</footer>

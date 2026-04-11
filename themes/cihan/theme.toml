@@ -1,0 +1,8 @@
+name = "Cihan"
+license = "MIT"
+licenselink = "https://github.com/cihandogan/cihandogan-blog/blob/main/LICENSE"
+description = "A minimal, fast, SEO-optimized blog theme"
+
+[author]
+  name = "Cihan Dogan"
+  homepage = "https://cihandogan.co.uk"

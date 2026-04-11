@@ -1,0 +1,79 @@
+{{ define "main" }}
+<article class="blog-post">
+  <div class="container container--narrow">
+    <header class="post-header">
+      <h1>{{ .Title }}</h1>
+      {{ partial "post-meta.html" . }}
+    </header>
+
+    {{ if .Params.toc | default true }}
+    {{ $toc := .TableOfContents }}
+    {{ if $toc }}
+    <nav class="toc" aria-label="Table of contents">
+      <details open>
+        <summary><strong>Table of Contents</strong></summary>
+        {{ $toc }}
+      </details>
+    </nav>
+    {{ end }}
+    {{ end }}
+
+    <div class="content">
+      {{ .Content }}
+    </div>
+
+    <footer class="post-footer">
+      {{ with .Params.tags }}
+      <div class="post-tags">
+        {{ range . }}
+        <a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="tag">{{ . }}</a>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      <div class="share-buttons">
+        <span>Share:</span>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">LinkedIn</a>
+        <a href="https://news.ycombinator.com/submitlink?u={{ .Permalink | urlquery }}&t={{ .Title | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Hacker News">Hacker News</a>
+        <a href="https://reddit.com/submit?url={{ .Permalink | urlquery }}&title={{ .Title | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit">Reddit</a>
+      </div>
+
+      {{ partial "author-box.html" . }}
+
+      <nav class="post-nav" aria-label="Post navigation">
+        {{ with .PrevInSection }}
+        <a href="{{ .RelPermalink }}" class="post-nav-prev">
+          <span>&larr; Previous</span>
+          <strong>{{ .Title }}</strong>
+        </a>
+        {{ end }}
+        {{ with .NextInSection }}
+        <a href="{{ .RelPermalink }}" class="post-nav-next">
+          <span>Next &rarr;</span>
+          <strong>{{ .Title }}</strong>
+        </a>
+        {{ end }}
+      </nav>
+
+      {{ $related := .Site.RegularPages.Related . | first 3 }}
+      {{ with $related }}
+      <section class="related-posts">
+        <h2>Related Posts</h2>
+        <div class="post-list">
+          {{ range . }}
+          <article class="post-card post-card--compact">
+            <a href="{{ .RelPermalink }}">
+              <h3>{{ .Title }}</h3>
+            </a>
+            <div class="post-meta">
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format $.Site.Params.dateFormat }}</time>
+            </div>
+          </article>
+          {{ end }}
+        </div>
+      </section>
+      {{ end }}
+    </footer>
+  </div>
+</article>
+{{ end }}
