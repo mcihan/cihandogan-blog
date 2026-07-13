@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deniz's Study Hub</title>
+<style>
+:root{
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans);color:#1c1c2c;line-height:1.6;min-height:100vh;
+  background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  display:flex;align-items:center;justify-content:center;padding:2.5rem 1.4rem;
+}
+.wrap{max-width:1020px;width:100%}
+.kicker{font-size:.75rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .9rem}
+h1{color:#fff;font-size:clamp(2.1rem,5.6vw,3.2rem);line-height:1.06;margin:0 0 .8rem;font-weight:900;letter-spacing:-.02em;text-wrap:balance}
+.lede{color:#dbe3ff;max-width:56ch;margin:0 0 2.4rem;font-size:1.06rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem}
+.card{
+  display:block;text-decoration:none;color:#1c1c2c;background:#fff;border-radius:22px;
+  padding:1.6rem 1.6rem 1.4rem;box-shadow:0 14px 40px -14px rgba(0,0,0,.45);
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 22px 50px -14px rgba(0,0,0,.55)}
+.card .icon{
+  width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  font-size:1.7rem;margin-bottom:1rem;color:#fff;
+}
+.card.java .icon{background:linear-gradient(135deg,#e8963c,#c26210)}
+.card.guide .icon{background:linear-gradient(135deg,#6366f1,#4338ca)}
+.card.sim .icon{background:linear-gradient(135deg,#0ea5e9,#0369a1)}
+.card h2{margin:0 0 .35rem;font-size:1.28rem;font-weight:850;letter-spacing:-.015em}
+.card p{margin:0 0 1.1rem;font-size:.92rem;color:#61617a}
+.card .go{font-weight:800;font-size:.9rem}
+.card.java .go{color:#c26210}
+.card.guide .go{color:#4338ca}
+.card.sim .go{color:#0369a1}
+.card .meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem}
+.card .meta span{font-size:.74rem;font-weight:700;background:#f2f2f9;color:#61617a;border-radius:99px;padding:.18rem .7rem}
+footer{margin-top:2.4rem;color:#a5b4fc;font-size:.8rem}
+a:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Made for Deniz · Java + ISTQB CTFL</p>
+  <h1>Your study hub.</h1>
+  <p class="lede">Everything in one place: refresh your Java, learn the whole ISTQB syllabus visually, then test yourself under real exam conditions.</p>
+  <div class="cards">
+    <a class="card java" href="java_brushup.html">
+      <span class="icon">&#9749;</span>
+      <h2>Java Brush-Up</h2>
+      <p>All the Java fundamentals from your practice repo — variables, loops, strings, collections, methods, classes — in simple English.</p>
+      <div class="meta"><span>14 topics</span><span>178 practice questions</span><span>hints included</span></div>
+      <span class="go">Start refreshing &#8594;</span>
+    </a>
+    <a class="card guide" href="istqub/istqb_study_guide.html">
+      <span class="icon">&#129514;</span>
+      <h2>ISTQB Study Guide</h2>
+      <p>The complete CTFL v4.0 syllabus on one visual page — diagrams for every concept, plus the exam traps to watch out for.</p>
+      <div class="meta"><span>6 chapters</span><span>15+ diagrams</span><span>exam traps</span></div>
+      <span class="go">Start learning &#8594;</span>
+    </a>
+    <a class="card sim" href="istqub/questions.html">
+      <span class="icon">&#9201;&#65039;</span>
+      <h2>Exam Simulator</h2>
+      <p>The four official CTFL sample exams with a real countdown, pass/fail scoring and full explanations for every answer.</p>
+      <div class="meta"><span>4 exams &#183; 160 questions</span><span>60 min timer</span><span>pass at 26/40</span></div>
+      <span class="go">Take an exam &#8594;</span>
+    </a>
+  </div>
+  <footer>Java examples from the java_tutorial practice repo &#183; ISTQB&#174; questions &#169; ISTQB, from the official CTFL v4.0 sample exams.</footer>
+</div>
+</body>
+</html>

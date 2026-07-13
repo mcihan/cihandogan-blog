@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISTQB CTFL v4.0 — Visual Study Guide</title>
+<style>
+:root{
+  --bg:#f7f7fb; --surface:#ffffff; --ink:#1c1c28; --muted:#5f5f74; --line:#e5e4ee;
+  --shadow:0 1px 2px rgba(28,28,60,.06), 0 8px 24px -12px rgba(28,28,60,.14);
+  --amber:#92400e; --amber-bg:#fef3e2; --amber-line:#f5d9ab;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#131320; --surface:#1c1c2c; --ink:#ececf4; --muted:#a3a3b8; --line:#2e2e42;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+    --amber:#fbbf24; --amber-bg:#2c2010; --amber-line:#5c451f; }
+}
+:root[data-theme="dark"]{ --bg:#131320; --surface:#1c1c2c; --ink:#ececf4; --muted:#a3a3b8; --line:#2e2e42;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+  --amber:#fbbf24; --amber-bg:#2c2010; --amber-line:#5c451f; }
+:root[data-theme="light"]{ --bg:#f7f7fb; --surface:#ffffff; --ink:#1c1c28; --muted:#5f5f74; --line:#e5e4ee;
+  --shadow:0 1px 2px rgba(28,28,60,.06), 0 8px 24px -12px rgba(28,28,60,.14);
+  --amber:#92400e; --amber-bg:#fef3e2; --amber-line:#f5d9ab; }
+*{box-sizing:border-box}
+html{background:var(--bg)}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;font-size:1rem}
+
+/* chapter hue system */
+section.ch{--c:#6366f1;--cd:#4338ca;--cs:#eef2ff;--cl:#c7d2fe}
+#ch1{--c:#6366f1;--cd:#4338ca;--cs:#eef2ff;--cl:#c7d2fe}
+#ch2{--c:#0ea5e9;--cd:#0369a1;--cs:#e8f6fe;--cl:#bae6fd}
+#ch3{--c:#8b5cf6;--cd:#6d28d9;--cs:#f3efff;--cl:#ddd6fe}
+#ch4{--c:#ec4899;--cd:#be185d;--cs:#fdf0f6;--cl:#fbcfe4}
+#ch5{--c:#f59e0b;--cd:#b45309;--cs:#fef6e7;--cl:#fde68a}
+#ch6{--c:#10b981;--cd:#047857;--cs:#e9faf3;--cl:#a7f3d0}
+:root[data-theme="dark"] section.ch, :root[data-theme="dark"] #ch1{--cs:#232345;--cl:#3f3f7a}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) #ch1{--c:#818cf8;--cd:#a5b4fc;--cs:#22224a;--cl:#3b3b78}
+  :root:not([data-theme="light"]) #ch2{--c:#38bdf8;--cd:#7dd3fc;--cs:#12283a;--cl:#1c4258}
+  :root:not([data-theme="light"]) #ch3{--c:#a78bfa;--cd:#c4b5fd;--cs:#251c44;--cl:#3d2e6b}
+  :root:not([data-theme="light"]) #ch4{--c:#f472b6;--cd:#f9a8d4;--cs:#3a1428;--cl:#5c2140}
+  :root:not([data-theme="light"]) #ch5{--c:#fbbf24;--cd:#fcd34d;--cs:#33240c;--cl:#57400f}
+  :root:not([data-theme="light"]) #ch6{--c:#34d399;--cd:#6ee7b7;--cs:#0e2f22;--cl:#14543c}
+}
+:root[data-theme="dark"] #ch1{--c:#818cf8;--cd:#a5b4fc;--cs:#22224a;--cl:#3b3b78}
+:root[data-theme="dark"] #ch2{--c:#38bdf8;--cd:#7dd3fc;--cs:#12283a;--cl:#1c4258}
+:root[data-theme="dark"] #ch3{--c:#a78bfa;--cd:#c4b5fd;--cs:#251c44;--cl:#3d2e6b}
+:root[data-theme="dark"] #ch4{--c:#f472b6;--cd:#f9a8d4;--cs:#3a1428;--cl:#5c2140}
+:root[data-theme="dark"] #ch5{--c:#fbbf24;--cd:#fcd34d;--cs:#33240c;--cl:#57400f}
+:root[data-theme="dark"] #ch6{--c:#34d399;--cd:#6ee7b7;--cs:#0e2f22;--cl:#14543c}
+
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(120deg,#312e81 0%,#4338ca 34%,#0e7490 100%);color:#fff;padding:3.4rem 1.5rem 2.8rem}
+.hero-in{max-width:1140px;margin:0 auto}
+.hero .kicker{font-size:.75rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .8rem}
+.hero h1{font-size:clamp(2.1rem,5.5vw,3.3rem);line-height:1.05;margin:0 0 .8rem;font-weight:900;letter-spacing:-.02em;text-wrap:balance}
+.hero .lede{max-width:60ch;color:#dbe3ff;margin:0 0 1.8rem;font-size:1.08rem}
+.pills{display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:2rem}
+.pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(4px);border-radius:14px;padding:.55rem 1.05rem}
+.pill b{display:block;font-size:1.3rem;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.pill span{font-size:.76rem;color:#c7d2fe}
+.distwrap{background:rgba(10,10,30,.28);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:1.05rem 1.2rem;max-width:56rem}
+.distwrap p{margin:0 0 .7rem;font-size:.86rem;font-weight:700;color:#e0e7ff}
+.distbar{display:flex;height:34px;border-radius:9px;overflow:hidden;gap:2px}
+.distbar div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.86rem;font-variant-numeric:tabular-nums}
+.distkey{display:flex;flex-wrap:wrap;gap:.4rem .95rem;margin-top:.65rem;font-size:.76rem;color:#dbe3ff}
+.distkey span{display:flex;align-items:center;gap:.35rem}
+.distkey i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 5rem;display:grid;grid-template-columns:220px minmax(0,1fr);gap:2.6rem;align-items:start}
+main{min-width:0}
+@media (max-width:940px){ .wrap{grid-template-columns:1fr;gap:1rem} }
+#toc{position:sticky;top:1rem;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow);padding:1rem 1rem;font-size:.85rem}
+@media (max-width:940px){ #toc{position:static} }
+.toc-title{margin:0 0 .55rem;font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+#toc ol{margin:0;padding:0;list-style:none}
+#toc a{display:flex;gap:.6rem;align-items:center;color:var(--muted);text-decoration:none;padding:.3rem .45rem;border-radius:9px;line-height:1.3}
+#toc a i{flex:none;width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.72rem;font-weight:900;color:#fff}
+#toc a:hover,#toc a.active{color:var(--ink);background:var(--bg);font-weight:650}
+
+/* ---------- chapters ---------- */
+section.ch{margin-top:3.2rem}
+section.ch:first-of-type{margin-top:.4rem}
+.chhead{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.chnum{flex:none;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;box-shadow:var(--shadow)}
+.chhead .t p{margin:0;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+.chhead .t h2{margin:.1rem 0 0;font-size:clamp(1.45rem,3.4vw,1.9rem);font-weight:900;letter-spacing:-.015em;line-height:1.15}
+h3{font-size:1.12rem;margin:2.3rem 0 .6rem;font-weight:800;letter-spacing:-.01em;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+h3::before{content:"";width:14px;height:14px;border-radius:5px;background:linear-gradient(135deg,var(--c),var(--cd));align-self:center;flex:none}
+h3 small{font-weight:600;color:var(--c);font-size:.78rem;background:var(--cs);padding:.14rem .6rem;border-radius:99px}
+p{margin:.55rem 0;max-width:72ch}
+code{font-family:var(--mono);font-size:.85em;background:var(--cs);color:var(--cd);padding:.08em .4em;border-radius:6px}
+strong{font-weight:750}
+ul{margin:.5rem 0;padding-left:1.3rem}
+li{margin:.24rem 0}
+.term{font-weight:800;color:var(--cd)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.8rem;margin:1rem 0}
+.card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:.9rem 1rem;box-shadow:var(--shadow)}
+.card b{display:block;font-size:.95rem;margin-bottom:.3rem;letter-spacing:-.01em}
+.card b i{font-style:normal;display:inline-flex;width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;font-size:.78rem;font-weight:900;align-items:center;justify-content:center;margin-right:.5rem;vertical-align:-.3em}
+.card p{margin:0;font-size:.86rem;color:var(--muted)}
+/* compare tables */
+table.cmp{width:100%;border-collapse:separate;border-spacing:0;margin:1rem 0;font-size:.9rem;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+table.cmp th{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;text-align:left;padding:.55rem .9rem;font-size:.85rem}
+table.cmp td{padding:.6rem .9rem;border-top:1px solid var(--line);vertical-align:top;width:50%}
+table.cmp td ul{margin:.2rem 0;padding-left:1.1rem}
+.tablewrap{overflow-x:auto;margin:1rem 0}
+.tablewrap table.cmp{margin:0;min-width:38rem}
+/* traps + notes */
+.trap{margin:1.6rem 0;padding:1rem 1.15rem;border:1px solid var(--amber-line);border-radius:14px;background:var(--amber-bg);font-size:.92rem;box-shadow:var(--shadow)}
+.trap b.t{color:var(--amber);display:flex;align-items:center;gap:.5rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+.trap b.t::before{content:"⚠";font-size:1rem}
+.trap ul{margin:.2rem 0 0;padding-left:1.25rem}
+.trap li{margin:.32rem 0}
+.note{margin:1.1rem 0;padding:.85rem 1.1rem;border-radius:14px;background:var(--cs);border:1px solid var(--cl);font-size:.92rem}
+.note p{margin:.2rem 0}
+/* flows */
+.flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:stretch;margin:1rem 0}
+.flow .step{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.6rem .85rem;font-size:.84rem;text-align:center;flex:1 1 8.5rem;min-width:8rem;box-shadow:var(--shadow);position:relative}
+.flow .step em{display:flex;font-style:normal;width:26px;height:26px;margin:0 auto .35rem;border-radius:50%;background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;font-weight:900;font-size:.8rem;align-items:center;justify-content:center}
+.flow .step b{display:block;font-size:.88rem;letter-spacing:-.01em}
+.flow .step small{color:var(--muted);font-size:.76rem;line-height:1.4;display:block;margin-top:.15rem}
+.flow .arr{align-self:center;color:var(--c);font-weight:900;font-size:1.1rem;flex:0 0 auto}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.7rem 0}
+.chips span{background:var(--cs);border:1px solid var(--cl);border-radius:99px;padding:.22rem .8rem;font-size:.82rem;color:var(--ink)}
+.chips span b{color:var(--cd);font-weight:900}
+
+/* figures = illustration panels (always light, like printed images) */
+figure.fig{margin:1.4rem 0;background:#fff;border:1px solid #e8e6f2;border-radius:18px;padding:1.2rem 1.2rem .9rem;overflow-x:auto;box-shadow:var(--shadow)}
+figure.fig svg{display:block;margin:0 auto;max-width:100%;height:auto}
+figure.fig figcaption{font-size:.82rem;color:#6a6a80;text-align:center;margin-top:.7rem;max-width:60ch;margin-left:auto;margin-right:auto}
+figure.fig figcaption strong{color:#3c3c50}
+
+/* quadrants */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1rem 0;font-size:.85rem;max-width:46rem}
+.quad .q{border-radius:14px;padding:.85rem 1rem;color:#fff;box-shadow:var(--shadow)}
+.quad .q b{display:block;margin-bottom:.3rem;font-size:.95rem}
+.quad .q ul{margin:0;padding-left:1.1rem;font-size:.82rem;opacity:.95}
+.quad .q2{background:linear-gradient(135deg,#6366f1,#4338ca)}
+.quad .q3{background:linear-gradient(135deg,#ec4899,#be185d)}
+.quad .q1{background:linear-gradient(135deg,#0ea5e9,#0369a1)}
+.quad .q4{background:linear-gradient(135deg,#10b981,#047857)}
+.quadaxes{display:flex;justify-content:space-between;max-width:46rem;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:.2rem 0}
+/* risk matrix */
+.risk{display:grid;grid-template-columns:auto repeat(3,minmax(5.5rem,7.5rem));gap:.4rem;margin:1rem 0;font-size:.82rem}
+.risk .lab{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.74rem;font-weight:800;text-align:center;line-height:1.25}
+.risk .cell{border-radius:10px;padding:.8rem .4rem;text-align:center;font-weight:800;color:#fff;box-shadow:var(--shadow)}
+.risk .lo{background:#059669}.risk .md{background:#d97706}.risk .hi{background:#dc2626}
+/* decision/state tables */
+table.dt{border-collapse:separate;border-spacing:0;font-size:.88rem;margin:0 auto;background:#fff;color:#1c1c28;border-radius:12px;overflow:hidden;border:1px solid #e8e6f2}
+table.dt th,table.dt td{border-bottom:1px solid #eceaf4;border-right:1px solid #eceaf4;padding:.45rem .85rem;text-align:center}
+table.dt tr&gt;*:last-child{border-right:none}
+table.dt tr:last-child&gt;*{border-bottom:none}
+table.dt th{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;font-size:.8rem}
+table.dt td:first-child,table.dt th:first-child{text-align:left;font-weight:650}
+table.dt .sec td{background:#f4f2fa;font-weight:800;text-align:left;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:#6a6a80}
+table.dt td.x{color:var(--cd);font-weight:900}
+/* defect ticket */
+.ticket{background:var(--surface);border:1px solid var(--line);border-radius:16px;max-width:40rem;margin:1.1rem 0;overflow:hidden;font-size:.87rem;box-shadow:var(--shadow)}
+.ticket .th{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;padding:.65rem 1.1rem;font-weight:800;display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap}
+.ticket .th span{font-weight:700;font-size:.72rem;background:rgba(255,255,255,.22);padding:.15rem .7rem;border-radius:99px}
+.ticket dl{display:grid;grid-template-columns:12rem 1fr;margin:0;padding:.7rem 1.1rem .9rem}
+.ticket dt{color:var(--muted);padding:.24rem 0;font-size:.8rem;font-weight:650}
+.ticket dd{margin:0;padding:.24rem 0}
+.ticket .hl{color:var(--cd);font-weight:800}
+@media (max-width:560px){ .ticket dl{grid-template-columns:1fr} .ticket dt{padding-bottom:0} }
+/* formula */
+.formula{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;border-radius:16px;padding:1.1rem 1.3rem;margin:1.1rem 0;max-width:38rem;box-shadow:var(--shadow)}
+.formula .f{font-family:var(--mono);font-size:1.25rem;font-weight:800;letter-spacing:.01em}
+.formula p{margin:.5rem 0 0;font-size:.88rem;opacity:.95}
+footer{max-width:1140px;margin:0 auto;padding:0 1.5rem 4rem;font-size:.92rem}
+footer .fcard{border-radius:18px;background:linear-gradient(120deg,#312e81,#0e7490);color:#dbe3ff;padding:1.5rem 1.7rem;max-width:76ch;box-shadow:var(--shadow)}
+footer .fcard strong{color:#fff}
+a{color:var(--cd,#4338ca)}
+a:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+</style>
+
+<header class="hero">
+  <div class="hero-in">
+    <p class="kicker">ISTQB® Certified Tester · Foundation Level · v4.0</p>
+    <h1>The CTFL exam,<br>on one visual page.</h1>
+    <p class="lede">Built from the official syllabus and checked against all four official sample exams — every tested topic is here, nothing extra. Learn from the pictures; the text just fills the gaps.</p>
+    <div class="pills">
+      <div class="pill"><b>40</b><span>questions · 1 point each</span></div>
+      <div class="pill"><b>26/40</b><span>to pass (65%)</span></div>
+      <div class="pill"><b>60 min</b><span>+25% extra time if English isn't your first language</span></div>
+      <div class="pill"><b>8 / 24 / 8</b><span>remember / understand / apply</span></div>
+    </div>
+    <div class="distwrap">
+      <p>Where the 40 questions come from — fixed in every exam</p>
+      <div class="distbar">
+        <div style="flex:8;background:#6366f1">8</div>
+        <div style="flex:6;background:#0ea5e9">6</div>
+        <div style="flex:4;background:#8b5cf6">4</div>
+        <div style="flex:11;background:#ec4899">11</div>
+        <div style="flex:9;background:#f59e0b">9</div>
+        <div style="flex:2;background:#10b981">2</div>
+      </div>
+      <div class="distkey">
+        <span><i style="background:#6366f1"></i>1 Fundamentals</span>
+        <span><i style="background:#0ea5e9"></i>2 SDLC</span>
+        <span><i style="background:#8b5cf6"></i>3 Static testing</span>
+        <span><i style="background:#ec4899"></i>4 Techniques</span>
+        <span><i style="background:#f59e0b"></i>5 Management</span>
+        <span><i style="background:#10b981"></i>6 Tools</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<nav id="toc" aria-label="Chapters">
+  <p class="toc-title">Chapters</p>
+  <ol>
+    <li><a href="#ch1"><i style="background:#6366f1">1</i>Fundamentals of testing</a></li>
+    <li><a href="#ch2"><i style="background:#0ea5e9">2</i>Testing through the SDLC</a></li>
+    <li><a href="#ch3"><i style="background:#8b5cf6">3</i>Static testing</a></li>
+    <li><a href="#ch4"><i style="background:#ec4899">4</i>Test analysis &amp; design</a></li>
+    <li><a href="#ch5"><i style="background:#f59e0b">5</i>Managing test activities</a></li>
+    <li><a href="#ch6"><i style="background:#10b981">6</i>Test tools</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ==================== CHAPTER 1 ==================== -->
+<section class="ch" id="ch1">
+  <div class="chhead"><div class="chnum">1</div><div class="t"><p>Chapter 1 · 8 exam questions</p><h2>Fundamentals of testing</h2></div></div>
+
+  <h3>What testing is</h3>
+  <p><span class="term">Testing</span> = activities to <strong>find defects</strong> and <strong>evaluate quality</strong>. It's much more than running programs — it includes planning, analysis, design and reviewing documents.</p>
+  <div class="cards">
+    <div class="card"><b>Dynamic testing</b><p>The software <strong>runs</strong>. Failures appear during execution.</p></div>
+    <div class="card"><b>Static testing</b><p>Nothing runs — documents and code are <strong>reviewed</strong> or analyzed by tools.</p></div>
+    <div class="card"><b>Verification</b><p>Did we build the product <strong>right</strong>? (meets the specified requirements)</p></div>
+    <div class="card"><b>Validation</b><p>Did we build the <strong>right</strong> product? (meets the users' real needs)</p></div>
+  </div>
+  <p>Typical <span class="term">test objectives</span>: find defects and cause failures · evaluate work products (requirements, stories, designs, code) · build confidence · reduce risk · check coverage · verify legal/contractual requirements · give stakeholders information for decisions (e.g. the release decision).</p>
+
+  <h3>Error → Defect → Failure</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 270" role="img" aria-label="Chain from root cause to error to defect to failure">
+      <defs>
+        <linearGradient id="g1a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient>
+        <linearGradient id="g1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#db2777"/></linearGradient>
+        <linearGradient id="g1c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ea580c"/></linearGradient>
+      </defs>
+      <rect x="25" y="45" width="200" height="150" rx="18" fill="#f4f4fb" stroke="#c9c9de" stroke-width="1.5" stroke-dasharray="7 5"/>
+      <circle cx="125" cy="92" r="22" fill="#e3e3f2"/>
+      <text x="125" y="100" text-anchor="middle" font-size="22">⏱</text>
+      <text x="125" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#3c3c55">Root cause</text>
+      <text x="125" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#70708a">time pressure, complexity,</text>
+      <text x="125" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#70708a">tiredness, lack of training</text>
+
+      <path d="M232 120 L268 120" stroke="#9a9ab8" stroke-width="3" fill="none"/><path d="M262 113 L273 120 L262 127" fill="none" stroke="#9a9ab8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <rect x="280" y="45" width="200" height="150" rx="18" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+      <circle cx="380" cy="92" r="22" fill="url(#g1a)"/>
+      <circle cx="380" cy="86" r="7" fill="#fff"/><path d="M366 103 C 366 94, 394 94, 394 103 Z" fill="#fff"/>
+      <text x="380" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#3730a3">Error (mistake)</text>
+      <text x="380" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#6366a8">a <tspan font-weight="800">human</tspan> does</text>
+      <text x="380" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#6366a8">something wrong</text>
+
+      <path d="M487 120 L523 120" stroke="#9a9ab8" stroke-width="3" fill="none"/><path d="M517 113 L528 120 L517 127" fill="none" stroke="#9a9ab8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <rect x="535" y="45" width="200" height="150" rx="18" fill="#fdf0f6" stroke="#fbcfe4" stroke-width="1.5"/>
+      <circle cx="635" cy="92" r="22" fill="url(#g1b)"/>
+      <ellipse cx="635" cy="94" rx="9" ry="11" fill="#fff"/>
+      <path d="M622 86 L611 80 M622 94 L609 94 M622 102 L611 108 M648 86 L659 80 M648 94 L661 94 M648 102 L659 108" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+      <text x="635" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#9d174d">Defect (bug, fault)</text>
+      <text x="635" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#b05387">a flaw in the <tspan font-weight="800">code</tspan></text>
+      <text x="635" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#b05387">or a <tspan font-weight="800">document</tspan></text>
+
+      <path d="M742 120 L778 120" stroke="#9a9ab8" stroke-width="3" fill="none"/><path d="M772 113 L783 120 L772 127" fill="none" stroke="#9a9ab8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <rect x="790" y="45" width="150" height="150" rx="18" fill="#fff4ec" stroke="#fed7aa" stroke-width="1.5"/>
+      <path d="M865 72 L888 112 L842 112 Z" fill="url(#g1c)"/>
+      <rect x="862.6" y="86" width="5" height="14" rx="2.5" fill="#fff"/><circle cx="865" cy="106" r="3" fill="#fff"/>
+      <text x="865" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#9a3412">Failure</text>
+      <text x="865" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#c2703d">wrong behavior</text>
+      <text x="865" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#c2703d">when it runs</text>
+
+      <text x="480" y="240" text-anchor="middle" font-family="system-ui" font-size="13.5" fill="#70708a">Not every defect causes a failure — and failures can also come from the environment (e.g. radiation), not only from defects.</text>
+    </svg>
+    <figcaption><strong>Keep the order straight</strong> — a person makes an <strong>error</strong>, which puts a <strong>defect</strong> in the code, which may cause a <strong>failure</strong> at runtime.</figcaption>
+  </figure>
+
+  <h3>Testing is not debugging</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Testing</b><small>triggers a failure, or finds a defect directly</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Debugging</b><small>reproduce → diagnose → fix (a development activity)</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Confirmation testing</b><small>is the fix really working?</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>Regression testing</b><small>did the fix break anything else?</small></div>
+  </div>
+
+  <h3>Testing vs quality assurance</h3>
+  <table class="cmp">
+    <tr><th>Testing (quality control)</th><th>Quality assurance (QA)</th></tr>
+    <tr><td><strong>Product-oriented · corrective.</strong> Focuses on the work product: find defects, evaluate quality. Test results → used to <strong>fix defects</strong>.</td><td><strong>Process-oriented · preventive.</strong> Good process, followed correctly → good product. Test results → feedback on <strong>how well the process works</strong>. Everyone's responsibility.</td></tr>
+  </table>
+
+  <h3>The seven testing principles</h3>
+  <div class="cards">
+    <div class="card"><b><i>1</i>Testing shows the presence, not absence of defects</b><p>Tests can prove defects exist — never that there are none.</p></div>
+    <div class="card"><b><i>2</i>Exhaustive testing is impossible</b><p>You can't test everything. Focus with techniques, priorities and risk.</p></div>
+    <div class="card"><b><i>3</i>Early testing saves time &amp; money</b><p>Early defects are cheap defects. See "shift left".</p></div>
+    <div class="card"><b><i>4</i>Defects cluster together</b><p>A few components hold most defects (Pareto). Aim your tests there.</p></div>
+    <div class="card"><b><i>5</i>Tests wear out</b><p>Repeated tests stop finding new defects — refresh them. (Automated regression tests are the useful exception.)</p></div>
+    <div class="card"><b><i>6</i>Testing is context dependent</b><p>No universal recipe: a bank is not a game app.</p></div>
+    <div class="card"><b><i>7</i>Absence-of-defects fallacy</b><p>Fixing every found defect still doesn't make the product what users need. Verify <strong>and</strong> validate.</p></div>
+  </div>
+
+  <h3>The test process — 7 activity groups</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Planning</b><small>objectives + approach</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Analysis</b><small><strong>what</strong> to test → test conditions</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Design</b><small><strong>how</strong> to test → test cases</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>Implementation</b><small>procedures, suites, data, schedule</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>5</em><b>Execution</b><small>run · compare · log</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>6</em><b>Completion</b><small>report · archive · learn</small></div>
+  </div>
+  <div class="note"><p><strong>Monitoring &amp; control</strong> is the 7th activity — it runs <strong>the whole time</strong>: compare progress against the plan, and steer with corrective actions. The activities are iterative, not a strict line.</p></div>
+
+  <h3>Testware — what each activity produces</h3>
+  <div class="tablewrap"><table class="cmp">
+    <tr><th style="width:13rem">Activity</th><th>Outputs (testware)</th></tr>
+    <tr><td><strong>Planning</strong></td><td>test plan, schedule, risk register, entry &amp; exit criteria</td></tr>
+    <tr><td><strong>Monitoring &amp; control</strong></td><td>test progress reports, control directives</td></tr>
+    <tr><td><strong>Analysis</strong></td><td>prioritized <strong>test conditions</strong>, defect reports on the test basis</td></tr>
+    <tr><td><strong>Design</strong></td><td>prioritized <strong>test cases</strong>, charters, coverage items, test data <em>requirements</em>, environment <em>requirements</em></td></tr>
+    <tr><td><strong>Implementation</strong></td><td>procedures, scripts, suites, <strong>test data</strong>, execution schedule, stubs &amp; drivers &amp; simulators</td></tr>
+    <tr><td><strong>Execution</strong></td><td>test logs, defect reports</td></tr>
+    <tr><td><strong>Completion</strong></td><td>test completion report, lessons learned, change requests</td></tr>
+  </table></div>
+
+  <h3>Traceability, roles &amp; skills</h3>
+  <p><span class="term">Traceability</span> connects test basis ↔ test conditions ↔ test cases ↔ results ↔ defects ↔ risks. It makes coverage measurable ("is every requirement covered?"), enables impact analysis, clearer reports, and audits.</p>
+  <table class="cmp">
+    <tr><th>Test management role</th><th>Testing role</th></tr>
+    <tr><td>Owns <strong>process &amp; team</strong>: planning, monitoring &amp; control, completion. In Agile, the team itself may absorb these tasks.</td><td>Owns the <strong>engineering side</strong>: analysis, design, implementation, execution.</td></tr>
+  </table>
+  <p><span class="term">Essential skills</span>: testing knowledge · thoroughness &amp; curiosity · <strong>communication</strong> (testers deliver "bad news" — do it constructively) · analytical &amp; critical thinking · technical knowledge · domain knowledge. The <span class="term">whole team approach</span> (from XP): anyone with the right skills does any task, quality is everyone's job — but safety-critical work may need more independence instead.</p>
+
+  <h3>Independence of testing</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 270" role="img" aria-label="Four rising steps of test independence">
+      <defs><linearGradient id="g1d" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs>
+      <rect x="40" y="170" width="200" height="60" rx="12" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+      <rect x="270" y="140" width="200" height="90" rx="12" fill="#dfe5fd" stroke="#c7d2fe" stroke-width="1.5"/>
+      <rect x="500" y="110" width="200" height="120" rx="12" fill="#c9d3fb" stroke="#aab8f5" stroke-width="1.5"/>
+      <rect x="730" y="80" width="200" height="150" rx="12" fill="url(#g1d)"/>
+      <text x="140" y="197" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#3730a3">None</text>
+      <text x="140" y="216" text-anchor="middle" font-family="system-ui" font-size="12" fill="#6366a8">author tests own work</text>
+      <text x="370" y="172" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#3730a3">Some</text>
+      <text x="370" y="191" text-anchor="middle" font-family="system-ui" font-size="12" fill="#5a5ea0">peers, same team</text>
+      <text x="600" y="145" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#312e81">High</text>
+      <text x="600" y="164" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4a4e8f">testers outside the team,</text>
+      <text x="600" y="180" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4a4e8f">same organization</text>
+      <text x="830" y="115" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#fff">Very high</text>
+      <text x="830" y="134" text-anchor="middle" font-family="system-ui" font-size="12" fill="#dbe0ff">testers from outside</text>
+      <text x="830" y="150" text-anchor="middle" font-family="system-ui" font-size="12" fill="#dbe0ff">the organization</text>
+      <path d="M60 60 L880 30" stroke="#9a9ab8" stroke-width="2.5" fill="none" stroke-dasharray="8 6"/>
+      <path d="M868 24 L886 30 L871 39" fill="none" stroke="#9a9ab8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="470" y="28" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="800" fill="#5f5f80">more independence → different eyes → different defects found</text>
+    </svg>
+    <figcaption>Independence helps because author and tester have <strong>different cognitive biases</strong> — but too much isolation harms collaboration, and developers may lose their feeling of responsibility for quality.</figcaption>
+  </figure>
+
+  <div class="trap"><b class="t">Exam traps — chapter 1</b>
+    <ul>
+      <li>Static testing finds <strong>defects</strong> directly; dynamic testing causes <strong>failures</strong>. Options that swap these two words are wrong.</li>
+      <li>Debugging <strong>fixes defects</strong> — it never "fixes failures", and it is not testing.</li>
+      <li>Verification = specified requirements · validation = user needs. The classic swap.</li>
+      <li>A regulator's fine is a <em>consequence</em>, not a failure. Keep the chain order exact.</li>
+      <li>Test data <em>requirements</em> → design. The actual test <em>data</em> → implementation.</li>
+    </ul>
+  </div>
+</section>
+<!-- ==================== CHAPTER 2 ==================== -->
+<section class="ch" id="ch2">
+  <div class="chhead"><div class="chnum">2</div><div class="t"><p>Chapter 2 · 6 exam questions</p><h2>Testing throughout the SDLC</h2></div></div>
+
+  <h3>SDLC models change how you test</h3>
+  <div class="cards">
+    <div class="card"><b>Sequential</b><p>Waterfall, V-model. Documents can be reviewed early, but running code arrives <strong>late</strong> — so dynamic testing starts late.</p></div>
+    <div class="card"><b>Iterative</b><p>Spiral, prototyping. Every loop delivers a working version → static + dynamic testing at <strong>all levels, every iteration</strong>.</p></div>
+    <div class="card"><b>Incremental</b><p>Unified Process. The product grows piece by piece → fast feedback and lots of <strong>regression testing</strong>.</p></div>
+  </div>
+  <p>The SDLC choice affects the scope and timing of testing, documentation detail, techniques, automation, and the tester's role. Agile prefers lightweight documentation, heavy <strong>test automation</strong> and experience-based manual testing.</p>
+  <div class="note"><p><strong>Good practices in every SDLC:</strong> every development activity has a matching test activity · every test level has its own objectives · test analysis &amp; design for a level starts <em>during</em> the matching development phase · testers review drafts as soon as they exist.</p></div>
+
+  <h3>Test-first — the only three approaches</h3>
+  <div class="cards">
+    <div class="card"><b>TDD</b><p><strong>Test-driven development.</strong> Developer writes a small test → writes code to pass it → refactors. Tests drive the <em>code</em>.</p></div>
+    <div class="card"><b>ATDD</b><p><strong>Acceptance test-driven development.</strong> The team writes tests from <strong>acceptance criteria</strong> before development.</p></div>
+    <div class="card"><b>BDD</b><p><strong>Behavior-driven development.</strong> Behavior written as simple natural-language tests: <strong>Given / When / Then</strong> → then automated.</p></div>
+  </div>
+
+  <h3>DevOps</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 340" role="img" aria-label="DevOps loop with development and operations stations">
+      <defs>
+        <linearGradient id="g2a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient>
+        <linearGradient id="g2b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
+      </defs>
+      <rect x="60" y="70" width="840" height="200" rx="100" fill="none" stroke="#d4d4e6" stroke-width="3"/>
+      <path d="M893 158 L902 172 L893 186" fill="none" stroke="#9a9ab8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M67 182 L58 168 L67 154" fill="none" stroke="#9a9ab8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g font-family="system-ui" font-size="14.5" font-weight="800" text-anchor="middle">
+        <rect x="120" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="190" y="76" fill="#fff">Plan</text>
+        <rect x="320" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="390" y="76" fill="#fff">Code</text>
+        <rect x="520" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="590" y="76" fill="#fff">Build</text>
+        <rect x="720" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="790" y="76" fill="#fff">Test</text>
+        <rect x="720" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="790" y="276" fill="#fff">Release</text>
+        <rect x="520" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="590" y="276" fill="#fff">Deploy</text>
+        <rect x="320" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="390" y="276" fill="#fff">Operate</text>
+        <rect x="120" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="190" y="276" fill="#fff">Monitor</text>
+      </g>
+      <text x="480" y="158" text-anchor="middle" font-family="system-ui" font-size="19" font-weight="900" fill="#3c3c55">Dev + Ops = one team</text>
+      <text x="480" y="184" text-anchor="middle" font-family="system-ui" font-size="13.5" fill="#70708a">automated CI/CD delivery pipeline · fast feedback · shared goals</text>
+      <text x="480" y="206" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#9a9ab8">the loop never stops — monitoring feeds the next plan</text>
+    </svg>
+    <figcaption><strong>Benefits for testing:</strong> fast feedback, shift left via CI, stable automated environments, less repetitive manual work, low regression risk. <strong>Risks:</strong> the pipeline must be built and maintained, automation costs effort — and manual, user-view testing is still needed.</figcaption>
+  </figure>
+
+  <h3>Shift left</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 250" role="img" aria-label="Shift left: testing moves earlier in the lifecycle">
+      <defs><linearGradient id="g2c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></linearGradient></defs>
+      <g font-family="system-ui" font-size="14.5" font-weight="700" text-anchor="middle">
+        <rect x="45" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="120" y="185" fill="#3c3c55">Requirements</text>
+        <rect x="225" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="300" y="185" fill="#3c3c55">Design</text>
+        <rect x="405" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="480" y="185" fill="#3c3c55">Code</text>
+        <rect x="585" y="150" width="150" height="58" rx="14" fill="url(#g2c)"/><text x="660" y="185" fill="#fff">Test</text>
+        <rect x="765" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="840" y="185" fill="#3c3c55">Deploy</text>
+      </g>
+      <path d="M655 140 C 540 42, 240 42, 128 136" fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+      <path d="M143 122 L124 140 L149 145" fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="392" y="30" text-anchor="middle" font-family="system-ui" font-size="17.5" font-weight="900" fill="#075985">Shift left — start testing earlier</text>
+      <text x="392" y="114" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#5f7c94">reviews with tester eyes · test cases before code · CI/CD</text>
+      <text x="392" y="134" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#5f7c94">static analysis first · early non-functional tests</text>
+    </svg>
+    <figcaption>Shift left = the early-testing principle in action. A bit more effort <strong>early</strong>, much less cost <strong>later</strong>. It does <em>not</em> mean late testing is neglected.</figcaption>
+  </figure>
+  <p><span class="term">Retrospectives</span> at the end of an iteration or project ask: what went well? what to improve? how? Results go into the test completion report. Benefits: better test effectiveness and testware, team learning, a better test basis, better dev–test cooperation.</p>
+
+  <h3>The five test levels</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 545" role="img" aria-label="V-model with development phases on the left and test levels on the right">
+      <defs>
+        <linearGradient id="g2d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+        <linearGradient id="g2e" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
+      </defs>
+      <g font-family="system-ui">
+        <rect x="30" y="30" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="155" y="56" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">User &amp; business needs</text>
+        <text x="155" y="76" text-anchor="middle" font-size="12" fill="#4886a5">what people actually need</text>
+        <rect x="85" y="135" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="210" y="161" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">System requirements</text>
+        <text x="210" y="181" text-anchor="middle" font-size="12" fill="#4886a5">what the system must do</text>
+        <rect x="140" y="240" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="265" y="266" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">Architecture</text>
+        <text x="265" y="286" text-anchor="middle" font-size="12" fill="#4886a5">how the parts fit together</text>
+        <rect x="195" y="345" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="320" y="371" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">Detailed design</text>
+        <text x="320" y="391" text-anchor="middle" font-size="12" fill="#4886a5">how each part works inside</text>
+        <rect x="380" y="462" width="200" height="54" rx="14" fill="url(#g2d)"/>
+        <text x="480" y="495" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">Code</text>
+        <rect x="515" y="345" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="640" y="371" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Component testing</text>
+        <text x="640" y="391" text-anchor="middle" font-size="12" fill="#dff2fd">single units · by developers</text>
+        <rect x="570" y="240" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="695" y="266" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Component integration</text>
+        <text x="695" y="286" text-anchor="middle" font-size="12" fill="#dff2fd">interfaces between components</text>
+        <rect x="625" y="135" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="750" y="161" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">System testing</text>
+        <text x="750" y="181" text-anchor="middle" font-size="12" fill="#dff2fd">+ system integration with other systems</text>
+        <rect x="680" y="30" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="805" y="56" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Acceptance testing</text>
+        <text x="805" y="76" text-anchor="middle" font-size="12" fill="#dff2fd">validation · by users</text>
+      </g>
+      <g stroke="#b9b9d4" stroke-width="2" stroke-dasharray="7 6">
+        <line x1="288" y1="61" x2="672" y2="61"/>
+        <line x1="343" y1="166" x2="617" y2="166"/>
+        <line x1="398" y1="271" x2="562" y2="271"/>
+        <line x1="453" y1="376" x2="507" y2="376"/>
+      </g>
+      <path d="M320 411 L432 460" stroke="#c9c9de" stroke-width="2.5" fill="none"/>
+      <path d="M640 411 L528 460" stroke="#c9c9de" stroke-width="2.5" fill="none"/>
+      <text x="480" y="442" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#9a9ab8">every development phase ↔ a matching test level</text>
+    </svg>
+    <figcaption>The V-model: work goes <strong>down</strong> the left side, testing climbs <strong>up</strong> the right side — each test level checks the work of its matching phase.</figcaption>
+  </figure>
+  <div class="tablewrap"><table class="cmp">
+    <tr><th style="width:14rem">Level</th><th>Focus</th></tr>
+    <tr><td><strong>Component (unit)</strong></td><td>one component in isolation · needs harnesses / unit test frameworks · usually developers</td></tr>
+    <tr><td><strong>Component integration</strong></td><td>interfaces between components · depends on integration strategy: bottom-up, top-down, big-bang</td></tr>
+    <tr><td><strong>System</strong></td><td>end-to-end behavior of the whole system, functional + non-functional · often an independent test team</td></tr>
+    <tr><td><strong>System integration</strong></td><td>interfaces to <strong>other systems &amp; external services</strong> · environment close to production</td></tr>
+    <tr><td><strong>Acceptance</strong></td><td><strong>validation</strong> — ready for users &amp; business? · forms: UAT, operational, contractual, regulatory, alpha, beta</td></tr>
+  </table></div>
+  <p>Levels differ by: test object, objectives, test basis, typical defects, and who is responsible.</p>
+
+  <h3>The four test types</h3>
+  <div class="cards">
+    <div class="card"><b>Functional</b><p><strong>What</strong> the system does — completeness, correctness, appropriateness.</p></div>
+    <div class="card"><b>Non-functional</b><p><strong>How well</strong> it behaves. ISO 25010: performance efficiency, compatibility, usability, reliability, security, maintainability, portability, safety.</p></div>
+    <div class="card"><b>Black-box</b><p>From the <strong>specification</strong> — checks behavior against requirements.</p></div>
+    <div class="card"><b>White-box</b><p>From the <strong>internal structure</strong> — checks the structure is covered.</p></div>
+  </div>
+  <p>All four types apply at <strong>every test level</strong>. Many non-functional tests are just functional tests with an extra check ("…and it finishes within 2 seconds").</p>
+
+  <h3>Confirmation vs regression testing</h3>
+  <table class="cmp">
+    <tr><th>Confirmation testing — is the fix fixed?</th><th>Regression testing — did we break anything else?</th></tr>
+    <tr><td>Re-run the tests that <strong>failed</strong> before the fix (or at minimum, repeat the failing steps). Comes <strong>first</strong>.</td><td>Checks for side effects in <strong>unchanged</strong> parts — same component, other components, even connected systems. Do an <strong>impact analysis</strong> to choose scope. Suites <strong>grow</strong> → automate them, early.</td></tr>
+  </table>
+
+  <h3>Maintenance testing — 3 triggers</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Modification</b><small>planned enhancements, corrective fixes, hot fixes</small></div>
+    <div class="step"><em>2</em><b>Upgrade / migration</b><small>new platform or environment · data conversion testing</small></div>
+    <div class="step"><em>3</em><b>Retirement</b><small>end of life · test archiving, restore &amp; retrieval</small></div>
+  </div>
+  <p>Scope depends on: the <strong>risk</strong> of the change, the <strong>size of the system</strong>, and the <strong>size of the change</strong>.</p>
+
+  <div class="trap"><b class="t">Exam traps — chapter 2</b>
+    <ul>
+      <li>Only <strong>TDD, ATDD, BDD</strong> exist. "System TDD" and "Function-driven development" are invented distractors.</li>
+      <li>Given/When/Then belongs to <strong>BDD</strong>. ATDD starts from acceptance criteria.</li>
+      <li>Integration is a test <strong>level</strong>, not a test type. "How fast?" is <strong>non-functional</strong>, even for a critical business function.</li>
+      <li>Confirmation testing → the <strong>changed</strong> code; regression testing → the <strong>unchanged</strong> rest. Regression suites grow, never shrink.</li>
+      <li>Retirement <strong>is</strong> a maintenance trigger (archiving + restore testing).</li>
+      <li>Retrospectives improve the <strong>process</strong>; end users don't attend them.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== CHAPTER 3 ==================== -->
+<section class="ch" id="ch3">
+  <div class="chhead"><div class="chnum">3</div><div class="t"><p>Chapter 3 · 4 exam questions</p><h2>Static testing</h2></div></div>
+
+  <h3>Test without running anything</h3>
+  <p><span class="term">Static testing</span> examines work products <strong>without executing them</strong> — by people (<strong>reviews</strong>) or by tools (<strong>static analysis</strong>). Anything readable can be reviewed: requirements, code, test plans, backlog items, contracts, models. Static analysis needs a formal structure to check (code, models); it lives happily inside CI pipelines.</p>
+  <table class="cmp">
+    <tr><th>Static testing</th><th>Dynamic testing</th></tr>
+    <tr><td>Finds <strong>defects directly</strong> — nothing runs, so nothing "fails".</td><td>Causes <strong>failures</strong>; the defect behind them is found by analysis.</td></tr>
+    <tr><td>Works on <strong>any readable work product</strong>, even non-executable ones.</td><td>Only on software that <strong>runs</strong>.</td></tr>
+    <tr><td>Measures things like <strong>maintainability</strong>.</td><td>Measures things like <strong>performance</strong>.</td></tr>
+  </table>
+  <p><strong>Found best (or only) statically:</strong> requirement defects (contradictions, ambiguities, omissions) · design defects (poor modularization) · unreachable code, undeclared variables, duplicated code · deviations from standards · wrong interface specifications · some security vulnerabilities (buffer overflows) · coverage gaps in the test basis.</p>
+  <div class="note"><p><strong>Why it pays off:</strong> defects are caught at the <strong>cheapest possible moment</strong>, stakeholders build shared understanding early, and communication improves. Reviews cost effort — total project cost goes <strong>down</strong>.</p></div>
+
+  <h3>The review process — 5 activities</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Planning</b><small>scope · focus · exit criteria · effort</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Review initiation</b><small>everyone has the work product &amp; knows their role</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Individual review</b><small>each reviewer logs anomalies, questions, ideas</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>Communication &amp; analysis</b><small>discuss anomalies · decide status &amp; actions</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>5</em><b>Fixing &amp; reporting</b><small>defect reports · fix · report results</small></div>
+  </div>
+  <p>The more formal the review, the more of these tasks it uses. An anomaly is <em>not automatically</em> a defect — that's decided in step 4.</p>
+
+  <h3>Who does what in a review</h3>
+  <div class="cards">
+    <div class="card"><b>Manager</b><p>Decides <strong>what</strong> gets reviewed; provides staff and time.</p></div>
+    <div class="card"><b>Author</b><p>Creates and <strong>fixes</strong> the work product.</p></div>
+    <div class="card"><b>Moderator (facilitator)</b><p>Runs the meeting; mediates; keeps it a <strong>safe space</strong>.</p></div>
+    <div class="card"><b>Scribe (recorder)</b><p>Collects anomalies; records decisions.</p></div>
+    <div class="card"><b>Reviewer</b><p>Does the reviewing — team member, expert, or any stakeholder.</p></div>
+    <div class="card"><b>Review leader</b><p>Overall responsibility: picks <strong>who</strong>, organizes <strong>when &amp; where</strong>.</p></div>
+  </div>
+
+  <h3>Four review types, from casual to strict</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 265" role="img" aria-label="Review types ordered by formality">
+      <defs><linearGradient id="g3a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ddd6fe"/><stop offset="1" stop-color="#6d28d9"/></linearGradient></defs>
+      <rect x="40" y="190" width="880" height="14" rx="7" fill="url(#g3a)"/>
+      <g font-family="system-ui">
+        <g>
+          <rect x="42" y="30" width="206" height="122" rx="14" fill="#faf9ff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="145" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Informal review</text>
+          <text x="145" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">no defined process</text>
+          <text x="145" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">no documented output needed</text>
+          <text x="145" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">goal: detect anomalies</text>
+          <line x1="145" y1="152" x2="145" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="272" y="30" width="206" height="122" rx="14" fill="#faf9ff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="375" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Walkthrough</text>
+          <text x="375" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">led by the <tspan font-weight="800">author</tspan></text>
+          <text x="375" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">individual prep optional</text>
+          <text x="375" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">quality · learning · consensus</text>
+          <line x1="375" y1="152" x2="375" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="502" y="30" width="206" height="122" rx="14" fill="#faf9ff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="605" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Technical review</text>
+          <text x="605" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">led by a <tspan font-weight="800">moderator</tspan></text>
+          <text x="605" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">technically qualified reviewers</text>
+          <text x="605" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">decide technical problems</text>
+          <line x1="605" y1="152" x2="605" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="732" y="30" width="206" height="122" rx="14" fill="#f3efff" stroke="#c4b5fd" stroke-width="2"/>
+          <text x="835" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Inspection</text>
+          <text x="835" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">most formal · full process · metrics</text>
+          <text x="835" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">author ≠ leader, author ≠ scribe</text>
+          <text x="835" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">find maximum anomalies</text>
+          <line x1="835" y1="152" x2="835" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <text x="40" y="235" font-size="12.5" font-weight="700" fill="#9a8fc4">casual</text>
+        <text x="920" y="235" text-anchor="end" font-size="12.5" font-weight="700" fill="#4c1d95">most formal</text>
+      </g>
+    </svg>
+    <figcaption><strong>Memorize the leaders:</strong> walkthrough → the author · technical review → a moderator · inspection → formal roles where the author can never lead or scribe.</figcaption>
+  </figure>
+  <p><strong>Review success factors:</strong> clear objectives and measurable exit criteria (<strong>never</strong> evaluating people) · the right review type · <strong>small chunks</strong> at a time · time to prepare · feedback to authors · management support · training · reviews as part of the culture.</p>
+
+  <div class="trap"><b class="t">Exam traps — chapter 3</b>
+    <ul>
+      <li>"Chairperson" is <strong>not</strong> a review role. Manager decides <em>what</em>; review leader decides <em>who/when/where</em>.</li>
+      <li>Reviews find <strong>defects/anomalies</strong> — never "failures" (nothing runs).</li>
+      <li>Informal reviews may still involve preparation — they just need no formal process or documented output.</li>
+      <li>Evaluating participants must <strong>never</strong> be a review objective.</li>
+    </ul>
+  </div>
+</section>
+<!-- ==================== CHAPTER 4 ==================== -->
+<section class="ch" id="ch4">
+  <div class="chhead"><div class="chnum">4</div><div class="t"><p>Chapter 4 · 11 exam questions — the biggest chapter, with guaranteed calculations</p><h2>Test analysis &amp; design</h2></div></div>
+
+  <h3>Three families of test techniques</h3>
+  <div class="cards">
+    <div class="card"><b>Black-box</b><p>From the <strong>specified behavior</strong>, ignoring internals. Tests survive implementation changes. EP · BVA · decision tables · state transitions.</p></div>
+    <div class="card"><b>White-box</b><p>From the <strong>internal structure</strong> — only possible once design/code exists. Statement &amp; branch testing.</p></div>
+    <div class="card"><b>Experience-based</b><p>From the <strong>tester's skill</strong>. Finds what the others miss — complementary. Error guessing · exploratory · checklists.</p></div>
+  </div>
+
+  <h3>Equivalence partitioning (EP) <small>guaranteed exam calculation</small></h3>
+  <p>Split the data into <span class="term">partitions</span> the system treats <strong>the same way</strong>. If one value in a partition finds a defect, any other value there would find it too — so <strong>one test per partition is enough</strong>.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 960 320" role="img" aria-label="Equivalence partitions of an age field with one test value each">
+      <defs><linearGradient id="g4a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ec4899"/><stop offset="1" stop-color="#be185d"/></linearGradient></defs>
+      <g font-family="system-ui">
+        <g text-anchor="middle" font-size="16" font-weight="800">
+          <rect x="102" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#b91c1c" stroke-width="2"/><text x="140" y="54" fill="#b91c1c">−5</text>
+          <rect x="292" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#be185d" stroke-width="2"/><text x="330" y="54" fill="#be185d">10</text>
+          <rect x="512" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#be185d" stroke-width="2"/><text x="550" y="54" fill="#be185d">30</text>
+          <rect x="742" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#be185d" stroke-width="2"/><text x="780" y="54" fill="#be185d">70</text>
+        </g>
+        <g stroke="#c9c9de" stroke-width="2">
+          <line x1="140" y1="66" x2="140" y2="104"/><line x1="330" y1="66" x2="330" y2="104"/><line x1="550" y1="66" x2="550" y2="104"/><line x1="780" y1="66" x2="780" y2="104"/>
+        </g>
+        <g font-size="15" font-weight="800" text-anchor="middle">
+          <rect x="60" y="110" width="160" height="64" rx="12" fill="#fdecec" stroke="#f3c1c1" stroke-width="1.5"/>
+          <text x="140" y="138" fill="#a03535">age &lt; 0</text><text x="140" y="158" font-size="12" font-weight="500" fill="#c07070">invalid — rejected</text>
+          <rect x="228" y="110" width="204" height="64" rx="12" fill="#fdf0f6" stroke="#fbcfe4" stroke-width="1.5"/>
+          <text x="330" y="138" fill="#9d174d">0 – 17</text><text x="330" y="158" font-size="12" font-weight="500" fill="#c65f95">child ticket</text>
+          <rect x="440" y="110" width="220" height="64" rx="12" fill="#fce0ee" stroke="#f8b7d8" stroke-width="1.5"/>
+          <text x="550" y="138" fill="#9d174d">18 – 64</text><text x="550" y="158" font-size="12" font-weight="500" fill="#c65f95">adult ticket</text>
+          <rect x="668" y="110" width="232" height="64" rx="12" fill="#fbcfe4" stroke="#f49cc8" stroke-width="1.5"/>
+          <text x="780" y="138" fill="#9d174d">65 +</text><text x="780" y="158" font-size="12" font-weight="500" fill="#b04a80">senior ticket</text>
+        </g>
+        <g font-size="13" font-weight="700" fill="#70708a" text-anchor="middle">
+          <text x="224" y="200">0</text><text x="436" y="200">18</text><text x="664" y="200">65</text>
+        </g>
+        <rect x="205" y="238" width="550" height="44" rx="22" fill="url(#g4a)"/>
+        <text x="480" y="266" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">4 partitions → 4 test values = 100% EP coverage</text>
+      </g>
+    </svg>
+    <figcaption>Partitions must <strong>not overlap</strong> and must not be empty — and <strong>invalid partitions count too</strong>: coverage = partitions tested ÷ all partitions × 100%.</figcaption>
+  </figure>
+  <div class="note"><p><strong>Each Choice coverage</strong> — when there are several inputs (e.g. floor type × payment type), each partition of <em>each</em> input must be hit at least once. One test can tick partitions of several inputs at the same time, and <strong>combinations are not required</strong>.</p></div>
+
+  <h3>Boundary value analysis (BVA) <small>guaranteed exam calculation</small></h3>
+  <p>Developers make mistakes <strong>at the edges</strong>. BVA tests each <strong>ordered</strong> partition's <span class="term">boundary values</span> — its minimum and maximum.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 960 480" role="img" aria-label="2-value and 3-value boundary value analysis with zoomed edges">
+      <g font-family="system-ui">
+        <g font-size="13" font-weight="700" fill="#70708a" text-anchor="middle">
+          <text x="200" y="52">1 – 100</text><text x="480" y="52">101 – 199</text><text x="760" y="52">200 – 500</text>
+        </g>
+        <g text-anchor="middle" font-size="14" font-weight="800">
+          <rect x="60" y="62" width="280" height="54" rx="12" fill="#fdf0f6" stroke="#fbcfe4" stroke-width="1.5"/><text x="200" y="95" fill="#9d174d">no discount</text>
+          <rect x="340" y="62" width="280" height="54" fill="#fce0ee" stroke="#f8b7d8" stroke-width="1.5"/><text x="480" y="95" fill="#9d174d">10% discount</text>
+          <rect x="620" y="62" width="280" height="54" rx="12" fill="#fbcfe4" stroke="#f49cc8" stroke-width="1.5"/><text x="760" y="95" fill="#9d174d">20% discount</text>
+        </g>
+        <g stroke="#b9b9d4" stroke-width="2" stroke-dasharray="6 5">
+          <line x1="340" y1="120" x2="255" y2="196"/>
+          <line x1="620" y1="120" x2="705" y2="196"/>
+        </g>
+        <g>
+          <rect x="110" y="200" width="290" height="158" rx="16" fill="#fbfaff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="255" y="228" text-anchor="middle" font-size="13" font-weight="800" fill="#5f5f80">zoom: the 100 | 101 edge</text>
+          <g text-anchor="middle" font-size="17" font-weight="800">
+            <rect x="127" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="157" y="279" fill="#b45309">99</text>
+            <rect x="195" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="225" y="279" fill="#fff">100</text>
+            <rect x="263" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="293" y="279" fill="#fff">101</text>
+            <rect x="331" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="361" y="279" fill="#b45309">102</text>
+          </g>
+          <text x="255" y="330" text-anchor="middle" font-size="12" fill="#8a8aa5">boundary 100 (max) meets boundary 101 (min)</text>
+        </g>
+        <g>
+          <rect x="560" y="200" width="290" height="158" rx="16" fill="#fbfaff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="705" y="228" text-anchor="middle" font-size="13" font-weight="800" fill="#5f5f80">zoom: the 199 | 200 edge</text>
+          <g text-anchor="middle" font-size="17" font-weight="800">
+            <rect x="577" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="607" y="279" fill="#b45309">198</text>
+            <rect x="645" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="675" y="279" fill="#fff">199</text>
+            <rect x="713" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="743" y="279" fill="#fff">200</text>
+            <rect x="781" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="811" y="279" fill="#b45309">201</text>
+          </g>
+          <text x="705" y="330" text-anchor="middle" font-size="12" fill="#8a8aa5">same story at every partition edge</text>
+        </g>
+        <g font-size="13.5">
+          <rect x="180" y="390" width="18" height="18" rx="5" fill="#ec4899"/>
+          <text x="208" y="404" fill="#3c3c55"><tspan font-weight="800">2-value BVA</tspan> = test the boundary values themselves (each partition's min &amp; max)</text>
+          <rect x="180" y="422" width="18" height="18" rx="5" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="208" y="436" fill="#3c3c55"><tspan font-weight="800">3-value BVA</tspan> = also test both neighbors of every boundary</text>
+          <text x="480" y="468" text-anchor="middle" font-size="12.5" fill="#8a8aa5">the outer edges count too: 1 and 500 are boundaries, with neighbors 0 / 2 and 499 / 501</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption><strong>Coverage %</strong> = boundary values (and neighbors, for 3-value) exercised ÷ total. BVA only works on <strong>ordered</strong> partitions.</figcaption>
+  </figure>
+  <div class="note"><p><strong>Why 3-value is stronger</strong> (the syllabus's own example): if <code>if (x &lt;= 10)</code> is wrongly coded as <code>if (x == 10)</code>, the 2-value tests x=10 and x=11 both pass — only <strong>x=9</strong>, the extra 3-value neighbor, catches the bug.</p></div>
+
+  <h3>Decision table testing <small>guaranteed exam calculation</small></h3>
+  <p>For business rules where <strong>combinations of conditions</strong> decide the outcome. Conditions and actions are rows; <strong>each column = one rule = one test</strong>.</p>
+  <figure class="fig">
+    <table class="dt">
+      <tr><th style="text-align:left">Online shop rules</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr>
+      <tr class="sec"><td colspan="5">Conditions</td></tr>
+      <tr><td>Customer is a member</td><td>T</td><td>T</td><td>F</td><td>F</td></tr>
+      <tr><td>Order is ≥ €100</td><td>T</td><td>F</td><td>T</td><td>F</td></tr>
+      <tr class="sec"><td colspan="5">Actions</td></tr>
+      <tr><td>Give 5% discount</td><td class="x">X</td><td class="x">X</td><td></td><td></td></tr>
+      <tr><td>Free shipping</td><td class="x">X</td><td></td><td class="x">X</td><td></td></tr>
+    </table>
+    <figcaption>A <strong>full table</strong> has a column for every combination (2 conditions → 2² = 4 columns; it grows <strong>exponentially</strong>). Notation: T / F · "–" = irrelevant · "N/A" = infeasible · X = action happens.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Coverage = columns exercised ÷ feasible columns × 100%.</strong> A second test hitting the same column adds <strong>nothing</strong>.</li>
+    <li>Tables can be <strong>minimized</strong> by merging columns where a condition doesn't change the outcome ("–").</li>
+    <li>Decision tables expose <strong>gaps</strong> (a combination no rule covers) and <strong>contradictions</strong> (two rules match the same combination with different actions).</li>
+  </ul>
+
+  <h3>State transition testing <small>guaranteed exam calculation</small></h3>
+  <p>Some systems answer the same event differently depending on their <span class="term">state</span>. Transition label syntax: <code>event [guard condition] / action</code>.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 960 380" role="img" aria-label="State diagram of an order with four states and four transitions">
+      <defs><linearGradient id="g4b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>
+      <g font-family="system-ui">
+        <circle cx="42" cy="112" r="9" fill="#3c3c55"/>
+        <line x1="51" y1="112" x2="74" y2="112" stroke="#3c3c55" stroke-width="2.5"/>
+        <path d="M68 106 L78 112 L68 118" fill="none" stroke="#3c3c55" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="80" y="80" width="180" height="64" rx="32" fill="url(#g4b)"/>
+        <text x="170" y="119" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">CREATED</text>
+        <rect x="396" y="80" width="170" height="64" rx="32" fill="url(#g4b)"/>
+        <text x="481" y="119" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">PAID</text>
+        <rect x="712" y="80" width="170" height="64" rx="32" fill="url(#g4b)"/>
+        <text x="797" y="119" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">SHIPPED</text>
+        <rect x="396" y="272" width="170" height="64" rx="32" fill="#3c3c55"/>
+        <text x="481" y="311" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">CLOSED</text>
+        <line x1="260" y1="112" x2="388" y2="112" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M382 106 L392 112 L382 118" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="228" y="18" width="200" height="48" rx="14" fill="#fff" stroke="#fbcfe4" stroke-width="1.5"/>
+        <text x="328" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#9d174d">pay [card ok]</text>
+        <text x="328" y="56" text-anchor="middle" font-size="12.5" fill="#c65f95">/ send receipt</text>
+        <line x1="328" y1="66" x2="328" y2="108" stroke="#f8b7d8" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <line x1="566" y1="112" x2="704" y2="112" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M698 106 L708 112 L698 118" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="635" y="100" text-anchor="middle" font-size="13" font-weight="800" fill="#9d174d">ship</text>
+        <path d="M797 144 C 797 250, 660 304, 574 304" fill="none" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M582 298 L570 304 L582 311" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="856" y="240" text-anchor="middle" font-size="13" font-weight="800" fill="#9d174d">deliver</text>
+        <path d="M170 144 C 170 250, 302 304, 388 304" fill="none" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M380 298 L392 304 L380 311" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="116" y="240" text-anchor="middle" font-size="13" font-weight="800" fill="#9d174d">cancel</text>
+        <text x="480" y="366" text-anchor="middle" font-size="12.5" fill="#8a8aa5">one test case = a sequence of events, e.g. pay → ship → deliver (covers 3 transitions)</text>
+      </g>
+    </svg>
+    <figcaption>4 states · 4 valid transitions. The same model as a <strong>state table</strong> below — where the <strong>empty cells are the invalid transitions</strong>.</figcaption>
+  </figure>
+  <figure class="fig">
+    <table class="dt">
+      <tr><th style="text-align:left">State ↓ · Event →</th><th>pay</th><th>ship</th><th>deliver</th><th>cancel</th></tr>
+      <tr><td>CREATED</td><td class="x">→ PAID</td><td></td><td></td><td class="x">→ CLOSED</td></tr>
+      <tr><td>PAID</td><td></td><td class="x">→ SHIPPED</td><td></td><td></td></tr>
+      <tr><td>SHIPPED</td><td></td><td></td><td class="x">→ CLOSED</td><td></td></tr>
+      <tr><td>CLOSED</td><td></td><td></td><td></td><td></td></tr>
+    </table>
+    <figcaption>12 empty cells = 12 <strong>invalid</strong> transitions (e.g. "ship" while still CREATED must be rejected).</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><b>All states coverage</b><p>Visit every state. The <strong>weakest</strong> criterion — possible without using every transition.</p></div>
+    <div class="card"><b>Valid transitions ("0-switch")</b><p>Exercise every valid transition. The <strong>most widely used</strong>. Implies all-states coverage.</p></div>
+    <div class="card"><b>All transitions</b><p>Valid ones <strong>+ attempts at invalid ones</strong>. Minimum for mission- &amp; safety-critical software. Only <strong>one invalid transition per test</strong> — or one defect can hide another (<em>defect masking</em>).</p></div>
+  </div>
+
+  <h3>White-box: statement &amp; branch coverage</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 400" role="img" aria-label="Control flow graph showing full statement coverage but incomplete branch coverage">
+      <g font-family="system-ui">
+        <rect x="40" y="40" width="310" height="132" rx="16" fill="#1e293b"/>
+        <g font-family="ui-monospace,Menlo,monospace" font-size="14.5" fill="#e2e8f0">
+          <text x="66" y="75">read x;</text>
+          <text x="66" y="100">if (x &gt; 100)</text>
+          <text x="66" y="125">    x = x - 10;</text>
+          <text x="66" y="150">print x;</text>
+        </g>
+        <rect x="40" y="200" width="310" height="158" rx="16" fill="#fff" stroke="#e8e6f2" stroke-width="1.5"/>
+        <text x="66" y="238" font-size="16.5" font-weight="900" fill="#1c1c28">One test: x = 200</text>
+        <text x="66" y="272" font-size="14" font-weight="700" fill="#047857">✓ statement coverage 4/4 = 100%</text>
+        <text x="66" y="302" font-size="14" font-weight="700" fill="#b91c1c">✗ branch coverage 3/4 = 75%</text>
+        <text x="66" y="330" font-size="12.5" fill="#8a8aa5">the False edge was never taken</text>
+        <rect x="520" y="40" width="170" height="50" rx="12" fill="#fff" stroke="#c9c9de" stroke-width="2"/>
+        <text x="605" y="71" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3c3c55">read x</text>
+        <rect x="520" y="150" width="170" height="50" rx="25" fill="#fdf0f6" stroke="#ec4899" stroke-width="2"/>
+        <text x="605" y="181" text-anchor="middle" font-size="14.5" font-weight="800" fill="#9d174d">x &gt; 100 ?</text>
+        <rect x="760" y="150" width="170" height="50" rx="12" fill="#fff" stroke="#c9c9de" stroke-width="2"/>
+        <text x="845" y="181" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3c3c55">x = x − 10</text>
+        <rect x="520" y="308" width="170" height="50" rx="12" fill="#fff" stroke="#c9c9de" stroke-width="2"/>
+        <text x="605" y="339" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3c3c55">print x</text>
+        <line x1="605" y1="90" x2="605" y2="144" stroke="#059669" stroke-width="3"/>
+        <path d="M599 138 L605 148 L611 138" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="690" y1="175" x2="754" y2="175" stroke="#059669" stroke-width="3"/>
+        <path d="M748 169 L758 175 L748 181" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="722" y="160" text-anchor="middle" font-size="12.5" font-weight="800" fill="#047857">True ✓</text>
+        <path d="M845 200 C 845 320, 750 333, 698 333" fill="none" stroke="#059669" stroke-width="3"/>
+        <path d="M706 327 L694 333 L706 340" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="605" y1="200" x2="605" y2="302" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 6"/>
+        <path d="M599 296 L605 306 L611 296" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="592" y="248" text-anchor="end" font-size="12.5" font-weight="800" fill="#b91c1c">False ✗</text>
+        <text x="592" y="266" text-anchor="end" font-size="11.5" fill="#d47070">never taken</text>
+      </g>
+    </svg>
+    <figcaption>An <strong>if without an else</strong>: one test executes every statement, yet one branch stays untested. That's why <strong>100% branch ⇒ 100% statement — never the reverse</strong>.</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><b>Statement coverage</b><p>= statements exercised ÷ all executable statements. Even 100% can miss data-dependent defects (e.g. division by zero).</p></div>
+    <div class="card"><b>Branch coverage</b><p>= branches exercised ÷ all branches. Branches are the <strong>edges</strong> of the control flow graph — conditional <em>and</em> unconditional.</p></div>
+    <div class="card"><b>Value &amp; limit</b><p>White-box looks at the real code, gives an <strong>objective coverage number</strong> — but can't find <strong>defects of omission</strong> (requirements never implemented).</p></div>
+  </div>
+
+  <h3>Experience-based techniques</h3>
+  <div class="cards">
+    <div class="card"><b>Error guessing</b><p>Anticipate likely errors, defects, failures from experience: how the app behaved before, mistakes these developers make, failures in similar apps. Methodical version: <strong>fault attacks</strong> — test from a written list of possible defects/failures.</p></div>
+    <div class="card"><b>Exploratory testing</b><p>Design, run and learn <strong>at the same time</strong>. Structured as <strong>session-based testing</strong>: time-box + <strong>test charter</strong> + debriefing. Shines when specs are weak or time is short; depends on the tester's skill.</p></div>
+    <div class="card"><b>Checklist-based testing</b><p>Test conditions come from a <strong>checklist</strong> (often questions). No automatable items, no entry/exit criteria, nothing vague. Update it regularly — old items wear out. More coverage, less repeatability.</p></div>
+  </div>
+
+  <h3>Collaboration-based approaches</h3>
+  <p>The techniques above <strong>find</strong> defects. Collaboration <strong>avoids</strong> them — through communication.</p>
+  <div class="cards">
+    <div class="card"><b><i>C</i>Card</b><p>The medium holding the user story (index card, board entry).</p></div>
+    <div class="card"><b><i>C</i>Conversation</b><p>The talk that builds shared understanding of how the software will be used.</p></div>
+    <div class="card"><b><i>C</i>Confirmation</b><p>The <strong>acceptance criteria</strong> — how we know it's done.</p></div>
+  </div>
+  <p>Story format: <em>"As a [role], I want [goal], so that I can [business value]"</em>. Good stories are <span class="term">INVEST</span>:</p>
+  <div class="chips"><span><b>I</b>ndependent</span><span><b>N</b>egotiable</span><span><b>V</b>aluable</span><span><b>E</b>stimable</span><span><b>S</b>mall</span><span><b>T</b>estable</span></div>
+  <p><span class="term">Acceptance criteria</span> = the story's test conditions. Two formats to classify on the exam:</p>
+  <table class="cmp">
+    <tr><th>Scenario-oriented</th><th>Rule-oriented</th></tr>
+    <tr><td>The <strong>Given / When / Then</strong> format (BDD):<br><em>Given I'm logged in, When I pay by card, Then I see a receipt.</em></td><td>A bullet-point verification list, or a table mapping inputs to outputs.</td></tr>
+  </table>
+  <p><span class="term">ATDD</span>, step by step: <strong>1)</strong> a <em>specification workshop</em> analyzes the user story + acceptance criteria and fixes their defects; <strong>2)</strong> the team writes <strong>test cases before coding</strong> — positive cases first, then negative, then non-functional. Automated, the tests become <strong>executable requirements</strong>. Tests must cover the whole story and <strong>never go beyond it</strong>; no two tests should check the same thing.</p>
+
+  <div class="trap"><b class="t">Exam traps — chapter 4</b>
+    <ul>
+      <li>EP coverage counts <strong>invalid partitions too</strong>; Each Choice needs <strong>no combinations</strong>.</li>
+      <li>BVA: count carefully — a boundary's neighbor is usually the <em>next partition's own boundary</em>. Open-ended ranges still have boundaries.</li>
+      <li>Decision tables: a duplicate test on a covered column adds nothing. Gap = no rule matches; contradiction = two rules match with different actions.</li>
+      <li>State transitions: repeating an event may reuse the <strong>same</strong> transition (no new coverage); any sequence continuing after the end state is <strong>infeasible</strong>.</li>
+      <li><strong>100% statement coverage does NOT give 100% branch coverage.</strong> Branch subsumes statement — know the direction.</li>
+      <li>Exploratory testing is <strong>experience-based</strong>, not black-box. A written failure list = <strong>fault attack</strong>, not checklist-based testing.</li>
+      <li>ATDD: a plausible test that goes <strong>beyond the acceptance criteria</strong> is the classic wrong answer.</li>
+    </ul>
+  </div>
+</section>
+<!-- ==================== CHAPTER 5 ==================== -->
+<section class="ch" id="ch5">
+  <div class="chhead"><div class="chnum">5</div><div class="t"><p>Chapter 5 · 9 exam questions — with calculations</p><h2>Managing the test activities</h2></div></div>
+
+  <h3>The test plan</h3>
+  <p>A <span class="term">test plan</span> = objectives, resources and processes of the test project. It documents the schedule, communicates with stakeholders, and shows how testing follows (or deviates from) the test policy and strategy. Content: context (scope, objectives, test basis) · assumptions &amp; constraints · stakeholders · communication · <strong>risk register</strong> · <strong>test approach</strong> (levels, types, techniques, entry/exit criteria, metrics, data &amp; environment needs) · budget &amp; schedule.</p>
+  <p><strong>Testers help plan too</strong> — in <em>release planning</em>: testable user stories &amp; acceptance criteria, risk analysis, effort estimation, the test approach. In <em>iteration planning</em>: detailed risk analysis, testability checks, breaking stories into testing tasks, estimating them.</p>
+
+  <h3>Entry criteria vs exit criteria</h3>
+  <table class="cmp">
+    <tr><th>Entry — may we start?</th><th>Exit — are we done?</th></tr>
+    <tr><td><strong>Things available before starting:</strong> resources (people, tools, environments, data, budget, time), testware (test basis, test cases), initial quality (smoke tests passed).<br>Agile name: <strong>Definition of Ready</strong>.</td><td><strong>Thoroughness achieved:</strong> coverage reached, unresolved defects, defect density, failed tests — plus yes/no checks (all planned tests executed, regression automated).<br>Agile name: <strong>Definition of Done</strong>. Running out of time/budget can be a valid exit if stakeholders accept the risk.</td></tr>
+  </table>
+
+  <h3>Estimation — four techniques <small>guaranteed exam calculation</small></h3>
+  <div class="cards">
+    <div class="card"><b>Ratios</b><p>Historical ratios from your own organization. Dev:test was 3:2 → dev of 600 person-days means <strong>400</strong> for test.</p></div>
+    <div class="card"><b>Extrapolation</b><p>Measure early, project forward — e.g. next iteration ≈ average of the last three.</p></div>
+    <div class="card"><b>Wideband Delphi</b><p>Experts estimate <strong>in isolation</strong> → discuss outliers → re-estimate → repeat until consensus. <strong>Planning Poker</strong> = the Agile card variant.</p></div>
+    <div class="card"><b>Three-point estimation</b><p>Optimistic <em>a</em> · most likely <em>m</em> · pessimistic <em>b</em> → weighted mean, with a known error range.</p></div>
+  </div>
+  <div class="formula">
+    <div class="f">E = (a + 4m + b) ÷ 6&nbsp;&nbsp;&nbsp;&nbsp;SD = (b − a) ÷ 6</div>
+    <p>Syllabus example: a=6, m=9, b=18 → E = (6+36+18)÷6 = <strong>10</strong>, SD = 12÷6 = <strong>2</strong> → the estimate is <strong>10 ± 2 person-hours</strong>.</p>
+  </div>
+
+  <h3>Test case prioritization <small>apply-level</small></h3>
+  <div class="cards">
+    <div class="card"><b>Risk-based</b><p>Tests for the <strong>biggest risks</strong> first.</p></div>
+    <div class="card"><b>Coverage-based</b><p>Highest coverage first (variant: highest <em>additional</em> coverage next).</p></div>
+    <div class="card"><b>Requirements-based</b><p>Tests of the most important requirements first.</p></div>
+  </div>
+  <div class="note"><p><strong>The exam twist: dependencies beat priority.</strong> If high-priority TC3 needs TC1's result, TC1 runs first regardless of priority. Resource availability constrains the order too.</p></div>
+
+  <h3>The test pyramid</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 445" role="img" aria-label="Test pyramid with many fast unit tests at the bottom and few slow end-to-end tests at the top">
+      <g font-family="system-ui">
+        <polygon points="480,50 590,163 370,163" fill="#fecdd3" stroke="#fda4af" stroke-width="1.5"/>
+        <polygon points="370,163 590,163 700,277 260,277" fill="#fde68a" stroke="#fcd34d" stroke-width="1.5"/>
+        <polygon points="260,277 700,277 810,390 150,390" fill="#a7f3d0" stroke="#6ee7b7" stroke-width="1.5"/>
+        <text x="480" y="130" text-anchor="middle" font-size="14.5" font-weight="800" fill="#9f1239">UI / End-to-end</text>
+        <text x="480" y="150" text-anchor="middle" font-size="11.5" fill="#be5b6e">few · slow</text>
+        <text x="480" y="212" text-anchor="middle" font-size="15.5" font-weight="800" fill="#92400e">Service / Integration</text>
+        <text x="480" y="233" text-anchor="middle" font-size="12" fill="#b07a30">APIs · component interactions</text>
+        <g fill="#d97706"><circle cx="450" cy="255" r="5"/><circle cx="465" cy="255" r="5"/><circle cx="480" cy="255" r="5"/><circle cx="495" cy="255" r="5"/><circle cx="510" cy="255" r="5"/></g>
+        <text x="480" y="322" text-anchor="middle" font-size="16" font-weight="800" fill="#065f46">Unit / Component</text>
+        <text x="480" y="343" text-anchor="middle" font-size="12" fill="#3d8f6e">many · fast · isolated</text>
+        <g fill="#059669"><circle cx="397" cy="366" r="5"/><circle cx="412" cy="366" r="5"/><circle cx="427" cy="366" r="5"/><circle cx="442" cy="366" r="5"/><circle cx="457" cy="366" r="5"/><circle cx="472" cy="366" r="5"/><circle cx="487" cy="366" r="5"/><circle cx="502" cy="366" r="5"/><circle cx="517" cy="366" r="5"/><circle cx="532" cy="366" r="5"/><circle cx="547" cy="366" r="5"/><circle cx="562" cy="366" r="5"/></g>
+        <line x1="95" y1="350" x2="95" y2="100" stroke="#9a9ab8" stroke-width="2.5"/>
+        <path d="M89 110 L95 96 L101 110" fill="none" stroke="#9a9ab8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text transform="rotate(-90 62 225)" x="62" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#70708a">fewer tests · slower · less isolated</text>
+        <line x1="865" y1="100" x2="865" y2="350" stroke="#9a9ab8" stroke-width="2.5"/>
+        <path d="M859 340 L865 354 L871 340" fill="none" stroke="#9a9ab8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text transform="rotate(90 898 225)" x="898" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#70708a">more tests · faster · easier to automate</text>
+        <text x="480" y="425" text-anchor="middle" font-size="12.5" fill="#8a8aa5">original naming (Cohn): unit tests · service tests · UI tests — layer names and count may vary</text>
+      </g>
+    </svg>
+    <figcaption>The pyramid guides <strong>test automation effort</strong>: build lots of small, fast, isolated tests at the bottom — keep the big, slow end-to-end tests few.</figcaption>
+  </figure>
+
+  <h3>The testing quadrants</h3>
+  <div class="quadaxes"><span>◀ support the team (guide development)</span><span>critique the product (measure it) ▶</span></div>
+  <div class="quad">
+    <div class="q q2"><b>Q2 · business facing · support</b><ul><li>functional tests, examples</li><li>user story tests, UX prototypes</li><li>API testing · manual or automated</li></ul></div>
+    <div class="q q3"><b>Q3 · business facing · critique</b><ul><li>exploratory testing</li><li>usability testing</li><li>user acceptance testing · often manual</li></ul></div>
+    <div class="q q1"><b>Q1 · technology facing · support</b><ul><li>component tests</li><li>component integration tests</li><li>automated, in CI</li></ul></div>
+    <div class="q q4"><b>Q4 · technology facing · critique</b><ul><li>smoke tests</li><li>non-functional tests (except usability)</li><li>often automated</li></ul></div>
+  </div>
+  <p>Top row = <strong>business facing</strong>, bottom row = <strong>technology facing</strong>. The quadrants (Marick) help every stakeholder see that <strong>no test type or level is forgotten</strong>.</p>
+
+  <h3>Risk management</h3>
+  <p><span class="term">Risk</span> = a potential event with an adverse effect. <strong>Risk level = likelihood × impact</strong> — two <strong>independent</strong> factors. <span class="term">Risk-based testing</span> selects and prioritizes test work by risk.</p>
+  <div class="risk">
+    <div class="lab"></div><div class="lab">Low impact</div><div class="lab">Medium impact</div><div class="lab">High impact</div>
+    <div class="lab">High<br>likelihood</div><div class="cell md">Medium</div><div class="cell hi">High</div><div class="cell hi">High</div>
+    <div class="lab">Medium<br>likelihood</div><div class="cell lo">Low</div><div class="cell md">Medium</div><div class="cell hi">High</div>
+    <div class="lab">Low<br>likelihood</div><div class="cell lo">Low</div><div class="cell lo">Low</div><div class="cell md">Medium</div>
+  </div>
+  <table class="cmp">
+    <tr><th>Project risks — can we deliver?</th><th>Product risks — is it good?</th></tr>
+    <tr><td>Organizational (delays, bad estimates, cost cutting) · people (skills, conflicts, shortage) · technical (<strong>scope creep, poor tool support</strong>) · suppliers. They hit <strong>schedule, budget or scope</strong>.</td><td>Missing/wrong functionality, wrong calculations, runtime errors, <strong>poor architecture</strong>, slow response, bad UX, security holes. They cause user dissatisfaction, lost revenue &amp; trust, penalties — in extreme cases injury or death.</td></tr>
+  </table>
+  <p><span class="term">Risk analysis</span> = <strong>identification</strong> (brainstorming, interviews…) + <strong>assessment</strong> (categorize, rate likelihood &amp; impact, prioritize). It decides the <strong>scope and thoroughness</strong> of testing: which levels, types, techniques, coverage, and what runs first.</p>
+  <p><span class="term">Risk control</span> = <strong>mitigation</strong> (do the planned actions) + <strong>monitoring</strong> (do they work? new risks?). Possible responses: <strong>mitigate</strong> by testing · <strong>accept</strong> · <strong>transfer</strong> (e.g. insurance) · contingency plan. Testing mitigates risk via: the right testers, right independence level, reviews &amp; static analysis, right techniques/coverage/types, regression testing.</p>
+
+  <h3>Monitoring, control &amp; reports</h3>
+  <p><span class="term">Monitoring</span> gathers data on progress and exit criteria · <span class="term">control</span> acts on it (reprioritize, adjust schedule, add resources) · <span class="term">completion</span> consolidates at milestones. Metric families: project progress · test progress (run/pass/fail) · product quality (e.g. mean time to failure) · defects (density, detection %) · risk (residual level) · coverage · cost.</p>
+  <table class="cmp">
+    <tr><th>Test progress report — during</th><th>Test completion report — at the end</th></tr>
+    <tr><td>Regular (daily/weekly): progress vs plan, impediments, metrics, new risks, next period. Supports ongoing control.</td><td>At a milestone (level / iteration / release done, exit criteria ideally met): summary, evaluation vs plan, deviations, unresolved defects &amp; risks, <strong>lessons learned</strong>. Built from progress reports.</td></tr>
+  </table>
+  <p>Tailor the message to the audience — business people don't need branch coverage. Channels: conversation, dashboards &amp; burn-down charts, chat/email, formal reports.</p>
+
+  <h3>Configuration management</h3>
+  <p>CM keeps testing <strong>reproducible</strong>: every item (test plans, cases, scripts, results, environments) is <strong>uniquely identified, version controlled, change-tracked and traceable</strong>. Approved versions become <strong>baselines</strong>, changed only via change control — and you can <strong>revert to a baseline to reproduce old results</strong>. In DevOps, CM is built into the pipeline.</p>
+
+  <h3>Defect management <small>guaranteed exam task: critique a report</small></h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Log</b><small>anomaly reported</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Analyze &amp; classify</b><small>real defect? duplicate? change request? false positive?</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Decide</b><small>fix — or keep as is</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>Close</b><small>after confirmation testing</small></div>
+  </div>
+  <div class="ticket">
+    <div class="th">DEF-1042 · Sorting loses duplicate rows <span>OPEN</span></div>
+    <dl>
+      <dt>Date · author · role</dt><dd>2026-07-08 · D. Dogan · tester</dd>
+      <dt>Test object + environment</dt><dd>WebShop v2.3.1 · Chrome 126 / Windows 11 <span class="hl">← the field everyone forgets!</span></dd>
+      <dt>Context</dt><dd>TC-17 · system testing · sorting the order list</dd>
+      <dt>Steps + data to reproduce</dt><dd>Open orders → add 3 orders dated 2026-07-01 → click "sort by date" <span class="hl">← input data lets the developer reproduce it</span></dd>
+      <dt>Expected vs actual</dt><dd>Expected: stable sorted list · Actual: duplicate rows disappear</dd>
+      <dt>Severity · priority</dt><dd>Severity: high (impact on stakeholders) · Priority: fix in next release</dd>
+      <dt>References</dt><dd>TC-17 · requirement R-88</dd>
+    </dl>
+  </div>
+  <p>Statuses: open · deferred · duplicate · waiting to be fixed · awaiting confirmation testing · re-opened · closed · rejected. A good report enables <strong>reproduction</strong>, tracks work-product quality, and feeds process improvement.</p>
+
+  <div class="trap"><b class="t">Exam traps — chapter 5</b>
+    <ul>
+      <li>Entry = <strong>available before</strong> starting · exit = <strong>achieved</strong> at the end. The classic flip.</li>
+      <li>Pyramid = <strong>granularity &amp; automation</strong> · quadrants = <strong>stakeholder view of test types</strong>. Distractors swap their properties.</li>
+      <li><strong>Scope creep and poor tool support are PROJECT risks</strong> — they only sound product-ish.</li>
+      <li>Likelihood and impact are <strong>independent</strong>; be ready to compute either one (risk ÷ likelihood = impact).</li>
+      <li>Severity (impact) ≠ priority (urgency to fix).</li>
+      <li>Versions + baselines + rollback = <strong>configuration management</strong>; defect IDs and workflow = <strong>defect management</strong>.</li>
+      <li>Acceptance criteria live on the <strong>user story</strong> — not in the test plan. Concrete test data doesn't belong in a test plan either.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== CHAPTER 6 ==================== -->
+<section class="ch" id="ch6">
+  <div class="chhead"><div class="chnum">6</div><div class="t"><p>Chapter 6 · 2 exam questions</p><h2>Test tools</h2></div></div>
+
+  <h3>Tool types</h3>
+  <div class="cards">
+    <div class="card"><b>Test management</b><p>Manage the SDLC, requirements, tests, defects, configuration.</p></div>
+    <div class="card"><b>Static testing</b><p>Support reviews and static analysis.</p></div>
+    <div class="card"><b>Design &amp; implementation</b><p>Generate test cases, test data, procedures.</p></div>
+    <div class="card"><b>Execution &amp; coverage</b><p>Run tests automatically, measure coverage.</p></div>
+    <div class="card"><b>Non-functional testing</b><p>Do what's hard by hand — e.g. performance load.</p></div>
+    <div class="card"><b>DevOps</b><p>Delivery pipeline, build automation, CI/CD.</p></div>
+    <div class="card"><b>Collaboration</b><p>Support communication.</p></div>
+    <div class="card"><b>Scalability &amp; deployment</b><p>Virtual machines, containers. Even a spreadsheet can be a test tool.</p></div>
+  </div>
+
+  <h3>Test automation — benefits vs risks</h3>
+  <table class="cmp">
+    <tr><th>Benefits ✓</th><th>Risks ✗</th></tr>
+    <tr><td><ul>
+      <li>Time saved on <strong>repetitive manual work</strong> (regression runs, re-entering data, comparing results)</li>
+      <li><strong>Consistency &amp; repeatability</strong> prevent simple human errors</li>
+      <li><strong>Objective</strong> measures (e.g. coverage) beyond human ability</li>
+      <li>Easy access to test info: statistics, graphs, aggregates</li>
+      <li><strong>Faster execution</strong> → earlier defects, faster feedback &amp; time to market</li>
+      <li>More tester time for <strong>new, deeper tests</strong></li>
+    </ul></td><td><ul>
+      <li><strong>Unrealistic expectations</strong> of the tool</li>
+      <li>Underestimated cost of <strong>introducing &amp; maintaining</strong> it (and the scripts)</li>
+      <li>Automating where <strong>manual testing fits better</strong></li>
+      <li>Over-reliance — losing <strong>human critical thinking</strong></li>
+      <li><strong>Vendor dependency</strong> (quits, retires the tool, bad support); abandoned open source</li>
+      <li>Tool <strong>incompatible</strong> with the dev platform, or failing <strong>regulatory / safety</strong> requirements</li>
+    </ul></td></tr>
+  </table>
+
+  <div class="trap"><b class="t">Exam traps — chapter 6</b>
+    <ul>
+      <li>Tools <strong>support</strong> testers — they don't share responsibility, replace critical thinking, or invent test cases with expected results from nothing.</li>
+      <li>Distractors reword benefits as risks and vice versa — "less repetitive manual work" is a <strong>benefit</strong>.</li>
+      <li>Matching questions: VM/containers = scalability &amp; deployment · CI/CD = DevOps tools.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div class="fcard">
+    <p><strong>That's the entire syllabus</strong> — checked question-by-question against the four official sample exams.</p>
+    <p>Before the exam: memorize the <strong>7 principles</strong>, the <strong>review types &amp; leaders</strong>, and <strong>E = (a + 4m + b) ÷ 6</strong>. Practice EP, BVA, decision tables and state transitions on paper until the counting feels easy — those calculations are guaranteed to appear. Then take the official sample exams (in this folder) under real conditions: 40 questions, 60 minutes, 26 correct = pass. You've got this. 🧪</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var links = {};
+  document.querySelectorAll('#toc a').forEach(function (a) {
+    links[a.getAttribute('href').slice(1)] = a;
+  });
+  if ('IntersectionObserver' in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          if (current) current.classList.remove('active');
+          current = links[en.target.id];
+          if (current) current.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -75% 0px' });
+    document.querySelectorAll('section.ch').forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</html>

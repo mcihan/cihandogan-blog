@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java Brush-Up</title>
+<style>
+:root{
+  --bg:#f7f5f1; --surface:#fffdf9; --ink:#242a37; --muted:#5f6774; --line:#e4dfd6;
+  --accent:#d97a16; --accent-ink:#a85a08; --accent-soft:#f6e9d8;
+  --blue:#46708f; --blue-ink:#3a5f7c; --blue-soft:#e6eef4;
+  --code-bg:#252b3b; --code-plain:#dce1ec;
+  --ok:#3d8a5a;
+  --sans:ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Code",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14171d; --surface:#1b2029; --ink:#e7e5e0; --muted:#99a1ae; --line:#2b303c;
+    --accent:#f0913a; --accent-ink:#f3a55c; --accent-soft:#2b2114;
+    --blue:#7fa8c4; --blue-ink:#93b7d0; --blue-soft:#1d2732;
+    --code-bg:#10131a; --code-plain:#d5dae5;
+    --ok:#6cc492;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14171d; --surface:#1b2029; --ink:#e7e5e0; --muted:#99a1ae; --line:#2b303c;
+  --accent:#f0913a; --accent-ink:#f3a55c; --accent-soft:#2b2114;
+  --blue:#7fa8c4; --blue-ink:#93b7d0; --blue-soft:#1d2732;
+  --code-bg:#10131a; --code-plain:#d5dae5;
+  --ok:#6cc492;
+}
+:root[data-theme="light"]{
+  --bg:#f7f5f1; --surface:#fffdf9; --ink:#242a37; --muted:#5f6774; --line:#e4dfd6;
+  --accent:#d97a16; --accent-ink:#a85a08; --accent-soft:#f6e9d8;
+  --blue:#46708f; --blue-ink:#3a5f7c; --blue-soft:#e6eef4;
+  --code-bg:#252b3b; --code-plain:#dce1ec;
+  --ok:#3d8a5a;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.65;font-size:1rem}
+
+/* ---------- hero ---------- */
+.hero{max-width:1100px;margin:0 auto;padding:3.2rem 1.4rem 1.6rem}
+.eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 .5rem}
+.hero h1{font-size:clamp(2rem,5vw,2.7rem);line-height:1.12;margin:0 0 .7rem;text-wrap:balance;font-weight:800}
+.hero .lede{max-width:62ch;color:var(--muted);margin:0 0 1.4rem;font-size:1.06rem}
+.hero-progress{display:flex;align-items:center;gap:.9rem;max-width:34rem}
+.bar{flex:1;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),#e8a04b);transition:width .35s ease}
+#bar-label{font-size:.85rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.howto{margin:1.6rem 0 0;padding:1rem 1.2rem;border:1px solid var(--line);border-radius:14px;background:var(--surface);max-width:62ch}
+.howto p{margin:.15rem 0;font-size:.94rem}
+.howto strong{color:var(--accent-ink)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.4rem 5rem;display:grid;grid-template-columns:235px minmax(0,1fr);gap:3rem;align-items:start}
+main{max-width:72ch;min-width:0}
+@media (max-width:920px){ .wrap{grid-template-columns:1fr;gap:1rem} }
+
+/* ---------- toc ---------- */
+#toc{position:sticky;top:1.2rem;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:1rem 1.1rem;font-size:.86rem}
+@media (max-width:920px){ #toc{position:static;max-height:none} }
+.toc-title{margin:0 0 .5rem;font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+#toc ol{margin:0;padding:0;list-style:none;counter-reset:toc}
+#toc li{counter-increment:toc}
+#toc a{display:flex;gap:.55rem;align-items:baseline;color:var(--muted);text-decoration:none;padding:.24rem .35rem;border-radius:8px;line-height:1.35}
+#toc a::before{content:counter(toc);font-size:.7rem;font-weight:700;color:var(--accent);min-width:1.1em;font-variant-numeric:tabular-nums}
+#toc a:hover{color:var(--ink);background:var(--accent-soft)}
+#toc a.active{color:var(--ink);background:var(--accent-soft);font-weight:700}
+
+/* ---------- sections ---------- */
+section.topic{padding-top:3.2rem;margin-top:2.2rem;border-top:1px solid var(--line)}
+section.topic:first-of-type{border-top:none;margin-top:0;padding-top:1.2rem}
+section.topic h2{font-size:1.55rem;margin:.1rem 0 .8rem;font-weight:800;text-wrap:balance}
+section.topic > p{max-width:66ch}
+h3{font-size:1.08rem;margin:1.8rem 0 .6rem;font-weight:750}
+p{margin:.6rem 0}
+code{font-family:var(--mono);font-size:.86em;background:var(--blue-soft);color:var(--blue-ink);padding:.1em .38em;border-radius:6px}
+strong{font-weight:750}
+
+/* ---------- code blocks ---------- */
+figure.code{margin:1.1rem 0}
+figure.code figcaption{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.05em;margin:0 0 .35rem .2rem}
+pre{margin:0;background:var(--code-bg);border-radius:12px;padding:.95rem 1.15rem;overflow-x:auto}
+pre code{background:none;padding:0;color:var(--code-plain);font-size:.84rem;line-height:1.6;display:block;min-width:max-content}
+.tk-kw{color:#f5a35a;font-weight:600}
+.tk-ty{color:#82c7e8}
+.tk-st{color:#a3d17e}
+.tk-nu{color:#e6c07b}
+.tk-co{color:#7b8496;font-style:italic}
+
+/* ---------- callouts ---------- */
+.note{margin:1.1rem 0;padding:.85rem 1.1rem;border-left:4px solid var(--accent);border-radius:0 12px 12px 0;background:var(--accent-soft);font-size:.94rem}
+.note p{margin:.25rem 0}
+
+/* ---------- quiz ---------- */
+.quiz{margin-top:2.2rem;border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:1.3rem 1.4rem 1.1rem}
+.quiz h3{margin:0 0 .2rem;display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.quiz h3 .qcount{font-size:.8rem;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.quiz > p{font-size:.9rem;color:var(--muted);margin:.2rem 0 1rem}
+ol.qs{margin:0;padding:0;list-style:none;counter-reset:q;display:flex;flex-direction:column;gap:.35rem}
+ol.qs li{counter-increment:q;padding:.65rem .6rem .55rem;border-radius:12px;border:1px solid transparent}
+ol.qs li:hover{background:var(--accent-soft)}
+ol.qs label{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer}
+ol.qs label::before{content:counter(q);flex:none;margin-top:.12em;width:1.55em;height:1.55em;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);font-size:.76rem;font-weight:800;font-variant-numeric:tabular-nums}
+ol.qs input[type=checkbox]{flex:none;margin-top:.35em;width:1.05em;height:1.05em;accent-color:var(--ok);cursor:pointer}
+ol.qs li.done label span{color:var(--muted)}
+ol.qs li.done label::before{background:var(--ok);color:#fff;content:"✓"}
+ol.qs details{margin:.3rem 0 0 4.15rem}
+ol.qs summary{cursor:pointer;font-size:.82rem;font-weight:700;color:var(--blue);width:max-content;border-radius:6px;padding:.05rem .3rem}
+ol.qs summary:hover{background:var(--blue-soft)}
+ol.qs details p{margin:.3rem 0 .2rem .3rem;font-size:.88rem;color:var(--muted)}
+
+/* ---------- footer ---------- */
+footer{max-width:1100px;margin:0 auto;padding:0 1.4rem 4rem;color:var(--muted);font-size:.9rem}
+footer .card{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:1.4rem 1.6rem;max-width:72ch}
+a{color:var(--blue)}
+input[type=checkbox]:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+
+<header class="hero">
+  <p class="eyebrow">Made for Deniz · A Java refresher</p>
+  <h1>Java Brush-Up</h1>
+  <p class="lede">Everything in this guide comes from your own practice repository — the same topics, the same style of exercises, in the same order you learned them. Read each part, then answer the practice questions to wake your memory up.</p>
+  <div class="hero-progress" aria-hidden="true">
+    <div class="bar"><span id="bar-fill"></span></div>
+    <span id="bar-label">0 / 0 done</span>
+  </div>
+  <div class="howto">
+    <p><strong>How to use this guide:</strong></p>
+    <p>1. Read one part and try the small examples in IntelliJ.</p>
+    <p>2. Answer the practice questions — write real code, don't just think it.</p>
+    <p>3. Stuck? Open the <strong>Hint</strong>. It tells you which tool to use, not the answer.</p>
+    <p>4. Tick the box when you solve one. Your progress is saved in this browser.</p>
+  </div>
+</header>
+
+<div class="wrap">
+<nav id="toc" aria-label="Contents">
+  <p class="toc-title">Contents</p>
+  <ol>
+    <li><a href="#s1">Printing to the screen</a></li>
+    <li><a href="#s2">Variables &amp; data types</a></li>
+    <li><a href="#s3">Math operators, % and casting</a></li>
+    <li><a href="#s4">User input with Scanner</a></li>
+    <li><a href="#s5">If / else / else-if</a></li>
+    <li><a href="#s6">Logical operators</a></li>
+    <li><a href="#s7">While loops</a></li>
+    <li><a href="#s8">For loops</a></li>
+    <li><a href="#s9">Strings &amp; string methods</a></li>
+    <li><a href="#s10">Arrays</a></li>
+    <li><a href="#s11">ArrayList</a></li>
+    <li><a href="#s12">Set &amp; HashMap</a></li>
+    <li><a href="#s13">Methods (functions)</a></li>
+    <li><a href="#s14">Classes &amp; objects</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ==================== 1. PRINTING ==================== -->
+<section class="topic" id="s1">
+  <p class="eyebrow">Part 1</p>
+  <h2>Printing to the screen</h2>
+  <p>Every Java program starts inside the <code>main</code> method. To show something on the screen, use <code>System.out.println(...)</code>.</p>
+
+  <figure class="code"><figcaption>Your very first program</figcaption>
+<pre><code>public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}</code></pre></figure>
+
+  <p><code>println</code> prints and then moves to a <strong>new line</strong>. <code>print</code> (without "ln") stays on the <strong>same line</strong>.</p>
+
+  <figure class="code"><figcaption>println vs print</figcaption>
+<pre><code>System.out.println("I love Java");  // goes to a new line after
+System.out.print("1 ");
+System.out.print("2 ");
+System.out.print("3 ");
+// output: 1 2 3   (all on one line)</code></pre></figure>
+
+  <p>You can join text and numbers with <code>+</code>. Be careful: parentheses change the result!</p>
+
+  <figure class="code"><figcaption>Joining text and numbers</figcaption>
+<pre><code>System.out.println("Total value: " + (5 + 10));  // Total value: 15
+System.out.println("Total value: " + 5 + 10);    // Total value: 510  (!)
+System.out.println("Result: " + 9 / 3);          // Result: 3  (division runs first)
+System.out.println(50 - 15);                     // 35  (no quotes = just math)</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> text inside <code>"double quotes"</code> is printed exactly as written. Math without quotes is calculated first. When text comes first, Java glues values to it one by one, from left to right.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s1"></span></h3>
+    <p>These are the same kind of questions you solved before. Write each one as a small program.</p>
+    <ol class="qs" data-sec="s1">
+      <li><label><input type="checkbox" data-q="s1-1"><span>Print the text <code>Hello World!</code> to the screen.</span></label><details><summary>Hint</summary><p>Use <code>System.out.println("...")</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-2"><span>Print the sentence <code>Coding is an art.</code></span></label><details><summary>Hint</summary><p>Same as question 1 — the text goes inside double quotes.</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-3"><span>Print the result of <code>50 - 15</code> directly, without making a variable.</span></label><details><summary>Hint</summary><p>Put the math inside <code>println</code> with no quotes around it.</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-4"><span>Using the numbers 5 and 10, print exactly: <code>Total value: 15</code></span></label><details><summary>Hint</summary><p>Put the addition inside parentheses: <code>"..." + (5 + 10)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-5"><span>Without running it — what does <code>System.out.println("Result: " + 9 / 3);</code> print?</span></label><details><summary>Hint</summary><p>Division runs before the text join. So what number comes after "Result: "?</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-6"><span>Without running it — does <code>System.out.println("Sum: " + 5 + 10);</code> print <code>Sum: 15</code> or <code>Sum: 510</code>? Why?</span></label><details><summary>Hint</summary><p>When text comes first, Java joins left to right: first "Sum: " + 5, then + 10.</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-7"><span>Print the numbers <code>1 2 3</code> all on one line, using three separate print commands.</span></label><details><summary>Hint</summary><p>Use <code>System.out.print</code> — without the "ln".</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-8"><span>Print <code>Hello, Java!</code> — just like the very first exercise in the repo.</span></label><details><summary>Hint</summary><p>Any text between double quotes works.</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-9"><span>Print your name on one line and your city on the next line, using two println commands.</span></label><details><summary>Hint</summary><p>Each <code>println</code> automatically ends its line.</p></details></li>
+      <li><label><input type="checkbox" data-q="s1-10"><span>Print the result of <code>9 * 3</code> directly to the screen.</span></label><details><summary>Hint</summary><p><code>*</code> is the multiplication symbol. No quotes needed.</p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 2. VARIABLES ==================== -->
+<section class="topic" id="s2">
+  <p class="eyebrow">Part 2</p>
+  <h2>Variables &amp; data types</h2>
+  <p>A variable is a <strong>named box</strong> that holds a value. You always write: <em>type, name, equals, value</em>.</p>
+
+  <figure class="code"><figcaption>All the types you used</figcaption>
+<pre><code>String learning = "I am learning Java";  // text
+int t = 50;                              // whole number
+float pi = 3.14f;                        // decimal — needs the letter f
+double price = 19.99;                    // decimal — no f needed
+boolean isJavaFun = true;                // true or false
+char firstLetter = 'J';                  // ONE character, single quotes
+long population = 1000000;               // very big whole number
+
+System.out.println(learning);
+System.out.println("price = " + price);</code></pre></figure>
+
+  <p>You can put the result of math into a variable, then print it with a label.</p>
+
+  <figure class="code"><figcaption>Store a result, then print it</figcaption>
+<pre><code>int x = 5;
+int y = 10;
+int result = x + y;
+System.out.println("Sum result: " + result);   // Sum result: 15</code></pre></figure>
+
+  <h3>Naming rules</h3>
+  <figure class="code"><figcaption>What is allowed</figcaption>
+<pre><code>// OK:      myCat   my_name   $money   isAdult   priceOfLipstick
+// NOT OK:  2cats   (cannot start with a digit)
+// NOT OK:  my-name (dash is not allowed — only _ and $ are)
+// Style:   camelCase for names, booleans start with is/has  (isAdult, hasCar)</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> <code>float</code> needs an <code>f</code> at the end (<code>3.14f</code>), <code>char</code> uses <strong>single</strong> quotes <code>'J'</code>, and <code>String</code> uses <strong>double</strong> quotes <code>"Java"</code>.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s2"></span></h3>
+    <p>Just like your homework: create the variable, then print it.</p>
+    <ol class="qs" data-sec="s2">
+      <li><label><input type="checkbox" data-q="s2-1"><span>Create a String variable named <code>learning</code> with the value "I am learning Java" and print it.</span></label><details><summary>Hint</summary><p>Type comes first: <code>String learning = "...";</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s2-2"><span>Create an int variable <code>t</code> with value 50 and print it.</span></label><details><summary>Hint</summary><p><code>int</code> is for whole numbers.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-3"><span>Create a boolean variable <code>isJavaFun</code> with value true and print it.</span></label><details><summary>Hint</summary><p>booleans hold only <code>true</code> or <code>false</code>, without quotes.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-4"><span>Create a float variable <code>pi</code> with value 3.14 and print it. What extra letter do you need?</span></label><details><summary>Hint</summary><p>A float value must end with <code>f</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-5"><span>Create a char variable <code>firstLetter</code> with the value J and print it.</span></label><details><summary>Hint</summary><p>A char takes exactly one character in <strong>single</strong> quotes.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-6"><span>Create a long variable <code>population</code> with value 1000000 and print it.</span></label><details><summary>Hint</summary><p><code>long</code> is like int, but for very big numbers.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-7"><span>Create a String variable <code>weather</code> with "The weather is very nice today" and print it.</span></label><details><summary>Hint</summary><p>Same pattern as question 1.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-8"><span>Create <code>x = 5</code> and <code>y = 10</code>, store their sum in a variable named <code>result</code>, and print <code>Sum result: 15</code>.</span></label><details><summary>Hint</summary><p>Three variables: x, y, and result = x + y. Then join text + result.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-9"><span>Create two int variables <code>a</code> and <code>b</code>, store their product in <code>product</code>, and print it.</span></label><details><summary>Hint</summary><p>Product means multiplication: <code>a * b</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-10"><span>Trace by hand: <code>int x = 4; x = x + 7;</code> — what is x now?</span></label><details><summary>Hint</summary><p>Take the old value of x (4) and add 7 to it.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-11"><span>Which of these names are valid? <code>2cats</code>, <code>myCat</code>, <code>$money</code>, <code>my-name</code>, <code>my_name</code></span></label><details><summary>Hint</summary><p>A name cannot start with a digit. Only <code>_</code> and <code>$</code> are allowed as symbols.</p></details></li>
+      <li><label><input type="checkbox" data-q="s2-12"><span>Create a double variable <code>price</code> with value 19.99 and print <code>price = 19.99</code>.</span></label><details><summary>Hint</summary><p>double is a decimal type that does <strong>not</strong> need the f letter.</p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 3. MATH ==================== -->
+<section class="topic" id="s3">
+  <p class="eyebrow">Part 3</p>
+  <h2>Math operators, % and casting</h2>
+  <p>Java has five math operators: <code>+</code> <code>-</code> <code>*</code> <code>/</code> and <code>%</code>. The last one, <strong>modulus</strong>, gives the <em>remainder</em> after division — you used it a lot!</p>
+
+  <figure class="code"><figcaption>The basics</figcaption>
+<pre><code>int number = 8;
+int square = number * number;           // 64
+int cube   = number * number * number;  // 512
+
+int remainder = 23 % 5;                 // 3  (23 / 5 = 4, remainder 3)
+System.out.println("23 mod 5 = " + remainder);</code></pre></figure>
+
+  <p><strong>Order matters.</strong> Multiplication and division run before plus and minus. Parentheses always win.</p>
+
+  <figure class="code"><figcaption>Precedence</figcaption>
+<pre><code>int m = 5 + 20 * 2;    // 45  (20*2 first)
+int n = (5 + 20) * 2;  // 50  (parentheses first)
+
+int half = 7 / 2;      // 3, NOT 3.5 — int division throws away the decimals!</code></pre></figure>
+
+  <figure class="code"><figcaption>Four ways to add 1</figcaption>
+<pre><code>counter = counter + 1;
+counter += 1;
+counter++;
+++counter;   // all four do the same thing here</code></pre></figure>
+
+  <p><strong>Casting</strong> changes one type into another. Going from decimal to int <em>loses</em> the decimal part.</p>
+
+  <figure class="code"><figcaption>Casting</figcaption>
+<pre><code>float price = 12.99f;
+int intPrice = (int) price;        // 12 — decimals are cut off, not rounded
+
+double average = (double) 7 / 2;   // 3.5 — cast first, then divide</code></pre></figure>
+
+  <figure class="code"><figcaption>A classic trick: digits of a number</figcaption>
+<pre><code>int n = 47;
+int tens = n / 10;   // 4
+int ones = n % 10;   // 7</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> <code>x % 2 == 0</code> means x is even. <code>a % b == 0</code> means a is exactly divisible by b. int divided by int is always an int.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s3"></span></h3>
+    <p>Mix of coding tasks and "trace it in your head" puzzles — just like the CihanOrnek drills.</p>
+    <ol class="qs" data-sec="s3">
+      <li><label><input type="checkbox" data-q="s3-1"><span>Compute the square of 8 and print: <code>8 squared is: 64</code></span></label><details><summary>Hint</summary><p>Square = the number times itself.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-2"><span>Compute the cube of 3 and print it.</span></label><details><summary>Hint</summary><p>Cube = number * number * number.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-3"><span>Take the number 7, multiply it by 3, add 5, and print the result.</span></label><details><summary>Hint</summary><p><code>(number * 3 + 5)</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s3-4"><span>With a = 4 and b = 6: add them, multiply the sum by 3, add 8, print the result.</span></label><details><summary>Hint</summary><p>Parentheses first: <code>((a + b) * 3 + 8)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-5"><span>Print the remainder of 23 divided by 5.</span></label><details><summary>Hint</summary><p>Use the <code>%</code> operator.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-6"><span>In your head: what is <code>45 % 7</code>?</span></label><details><summary>Hint</summary><p>7 × 6 = 42. What is left over?</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-7"><span>In your head: what is <code>18 % 4</code>?</span></label><details><summary>Hint</summary><p>4 × 4 = 16. What remains?</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-8"><span>Trace: <code>x = 3; x = x + 5; x = x * 4; x = x - 1;</code> — what is x at the end?</span></label><details><summary>Hint</summary><p>Do it step by step: 3 → 8 → ... → ?</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-9"><span>What does <code>System.out.println(7 / 2);</code> print — and why not 3.5?</span></label><details><summary>Hint</summary><p>Both numbers are ints, so the result is an int.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-10"><span>Take 5, divide it by 2 first, then multiply the result by 5. What prints, and why is it surprising?</span></label><details><summary>Hint</summary><p><code>(5 / 2)</code> is int division — the decimals disappear before the multiply.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-11"><span>For the two-digit number 47, print its tens digit and its ones digit separately.</span></label><details><summary>Hint</summary><p><code>n / 10</code> and <code>n % 10</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-12"><span>Write four different lines that each increase <code>counter</code> by 1.</span></label><details><summary>Hint</summary><p>Long form, <code>+=</code>, and the two <code>++</code> forms.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-13"><span><code>float price = 12.99f; int intPrice = (int) price;</code> — what does intPrice hold?</span></label><details><summary>Hint</summary><p>Casting to int cuts off the decimals. It does not round.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-14"><span>You have <code>int sum = 7</code> and <code>int count = 2</code>. Print the exact average 3.5.</span></label><details><summary>Hint</summary><p>Cast one side: <code>(double) sum / count</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s3-15"><span>With x=5, y=6, z=2: what is <code>x + y * z</code>? And <code>(x + y) * z</code>?</span></label><details><summary>Hint</summary><p>Multiplication before addition — unless parentheses say otherwise.</p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 4. SCANNER ==================== -->
+<section class="topic" id="s4">
+  <p class="eyebrow">Part 4</p>
+  <h2>User input with Scanner</h2>
+  <p>Scanner lets your program <strong>ask the user</strong> for a value. First import it, then create it, then read.</p>
+
+  <figure class="code"><figcaption>Reading a number</figcaption>
+<pre><code>import java.util.Scanner;
+
+Scanner kb = new Scanner(System.in);
+System.out.print("Please enter a number: ");
+int number = kb.nextInt();
+System.out.println("You entered: " + number);</code></pre></figure>
+
+  <figure class="code"><figcaption>Reading text and decimals</figcaption>
+<pre><code>String name = kb.nextLine();     // reads a whole line of text
+double radius = kb.nextDouble(); // reads a decimal number
+
+double area = 3.14159 * radius * radius;
+System.out.println("Circle area: " + area);</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> <code>nextInt()</code> for whole numbers, <code>nextDouble()</code> for decimals, <code>nextLine()</code> for text. Always print a friendly message <em>before</em> reading, so the user knows what to type.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s4"></span></h3>
+    <p>Run each one and type real values in the console.</p>
+    <ol class="qs" data-sec="s4">
+      <li><label><input type="checkbox" data-q="s4-1"><span>Ask the user for two numbers, add them, and print the sum.</span></label><details><summary>Hint</summary><p>Call <code>kb.nextInt()</code> twice, into two variables.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-2"><span>Ask for the user's name and print <code>Hello, &lt;name&gt;!</code></span></label><details><summary>Hint</summary><p><code>nextLine()</code> reads text. Join with <code>+</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-3"><span>Ask for a circle's radius and print its area (use pi = 3.14159).</span></label><details><summary>Hint</summary><p>Use <code>double</code> and <code>nextDouble()</code>. Area = pi * r * r.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-4"><span>Ask for the height and width of a rectangle and print its area.</span></label><details><summary>Hint</summary><p>Two <code>nextInt()</code> calls, then multiply.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-5"><span>Ask for a number and print it back like: <code>Your number is: 42</code></span></label><details><summary>Hint</summary><p>Read into a variable, then print text + variable.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-6"><span>Ask for three numbers and print their average. Careful: 5, 6, 6 should give 5.66, not 5!</span></label><details><summary>Hint</summary><p>int division loses decimals — cast the sum with <code>(double)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-7"><span>Ask for the user's age and store <code>age &gt; 18</code> in a boolean called <code>isAdult</code>, then print it.</span></label><details><summary>Hint</summary><p>A comparison like <code>age &gt; 18</code> IS a boolean value — assign it directly.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-8"><span>Ask for a two-digit number and print the sum of its two digits.</span></label><details><summary>Hint</summary><p>Digits again: <code>n / 10</code> and <code>n % 10</code>, then add them.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-9"><span>Ask for today's temperature and print <code>Temperature: 21 C</code>.</span></label><details><summary>Hint</summary><p>Read an int, print with a label.</p></details></li>
+      <li><label><input type="checkbox" data-q="s4-10"><span>In your own words: what is the difference between <code>nextInt()</code> and <code>nextLine()</code>?</span></label><details><summary>Hint</summary><p>One reads a whole number, the other reads a whole line of text.</p></details></li>
+    </ol>
+  </div>
+</section>
+<!-- ==================== 5. IF/ELSE ==================== -->
+<section class="topic" id="s5">
+  <p class="eyebrow">Part 5</p>
+  <h2>If / else / else-if</h2>
+  <p>An <code>if</code> lets your program make decisions. You compare values with <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> <code>==</code> and <code>!=</code>.</p>
+
+  <figure class="code"><figcaption>if alone, and if/else</figcaption>
+<pre><code>int shoePrice = 20;
+if (shoePrice &lt; 25) {
+    System.out.println("I can buy these shoes for sport");
+}
+
+int mealCalories = 700;
+if (mealCalories &gt; 600) {
+    System.out.println("This meal is very high-calorie!");
+} else {
+    System.out.println("This meal is healthy");
+}</code></pre></figure>
+
+  <p>For more than two roads, chain conditions with <code>else if</code>. Java checks them from top to bottom and runs <strong>only the first one that matches</strong>.</p>
+
+  <figure class="code"><figcaption>else-if ladder</figcaption>
+<pre><code>int hourOfDay = 14;
+if (hourOfDay &lt; 6) {
+    System.out.println("Night time");
+} else if (hourOfDay &lt; 18) {
+    System.out.println("Daytime");
+} else {
+    System.out.println("Evening time");
+}</code></pre></figure>
+
+  <p>Chars are compared with <code>==</code> too. And a very useful pattern from your exercises: <strong>set a variable inside the branches, print once at the end</strong>.</p>
+
+  <figure class="code"><figcaption>char comparison + assign-in-branch pattern</figcaption>
+<pre><code>char grade = 'A';
+if (grade == 'A') {
+    System.out.println("Excellent");
+} else if (grade == 'B') {
+    System.out.println("Good");
+} else {
+    System.out.println("Invalid grade!");
+}
+
+int age = 10;
+int ticketPrice;
+if (age &lt; 12) {
+    ticketPrice = 10;
+} else {
+    ticketPrice = 20;
+}
+System.out.println("Ticket price: " + ticketPrice);</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> one <code>=</code> assigns a value, two <code>==</code> compares. In an else-if ladder you don't need to repeat the lower bound — if the code reached <code>else if (age &lt; 12)</code>, age is already 4 or more.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s5"></span></h3>
+    <p>These come straight from your if/else homework set.</p>
+    <ol class="qs" data-sec="s5">
+      <li><label><input type="checkbox" data-q="s5-1"><span>Create <code>shoePrice</code>. If it is less than 25, print "I can buy these shoes for sport".</span></label><details><summary>Hint</summary><p>A single <code>if</code> is enough — no else needed.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-2"><span>Create <code>commutingTime</code>. If it is more than 50, print "Commuting to work is very boring".</span></label><details><summary>Hint</summary><p>Use the <code>&gt;</code> operator.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-3"><span>Create <code>number</code>. Print "positive", "zero", or "negative".</span></label><details><summary>Hint</summary><p>Three roads: <code>&gt; 0</code>, <code>== 0</code>, else.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-4"><span>Create <code>mealCalories</code>. More than 600 → "This meal is very high-calorie!", otherwise → "This meal is healthy".</span></label><details><summary>Hint</summary><p>Classic if/else, two roads.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-5"><span>Create <code>waterIntake</code> (litres). More than 2 → "You drank enough water", otherwise → "You should drink more water".</span></label><details><summary>Hint</summary><p>Same shape as question 4.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-6"><span>Create <code>travelDistance</code> (km). Less than 5 → "You can walk"; 5 to 20 → "Take the bus"; more than 20 → "Use a car or train".</span></label><details><summary>Hint</summary><p>An else-if ladder with three roads.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-7"><span>Create <code>hourOfDay</code>. Before 6 → "Night time"; 6 to 18 → "Daytime"; after 18 → "Evening time".</span></label><details><summary>Hint</summary><p>Check the smallest range first, then let else-if handle the rest.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-8"><span>Create <code>speed</code>. Under 30 → "You are going slow"; 30 to 60 → "Medium speed"; over 60 → "You are going fast".</span></label><details><summary>Hint</summary><p>Three-road ladder again.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-9"><span>Create <code>batteryLevel</code>. Under 20 → "Battery low, charge now!"; 20 to 80 → "Battery level sufficient"; over 80 → "Battery fully charged".</span></label><details><summary>Hint</summary><p>Same ladder pattern — pick your boundaries carefully.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-10"><span>Create <code>vacation</code> (days). Under 5 → "A UK trip suits"; 5–10 → "A Europe trip suits"; 10–15 → "An Asia tour suits"; over 15 → "A South America tour suits".</span></label><details><summary>Hint</summary><p>Four roads: if, two else-ifs, and a final else.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-11"><span>Create a char <code>grade</code>. 'A' → "Excellent", 'B' → "Good", 'C' → "Average", 'D' → "Pass", 'F' → "Fail", anything else → "Invalid grade!".</span></label><details><summary>Hint</summary><p>Compare chars with <code>==</code> and single quotes: <code>grade == 'A'</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-12"><span>Create a char <code>coffeeSize</code>. 'S' → "You ordered a small coffee", 'M' → medium, 'L' → large. Bonus: store the message in a String variable and print once at the end.</span></label><details><summary>Hint</summary><p>Make <code>String message = "";</code> first, fill it in the branches.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-13"><span>Create <code>age</code> and <code>ticketPrice</code>. Under 12 → price 10, otherwise → price 20. Print the price at the end, outside the if.</span></label><details><summary>Hint</summary><p>Assign inside the branches; only one println at the bottom.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-14"><span>Create <code>examScore</code> and <code>grade</code> (int). 90+ → 5; 75–89 → 4; 60–74 → 3; 50–59 → 2; below 50 → 1. Print the grade at the end.</span></label><details><summary>Hint</summary><p>Ladder from the top: check <code>&gt;= 90</code> first, then you don't need upper bounds.</p></details></li>
+      <li><label><input type="checkbox" data-q="s5-15"><span>Create <code>humanAge</code> and a String <code>humanStatus</code>. Under 4 → "baby"; under 12 → "child"; under 18 → "teen"; otherwise → "adult". Print at the end.</span></label><details><summary>Hint</summary><p>Because else-if runs in order, <code>humanAge &lt; 12</code> already means "4 or more".</p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 6. LOGICAL OPERATORS ==================== -->
+<section class="topic" id="s6">
+  <p class="eyebrow">Part 6</p>
+  <h2>Logical operators: &amp;&amp;, ||, !</h2>
+  <p>Sometimes one condition is not enough. <code>&amp;&amp;</code> means <strong>AND</strong> (both must be true), <code>||</code> means <strong>OR</strong> (at least one is true), <code>!</code> means <strong>NOT</strong>.</p>
+
+  <figure class="code"><figcaption>Combining conditions</figcaption>
+<pre><code>int number = 30;
+if (number % 3 == 0 &amp;&amp; number % 5 == 0) {
+    System.out.println("divisible by both 3 and 5");
+}
+
+if (number % 2 == 0 &amp;&amp; number % 4 != 0) {
+    System.out.println("divisible by 2 but not by 4");   // true for 6, 14, 30...
+}</code></pre></figure>
+
+  <p>A comparison <em>is</em> a boolean value. You can store it in a variable with a nice name.</p>
+
+  <figure class="code"><figcaption>Named booleans</figcaption>
+<pre><code>int x = 8;
+boolean isEven = (x % 2) == 0;        // "is it even?" → true
+
+int age = 70;
+boolean isEligibleForRetirement = age &gt; 65;
+System.out.println(isEligibleForRetirement);   // true</code></pre></figure>
+
+  <figure class="code"><figcaption>Two variables in one condition</figcaption>
+<pre><code>int temperature = 33;
+int humidity = 75;
+if (temperature &gt; 30 &amp;&amp; humidity &gt; 70) {
+    System.out.println("The weather is stifling");
+} else if (temperature &lt; 15 &amp;&amp; humidity &lt; 30) {
+    System.out.println("The weather is dry and cool");
+}</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> <code>%</code> + logical operators is a power combo: even = <code>% 2 == 0</code>, odd = <code>% 2 != 0</code>, "divisible by a but not b" = <code>% a == 0 &amp;&amp; % b != 0</code>.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s6"></span></h3>
+    <p>The mod + logic drills — your favourite question folder.</p>
+    <ol class="qs" data-sec="s6">
+      <li><label><input type="checkbox" data-q="s6-1"><span>Create a number. If it is divisible by 2 print "Even", otherwise print "Odd".</span></label><details><summary>Hint</summary><p><code>number % 2 == 0</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s6-2"><span>Create a number. If it is a multiple of 3, print "multiple of 3".</span></label><details><summary>Hint</summary><p>Multiple of 3 means remainder 0 when divided by 3.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-3"><span>Create a number. If it is divisible by <strong>both</strong> 3 and 5 (like 15, 30, 45), print a message.</span></label><details><summary>Hint</summary><p>Two <code>%</code> checks joined with <code>&amp;&amp;</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-4"><span>Create a number. If it is divisible by 2 but <strong>not</strong> by 4 (like 6, 14), print a message.</span></label><details><summary>Hint</summary><p>Use <code>!=</code> for the "not" part: <code>% 4 != 0</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-5"><span>Create a number. If it is odd <strong>and</strong> not divisible by 3 (like 1, 5, 7), print a message.</span></label><details><summary>Hint</summary><p>Odd = <code>% 2 == 1</code>. Join with <code>&amp;&amp;</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-6"><span>Create <code>temperature</code> and <code>humidity</code>. Over 30° and over 70% → "The weather is stifling"; under 15° and under 30% → "The weather is dry and cool".</span></label><details><summary>Hint</summary><p>Two conditions per branch, joined with <code>&amp;&amp;</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-7"><span>Create <code>age</code> and <code>salary</code>. Under 30 and under 3000 → "Young but low-paid"; over 50 and over 5000 → "Experienced and well-paid".</span></label><details><summary>Hint</summary><p>Same two-variable pattern as question 6.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-8"><span>Create <code>weight</code> and <code>height</code>. Over 80 kg and under 160 cm → one message; under 65 kg and over 180 cm → another message.</span></label><details><summary>Hint</summary><p>Two conditions joined with <code>&amp;&amp;</code> in each branch — you solved this one with funny messages.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-9"><span>Ask the user for a number and store <code>number &gt; 0</code> in a boolean named <code>isPositive</code>. Print it.</span></label><details><summary>Hint</summary><p>No if needed at all — assign the comparison directly.</p></details></li>
+      <li><label><input type="checkbox" data-q="s6-10"><span>Create <code>age</code>. Make a boolean <code>isEligibleForRetirement</code> (true if age is over 65) and print it.</span></label><details><summary>Hint</summary><p><code>boolean isEligibleForRetirement = age &gt; 65;</code></p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 7. WHILE ==================== -->
+<section class="topic" id="s7">
+  <p class="eyebrow">Part 7</p>
+  <h2>While loops</h2>
+  <p>A <code>while</code> loop repeats code <strong>as long as</strong> a condition is true. You need three things: a counter, a condition, and a step that changes the counter — or the loop never ends!</p>
+
+  <figure class="code"><figcaption>The classic shape</figcaption>
+<pre><code>int i = 0;
+while (i &lt; 5) {
+    System.out.println("*");
+    i++;                      // never forget this line!
+}</code></pre></figure>
+
+  <figure class="code"><figcaption>Doubling: 1, 2, 4, 8, 16</figcaption>
+<pre><code>int number = 1;
+int i = 1;
+while (i &lt;= 5) {
+    System.out.println(number);
+    number = number * 2;
+    i++;
+}</code></pre></figure>
+
+  <figure class="code"><figcaption>while(true) + break</figcaption>
+<pre><code>int i = 0;
+while (true) {                // runs forever...
+    System.out.println("Hello");
+    i++;
+    if (i == 5) {
+        break;                // ...until break stops it
+    }
+}</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> if you forget <code>i++</code>, the condition never becomes false and the loop runs forever. This was the bug in one of the repo files — the loop body only counted and never printed!</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s7"></span></h3>
+    <p>Solve each one with a <strong>while</strong> loop, even if a for loop feels easier.</p>
+    <ol class="qs" data-sec="s7">
+      <li><label><input type="checkbox" data-q="s7-1"><span>Print the <code>*</code> character 5 times, one per line.</span></label><details><summary>Hint</summary><p>Counter starts at 0, condition <code>i &lt; 5</code>, and i++ inside.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-2"><span>Print "Hello, World!" 4 times.</span></label><details><summary>Hint</summary><p>Same shape, different condition number.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-3"><span>Print the numbers 1 to 5.</span></label><details><summary>Hint</summary><p>Start the counter at 1 and print the counter itself.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-4"><span>Ask the user for a number n, then print the numbers from 1 up to n.</span></label><details><summary>Hint</summary><p>Scanner first, then <code>while (i &lt;= n)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-5"><span>Starting from 1, double the number each time and print it 5 times: 1, 2, 4, 8, 16.</span></label><details><summary>Hint</summary><p>Two variables: the number (× 2 each round) and a counter.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-6"><span>Print the even numbers from 20 down to 2.</span></label><details><summary>Hint</summary><p>Start at 20 and subtract 2 each round: <code>i -= 2</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-7"><span>Count down from 10 to 1.</span></label><details><summary>Hint</summary><p>Condition <code>i &gt;= 1</code>, step <code>i--</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-8"><span>Print only the multiples of 3 between 1 and 30.</span></label><details><summary>Hint</summary><p>Put an <code>if (i % 3 == 0)</code> inside the loop.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-9"><span>Print the numbers 1 to 10, and next to each one write "even" or "odd".</span></label><details><summary>Hint</summary><p>if/else inside the loop, with <code>% 2</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-10"><span>Print the squares of the numbers 1 to 10: 1, 4, 9, 16, ...</span></label><details><summary>Hint</summary><p>Print <code>i * i</code> instead of i.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-11"><span>Use <code>while (true)</code> to print "Hello" again and again, but stop after 5 prints.</span></label><details><summary>Hint</summary><p>Count inside, and <code>break</code> when the counter hits 5.</p></details></li>
+      <li><label><input type="checkbox" data-q="s7-12"><span>Add the numbers 1 to 5 with a while loop and print the total (15).</span></label><details><summary>Hint</summary><p>Make <code>int total = 0;</code> before the loop and do <code>total += i;</code> inside.</p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 8. FOR ==================== -->
+<section class="topic" id="s8">
+  <p class="eyebrow">Part 8</p>
+  <h2>For loops</h2>
+  <p>A <code>for</code> loop puts the counter, the condition, and the step all on one line. Best choice when you know how many times to repeat.</p>
+
+  <figure class="code"><figcaption>The shape: start; condition; step</figcaption>
+<pre><code>for (int i = 1; i &lt;= 5; i++) {
+    System.out.println(i);        // 1 2 3 4 5
+}
+
+for (int i = 20; i &gt;= 2; i -= 2) {
+    System.out.println(i);        // 20 18 16 ... 2
+}
+
+for (int i = 1; i &lt;= 16; i = i * 2) {
+    System.out.println(i);        // 1 2 4 8 16
+}</code></pre></figure>
+
+  <p>The <strong>accumulator</strong> pattern: build up a total inside the loop.</p>
+
+  <figure class="code"><figcaption>Summing with an accumulator</figcaption>
+<pre><code>int total = 0;
+for (int i = 1; i &lt;= 5; i++) {
+    total += i;
+}
+System.out.println("Total = " + total);   // 15</code></pre></figure>
+
+  <figure class="code"><figcaption>FizzBuzz — the famous one</figcaption>
+<pre><code>for (int i = 1; i &lt;= 30; i++) {
+    if (i % 3 == 0) {
+        System.out.println("Fizz");
+    } else if (i % 5 == 0) {
+        System.out.println("Buzz");
+    } else {
+        System.out.println(i);
+    }
+}</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> the step doesn't have to be <code>i++</code> — it can be <code>i--</code>, <code>i -= 2</code>, even <code>i = i * 2</code>. And an <code>if</code> inside a loop is how you <em>filter</em> numbers.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s8"></span></h3>
+    <p>The biggest topic in your repo — so the biggest quiz.</p>
+    <ol class="qs" data-sec="s8">
+      <li><label><input type="checkbox" data-q="s8-1"><span>Print the numbers 1 to 5 with a for loop.</span></label><details><summary>Hint</summary><p><code>for (int i = 1; i &lt;= 5; i++)</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s8-2"><span>Print the <code>*</code> character 5 times with a for loop.</span></label><details><summary>Hint</summary><p>The loop body doesn't have to use i.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-3"><span>Print all even numbers from 1 to 20.</span></label><details><summary>Hint</summary><p>Either filter with <code>% 2 == 0</code>, or start at 2 and step by 2.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-4"><span>Add up all even numbers from 1 to 50 and print the total. (Check: it should be 650.)</span></label><details><summary>Hint</summary><p>Accumulator + an if filter inside the loop.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-5"><span>FizzBuzz: print 1 to 30, but "Fizz" for multiples of 3 and "Buzz" for multiples of 5.</span></label><details><summary>Hint</summary><p>if / else if / else inside the loop. Order matters!</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-6"><span>Ask the user for a number and print only the odd numbers up to it (input 7 → 1 3 5 7).</span></label><details><summary>Hint</summary><p>Odd = <code>% 2 != 0</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-7"><span>Count from 10 down to 1, but print only the numbers greater than 5, all on one line: <code>10 9 8 7 6</code></span></label><details><summary>Hint</summary><p>Use <code>System.out.print(i + " ")</code> and an if.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-8"><span>Print 1 to 10. If a number is divisible by both 2 and 3, print "Divisible by 2 and 3" next to it.</span></label><details><summary>Hint</summary><p>Two <code>%</code> checks joined with <code>&amp;&amp;</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-9"><span>Print 1 to 15 with labels: "Small" (under 5), "Medium" (5 to 10), "Large" (over 10).</span></label><details><summary>Hint</summary><p>An else-if ladder inside the loop.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-10"><span>Print the numbers from 1 to 50 that are divisible by 7 <strong>or</strong> 11.</span></label><details><summary>Hint</summary><p>This one wants <code>||</code>, not <code>&amp;&amp;</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-11"><span>Print 1 to 20, but <strong>skip</strong> the multiples of 4.</span></label><details><summary>Hint</summary><p>Print only when <code>i % 4 != 0</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-12"><span>Print 1 to 50. If a number is divisible by both 2 and 5, print <code>- Bingo!</code> after it.</span></label><details><summary>Hint</summary><p>Divisible by 2 and 5 is the same as divisible by 10.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-13"><span>Ask for a number n. Print 1 to n, but replace every multiple of 7 with "Lucky Seven!".</span></label><details><summary>Hint</summary><p>if → print the message, else → print the number.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-14"><span>Count down from 10 to 1 and print a <code>*</code> next to the odd numbers.</span></label><details><summary>Hint</summary><p>Descending loop + <code>% 2 != 0</code> check.</p></details></li>
+      <li><label><input type="checkbox" data-q="s8-15"><span>Print 1, 2, 4, 8, 16 using the loop's own step part (no extra variable).</span></label><details><summary>Hint</summary><p>The step can be <code>i = i * 2</code>.</p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 9. STRINGS ==================== -->
+<section class="topic" id="s9">
+  <p class="eyebrow">Part 9</p>
+  <h2>Strings &amp; string methods</h2>
+  <p>A String has built-in <strong>methods</strong> — small tools you call with a dot. These are the ones you practiced:</p>
+
+  <figure class="code"><figcaption>The toolbox</figcaption>
+<pre><code>String name = "Thailand";
+name.length();          // 8  — how many characters
+name.charAt(0);         // 'T' — character at a position (starts at 0!)
+name.toUpperCase();     // "THAILAND"
+name.toLowerCase();     // "thailand"
+name.contains("ai");    // true
+name.startsWith("T");   // true
+name.endsWith("d");     // true
+name.indexOf("a");      // 2  — position of the first 'a'
+name.replace('a', '*'); // "Th*il*nd"
+name.substring(0, 4);   // "Thai" — from 0 up to (not including) 4</code></pre></figure>
+
+  <p><strong>Comparing text:</strong> use <code>.equals()</code>, never <code>==</code>. For "ignore big/small letters" use <code>.equalsIgnoreCase()</code>.</p>
+
+  <figure class="code"><figcaption>equals vs equalsIgnoreCase</figcaption>
+<pre><code>String name1 = "HasoMis";
+String name2 = "HAsOmiS";
+name1.equals(name2);            // false — case matters
+name1.equalsIgnoreCase(name2);  // true</code></pre></figure>
+
+  <figure class="code"><figcaption>Classic exercise: cut an email into pieces</figcaption>
+<pre><code>String email = "denizukad@gmail.com";
+int atIndex = email.indexOf("@");
+String username = email.substring(0, atIndex);   // "denizukad"
+String website  = email.substring(atIndex + 1);  // "gmail.com"</code></pre></figure>
+
+  <figure class="code"><figcaption>Walk through a string, one char at a time</figcaption>
+<pre><code>String word = "Java";
+for (int i = 0; i &lt; word.length(); i++) {
+    System.out.println(word.charAt(i));
+}</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> positions start at <strong>0</strong>. The last character is at <code>length() - 1</code>. In <code>substring(start, end)</code> the start is included, the end is <strong>not</strong>.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s9"></span></h3>
+    <p>Ask the user for the text with Scanner, like the original exercises did.</p>
+    <ol class="qs" data-sec="s9">
+      <li><label><input type="checkbox" data-q="s9-1"><span>Ask for the user's name and print how many characters it has.</span></label><details><summary>Hint</summary><p><code>.length()</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-2"><span>Ask for a city name and print its first and last characters.</span></label><details><summary>Hint</summary><p><code>.charAt(0)</code> and <code>.charAt(city.length() - 1)</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-3"><span>Ask for a word and print it in ALL CAPITALS.</span></label><details><summary>Hint</summary><p><code>.toUpperCase()</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-4"><span>Ask for two words. If they are the same when you ignore big/small letters, print "The words are the same", otherwise "different".</span></label><details><summary>Hint</summary><p><code>.equalsIgnoreCase()</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-5"><span>Ask for an email address. If it contains "@", print "Valid email", otherwise "Invalid email".</span></label><details><summary>Hint</summary><p><code>.contains("@")</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-6"><span>Ask for a sentence and print it with every letter 'a' replaced by '*'.</span></label><details><summary>Hint</summary><p><code>.replace('a', '*')</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-7"><span>Ask for a short sentence and print it without its first and last characters.</span></label><details><summary>Hint</summary><p><code>.substring(1, s.length() - 1)</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-8"><span>Ask for a word. Print true if it starts with capital "S", otherwise false.</span></label><details><summary>Hint</summary><p><code>.startsWith("S")</code> gives a boolean directly.</p></details></li>
+      <li><label><input type="checkbox" data-q="s9-9"><span>Ask for a word and print each of its characters on a separate line.</span></label><details><summary>Hint</summary><p>A for loop from 0 to length, with <code>.charAt(i)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s9-10"><span>From "denizukad@gmail.com", cut out and print the username: <code>denizukad</code></span></label><details><summary>Hint</summary><p>Find "@" with <code>.indexOf</code>, then <code>.substring(0, thatIndex)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s9-11"><span>From the same email, cut out and print just the domain: <code>gmail</code> (between "@" and ".").</span></label><details><summary>Hint</summary><p>You need two indexOf results — one for "@", one for ".".</p></details></li>
+      <li><label><input type="checkbox" data-q="s9-12"><span>Ask for a word and print its first three characters.</span></label><details><summary>Hint</summary><p><code>.substring(0, 3)</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-13"><span>Ask for a word and print its last two characters.</span></label><details><summary>Hint</summary><p><code>.substring(word.length() - 2)</code> — one argument goes to the end.</p></details></li>
+      <li><label><input type="checkbox" data-q="s9-14"><span>Ask for a word and print it without its last character.</span></label><details><summary>Hint</summary><p><code>.substring(0, word.length() - 1)</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s9-15"><span>Ask for a word and print it with its first two characters glued to the front again: "World" → <code>WoWorld</code></span></label><details><summary>Hint</summary><p><code>word.substring(0, 2) + word</code></p></details></li>
+    </ol>
+  </div>
+</section>
+<!-- ==================== 10. ARRAYS ==================== -->
+<section class="topic" id="s10">
+  <p class="eyebrow">Part 10</p>
+  <h2>Arrays</h2>
+  <p>An array holds <strong>many values of the same type</strong> in one variable. Each value has a position (index) starting at 0.</p>
+
+  <figure class="code"><figcaption>Create, read, loop</figcaption>
+<pre><code>String[] colours = {"Red", "Blue", "Green", "Yellow"};
+System.out.println(colours[0]);        // Red — first element
+
+for (int i = 0; i &lt; colours.length; i++) {
+    System.out.println(colours[i]);
+}</code></pre></figure>
+
+  <figure class="code"><figcaption>Filtering with an if inside the loop</figcaption>
+<pre><code>int[] numbers = {5, 12, 9, 21, 17, 6};
+for (int i = 0; i &lt; numbers.length; i++) {
+    if (numbers[i] % 2 == 0) {
+        System.out.println(numbers[i]);   // only 12 and 6
+    }
+}</code></pre></figure>
+
+  <figure class="code"><figcaption>Backwards, and adding up</figcaption>
+<pre><code>int[] evens = {2, 4, 6, 8, 10, 12};
+for (int i = evens.length - 1; i &gt;= 0; i--) {
+    System.out.println(evens[i]);         // 12 10 8 ...
+}
+
+int[] weights = {60, 63, 64, 59, 55, 52};
+int total = 0;
+for (int i = 0; i &lt; weights.length; i++) {
+    total += weights[i];
+}</code></pre></figure>
+
+  <figure class="code"><figcaption>An empty array you fill yourself</figcaption>
+<pre><code>int[] a = new int[5];          // 5 empty slots, all 0
+for (int i = 0; i &lt; a.length; i++) {
+    a[i] = (i + 1) * 2;        // fills with 2, 4, 6, 8, 10
+}</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> for arrays it is <code>.length</code> with no parentheses (Strings use <code>.length()</code> with parentheses). The last index is <code>length - 1</code>.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s10"></span></h3>
+    <p>Create the array yourself, then loop over it.</p>
+    <ol class="qs" data-sec="s10">
+      <li><label><input type="checkbox" data-q="s10-1"><span>Make a String array with at least 4 colours and print all of them with a for loop.</span></label><details><summary>Hint</summary><p><code>{"Red", "Blue", ...}</code> then loop to <code>.length</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-2"><span>Make an int array with the first 5 Fibonacci numbers (1, 1, 2, 3, 5) and print each one.</span></label><details><summary>Hint</summary><p>Just list them in the curly braces.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-3"><span>Make a char array with the letters A, B, C, D and print each.</span></label><details><summary>Hint</summary><p>chars use single quotes: <code>{'A', 'B', ...}</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s10-4"><span>Make a String array with your three favourite foods and print them.</span></label><details><summary>Hint</summary><p>Same pattern as question 1.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-5"><span>Make a char array with the vowels a, e, i, o, u and print each one.</span></label><details><summary>Hint</summary><p>Five chars in braces, then a loop.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-6"><span>From <code>{1, 2, 3, 5, 13, 21}</code>, print only the elements greater than 5.</span></label><details><summary>Hint</summary><p>An if inside the loop: <code>numbers[i] &gt; 5</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-7"><span>From <code>{5, 12, 9, 21, 17, 6}</code>, print only the even numbers.</span></label><details><summary>Hint</summary><p><code>numbers[i] % 2 == 0</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s10-8"><span>Make an array of 6 city names. Print only the cities with names longer than 5 characters.</span></label><details><summary>Hint</summary><p>Each element is a String, so it has <code>.length()</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-9"><span>From the chars <code>{'a', 'b', 'C', 'd', 'E', 'f'}</code>, print only the capital letters.</span></label><details><summary>Hint</summary><p><code>Character.isUpperCase(letters[i])</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s10-10"><span>Print <code>{2, 4, 6, 8, 10, 12}</code> in reverse order.</span></label><details><summary>Hint</summary><p>Start the loop at <code>length - 1</code> and go down with <code>i--</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-11"><span>Make an int array of 6 numbers and print the sum of only the <strong>odd</strong> ones.</span></label><details><summary>Hint</summary><p>Accumulator + <code>% 2 != 0</code> filter.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-12"><span>Make an array of 7 animal names and print the ones ending with the letter "r".</span></label><details><summary>Hint</summary><p><code>.endsWith("r")</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s10-13"><span>From <code>{1, 3, 9, 10, 27, 45, 50}</code>, print the numbers divisible by 3 but <strong>not</strong> by 9.</span></label><details><summary>Hint</summary><p><code>% 3 == 0 &amp;&amp; % 9 != 0</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s10-14"><span>From <code>{100, 55, 77, 82, 33, 120, 40}</code>, print the numbers that end in 0.</span></label><details><summary>Hint</summary><p>A number ends in 0 when <code>% 10 == 0</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s10-15"><span>Create <code>new int[5]</code>, fill it with the even numbers 2, 4, 6, 8, 10 using a loop, then print it. Bonus: also print the sum and average.</span></label><details><summary>Hint</summary><p>Fill with <code>a[i] = (i + 1) * 2;</code>. For a decimal average, remember the <code>(double)</code> cast.</p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 11. ARRAYLIST ==================== -->
+<section class="topic" id="s11">
+  <p class="eyebrow">Part 11</p>
+  <h2>ArrayList</h2>
+  <p>An <code>ArrayList</code> is like an array that can <strong>grow</strong>. You add items one by one. For numbers and chars you use the "big" type names: <code>Integer</code>, <code>Double</code>, <code>Character</code>.</p>
+
+  <figure class="code"><figcaption>Create, add, read</figcaption>
+<pre><code>import java.util.ArrayList;
+
+ArrayList&lt;String&gt; cities = new ArrayList&lt;&gt;();
+cities.add("Istanbul");
+cities.add("Bangkok");
+cities.add("Chiang Mai");
+
+cities.size();      // 3   (not .length!)
+cities.get(0);      // "Istanbul"
+System.out.println(cities);   // [Istanbul, Bangkok, Chiang Mai]</code></pre></figure>
+
+  <figure class="code"><figcaption>Three ways to loop</figcaption>
+<pre><code>// 1. index loop
+for (int i = 0; i &lt; cities.size(); i++) {
+    System.out.println(cities.get(i));
+}
+
+// 2. for-each — the easy one
+for (String city : cities) {
+    System.out.println(city);
+}
+
+// 3. forEach with a lambda
+cities.forEach(city -&gt; {
+    System.out.println(city);
+});</code></pre></figure>
+
+  <figure class="code"><figcaption>Filtering, Thailand style</figcaption>
+<pre><code>ArrayList&lt;Integer&gt; days = new ArrayList&lt;&gt;();
+days.add(3); days.add(7); days.add(10); days.add(15); days.add(22);
+
+for (int day : days) {
+    if (day &gt; 10) {
+        System.out.println("day = " + day);   // 15 and 22
+    }
+}</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> array → <code>.length</code>, String → <code>.length()</code>, ArrayList → <code>.size()</code>. Three different spellings — a classic exam trap!</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s11"></span></h3>
+    <p>The Thailand questions — your repo's favourite theme.</p>
+    <ol class="qs" data-sec="s11">
+      <li><label><input type="checkbox" data-q="s11-1"><span>Make an <code>ArrayList&lt;String&gt;</code> with at least 4 colours and print them all.</span></label><details><summary>Hint</summary><p><code>new ArrayList&lt;&gt;()</code> then <code>.add(...)</code> for each.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-2"><span>Make an <code>ArrayList&lt;Integer&gt;</code> with the first 5 Fibonacci numbers and print each one.</span></label><details><summary>Hint</summary><p>For int values the list type is <code>Integer</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-3"><span>Make a list with the days of the week and print each day with a for-each loop.</span></label><details><summary>Hint</summary><p><code>for (String day : days)</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s11-4"><span>Make a list with the four seasons and print each one.</span></label><details><summary>Hint</summary><p>Same as question 3.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-5"><span>Make an <code>ArrayList&lt;Double&gt;</code> with the prices of three products and print each price.</span></label><details><summary>Hint</summary><p>Decimals → <code>Double</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-6"><span>Days spent in Thai cities: <code>3, 7, 10, 15, 22, 30</code>. Print only the ones greater than 10.</span></label><details><summary>Hint</summary><p>for-each + if.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-7"><span>Make a list of Thai street foods. If the food is "pad thai" or "green curry", print "favorite" next to it.</span></label><details><summary>Hint</summary><p>Compare Strings with <code>.equals(...)</code>, join with <code>||</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-8"><span>Prices in THB: <code>14, 5, 18, 7, 20, 9</code>. Print only the odd prices.</span></label><details><summary>Hint</summary><p><code>% 2 == 1</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s11-9"><span>Make a list of Thai city names. Print the cities with more than 7 characters.</span></label><details><summary>Hint</summary><p><code>city.length() &gt; 7</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s11-10"><span>Island-hopping days: <code>5, 10, 15, 20, 25</code>. Print them in reverse order.</span></label><details><summary>Hint</summary><p>Index loop from <code>size() - 1</code> down to 0, with <code>.get(i)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-11"><span>Expenses: <code>3, 6, 10, 7, 12, 5</code>. Print the sum of only the even ones.</span></label><details><summary>Hint</summary><p>Accumulator variable + <code>% 2 == 0</code> filter.</p></details></li>
+      <li><label><input type="checkbox" data-q="s11-12"><span>Print any of your lists using <code>forEach</code> with a lambda arrow.</span></label><details><summary>Hint</summary><p><code>list.forEach(item -&gt; { ... });</code></p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 12. SET & HASHMAP ==================== -->
+<section class="topic" id="s12">
+  <p class="eyebrow">Part 12</p>
+  <h2>Set &amp; HashMap</h2>
+  <p>A <code>Set</code> is a collection with <strong>no duplicates</strong> — if you add the same thing twice, it keeps only one.</p>
+
+  <figure class="code"><figcaption>Set removes duplicates by itself</figcaption>
+<pre><code>import java.util.Set;
+import java.util.HashSet;
+
+Set&lt;String&gt; cityNames = new HashSet&lt;&gt;();
+cityNames.add("Bangkok");
+cityNames.add("Bangkok");     // ignored — already there
+cityNames.add("Phuket");
+
+for (String city : cityNames) {
+    System.out.println(city);  // Bangkok appears only once
+}</code></pre></figure>
+
+  <p>A <code>HashMap</code> stores <strong>pairs</strong>: a key and its value. You look values up by key.</p>
+
+  <figure class="code"><figcaption>put, get, and looping</figcaption>
+<pre><code>import java.util.HashMap;
+
+HashMap&lt;String, String&gt; names = new HashMap&lt;&gt;();
+names.put("Deniz", "Turkey");
+names.put("Somchai", "Thailand");
+
+names.get("Deniz");            // "Turkey"
+
+for (String key : names.keySet()) {
+    String value = names.get(key);
+    System.out.println(key + " lives in " + value);
+}
+
+// or with a lambda:
+names.forEach((key, value) -&gt; {
+    System.out.println(key + " -&gt; " + value);
+});</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> List = keeps order, allows duplicates. Set = no duplicates. Map = key → value pairs. <code>put</code> to add, <code>get</code> to read, <code>keySet()</code> to loop.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s12"></span></h3>
+    <p>Short section, short quiz.</p>
+    <ol class="qs" data-sec="s12">
+      <li><label><input type="checkbox" data-q="s12-1"><span>Make a <code>HashSet</code> of Thai city names and add "Bangkok" twice. Print the set — what do you see?</span></label><details><summary>Hint</summary><p>A Set silently drops the second "Bangkok".</p></details></li>
+      <li><label><input type="checkbox" data-q="s12-2"><span>Make an ArrayList and a Set with the same names, including duplicates. Print both and compare.</span></label><details><summary>Hint</summary><p>The list keeps the duplicates, the set does not.</p></details></li>
+      <li><label><input type="checkbox" data-q="s12-3"><span>Make a Set of Thai fruits. If a fruit is "mango" or "durian", print "must try" next to it.</span></label><details><summary>Hint</summary><p>for-each over the set, <code>.equals()</code> and <code>||</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s12-4"><span>Make a Set of Thailand-related words and print only the words containing the letter "t".</span></label><details><summary>Hint</summary><p><code>.contains("t")</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s12-5"><span>Make a HashMap named <code>student</code>, put "name" → "John", and print the name using get.</span></label><details><summary>Hint</summary><p><code>student.get("name")</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s12-6"><span>Make a HashMap with "language" → "Java" and "level" → "Beginner", then print the whole map.</span></label><details><summary>Hint</summary><p><code>System.out.println(map)</code> prints all pairs.</p></details></li>
+      <li><label><input type="checkbox" data-q="s12-7"><span>Make a <code>HashMap&lt;String, Integer&gt;</code>, put "age" → 25, and print <strong>only the value</strong>, not the whole map.</span></label><details><summary>Hint</summary><p>get returns just the value for that key.</p></details></li>
+      <li><label><input type="checkbox" data-q="s12-8"><span>Make a map with at least two pairs and print every key and value using a loop over <code>keySet()</code>.</span></label><details><summary>Hint</summary><p><code>for (String key : map.keySet())</code> then <code>map.get(key)</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s12-9"><span>Make a map of names → countries and print lines like <code>Deniz lives in Turkey</code>.</span></label><details><summary>Hint</summary><p>Join key + text + value inside the loop.</p></details></li>
+      <li><label><input type="checkbox" data-q="s12-10"><span>Make a map of names → ages and print it using <code>forEach</code> with a lambda.</span></label><details><summary>Hint</summary><p><code>map.forEach((key, value) -&gt; { ... });</code></p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 13. METHODS ==================== -->
+<section class="topic" id="s13">
+  <p class="eyebrow">Part 13</p>
+  <h2>Methods (functions)</h2>
+  <p>A method is a <strong>named block of code you can reuse</strong>. Instead of copying the same lines again and again, you write them once and call the name.</p>
+
+  <figure class="code"><figcaption>The template</figcaption>
+<pre><code>public static returnType methodName(parameters) { ... }
+
+// simplest: no parameters, returns nothing (void)
+public static void printWelcome() {
+    System.out.println("Welcome to Java programming!");
+}
+
+// with parameters
+public static void printDifference(int a, int b) {
+    System.out.println("Difference: " + (a - b));
+}
+
+public static void main(String[] args) {
+    printWelcome();
+    printDifference(10, 4);   // Difference: 6
+}</code></pre></figure>
+
+  <p>A method can also <strong>return</strong> a value. Then <code>void</code> becomes the value's type, and the method ends with <code>return</code>.</p>
+
+  <figure class="code"><figcaption>Returning values</figcaption>
+<pre><code>public static int multiply(int a, int b) {
+    return a * b;
+}
+
+public static String checkEvenOdd(int number) {
+    if (number % 2 == 0) {
+        return "Even";
+    } else {
+        return "Odd";
+    }
+}
+
+int result = multiply(4, 3);            // 12
+System.out.println(checkEvenOdd(9));    // Odd</code></pre></figure>
+
+  <figure class="code"><figcaption>Building a result with a loop</figcaption>
+<pre><code>public static String repeatLaugh(int times) {
+    String result = "";
+    for (int i = 0; i &lt; times; i++) {
+        result += "ha";
+    }
+    return result;
+}
+// repeatLaugh(3) → "hahaha"</code></pre></figure>
+
+  <p>The best trick from the Catan exercises: <strong>one method's return value becomes another method's parameter</strong>.</p>
+
+  <figure class="code"><figcaption>Chaining methods (Catan style)</figcaption>
+<pre><code>public static int calculateKnightPoints(int knightCards) {
+    return knightCards;      // each knight = 1 point
+}
+public static void printKnightPoints(int points) {
+    System.out.println("Knight points: " + points);
+}
+
+printKnightPoints(calculateKnightPoints(5));   // Knight points: 5</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> <code>void</code> = prints or does something, returns nothing. A return type (<code>int</code>, <code>String</code>...) = gives a value back that you can store or pass on. After <code>return</code>, the method stops.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s13"></span></h3>
+    <p>Sweden and Catan questions included — of course.</p>
+    <ol class="qs" data-sec="s13">
+      <li><label><input type="checkbox" data-q="s13-1"><span>Write <code>printWelcome()</code> — no parameters — that prints "Welcome to Java programming!". Call it from main.</span></label><details><summary>Hint</summary><p><code>public static void</code>, empty parentheses.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-2"><span>Write <code>printAge(int age)</code> that prints <code>Age: 25</code> when called with 25.</span></label><details><summary>Hint</summary><p>One int parameter, join text + parameter.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-3"><span>Write <code>printDifference(int a, int b)</code> that prints <code>Difference: 6</code> for (10, 4).</span></label><details><summary>Hint</summary><p>Two parameters, separated by a comma.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-4"><span>Write <code>printPassFail(int score)</code>: print "Pass" if the score is 50 or more, otherwise "Fail". Call it for 65, 25, and 90.</span></label><details><summary>Hint</summary><p>if/else inside the method — and be careful not to call the method from inside itself!</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-5"><span>Write <code>printWelcomeMessage(String name)</code> that prints <code>Welcome, Deniz!</code></span></label><details><summary>Hint</summary><p>A String parameter this time.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-6"><span>Write <code>printMax(int a, int b)</code> that prints the bigger number, or "Equal" if they are the same.</span></label><details><summary>Hint</summary><p>if / else if / else — three roads.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-7"><span>Write <code>printMessageNTimes(String message, int n)</code> that prints the message n times.</span></label><details><summary>Hint</summary><p>A for loop inside the method, using n as the limit.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-8"><span>Write <code>addTen(int number)</code> that <strong>returns</strong> the number plus 10. Store the result of <code>addTen(5)</code> and print it.</span></label><details><summary>Hint</summary><p>Return type is <code>int</code>, not void.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-9"><span>Write <code>multiply(int a, int b)</code> that returns the product. <code>multiply(4, 3)</code> → 12.</span></label><details><summary>Hint</summary><p><code>return a * b;</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s13-10"><span>Write <code>checkEvenOdd(int number)</code> that returns the String "Even" or "Odd".</span></label><details><summary>Hint</summary><p>Return type String; a return in each branch.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-11"><span>Write <code>repeatLaugh(int times)</code> that returns "ha" repeated. <code>repeatLaugh(3)</code> → "hahaha".</span></label><details><summary>Hint</summary><p>Start with an empty String and add "ha" in a loop.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-12"><span>Write <code>sumFromAtoB(int start, int end)</code> that returns the sum of all numbers from start to end. (3, 6) → 18.</span></label><details><summary>Hint</summary><p>Accumulator inside, <code>return sum;</code> at the end.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-13"><span>Catan: write <code>calculateVictoryPoints(int settlements, int cities)</code> — each settlement is 1 point, each city is 2 points. Return the total.</span></label><details><summary>Hint</summary><p><code>settlements * 1 + cities * 2</code></p></details></li>
+      <li><label><input type="checkbox" data-q="s13-14"><span>Catan: write <code>calculateTotalRoads(int wood, int brick)</code> — each road costs 1 wood + 1 brick. Return how many roads you can build. (3, 2) → 2.</span></label><details><summary>Hint</summary><p>The answer is the <strong>smaller</strong> of the two values.</p></details></li>
+      <li><label><input type="checkbox" data-q="s13-15"><span>Catan: write <code>calculateKnightPoints(int knightCards)</code> and <code>printKnightPoints(int points)</code>, then pass the first one's return value straight into the second.</span></label><details><summary>Hint</summary><p><code>printKnightPoints(calculateKnightPoints(5));</code></p></details></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 14. CLASSES ==================== -->
+<section class="topic" id="s14">
+  <p class="eyebrow">Part 14</p>
+  <h2>Classes &amp; objects</h2>
+  <p>A class is a <strong>blueprint</strong>. It says what data (fields) something has. From one class you can create many <strong>objects</strong> with <code>new</code>.</p>
+
+  <figure class="code"><figcaption>A class and its objects</figcaption>
+<pre><code>public class Phone {
+    String brand;
+    String model;
+    int storage;
+}
+
+// in main:                 ClassName variableName = new ClassName()
+Phone phone1 = new Phone();
+phone1.brand = "iphone";
+phone1.model = "iphone 13";
+phone1.storage = 36;
+
+Phone phone2 = new Phone();
+phone2.brand = "samsung";</code></pre></figure>
+
+  <p>A <strong>constructor</strong> lets you fill the fields in one line. Inside it, <code>this.name</code> means "the field of <em>this</em> object".</p>
+
+  <figure class="code"><figcaption>Constructor + this</figcaption>
+<pre><code>public class Employee {
+    String name;
+    String position;
+    int salary;
+
+    public Employee(String name, String position, int salary) {
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+    }
+}
+
+Employee employee1 = new Employee("Deniz", "QA", 85000);</code></pre></figure>
+
+  <p>To print an object nicely, add a <code>toString()</code> method — then <code>println(object)</code> just works. (IntelliJ can generate it for you.)</p>
+
+  <figure class="code"><figcaption>toString</figcaption>
+<pre><code>@Override
+public String toString() {
+    return "Employee{name='" + name + "', position='" + position +
+           "', salary=" + salary + "}";
+}
+
+System.out.println(employee1);
+// Employee{name='Deniz', position='QA', salary=85000}</code></pre></figure>
+
+  <p>Objects can live inside lists, and everything you learned before still works:</p>
+
+  <figure class="code"><figcaption>Objects in an ArrayList</figcaption>
+<pre><code>List&lt;Country&gt; countries = new ArrayList&lt;&gt;();
+countries.add(hungary);
+countries.add(vietnam);
+
+for (Country country : countries) {
+    if (country.population &gt; 50000) {
+        System.out.println(country.capitalCity);
+    }
+}</code></pre></figure>
+
+  <div class="note"><p><strong>Remember:</strong> class = the blueprint, object = one real thing made from it. <code>new</code> creates the object. A class can have more than one constructor (with different parameters) — that is called overloading.</p></div>
+
+  <div class="quiz">
+    <h3>Practice time <span class="qcount" data-sec="s14"></span></h3>
+    <p>The 15 class questions in your repo all follow this pattern: make the class, create 3 objects, print them.</p>
+    <ol class="qs" data-sec="s14">
+      <li><label><input type="checkbox" data-q="s14-1"><span>Make a <code>Phone</code> class with brand, model and storage. Create 3 phones by setting the fields one by one, and print them.</span></label><details><summary>Hint</summary><p>No constructor needed — use <code>phone1.brand = "..."</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-2"><span>Make a <code>Student</code> class (name, department, age). Create 3 students and print them with a helper method <code>printStudent(Student s)</code>.</span></label><details><summary>Hint</summary><p>The helper is <code>static void</code> and takes the whole object as its parameter.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-3"><span>Make a <code>Book</code> class (title, author, pageCount) with a constructor and a toString. Create 3 books and print them.</span></label><details><summary>Hint</summary><p>With toString, <code>System.out.println(book1)</code> is enough.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-4"><span>Make a <code>City</code> class (name, country, population) with a constructor. Create 3 cities with <code>new City("...", "...", ...)</code> and print each.</span></label><details><summary>Hint</summary><p>The constructor fills all fields in one line — no field assignments needed.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-5"><span>Make an <code>Employee</code> class (name, position, salary) with a constructor + toString. Create 3 employees and print them.</span></label><details><summary>Hint</summary><p>Exactly the pattern from the example above.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-6"><span>Make a <code>Movie</code> class (title, genre, rating as float). Create 3 movies and print them.</span></label><details><summary>Hint</summary><p>Remember: float fields take values like <code>8.5f</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-7"><span>Make a <code>Product</code> class (name, category, price as float). Create 3 products and print them.</span></label><details><summary>Hint</summary><p>Same recipe: constructor, toString, three objects.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-8"><span>Make a <code>GameScore</code> class (playerName, level, score). Create 4 score objects and print them.</span></label><details><summary>Hint</summary><p>All three fields can be simple types: String, int, int.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-9"><span>Make a <code>Member</code> class with <strong>two</strong> constructors: one taking only a name (other fields get default values), one taking everything.</span></label><details><summary>Hint</summary><p>Two constructors with different parameter lists — this is overloading.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-10"><span>In your own words: what does <code>this</code> mean inside a constructor, and why do we need it?</span></label><details><summary>Hint</summary><p>The parameter and the field often have the same name — <code>this.name</code> picks the field.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-11"><span>Make a <code>Country</code> class (capitalCity, population, language). Put several countries into an ArrayList and print the capitals of countries with population over 50000.</span></label><details><summary>Hint</summary><p>for-each over the list, then <code>country.population &gt; 50000</code>.</p></details></li>
+      <li><label><input type="checkbox" data-q="s14-12"><span>Make a <code>TravelPlan</code> class (destination, travelDays, transportType) with only a toString — no constructor. Create 3 plans by field assignment and print them.</span></label><details><summary>Hint</summary><p>Mix of the two styles: set fields by hand, print with println(object).</p></details></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div class="card">
+    <p><strong>You made it to the end!</strong> That was the whole repository: printing, variables, math, input, decisions, loops, strings, arrays, lists, maps, methods and classes.</p>
+    <p>If a quiz felt hard, go back to that part's examples and the matching files in the repo — every question here has a twin you already solved once. You knew all of this before, and it comes back fast. Good luck! ☕</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // --- tiny Java syntax highlighter ---
+  var KW = /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*")|('(?:[^'\\\n]|\\.)*')|\b(package|import|public|private|static|void|class|new|return|if|else|for|while|break|true|false|this)\b|\b(int|float|double|boolean|char|long|String|Scanner|ArrayList|List|Set|HashSet|HashMap|Integer|Double|Float|Character|System|Override)\b|\b(\d[\d_]*(?:\.\d+)?f?)\b/g;
+  document.querySelectorAll('pre code').forEach(function (el) {
+    var t = el.textContent.replace(/[&<>]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
+    });
+    t = t.replace(KW, function (m, co, st, ch, kw, ty, nu) {
+      if (co) return '<span class="tk-co">' + co + '</span>';
+      if (st) return '<span class="tk-st">' + st + '</span>';
+      if (ch) return '<span class="tk-st">' + ch + '</span>';
+      if (kw) return '<span class="tk-kw">' + kw + '</span>';
+      if (ty) return '<span class="tk-ty">' + ty + '</span>';
+      if (nu) return '<span class="tk-nu">' + nu + '</span>';
+      return m;
+    });
+    el.innerHTML = t;
+  });
+
+  // --- progress: checkboxes saved in localStorage ---
+  var KEY = 'javaBrushupProgress';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('input[data-q]'));
+
+  function refresh() {
+    var total = boxes.length, checked = 0;
+    boxes.forEach(function (cb) {
+      cb.closest('li').classList.toggle('done', cb.checked);
+      if (cb.checked) checked++;
+    });
+    var fill = document.getElementById('bar-fill');
+    var label = document.getElementById('bar-label');
+    if (fill) fill.style.width = (total ? (100 * checked / total) : 0) + '%';
+    if (label) label.textContent = checked + ' / ' + total + ' done';
+    document.querySelectorAll('ol.qs').forEach(function (ol) {
+      var sec = ol.getAttribute('data-sec');
+      var secBoxes = ol.querySelectorAll('input[data-q]');
+      var secDone = ol.querySelectorAll('input[data-q]:checked').length;
+      var badge = document.querySelector('.qcount[data-sec="' + sec + '"]');
+      if (badge) badge.textContent = secDone + ' / ' + secBoxes.length + ' done';
+    });
+  }
+
+  boxes.forEach(function (cb) {
+    cb.checked = !!done[cb.getAttribute('data-q')];
+    cb.addEventListener('change', function () {
+      done[cb.getAttribute('data-q')] = cb.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {}
+      refresh();
+    });
+  });
+  refresh();
+
+  // --- scroll-spy for the table of contents ---
+  var links = {};
+  document.querySelectorAll('#toc a').forEach(function (a) {
+    links[a.getAttribute('href').slice(1)] = a;
+  });
+  if ('IntersectionObserver' in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          if (current) current.classList.remove('active');
+          current = links[en.target.id];
+          if (current) current.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    document.querySelectorAll('section.topic').forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</html>
