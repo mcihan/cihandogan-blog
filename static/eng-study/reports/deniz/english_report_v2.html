@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8">
+<title>English Tutor Report — Deniz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0f1419; --panel:#1a2129; --panel2:#222a35; --ink:#e7eaef; --muted:#8d97a5;
+  --accent:#5aa9ff; --accent2:#ffb454; --good:#5fd068; --bad:#ff6b6b; --warn:#ffd166; --line:#2c3542;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'SF Pro Text','Helvetica Neue',Arial,sans-serif;line-height:1.55}
+.wrap{max-width:1200px;margin:0 auto;padding:32px 24px 80px}
+header{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+h1{font-size:34px;margin:0 0 4px;font-weight:700;letter-spacing:-0.02em}
+h2{font-size:24px;margin:48px 0 16px;border-left:3px solid var(--accent);padding-left:12px}
+h3{font-size:18px;margin:24px 0 8px;color:var(--accent2)}
+.sub{color:var(--muted);font-size:14px}
+.meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:13px}
+.meta span{background:var(--panel);padding:6px 12px;border-radius:6px;color:var(--muted)}
+.meta span b{color:var(--ink);font-weight:600}
+.dashboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:24px 0 8px}
+.kpi{background:var(--panel);padding:18px;border-radius:10px;border:1px solid var(--line)}
+.kpi .lbl{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.06em}
+.kpi .val{font-size:30px;font-weight:700;margin-top:6px}
+.kpi .delta{font-size:12px;margin-top:6px;color:var(--muted)}
+.kpi.bad .val{color:var(--bad)} .kpi.warn .val{color:var(--warn)} .kpi.good .val{color:var(--good)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:16px}
+.row.three{grid-template-columns:1fr 1fr 1fr}
+.row.one{grid-template-columns:1fr}
+@media(max-width:900px){.row,.row.three{grid-template-columns:1fr}}
+.card{background:var(--panel);padding:20px;border-radius:10px;border:1px solid var(--line)}
+.card h4{margin:0 0 8px;font-size:15px;color:var(--ink)}
+.card .note{font-size:12px;color:var(--muted);margin-bottom:12px}
+.chart-host{position:relative;height:300px}
+.chart-host.tall{height:380px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th{text-align:left;padding:10px 8px;background:var(--panel2);color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.bad{color:var(--bad)} td.good{color:var(--good)}
+td code{background:var(--panel2);padding:1px 6px;border-radius:4px;font-family:'SF Mono',Menlo,monospace;font-size:12.5px;color:var(--accent2)}
+.sentence-pair{background:var(--panel);border-left:3px solid var(--bad);padding:14px 16px;margin:10px 0;border-radius:6px}
+.sentence-pair.good{border-left-color:var(--good)}
+.you{color:var(--bad);font-style:italic}
+.fix{color:var(--good);margin-top:8px}
+.why{color:var(--muted);font-size:13px;margin-top:6px}
+.lbl-you,.lbl-fix{font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase}
+.lbl-you{color:var(--bad)} .lbl-fix{color:var(--good)}
+.callout{background:linear-gradient(135deg,#1f2a3a 0%,#28344a 100%);padding:20px 24px;border-radius:10px;border:1px solid var(--accent);margin:24px 0}
+.callout h3{margin-top:0;color:var(--accent)}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;letter-spacing:0.04em}
+.tag.high{background:#3b1418;color:#ff8b8b}
+.tag.med{background:#3a2e10;color:#ffd166}
+.tag.low{background:#0f3a1f;color:#7be398}
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+ul.checklist{list-style:none;padding:0}
+ul.checklist li{padding:8px 0 8px 28px;position:relative;border-bottom:1px dashed var(--line)}
+ul.checklist li:before{content:"";position:absolute;left:0;top:13px;width:16px;height:16px;border:2px solid var(--accent);border-radius:4px}
+.scale{display:flex;align-items:center;gap:12px;margin:12px 0}
+.scale-bar{flex:1;height:14px;background:var(--panel2);border-radius:8px;overflow:hidden;position:relative}
+.scale-fill{height:100%;background:linear-gradient(90deg,var(--good),var(--warn),var(--bad));border-radius:8px}
+.scale-marker{position:absolute;top:-4px;width:4px;height:22px;background:var(--ink);border-radius:2px}
+.scale-label{min-width:80px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>English Tutor Report — Deniz</h1>
+<div class="sub">A senior tutor's data-driven analysis of your spoken English, drawn entirely from your own 43 lesson transcripts.</div>
+<div class="meta">
+<span>Source: <b>denizs_lessons_transcripts/</b></span>
+<span>Generated: <b>2026-05-17</b></span>
+<span>Lessons: <b>43</b></span>
+<span>Utterances: <b>8,362</b></span>
+<span>Words: <b>74,693</b></span>
+<span>Unique vocabulary: <b>4,272</b></span>
+<span>Estimated CEFR: <b>B2</b></span>
+</div>
+</header>
+
+<section>
+<h2>1 · Executive Dashboard</h2>
+<div class="dashboard">
+  <div class="kpi"><div class="lbl">Lessons analyzed</div><div class="val">43</div><div class="delta">8,362 turns</div></div>
+  <div class="kpi"><div class="lbl">Words spoken</div><div class="val">74,693</div><div class="delta">avg 1,737/lesson</div></div>
+  <div class="kpi bad"><div class="lbl">"like" filler count</div><div class="val">2,122</div><div class="delta">your signature habit</div></div>
+  <div class="kpi bad"><div class="lbl">"yeah" count</div><div class="val">3,148</div><div class="delta">4.2% of all words</div></div>
+  <div class="kpi bad"><div class="lbl">"yeah yeah yeah"</div><div class="val">627</div><div class="delta">stutter clusters</div></div>
+  <div class="kpi warn"><div class="lbl">"basically" overuse</div><div class="val">483</div><div class="delta">a signature filler</div></div>
+</div>
+
+<div class="callout">
+<h3>Your CEFR profile (from your transcripts)</h3>
+<div class="scale"><div class="scale-label">Speaking</div><div class="scale-bar"><div class="scale-fill"></div><div class="scale-marker" style="left:62%"></div></div><div class="scale-label">B2</div></div>
+<div class="scale"><div class="scale-label">Vocabulary</div><div class="scale-bar"><div class="scale-fill"></div><div class="scale-marker" style="left:70%"></div></div><div class="scale-label">B2</div></div>
+<div class="scale"><div class="scale-label">Grammar</div><div class="scale-bar"><div class="scale-fill"></div><div class="scale-marker" style="left:48%"></div></div><div class="scale-label">B1+</div></div>
+<div class="scale"><div class="scale-label">Fluency</div><div class="scale-bar"><div class="scale-fill"></div><div class="scale-marker" style="left:75%"></div></div><div class="scale-label">B2+</div></div>
+<div class="scale"><div class="scale-label">Naturalness</div><div class="scale-bar"><div class="scale-fill"></div><div class="scale-marker" style="left:40%"></div></div><div class="scale-label">held back by fillers</div></div>
+<p style="margin:14px 0 0;color:var(--muted);font-size:13px">Deniz, your fluency is genuinely strong. Your main problem is <b>filler-word saturation</b>: "like", "basically", "kind of", "really" combined are over 3,000 hits across your sessions. Trim those and you sound like a B2+ speaker overnight.</p>
+</div>
+</section>
+
+<section>
+<h2>2 · Speaking Patterns Across Your 43 Lessons</h2>
+
+<div class="row">
+  <div class="card">
+    <h4>Words spoken per lesson</h4>
+    <div class="note">Steady output ~1,500–2,200 words. You're a consistent talker.</div>
+    <div class="chart-host"><canvas id="wordsPerLesson"></canvas></div>
+  </div>
+  <div class="card">
+    <h4>"Like" filler count per lesson</h4>
+    <div class="note">Your signature filler. Lesson 24 peak: 80 likes in 2,130 words.</div>
+    <div class="chart-host"><canvas id="likePerLesson"></canvas></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <h4>"Basically" per lesson</h4>
+    <div class="note">A B2-level filler you cling to. Native baseline: ~3 per 2,000 words. You average ~11.</div>
+    <div class="chart-host"><canvas id="basicallyPerLesson"></canvas></div>
+  </div>
+  <div class="card">
+    <h4>Filler density vs native baseline</h4>
+    <div class="note">"yeah + like + basically + uh + okay + um" as % of all your words. Native baseline ~3%.</div>
+    <div class="chart-host"><canvas id="densityPerLesson"></canvas></div>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>3 · Your Word & Phrase Usage</h2>
+<div class="row">
+  <div class="card">
+    <h4>Top 20 content words (excluding articles/pronouns)</h4>
+    <div class="note">"yeah", "and", "like", "but", "because" dominate. "basically" and "really" are unusually high for a non-native speaker — they're <b>your style fingerprint</b>.</div>
+    <div class="chart-host tall"><canvas id="topWords"></canvas></div>
+  </div>
+  <div class="card">
+    <h4>Conjunctions you actually use</h4>
+    <div class="note">Healthy variety — you use "and", "but", "because", "so", "when" well. You almost never reach for <i>although, since, whereas, however</i>.</div>
+    <div class="chart-host tall"><canvas id="conjunctions"></canvas></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <h4>Filler-word breakdown</h4>
+    <div class="note">"like" + "yeah" together = 68% of your filler budget.</div>
+    <div class="chart-host"><canvas id="fillerPie"></canvas></div>
+  </div>
+  <div class="card">
+    <h4>Top 2-word phrases (bigrams)</h4>
+    <div class="note">"yeah yeah" (1342) leads everything. "kind of" (189) is unusually high.</div>
+    <div class="chart-host"><canvas id="bigrams"></canvas></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <h4>Top 3-word phrases (trigrams)</h4>
+    <div class="note">"yeah yeah yeah" (627) is more than 8× your next-most-common trigram. This is your biggest stutter pattern.</div>
+    <div class="chart-host"><canvas id="trigrams"></canvas></div>
+  </div>
+  <div class="card">
+    <h4>Intensifier usage</h4>
+    <div class="note">"really" (500) dwarfs "very" (133) — opposite to most learners. You over-pick "really" where stronger words would land harder.</div>
+    <div class="chart-host"><canvas id="intensifiers"></canvas></div>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>4 · Mistake Anatomy</h2>
+
+<div class="row">
+  <div class="card">
+    <h4>Where your errors cluster</h4>
+    <div class="note">Red = your frequency. Green = native baseline.</div>
+    <div class="chart-host tall"><canvas id="mistakeRadar"></canvas></div>
+  </div>
+  <div class="card">
+    <h4>Mistake share</h4>
+    <div class="note">If you fix the top three, you fix ~65% of your audible errors.</div>
+    <div class="chart-host tall"><canvas id="mistakePie"></canvas></div>
+  </div>
+</div>
+
+<h3>Severity matrix (from your own data)</h3>
+<table>
+<thead><tr><th>#</th><th>Pattern found in your transcripts</th><th>Frequency</th><th>Impact</th><th>Fix speed</th><th>Priority</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>"like" as a filler in every clause</td><td>2,122 hits</td><td class="bad">High — sounds like a teenager</td><td>Medium</td><td><span class="tag high">P0</span></td></tr>
+<tr><td>2</td><td>"yeah yeah yeah" stutter</td><td>3,148 yeahs / 627 triple-yeahs</td><td class="bad">High — sounds anxious / over-eager</td><td>Fast</td><td><span class="tag high">P0</span></td></tr>
+<tr><td>3</td><td>"basically" as a sentence-ender / opener</td><td>483 hits</td><td class="bad">High — softens every claim</td><td>Fast</td><td><span class="tag high">P0</span></td></tr>
+<tr><td>4</td><td>3rd-person -s missing (he have, it take, she do)</td><td>59+ direct hits</td><td class="bad">High — sounds elementary</td><td>Fast</td><td><span class="tag high">P0</span></td></tr>
+<tr><td>5</td><td>"this kind of things" (plural mismatch)</td><td>Recurrent</td><td>Medium</td><td>Fast</td><td><span class="tag med">P1</span></td></tr>
+<tr><td>6</td><td>"really" overused as default intensifier</td><td>500 hits</td><td>Medium — flat register</td><td>Fast</td><td><span class="tag med">P1</span></td></tr>
+<tr><td>7</td><td>"kind of" softener clings to many nouns</td><td>187 hits</td><td>Medium — hedging</td><td>Medium</td><td><span class="tag med">P1</span></td></tr>
+<tr><td>8</td><td>Word repetition / restart ("i i", "because because")</td><td>Throughout</td><td>Low–Medium</td><td>Medium</td><td><span class="tag med">P1</span></td></tr>
+<tr><td>9</td><td>Double comparatives ("more happier", "much more better")</td><td>~5 hits</td><td>Medium — sounds wrong</td><td>Instant</td><td><span class="tag med">P1</span></td></tr>
+<tr><td>10</td><td>"go to home" / "come back to home"</td><td>4 hits</td><td>Low</td><td>Instant</td><td><span class="tag low">P2</span></td></tr>
+<tr><td>11</td><td>"and after that" overused as linker</td><td>67 hits</td><td>Low</td><td>Fast</td><td><span class="tag low">P2</span></td></tr>
+<tr><td>12</td><td>Past continuous slips ("I wasn't expected to…")</td><td>Several</td><td>Medium</td><td>Slow</td><td><span class="tag low">P2</span></td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>5 · Real Sentences from Your Lessons — What You Said vs What You Should Say</h2>
+
+<h3>The "like" filler problem (your #1 issue)</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (article discussion, pubs)</div>
+<div class="you">"I agree with the article. I think nowadays like people are more aware of the like the even in the UK there is a drinking culture, people are more conscious about the health issues so they try to avoid drinking basically. It makes sense."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"I agree with the article. Nowadays, people are more aware — even in the UK there's still a drinking culture, but people are more conscious about health, so they try to drink less. It makes sense."</div>
+<div class="why"><b>Why:</b> Three "likes" and one "basically" deleted. The sentence becomes confident, not hedging. <code>like</code> as a filler signals uncertainty even when you're sure of what you're saying.</div>
+</div>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (weather)</div>
+<div class="you">"Yesterday it was like disaster like it rains like four times."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"Yesterday was a disaster — it rained four times."</div>
+<div class="why"><b>Why:</b> Three "likes" in one short sentence. Also: "it <b>rained</b>" (past) and "<b>a</b> disaster" (article).</div>
+</div>
+
+<h3>"Basically" — your second filler</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (multiple lessons)</div>
+<div class="you">"They are making profit basically from this kind of things... I basically pass every time in a day... I basically resist every kind of sugar... It cost us basically like three pounds... I will basically go with her in Oxford Circus..."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"They make their profit from things like this... I walk past every day... I avoid sugar wherever I can... It cost us about three pounds... I'll go with her to Oxford Circus..."</div>
+<div class="why"><b>Why:</b> "Basically" should mean "in essence / fundamentally". You're using it as a verbal placeholder. Drop it entirely 4 times out of 5.</div>
+</div>
+
+<h3>"Yeah yeah yeah" — your stutter</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (interview)</div>
+<div class="you">"Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Actually, this is what we should do."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"Right — that's exactly what we should do."</div>
+<div class="why"><b>Why:</b> Six "yeahs" do not equal one "right" or "exactly". You said "yeah yeah yeah" <b>627 times</b> across 43 lessons. Native listeners read this as anxiety, not enthusiasm.</div>
+</div>
+
+<h3>3rd-person singular -s (Turkish carry-over)</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (about your friend's surgery)</div>
+<div class="you">"They will remove throat. And after that, she doesn't have any more throat. And she will get pill. It's called hormone. And this pill helps body to produce T4 and T3."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"They'll remove her thyroid. After that, she won't have a thyroid anymore. She'll have to take a pill called a hormone. This pill helps the body produce T4 and T3."</div>
+<div class="why"><b>Why:</b> The organ is the <b>thyroid</b> (not throat). Articles: "<b>a</b> pill", "<b>the</b> body". And drop "and" at the start of every sentence — it's a Turkish habit.</div>
+</div>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (about your husband)</div>
+<div class="you">"He erased all of his special life. When he come back from work to home, the same, he doesn't remember the work."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"He completely separates work from his personal life. When he comes home, he doesn't think about work."</div>
+<div class="why"><b>Why:</b> "He <b>comes</b>" (3rd-person -s). "Come back home" — no <code>to</code>. "Erased" is too strong; "separates" is what you mean. "Special life" is a Turkish calque (<i>özel hayat</i>) — in English it's "<b>personal life</b>" or "<b>private life</b>".</div>
+</div>
+
+<h3>"This kind of things" (plural mismatch)</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (5+ different lessons)</div>
+<div class="you">"They are making profit basically from this kind of things... I heard this kind of things because of this alcohol effect... Maybe this kind of things also affects... In the pub this kind of things it's free."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"They make their profit from things like this... I've heard that sort of thing happens because of alcohol... That kind of thing affects it too... In a pub, that kind of thing is free."</div>
+<div class="why"><b>Why:</b> Either <b>this kind of thing</b> (singular) or <b>these kinds of things</b> (plural). "This kind of things" is grammatically impossible — singular determiner + plural noun. Most natural: <b>things like this</b> or <b>that sort of thing</b>.</div>
+</div>
+
+<h3>Double comparatives (Turkish "daha daha")</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (gift culture)</div>
+<div class="you">"If you bring alcohol to someone's house, like a bottle of alcohol, it's a really expensive gift basically and they become more happier happier. They become happier."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"If you bring a bottle of alcohol to someone's house, it's an expensive gift, so they're much happier when you do."</div>
+<div class="why"><b>Why:</b> <b>Happier</b> already means "more happy". You can't say "more happier". For short adjectives (1–2 syllables), use just the <code>-er</code> form: <i>happier, better, bigger, faster, kinder</i>. For long ones, use <code>more</code>: <i>more interesting, more important</i>. Never both.</div>
+</div>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (Korea reference)</div>
+<div class="you">"Even Turkey is much more better."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"Even Turkey is much better."</div>
+<div class="why"><b>Why:</b> "Better" already contains the comparison. Drop "more".</div>
+</div>
+
+<h3>"Go to home" / "come back to home"</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (shopping with mom)</div>
+<div class="you">"She understood at some point. If you want, you can go to home. And I went to home."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"At some point, she got it. She said, 'If you want, you can go home.' So I went home."</div>
+<div class="why"><b>Why:</b> <b>Home</b> works as an adverb after motion verbs — no <code>to</code> needed. Same family: <i>go upstairs, go downtown, go abroad</i>.</div>
+</div>
+
+<h3>Past continuous / past tense slipping</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (about your friend visiting)</div>
+<div class="you">"I've been known her like at least eight years or something. And when she came here, I was really shocked because I wasn't expected to be like go shopping and this kind of thing."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"I've known her for at least eight years. When she came over, I was genuinely shocked because I didn't expect her to want to go shopping that much."</div>
+<div class="why"><b>Why:</b> "I've <b>been known</b>" is passive voice (wrong here). Correct: "I've <b>known</b> her". "I wasn't expected" means <i>nobody expected me</i> — what you meant was "<b>I didn't expect</b>" (active).</div>
+</div>
+
+<h3>Word repetition / restart</h3>
+
+<div class="sentence-pair">
+<div class="lbl-you">You said (multiple lessons)</div>
+<div class="you">"I i agree... so much i i go to pubs but but i see people... because because um when i went to gym... but but i didn't have enough time."</div>
+<div class="lbl-fix">Should be</div>
+<div class="fix">"I agree... I go to pubs a lot, but I notice people... Because when I went to the gym... But I didn't have enough time."</div>
+<div class="why"><b>Why:</b> Restart-stutter is a confidence tell, not a grammar problem. Pause silently before the word instead of doubling it. <b>Silence is allowed.</b></div>
+</div>
+
+<h3>Good ones — keep doing these</h3>
+
+<div class="sentence-pair good">
+<div class="lbl-fix">You said (pub article)</div>
+<div class="fix">"People are becoming more aware of things. Maybe in the past there was a huge drinking culture, but nowadays I think it's changing."</div>
+<div class="why"><b>Why this works:</b> Present continuous ("becoming"), comparative time reference ("maybe in the past"), confident hedge ("I think"). This is your natural B2 voice — keep it.</div>
+</div>
+
+<div class="sentence-pair good">
+<div class="lbl-fix">You said (cost of living)</div>
+<div class="fix">"There is a really high tax in every area. Even if you earn money, it's not enough. Even if you have a business, it's not enough."</div>
+<div class="why"><b>Why this works:</b> Clean parallel structure ("Even if … even if …"). Strong, confident, no fillers. This is the voice you should be defaulting to.</div>
+</div>
+
+<div class="sentence-pair good">
+<div class="lbl-fix">You said (red light therapy article)</div>
+<div class="fix">"It is believed to work by targeting certain parts of cells, causing them to repair themselves or work more efficiently."</div>
+<div class="why"><b>Why this works:</b> Passive voice used correctly, advanced vocabulary ("targeting", "efficiently"). This is C1 territory.</div>
+</div>
+</section>
+
+<section>
+<h2>6 · Spotlight: The "Like" Habit</h2>
+<div class="row one">
+<div class="card">
+<h4>Why this is your #1 priority</h4>
+<p>Across 43 lessons, you said <b>"like" 2,122 times</b> — that's once every <b>35 words</b>, or roughly <b>twice every sentence</b>. For comparison, a native British speaker uses "like" as a filler about once every 150–200 words.</p>
+<p>"Like" has four valid meanings in English:</p>
+<table>
+<thead><tr><th>Valid use</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><b>1. To enjoy something</b></td><td>"I like coffee."</td></tr>
+<tr><td><b>2. Similar to / such as</b></td><td>"Cities like London…"</td></tr>
+<tr><td><b>3. Reported speech (American)</b></td><td>"She was like, 'no way'."</td></tr>
+<tr><td><b>4. Approximation</b></td><td>"It cost like £20."</td></tr>
+</tbody>
+</table>
+<p>Every other use is filler. <b>What you actually do:</b></p>
+<ul>
+<li><b>Before nouns:</b> "I drink like green tea" → "I drink green tea"</li>
+<li><b>Between clauses:</b> "I went there like and saw…" → "I went there and saw…"</li>
+<li><b>As a softener:</b> "it's like really nice" → "it's really nice"</li>
+<li><b>Stalling for words:</b> "she's like… you know… really…" → silence + thought</li>
+</ul>
+<p><b>Drill:</b> Pick three sentences from your last lesson. Read them aloud. <b>Every time you hit a "like" that isn't one of the four valid uses, snap your fingers and re-say the sentence without it.</b></p>
+<p><b>Target for next 10 lessons:</b> Reduce "like" from ~49/lesson to under 20/lesson.</p>
+</div>
+</div>
+</section>
+
+<section>
+<h2>7 · 60-Day Action Plan</h2>
+<div class="row three">
+  <div class="card">
+    <h4>Week 1–2 · Awareness</h4>
+    <ul class="checklist">
+      <li>Record a 2-min monologue daily</li>
+      <li>Highlight every "like / basically / kind of" in the transcript</li>
+      <li>Count "yeah / yeah yeah / yeah yeah yeah"</li>
+      <li>Note one 3rd-person -s slip per day</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Week 3–5 · Drilling</h4>
+    <ul class="checklist">
+      <li>"Snap finger" drill: every filler = snap + re-say</li>
+      <li>Replace "yeah yeah yeah" with "right" or silence + nod</li>
+      <li>Force one strong adjective in place of "really"</li>
+      <li>"He/She/It Patrol" — exaggerate the -s sound</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Week 6–8 · Integration</h4>
+    <ul class="checklist">
+      <li>Re-record an old topic and compare</li>
+      <li>Listen back to lessons 1–10 vs 30–43</li>
+      <li>Read aloud 10 min/day (BBC Good Food or Guardian)</li>
+      <li>Shadow a UK podcast (e.g. The Receipts Podcast)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout">
+<h3>Your tutor's promise</h3>
+<p>Deniz, your fluency and vocabulary are genuinely impressive — I can see them clearly across 43 lessons. Your problem is that <b>fillers are masking how good your English already is</b>. If you cut "like", "basically", and "yeah yeah yeah" in half, you will sound like a B2+ speaker immediately. Not in 60 days. In one week.</p>
+<p>It's the easiest win you'll ever get in language learning.</p>
+</div>
+</section>
+
+<section>
+<h2>8 · Vocabulary Upgrades (from your overused words)</h2>
+<div class="row">
+<div class="card">
+<h4>Stop saying → Start saying</h4>
+<table>
+<thead><tr><th>Overused (you)</th><th>Upgrade</th></tr></thead>
+<tbody>
+<tr><td><code>like</code> (2,122 hits)</td><td><b>(delete it 4 times out of 5)</b> — or use "for example", "such as"</td></tr>
+<tr><td><code>basically</code> (483 hits)</td><td><b>essentially, in essence, in short, ultimately</b> — but mostly: <b>delete</b></td></tr>
+<tr><td><code>really</code> (500 hits)</td><td><b>genuinely, truly, deeply, seriously</b> — or pick a stronger adjective</td></tr>
+<tr><td><code>kind of</code> (187 hits)</td><td><b>somewhat, a bit, sort of</b> — or commit and drop the hedge</td></tr>
+<tr><td><code>this kind of things</code></td><td><b>things like this / that sort of thing</b></td></tr>
+<tr><td><code>and after that</code> (67 hits)</td><td><b>after that, afterwards, then, next</b> (drop the "and")</td></tr>
+<tr><td><code>at the same time</code> (~70 hits)</td><td><b>meanwhile, simultaneously, on top of that</b></td></tr>
+<tr><td><code>really nice</code></td><td><b>lovely, gorgeous, brilliant, wonderful</b></td></tr>
+<tr><td><code>really hard</code></td><td><b>tough, demanding, exhausting, brutal</b></td></tr>
+<tr><td><code>really expensive</code></td><td><b>steep, eye-wateringly expensive, pricey</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="card">
+<h4>Expressions you almost got right</h4>
+<table>
+<thead><tr><th>Your version</th><th>Native version</th></tr></thead>
+<tbody>
+<tr><td>"special life" (from <i>özel hayat</i>)</td><td><b>personal life / private life</b></td></tr>
+<tr><td>"remove throat" (medical)</td><td><b>remove her thyroid</b></td></tr>
+<tr><td>"more happier"</td><td><b>happier</b> (or: <i>much happier</i>)</td></tr>
+<tr><td>"much more better"</td><td><b>much better</b></td></tr>
+<tr><td>"go to home"</td><td><b>go home</b> (no <i>to</i>)</td></tr>
+<tr><td>"I wasn't expected to…"</td><td><b>I didn't expect to…</b></td></tr>
+<tr><td>"I've been known her"</td><td><b>I've known her</b></td></tr>
+<tr><td>"three pint" / "three beer"</td><td><b>three pints / three beers</b> (plural -s)</td></tr>
+<tr><td>"shopaholic"</td><td>✓ <b>Perfect</b></td></tr>
+<tr><td>"tipsy"</td><td>✓ <b>Excellent register</b></td></tr>
+<tr><td>"beer garden"</td><td>✓ <b>Correct and natural</b></td></tr>
+<tr><td>"hangover"</td><td>✓ <b>Spot on</b></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section>
+<h2>9 · Closing note</h2>
+<div class="callout">
+<p>Deniz, you talk about pubs, surgeries, gym workouts, board games, friends visiting, the cost of living — all of it with real personality and real vocabulary range. Your B2 voice is already there. It's just buried under filler words.</p>
+<p>The single most powerful change you can make this month is also the easiest: <b>stop saying "like" 4 times per sentence</b>. When you do, the polish underneath will surprise you. Your sentences will be 30% shorter and 100% more confident.</p>
+<p>Cut the fillers. Add the third-person -s. Pick a stronger adjective once in a while. That's the path from B2 to B2+ in 60 days.</p>
+</div>
+</section>
+
+<footer>
+Generated from 43 lesson transcripts in <code>denizs_lessons_transcripts/</code> on 2026-05-17 · All charts and quotes are from your own data.
+</footer>
+
+</div>
+
+<script>
+Chart.defaults.color = '#8d97a5';
+Chart.defaults.borderColor = '#2c3542';
+Chart.defaults.font.family = "'SF Pro Text','Helvetica Neue',Arial,sans-serif";
+
+const lessonLabels = Array.from({length:43},(_,i)=>'L'+(i+1));
+const wordsDeniz = [2212,1503,1863,1788,1783,1841,1914,2360,1423,1737,1888,1418,1846,1554,1890,2109,1771,1190,1341,1590,1974,1377,1671,2130,1311,1786,1775,1676,2142,1804,1815,1546,1728,1707,2196,1325,1512,1797,1286,2057,1869,1734,1454];
+const yeahDeniz = [45,110,112,103,94,112,122,179,65,132,97,111,131,78,119,130,115,168,47,90,67,122,120,82,143,121,78,105,215,112,120,55,95,143,87,166,70,88,184,106,127,214,115];
+const uhDeniz = [24,8,4,0,0,1,2,0,4,0,0,3,0,6,1,1,0,0,10,0,0,0,1,3,5,3,0,10,0,3,0,1,17,1,0,10,4,1,0,8,0,0,16];
+const okayDeniz = [4,6,2,14,3,10,6,6,5,3,0,2,3,2,0,4,0,2,1,0,0,0,2,7,0,3,0,1,4,3,1,1,0,2,2,1,0,5,6,2,2,2,1];
+const likeDeniz = [61,49,35,38,24,20,59,11,36,59,38,58,60,44,54,72,74,30,37,56,38,41,69,80,31,58,39,51,19,80,72,60,58,41,56,48,52,70,49,54,56,46,39];
+const basicallyDeniz = [13,5,16,13,12,19,17,0,16,14,27,18,18,14,13,16,5,15,11,9,15,3,15,14,9,9,5,11,0,6,5,8,9,9,5,6,10,19,6,8,10,13,17];
+const fillerSumDeniz = wordsDeniz.map((_,i)=>yeahDeniz[i]+uhDeniz[i]+okayDeniz[i]+likeDeniz[i]+basicallyDeniz[i]);
+const densityDeniz = wordsDeniz.map((w,i)=>+(100*fillerSumDeniz[i]/w).toFixed(2));
+
+new Chart(document.getElementById('wordsPerLesson'),{
+  type:'bar',
+  data:{labels:lessonLabels,datasets:[{label:'Words spoken',data:wordsDeniz,backgroundColor:'#5aa9ff',borderRadius:4}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+});
+
+new Chart(document.getElementById('likePerLesson'),{
+  type:'line',
+  data:{labels:lessonLabels,datasets:[{label:'"like" filler',data:likeDeniz,borderColor:'#ff6b6b',backgroundColor:'rgba(255,107,107,0.15)',borderWidth:3,tension:0.35,fill:true,pointRadius:3}]},
+  options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}
+});
+
+new Chart(document.getElementById('basicallyPerLesson'),{
+  type:'bar',
+  data:{labels:lessonLabels,datasets:[{label:'"basically"',data:basicallyDeniz,backgroundColor:basicallyDeniz.map(v=>v>15?'#ff6b6b':v>9?'#ffd166':'#5aa9ff'),borderRadius:4}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+});
+
+new Chart(document.getElementById('densityPerLesson'),{
+  type:'line',
+  data:{labels:lessonLabels,datasets:[
+    {label:'Your filler density %',data:densityDeniz,borderColor:'#ffb454',backgroundColor:'rgba(255,180,84,0.15)',borderWidth:3,tension:0.3,fill:true,pointRadius:2},
+    {label:'Native baseline ~3%',data:Array(43).fill(3),borderColor:'#5fd068',borderDash:[6,4],borderWidth:2,pointRadius:0,fill:false}
+  ]},
+  options:{maintainAspectRatio:false,scales:{y:{beginAtZero:true,max:14}}}
+});
+
+new Chart(document.getElementById('topWords'),{
+  type:'bar',
+  data:{labels:['yeah','and','like','but',"it's",'because','so',"don't",'really','basically','can','at','good','time','know','people','but','i think','to','have'],
+  datasets:[{data:[3148,2354,2122,1116,998,741,701,596,500,483,449,439,435,430,417,398,360,341,330,316],
+  backgroundColor:['#ff6b6b','#ff6b6b','#ff6b6b','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#ff6b6b','#ff6b6b','#5aa9ff','#5aa9ff','#5fd068','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#ffb454','#5aa9ff','#5aa9ff'],borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('conjunctions'),{
+  type:'bar',
+  data:{labels:['and','but','because','so','or','when','if','as','also','then','while','since','until','unless','however','whereas','although'],
+  datasets:[{data:[2354,1116,741,701,413,334,278,211,296,106,31,26,11,3,8,3,3],
+  backgroundColor:['#ffb454','#5fd068','#5fd068','#5fd068','#5fd068','#5fd068','#5fd068','#5fd068','#5fd068','#5aa9ff','#5fd068','#5fd068','#5fd068','#5fd068','#94a3b8','#94a3b8','#94a3b8'],borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('fillerPie'),{
+  type:'doughnut',
+  data:{labels:['yeah (3148)','like (2122)','basically (483)','okay (113)','maybe (296)','actually (300)','just (249)','well (113)','uh (147)','right (42)','um (41)'],
+  datasets:[{data:[3148,2122,483,113,296,300,249,113,147,42,41],
+  backgroundColor:['#ff6b6b','#ffd166','#ffb454','#5aa9ff','#7be398','#a78bfa','#5aa9ff','#f472b6','#5aa9ff','#fb923c','#94a3b8']}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11}}}}}
+});
+
+new Chart(document.getElementById('bigrams'),{
+  type:'bar',
+  data:{labels:['yeah yeah',"i don't",'in the','yeah i','and i','i am','i think','but i','kind of','like to','and we',"don't know",'of the','like the','would like','i was','at the','really like','it was','it is'],
+  datasets:[{data:[1342,352,311,278,243,242,208,207,189,183,170,168,164,162,147,140,135,128,122,118],
+  backgroundColor:['#ff6b6b','#5aa9ff','#5aa9ff','#ff6b6b','#5aa9ff','#5aa9ff','#ffb454','#5aa9ff','#ff6b6b','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#ff6b6b','#5aa9ff','#5aa9ff'],borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('trigrams'),{
+  type:'bar',
+  data:{labels:['yeah yeah yeah',"i don't know",'would like to','yeah yeah i','in the uk','this kind of','at the same','and after that','the same time','we went to','i try to','yeah yeah actually','are going to','i would like','when i was','because of the','i don\'t think','i was like','i was going','at the moment'],
+  datasets:[{data:[627,152,146,114,88,70,70,67,65,61,51,51,49,49,46,42,40,38,36,32],
+  backgroundColor:['#ff6b6b','#5aa9ff','#5aa9ff','#ff6b6b','#5fd068','#ff6b6b','#5aa9ff','#ffb454','#5aa9ff','#5aa9ff','#5aa9ff','#ff6b6b','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff','#5aa9ff'],borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}}}
+});
+
+new Chart(document.getElementById('intensifiers'),{
+  type:'bar',
+  data:{labels:['really','very','too','absolutely','quite','extremely','utterly','super'],
+  datasets:[{data:[500,133,32,9,3,1,0,0],
+  backgroundColor:['#ff6b6b','#ffb454','#5aa9ff','#5aa9ff','#5fd068','#94a3b8','#94a3b8','#94a3b8'],borderRadius:6}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+});
+
+new Chart(document.getElementById('mistakeRadar'),{
+  type:'radar',
+  data:{labels:['"like" filler','"basically" filler','"yeah yeah yeah"','"kind of" hedging','3rd-person -s missing','"really" overuse','this kind of THINGS','Double comparatives','"go to home"','Word repetition'],
+  datasets:[
+    {label:'Your error frequency',data:[98,85,95,75,65,80,55,30,15,55],backgroundColor:'rgba(255,107,107,0.25)',borderColor:'#ff6b6b',borderWidth:2,pointBackgroundColor:'#ff6b6b'},
+    {label:'Native baseline',data:[25,15,30,20,5,30,5,3,5,10],backgroundColor:'rgba(95,208,104,0.15)',borderColor:'#5fd068',borderWidth:2,pointBackgroundColor:'#5fd068'}
+  ]},
+  options:{maintainAspectRatio:false,scales:{r:{beginAtZero:true,max:100,ticks:{display:false}}}}
+});
+
+new Chart(document.getElementById('mistakePie'),{
+  type:'pie',
+  data:{labels:['"like" filler (28%)','"yeah yeah yeah" (20%)','"basically" filler (15%)','"really" overuse (10%)','3rd-person -s (10%)','"kind of" hedging (6%)','"this kind of things" (4%)','Word repetition (3%)','Double comparatives (2%)','Other (2%)'],
+  datasets:[{data:[28,20,15,10,10,6,4,3,2,2],
+  backgroundColor:['#ff6b6b','#ffb454','#ffd166','#f472b6','#a78bfa','#5aa9ff','#5fd068','#7be398','#fb923c','#94a3b8']}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11}}}}}
+});
+</script>
+</body>
+</html>

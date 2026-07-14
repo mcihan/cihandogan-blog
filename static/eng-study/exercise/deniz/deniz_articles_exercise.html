@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Articles (a / an / the) — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Articles (a / an / the) — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Articles (a / an / the)</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "I can't keep up with the technology.", "a": ["I can't keep up with technology."], "explanation": "Abstract / general nouns ('technology' meaning technology in general) take zero article."}, {"type": "correct", "q": "Because of the technology, life is faster.", "a": ["Because of technology, life is faster."], "explanation": "'Technology' in a general sense — no 'the'."}, {"type": "correct", "q": "You don't think about the work on weekends.", "a": ["You don't think about work on weekends."], "explanation": "'Work' here is general/abstract → zero article."}, {"type": "correct", "q": "The English taught us a lot.", "a": ["English taught us a lot."], "explanation": "Language names take zero article."}, {"type": "correct", "q": "They destroyed the nature there.", "a": ["They destroyed nature there.", "They destroyed the natural environment there."], "explanation": "'Nature' (in general) takes zero article; use 'the natural environment' if you mean a specific place."}, {"type": "correct", "q": "I want to open a company in UK.", "a": ["I want to open a company in the UK."], "explanation": "Country names with 'Kingdom/States/Republic' take 'the': the UK, the US."}, {"type": "correct", "q": "Where do you live, in UK or in US?", "a": ["Where do you live, in the UK or in the US?"], "explanation": "Both 'the UK' and 'the US' need 'the'."}, {"type": "correct", "q": "We always make a joke about this situation in us.", "a": ["We always make a joke about this situation in the US."], "explanation": "'In the US' — capitalise and use 'the'."}, {"type": "correct", "q": "If you want, you can go to home.", "a": ["If you want, you can go home."], "explanation": "'Go home' is a fixed expression — no preposition, no article."}, {"type": "fill", "q": "I have to be at ___ home tonight by 9 pm.", "a": ["-", "x", "no article", ""], "explanation": "'At home' takes zero article — fixed expression."}, {"type": "fill", "q": "My sister lives in ___ Netherlands.", "a": ["the"], "explanation": "Plural country names take 'the': the Netherlands, the Philippines."}, {"type": "fill", "q": "I prefer ___ life in a small town.", "a": ["-", "x", "no article", ""], "explanation": "Abstract general noun → zero article."}, {"type": "fill", "q": "___ life in a small town is quieter than ___ life in a city.", "a": ["- -", "Life Life", "no article no article"], "explanation": "Both 'life' uses are general/abstract → zero article."}, {"type": "fill", "q": "He is studying ___ medicine at university.", "a": ["-", "x", "no article", ""], "explanation": "Fields of study take zero article."}, {"type": "fill", "q": "She works in ___ UAE.", "a": ["the"], "explanation": "'the UAE' — federation/union names take 'the'."}, {"type": "fill", "q": "I went to ___ work by bus this morning.", "a": ["-", "x", "no article", ""], "explanation": "'Go to work' is a fixed expression — no article."}, {"type": "fill", "q": "He is in ___ hospital after the accident.", "a": ["-", "x", "no article", ""], "explanation": "'In hospital' (UK) = as a patient — no article. (US English uses 'in the hospital'.)"}, {"type": "correct", "q": "The religion makes people a bit silly.", "a": ["Religion makes people a bit silly."], "explanation": "Abstract nouns in general statements take zero article."}, {"type": "correct", "q": "I love the music in the morning.", "a": ["I love music in the morning.", "I love listening to music in the morning."], "explanation": "'Music' in general → zero article. ('The music' = specific music you've mentioned.)"}, {"type": "fill", "q": "I bought ___ house in ___ UK last year.", "a": ["a the"], "explanation": "'a house' (indefinite singular countable), 'the UK' (country with 'Kingdom')."}, {"type": "fill", "q": "He gave ___ presentation about ___ AI yesterday.", "a": ["a -", "a no article"], "explanation": "'A presentation' (indefinite), 'AI' in general → zero article."}, {"type": "correct", "q": "My job is to study the human behaviour.", "a": ["My job is to study human behaviour."], "explanation": "General concept → zero article."}, {"type": "fill", "q": "Fruit is more expensive in ___ UK than in Turkey.", "a": ["the"], "explanation": "'the UK' takes 'the'; 'Turkey' (single-word country) takes zero article."}, {"type": "correct", "q": "I want to learn the English better.", "a": ["I want to learn English better."], "explanation": "Language names take zero article."}, {"type": "correct", "q": "The immigrants in the UK come from all over.", "a": ["Immigrants in the UK come from all over."], "explanation": "General plural → zero article; 'the UK' keeps 'the'."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

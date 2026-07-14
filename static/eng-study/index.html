@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>English with AI — Learning Hub</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #1e2433;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --cihan: #2563eb;
+    --cihan-soft: #eff4ff;
+    --deniz: #0d9488;
+    --deniz-soft: #ecfaf8;
+    --generic: #7c3aed;
+    --generic-soft: #f4efff;
+    --shadow: 0 1px 3px rgba(30, 41, 59, 0.08), 0 4px 14px rgba(30, 41, 59, 0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding-bottom: 60px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #0d9488 100%);
+    color: #fff;
+    padding: 40px 24px 32px;
+    text-align: center;
+  }
+  header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
+  header p { margin-top: 6px; opacity: 0.85; font-size: 0.98rem; }
+  .header-stats {
+    display: flex; justify-content: center; gap: 28px; margin-top: 22px; flex-wrap: wrap;
+  }
+  .header-stats div { text-align: center; }
+  .header-stats .num { font-size: 1.5rem; font-weight: 700; }
+  .header-stats .lbl { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+
+  /* ---------- Layout ---------- */
+  main { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Controls ---------- */
+  .controls {
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    margin: -22px auto 28px;
+    background: var(--card); border-radius: 14px; box-shadow: var(--shadow);
+    padding: 14px 18px;
+  }
+  .controls input[type="search"] {
+    flex: 1; min-width: 220px;
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; font-size: 0.95rem; outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .controls input[type="search"]:focus {
+    border-color: var(--cihan); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+  .filter-btns { display: flex; gap: 8px; }
+  .filter-btn {
+    border: 1px solid var(--border); background: #fff; color: var(--muted);
+    border-radius: 999px; padding: 8px 16px; font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: #cbd5e1; color: var(--text); }
+  .filter-btn.active-all    { background: var(--text);   border-color: var(--text);   color: #fff; }
+  .filter-btn.active-cihan  { background: var(--cihan);  border-color: var(--cihan);  color: #fff; }
+  .filter-btn.active-deniz  { background: var(--deniz);  border-color: var(--deniz);  color: #fff; }
+
+  /* ---------- Student sections ---------- */
+  .student {
+    background: var(--card); border-radius: 16px; box-shadow: var(--shadow);
+    margin-bottom: 32px; overflow: hidden;
+  }
+  .student-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+  }
+  .avatar {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1.15rem; color: #fff; flex-shrink: 0;
+  }
+  .student.cihan .avatar { background: var(--cihan); }
+  .student.deniz .avatar { background: var(--deniz); }
+  .student.generic .avatar { background: var(--generic); }
+  .student-head h2 { font-size: 1.25rem; }
+  .student-head .sub { font-size: 0.85rem; color: var(--muted); }
+  .count-pill {
+    margin-left: auto; font-size: 0.8rem; font-weight: 600; color: var(--muted);
+    background: var(--bg); border-radius: 999px; padding: 5px 12px;
+  }
+
+  .student-body { padding: 20px 24px 26px; }
+
+  .group { margin-bottom: 26px; }
+  .group:last-child { margin-bottom: 0; }
+  .group-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--muted); margin-bottom: 12px;
+  }
+  .group-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 10px;
+  }
+
+  a.card {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--text);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 14px; background: #fff;
+    font-size: 0.92rem; font-weight: 500;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  a.card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .student.cihan a.card:hover { border-color: var(--cihan); }
+  .student.deniz a.card:hover { border-color: var(--deniz); }
+  .student.generic a.card:hover { border-color: var(--generic); }
+  a.card .icon {
+    width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .student.cihan a.card .icon { background: var(--cihan-soft); }
+  .student.deniz a.card .icon { background: var(--deniz-soft); }
+  .student.generic a.card .icon { background: var(--generic-soft); }
+
+  a.card.featured {
+    grid-column: 1 / -1;
+    font-size: 1rem; font-weight: 600; padding: 16px;
+  }
+  .student.cihan a.card.featured { background: var(--cihan-soft); border-color: rgba(37,99,235,0.35); }
+  .student.deniz a.card.featured { background: var(--deniz-soft); border-color: rgba(13,148,136,0.35); }
+  a.card.featured .desc { display: block; font-size: 0.82rem; font-weight: 400; color: var(--muted); margin-top: 2px; }
+
+  .hidden { display: none !important; }
+
+  .no-results {
+    text-align: center; color: var(--muted); padding: 40px 0; display: none;
+  }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 8px; }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    header h1 { font-size: 1.5rem; }
+  }
+  /* ---------- Password gate ---------- */
+  #pw-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #0d9488 100%);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+  }
+  #pw-gate .box {
+    background: var(--card); border-radius: 16px; box-shadow: var(--shadow);
+    padding: 36px 32px; max-width: 380px; width: 100%; text-align: center;
+  }
+  #pw-gate .box .lock-icon { font-size: 2.2rem; margin-bottom: 10px; }
+  #pw-gate .box h2 { font-size: 1.2rem; margin-bottom: 4px; }
+  #pw-gate .box p { font-size: 0.88rem; color: var(--muted); margin-bottom: 20px; }
+  #pw-gate input[type="password"] {
+    width: 100%; border: 1px solid var(--border); border-radius: 10px;
+    padding: 11px 14px; font-size: 1rem; outline: none; margin-bottom: 12px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  #pw-gate input[type="password"]:focus {
+    border-color: var(--cihan); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+  #pw-gate button {
+    width: 100%; border: none; border-radius: 10px; padding: 11px;
+    background: var(--cihan); color: #fff; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; transition: background 0.15s;
+  }
+  #pw-gate button:hover { background: #1d4ed8; }
+  #pw-gate .error { color: #dc2626; font-size: 0.85rem; margin-top: 10px; min-height: 1.2em; }
+</style>
+</head>
+<body>
+
+<style id="gate-hide">header, main { display: none; }</style>
+<div id="pw-gate">
+  <form class="box" id="pw-form">
+    <div class="lock-icon">🔒</div>
+    <h2>Private Area</h2>
+    <p>Enter the password to access the learning hub.</p>
+    <input type="password" id="pw-input" placeholder="Password" autocomplete="current-password" autofocus>
+    <button type="submit">Unlock</button>
+    <div class="error" id="pw-error"></div>
+  </form>
+</div>
+<script>
+(function () {
+  const KEY = 'engstudy-auth';
+  const HASH = 'ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d';
+
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function unlock() {
+    document.getElementById('gate-hide').remove();
+    document.getElementById('pw-gate').remove();
+  }
+
+  if (sessionStorage.getItem(KEY) === HASH) {
+    unlock();
+    return;
+  }
+
+  document.getElementById('pw-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const input = document.getElementById('pw-input');
+    const error = document.getElementById('pw-error');
+    if (await sha256(input.value) === HASH) {
+      sessionStorage.setItem(KEY, HASH);
+      unlock();
+    } else {
+      error.textContent = 'Wrong password, try again.';
+      input.value = '';
+      input.focus();
+    }
+  });
+})();
+</script>
+
+<header>
+  <h1>📚 English with AI — Learning Hub</h1>
+  <p>Personalized reports, exercises and vocabulary practice for Cihan &amp; Deniz</p>
+  <div class="header-stats">
+    <div><div class="num">2</div><div class="lbl">Students</div></div>
+    <div><div class="num">31</div><div class="lbl">Topic Exercises</div></div>
+    <div><div class="num">6</div><div class="lbl">Mixed Tests</div></div>
+    <div><div class="num">7</div><div class="lbl">Reports &amp; Dashboards</div></div>
+  </div>
+</header>
+
+<main>
+  <div class="controls">
+    <input type="search" id="search" placeholder="Search exercises, reports, topics… (e.g. tenses, articles)">
+    <div class="filter-btns">
+      <button class="filter-btn active-all" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="cihan">Cihan</button>
+      <button class="filter-btn" data-filter="deniz">Deniz</button>
+    </div>
+  </div>
+
+  <!-- ==================== CIHAN ==================== -->
+  <section class="student cihan" data-student="cihan">
+    <div class="student-head">
+      <div class="avatar">C</div>
+      <div>
+        <h2>Cihan</h2>
+        <div class="sub">Progress dashboard · diagnostic reports · 14 topic exercises · 3 mixed tests · vocabulary</div>
+      </div>
+      <span class="count-pill">21 pages</span>
+    </div>
+    <div class="student-body">
+
+      <div class="group">
+        <div class="group-title">📊 Reports &amp; Dashboard</div>
+        <div class="grid">
+          <a class="card featured" href="reports/cihan/dashboard.html">
+            <span class="icon">📈</span>
+            <span>Progress Dashboard<span class="desc">Overview of strengths, weaknesses and lesson progress</span></span>
+          </a>
+          <a class="card" href="reports/cihan/english_report_v1.html"><span class="icon">📄</span>English Report — v1</a>
+          <a class="card" href="reports/cihan/english_report_v2.html"><span class="icon">📄</span>English Report — v2</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">🧠 Vocabulary</div>
+        <div class="grid">
+          <a class="card" href="vocabulary/learn/cihan/vocabulary_learn.html"><span class="icon">🗂️</span>Vocabulary Learning</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">✏️ Topic Exercises <span style="text-transform:none;letter-spacing:0;">(25 questions each)</span></div>
+        <div class="grid">
+          <a class="card" href="exercise/cihan/cihan_articles_exercise.html"><span class="icon">🔤</span>Articles</a>
+          <a class="card" href="exercise/cihan/cihan_tenses_exercise.html"><span class="icon">⏳</span>Verb Tenses</a>
+          <a class="card" href="exercise/cihan/cihan_prepositions_exercise.html"><span class="icon">📍</span>Prepositions</a>
+          <a class="card" href="exercise/cihan/cihan_subject_verb_agreement_exercise.html"><span class="icon">🤝</span>Subject–Verb Agreement</a>
+          <a class="card" href="exercise/cihan/cihan_sentence_structure_exercise.html"><span class="icon">🏗️</span>Sentence Structure</a>
+          <a class="card" href="exercise/cihan/cihan_word_order_exercise.html"><span class="icon">🔀</span>Word Order</a>
+          <a class="card" href="exercise/cihan/cihan_question_formation_exercise.html"><span class="icon">❓</span>Question Formation</a>
+          <a class="card" href="exercise/cihan/cihan_modal_verbs_exercise.html"><span class="icon">🎛️</span>Modal Verbs</a>
+          <a class="card" href="exercise/cihan/cihan_gerunds_infinitives_exercise.html"><span class="icon">🔁</span>Gerunds vs Infinitives</a>
+          <a class="card" href="exercise/cihan/cihan_conditionals_exercise.html"><span class="icon">🔮</span>Conditionals</a>
+          <a class="card" href="exercise/cihan/cihan_passive_voice_exercise.html"><span class="icon">🔄</span>Passive Voice</a>
+          <a class="card" href="exercise/cihan/cihan_plurals_exercise.html"><span class="icon">👥</span>Plurals</a>
+          <a class="card" href="exercise/cihan/cihan_connectors_exercise.html"><span class="icon">🔗</span>Connectors</a>
+          <a class="card" href="exercise/cihan/cihan_vocabulary_exercise.html"><span class="icon">📖</span>Vocabulary</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">🎯 Mixed Comprehensive Tests</div>
+        <div class="grid">
+          <a class="card" href="exercise/cihan/cihan_mixed_test_1.html"><span class="icon">1️⃣</span>Mixed Test 1</a>
+          <a class="card" href="exercise/cihan/cihan_mixed_test_2.html"><span class="icon">2️⃣</span>Mixed Test 2</a>
+          <a class="card" href="exercise/cihan/cihan_mixed_test_3.html"><span class="icon">3️⃣</span>Mixed Test 3</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== DENIZ ==================== -->
+  <section class="student deniz" data-student="deniz">
+    <div class="student-head">
+      <div class="avatar">D</div>
+      <div>
+        <h2>Deniz</h2>
+        <div class="sub">Progress dashboard · diagnostic reports · 14 topic exercises · 3 mixed tests · vocabulary</div>
+      </div>
+      <span class="count-pill">21 pages</span>
+    </div>
+    <div class="student-body">
+
+      <div class="group">
+        <div class="group-title">📊 Reports &amp; Dashboard</div>
+        <div class="grid">
+          <a class="card featured" href="reports/deniz/dashboard.html">
+            <span class="icon">📈</span>
+            <span>Progress Dashboard<span class="desc">Overview of strengths, weaknesses and lesson progress</span></span>
+          </a>
+          <a class="card" href="reports/deniz/english_report_v1.html"><span class="icon">📄</span>English Report — v1</a>
+          <a class="card" href="reports/deniz/english_report_v2.html"><span class="icon">📄</span>English Report — v2</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">🧠 Vocabulary</div>
+        <div class="grid">
+          <a class="card" href="vocabulary/learn/deniz/vocabulary_learn.html"><span class="icon">🗂️</span>Vocabulary Learning</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">✏️ Topic Exercises <span style="text-transform:none;letter-spacing:0;">(25 questions each)</span></div>
+        <div class="grid">
+          <a class="card" href="exercise/deniz/deniz_articles_exercise.html"><span class="icon">🔤</span>Articles</a>
+          <a class="card" href="exercise/deniz/deniz_tenses_exercise.html"><span class="icon">⏳</span>Verb Tenses</a>
+          <a class="card" href="exercise/deniz/deniz_prepositions_exercise.html"><span class="icon">📍</span>Prepositions</a>
+          <a class="card" href="exercise/deniz/deniz_sentence_structure_exercise.html"><span class="icon">🏗️</span>Sentence Structure</a>
+          <a class="card" href="exercise/deniz/deniz_relative_clauses_exercise.html"><span class="icon">🧩</span>Relative Clauses</a>
+          <a class="card" href="exercise/deniz/deniz_comparatives_exercise.html"><span class="icon">⚖️</span>Comparatives</a>
+          <a class="card" href="exercise/deniz/deniz_modal_verbs_exercise.html"><span class="icon">🎛️</span>Modal Verbs</a>
+          <a class="card" href="exercise/deniz/deniz_conditionals_exercise.html"><span class="icon">🔮</span>Conditionals</a>
+          <a class="card" href="exercise/deniz/deniz_passive_voice_exercise.html"><span class="icon">🔄</span>Passive Voice</a>
+          <a class="card" href="exercise/deniz/deniz_plurals_exercise.html"><span class="icon">👥</span>Plurals</a>
+          <a class="card" href="exercise/deniz/deniz_connectors_exercise.html"><span class="icon">🔗</span>Connectors</a>
+          <a class="card" href="exercise/deniz/deniz_collocations_exercise.html"><span class="icon">🧲</span>Collocations</a>
+          <a class="card" href="exercise/deniz/deniz_word_form_exercise.html"><span class="icon">🔠</span>Word Forms</a>
+          <a class="card" href="exercise/deniz/deniz_vocabulary_exercise.html"><span class="icon">📖</span>Vocabulary</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-title">🎯 Mixed Comprehensive Tests</div>
+        <div class="grid">
+          <a class="card" href="exercise/deniz/deniz_mixed_test_1.html"><span class="icon">1️⃣</span>Mixed Test 1</a>
+          <a class="card" href="exercise/deniz/deniz_mixed_test_2.html"><span class="icon">2️⃣</span>Mixed Test 2</a>
+          <a class="card" href="exercise/deniz/deniz_mixed_test_3.html"><span class="icon">3️⃣</span>Mixed Test 3</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== SHARED ==================== -->
+  <section class="student generic" data-student="all">
+    <div class="student-head">
+      <div class="avatar">✦</div>
+      <div>
+        <h2>Shared Resources</h2>
+        <div class="sub">Generic materials not tied to one student</div>
+      </div>
+      <span class="count-pill">1 page</span>
+    </div>
+    <div class="student-body">
+      <div class="group">
+        <div class="group-title">📊 Reports</div>
+        <div class="grid">
+          <a class="card" href="reports/generic/english_report.html"><span class="icon">📄</span>Generic English Report</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="no-results" id="noResults">No pages match your search.</p>
+
+  <footer>English with AI · 44 learning pages · open any card to start practicing</footer>
+</main>
+
+<script>
+  const searchInput = document.getElementById('search');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const sections = document.querySelectorAll('.student');
+  const noResults = document.getElementById('noResults');
+  let activeFilter = 'all';
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.dataset.filter;
+      filterBtns.forEach(b => b.classList.remove('active-all', 'active-cihan', 'active-deniz'));
+      btn.classList.add('active-' + (activeFilter === 'all' ? 'all' : activeFilter));
+      applyFilters();
+    });
+  });
+
+  searchInput.addEventListener('input', applyFilters);
+
+  function applyFilters() {
+    const q = searchInput.value.trim().toLowerCase();
+    let anyVisible = false;
+
+    sections.forEach(section => {
+      const student = section.dataset.student;
+      const studentMatch = activeFilter === 'all' || student === activeFilter || student === 'all';
+
+      if (!studentMatch) { section.classList.add('hidden'); return; }
+
+      let sectionHasCard = false;
+      section.querySelectorAll('.group').forEach(group => {
+        let groupHasCard = false;
+        group.querySelectorAll('a.card').forEach(card => {
+          const match = !q || card.textContent.toLowerCase().includes(q);
+          card.classList.toggle('hidden', !match);
+          if (match) groupHasCard = true;
+        });
+        group.classList.toggle('hidden', !groupHasCard);
+        if (groupHasCard) sectionHasCard = true;
+      });
+
+      section.classList.toggle('hidden', !sectionHasCard);
+      if (sectionHasCard) anyVisible = true;
+    });
+
+    noResults.style.display = anyVisible ? 'none' : 'block';
+  }
+</script>
+
+</body>
+</html>

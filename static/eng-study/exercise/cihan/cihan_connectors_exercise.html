@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connectors &amp; Cohesion — Personalised Exercise for Cihan</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #2563eb; }
+  .question-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #2563eb; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #2563eb; background: #eff6ff; }
+  .option.selected { border-color: #2563eb; background: #dbeafe; }
+  .check-btn {
+    margin-top: 12px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #1d4ed8; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #eff6ff;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #1e40af; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Connectors &amp; Cohesion — Personalised Exercise for Cihan</h1>
+    <div class="meta">
+      <span>Student: Cihan</span>
+      <span>Topic: Connectors &amp; Cohesion</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "mc", "q": "It was cold. ___ , we went out for a walk.", "options": ["However", "Therefore", "Moreover", "Whereas"], "a": "However", "explanation": "'However' = contrast (but)."}, {"type": "mc", "q": "He studied hard. ___ , he passed the exam.", "options": ["However", "Therefore", "Whereas", "Despite"], "a": "Therefore", "explanation": "'Therefore' = cause→effect (so)."}, {"type": "mc", "q": "The plan is good. ___ , it is cheap.", "options": ["However", "Moreover", "Whereas", "Nevertheless"], "a": "Moreover", "explanation": "'Moreover' = adding information (also)."}, {"type": "mc", "q": "I like tea, ___ my brother prefers coffee.", "options": ["however", "therefore", "whereas", "although"], "a": "whereas", "explanation": "'Whereas' = direct contrast between two facts."}, {"type": "mc", "q": "He was tired. ___ , he kept working.", "options": ["Therefore", "Nevertheless", "Moreover", "Whereas"], "a": "Nevertheless", "explanation": "'Nevertheless' = strong concession (in spite of that)."}, {"type": "mc", "q": "___ the rain, we went to the picnic.", "options": ["Although", "Despite", "However", "Because"], "a": "Despite", "explanation": "'Despite + noun/-ing' (not + clause)."}, {"type": "mc", "q": "___ it was raining, we went to the picnic.", "options": ["Although", "Despite", "However", "Because of"], "a": "Although", "explanation": "'Although + clause' (with subject + verb)."}, {"type": "correct", "q": "Even it is not huge mistakes, we should fix them.", "a": ["Even though they are not huge mistakes, we should fix them.", "Even if they are not huge mistakes, we should fix them."], "explanation": "'Even + clause' is wrong; use 'even though' (real concession) or 'even if' (hypothetical)."}, {"type": "correct", "q": "Even we understand it, we can't apply it.", "a": ["Even though we understand it, we can't apply it."], "explanation": "For a true concession use 'even though'."}, {"type": "mc", "q": "___ we miss the train, we can take a taxi.", "options": ["Even though", "Even if", "Even", "Although"], "a": "Even if", "explanation": "'Even if' = hypothetical (whether or not)."}, {"type": "mc", "q": "___ the team worked hard, the deadline was met.", "options": ["Because", "Despite", "However", "Whereas"], "a": "Because", "explanation": "'Because + clause' for reason."}, {"type": "mc", "q": "He's late. ___ , let's start without him.", "options": ["In contrast", "In addition", "In the meantime", "Anyway"], "a": "Anyway", "explanation": "'Anyway' = moving on / despite that."}, {"type": "correct", "q": "Because of this is very expensive, we can't buy it.", "a": ["This is very expensive, so we can't buy it.", "Because this is very expensive, we can't buy it."], "explanation": "'Because of' takes a noun; 'because' takes a clause."}, {"type": "mc", "q": "He failed the test. ___ , he didn't give up.", "options": ["Therefore", "Moreover", "However", "Whereas"], "a": "However", "explanation": "'However' for contrast between two clauses."}, {"type": "mc", "q": "The product is high-quality. ___ , it is affordable.", "options": ["In addition", "In contrast", "Otherwise", "On the contrary"], "a": "In addition", "explanation": "'In addition' adds further information."}, {"type": "mc", "q": "You must leave now; ___ you will miss the flight.", "options": ["otherwise", "however", "therefore", "moreover"], "a": "otherwise", "explanation": "'Otherwise' = if not."}, {"type": "mc", "q": "He didn't study. ___ , he failed.", "options": ["As a result", "Whereas", "Moreover", "Although"], "a": "As a result", "explanation": "'As a result' = consequence."}, {"type": "mc", "q": "___ being tired, she finished the marathon.", "options": ["Although", "Despite", "Even though", "Whereas"], "a": "Despite", "explanation": "'Despite + -ing'."}, {"type": "mc", "q": "___ she was tired, she finished the marathon.", "options": ["Despite", "Although", "Moreover", "Therefore"], "a": "Although", "explanation": "'Although + clause'."}, {"type": "mc", "q": "On the one hand, it's cheap. ___, the quality is poor.", "options": ["Therefore", "On the other hand", "In addition", "As a result"], "a": "On the other hand", "explanation": "'On the other hand' balances 'on the one hand'."}, {"type": "mc", "q": "He is very young. ___ , he is the best in the team.", "options": ["Nevertheless", "Moreover", "Therefore", "In addition"], "a": "Nevertheless", "explanation": "'Nevertheless' = strong concession."}, {"type": "correct", "q": "Even they are not aware, we need to inform them.", "a": ["Even though they are not aware, we need to inform them.", "Even if they are not aware, we need to inform them."], "explanation": "'Even + clause' is wrong; use 'even though/even if'."}, {"type": "mc", "q": "I don't like coffee. ___ , I drink it every morning.", "options": ["Furthermore", "Nevertheless", "Therefore", "Whereas"], "a": "Nevertheless", "explanation": "'Nevertheless' = in spite of that."}, {"type": "rewrite", "q": "Rewrite using 'whereas': 'I like cats. My sister likes dogs.'", "a": ["I like cats, whereas my sister likes dogs."], "explanation": "'Whereas' = direct contrast."}, {"type": "rewrite", "q": "Replace 'because of that' with a more formal connector: 'It was raining. Because of that, we cancelled the trip.'", "a": ["It was raining. As a result, we cancelled the trip.", "It was raining. Consequently, we cancelled the trip.", "It was raining. Therefore, we cancelled the trip."], "explanation": "Formal alternatives to 'because of that': as a result, consequently, therefore."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

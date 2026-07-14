@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Word-Form Consistency — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Word-Form Consistency — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Word-Form Consistency</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "Another shirt is light blue or gray, which is really look good, looks good on them.", "a": ["Another shirt is light blue or grey, which really looks good on them."], "explanation": "Hold ONE form for the whole clause: 'looks' (3rd-person singular agreeing with 'which')."}, {"type": "correct", "q": "This food taste good but it doesn't looks good.", "a": ["This food tastes good but it doesn't look good."], "explanation": "After 'doesn't' use the base form: 'look'. With 'this food' (singular) use 'tastes'."}, {"type": "correct", "q": "She is work in marketing and she is enjoying it.", "a": ["She works in marketing and she enjoys it.", "She is working in marketing and she is enjoying it."], "explanation": "Pick one tense: present simple ('works / enjoys') for habits, present continuous ('is working / is enjoying') for ongoing."}, {"type": "correct", "q": "He has been bought a new car.", "a": ["He has bought a new car.", "He has just bought a new car."], "explanation": "Present perfect active: 'has + past participle'. Don't add 'been' unless it's passive."}, {"type": "correct", "q": "I am agree with you.", "a": ["I agree with you."], "explanation": "'Agree' is a verb, not an adjective. Don't use 'be' with it."}, {"type": "correct", "q": "He is depend on his family.", "a": ["He depends on his family.", "He is dependent on his family."], "explanation": "'Depend' is a verb → 'depends'. 'Dependent' is the adjective."}, {"type": "correct", "q": "This book is more interest than the other one.", "a": ["This book is more interesting than the other one."], "explanation": "Adjective form: 'interesting' (not 'interest', which is the noun)."}, {"type": "correct", "q": "His behaviour is very surprised.", "a": ["His behaviour is very surprising."], "explanation": "'-ing' describes the cause; '-ed' describes the feeling. Behaviour can be 'surprising', a person can feel 'surprised'."}, {"type": "correct", "q": "The new policy will affect on many people.", "a": ["The new policy will affect many people."], "explanation": "'Affect' is transitive — no preposition. ('Have an effect on' takes 'on'.)"}, {"type": "correct", "q": "I am think it is a good idea.", "a": ["I think it is a good idea."], "explanation": "Present simple, not 'am + think'. Stative verbs don't usually take continuous."}, {"type": "correct", "q": "She doesn't can speak Spanish.", "a": ["She can't speak Spanish."], "explanation": "Don't use 'do/does' with modal verbs. The modal has its own negative: 'can't'."}, {"type": "correct", "q": "He is can to fix it tomorrow.", "a": ["He can fix it tomorrow.", "He will be able to fix it tomorrow."], "explanation": "After a modal use the base form, no 'to'. Don't mix 'be' with a modal."}, {"type": "correct", "q": "They are have a new project.", "a": ["They have a new project."], "explanation": "'Have' (possession) is present simple, not continuous."}, {"type": "correct", "q": "She enjoys to cook Italian food.", "a": ["She enjoys cooking Italian food."], "explanation": "'Enjoy' takes -ing, not 'to + base'."}, {"type": "correct", "q": "He decided going home.", "a": ["He decided to go home."], "explanation": "'Decide' takes 'to + base', not -ing."}, {"type": "correct", "q": "My friend is really kind person.", "a": ["My friend is a really kind person."], "explanation": "Singular countable noun needs an article: 'a kind person'."}, {"type": "correct", "q": "He is more taller than his brother.", "a": ["He is taller than his brother."], "explanation": "'Taller' is already comparative — never 'more + -er'."}, {"type": "correct", "q": "This is a very interested topic.", "a": ["This is a very interesting topic."], "explanation": "-ing for things that cause the feeling: 'interesting topic'."}, {"type": "correct", "q": "She is feeling really tiring after work.", "a": ["She is feeling really tired after work."], "explanation": "-ed for how someone feels: 'tired'."}, {"type": "correct", "q": "They are usually go to the cinema on Fridays.", "a": ["They usually go to the cinema on Fridays."], "explanation": "Present simple for routines — no 'are'. Frequency adverb between subject and main verb."}, {"type": "correct", "q": "My sister can drives a manual car.", "a": ["My sister can drive a manual car."], "explanation": "After 'can' use base form: 'drive'."}, {"type": "correct", "q": "He was been driving for hours.", "a": ["He had been driving for hours.", "He was driving for hours."], "explanation": "Past perfect continuous: 'had been + -ing'. Don't mix with 'was'."}, {"type": "correct", "q": "We are needing more information.", "a": ["We need more information."], "explanation": "'Need' is stative — use present simple, not continuous."}, {"type": "correct", "q": "They are knowing each other since 2010.", "a": ["They have known each other since 2010."], "explanation": "Stative verbs (know, like, believe) take present perfect for duration up to now."}, {"type": "correct", "q": "I have being to Spain twice.", "a": ["I have been to Spain twice."], "explanation": "Present perfect of 'be' is 'have been' (not 'have being')."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

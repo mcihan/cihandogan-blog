@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Question Formation — Personalised Exercise for Cihan</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #2563eb; }
+  .question-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #2563eb; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #2563eb; background: #eff6ff; }
+  .option.selected { border-color: #2563eb; background: #dbeafe; }
+  .check-btn {
+    margin-top: 12px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #1d4ed8; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #eff6ff;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #1e40af; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Question Formation — Personalised Exercise for Cihan</h1>
+    <div class="meta">
+      <span>Student: Cihan</span>
+      <span>Topic: Question Formation</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "rewrite", "q": "Form a question for: 'He works in Istanbul.'", "a": ["Where does he work?"], "explanation": "Question word + auxiliary (does) + subject + base verb."}, {"type": "rewrite", "q": "Form a yes/no question: 'She has finished the report.'", "a": ["Has she finished the report?"], "explanation": "Invert auxiliary 'has' and subject."}, {"type": "rewrite", "q": "Form a question for: 'They went home at 9 pm.'", "a": ["What time did they go home?", "When did they go home?"], "explanation": "Past simple question: did + subject + base verb."}, {"type": "rewrite", "q": "Form a question for the bold part: 'She bought TWO BOOKS.'", "a": ["How many books did she buy?"], "explanation": "Use 'how many' for countable quantities."}, {"type": "correct", "q": "Where you work?", "a": ["Where do you work?"], "explanation": "Present simple question needs auxiliary 'do/does'."}, {"type": "correct", "q": "Why he left early?", "a": ["Why did he leave early?"], "explanation": "Past simple question: did + subject + base verb."}, {"type": "correct", "q": "You have finished?", "a": ["Have you finished?"], "explanation": "Invert auxiliary and subject for a yes/no question."}, {"type": "correct", "q": "How long you have been working here?", "a": ["How long have you been working here?"], "explanation": "Present perfect continuous question: how long + have + subject + been + -ing."}, {"type": "correct", "q": "What time the meeting starts?", "a": ["What time does the meeting start?"], "explanation": "Add auxiliary 'does' before subject."}, {"type": "correct", "q": "Why he go back to his hometown?", "a": ["Why does he go back to his hometown?", "Why did he go back to his hometown?"], "explanation": "Add auxiliary; choose tense based on context."}, {"type": "rewrite", "q": "Form a tag question: 'You speak Turkish.'", "a": ["You speak Turkish, don't you?"], "explanation": "Positive statement → negative tag with matching auxiliary."}, {"type": "rewrite", "q": "Form a tag question: 'She isn't coming.'", "a": ["She isn't coming, is she?"], "explanation": "Negative statement → positive tag."}, {"type": "rewrite", "q": "Make this indirect question polite: 'Where is the station?'", "a": ["Could you tell me where the station is?", "Do you know where the station is?"], "explanation": "Indirect question keeps statement word order."}, {"type": "correct", "q": "Can you tell me what time is it?", "a": ["Can you tell me what time it is?"], "explanation": "Indirect question: subject + verb (no inversion)."}, {"type": "mc", "q": "Choose the correct question:", "options": ["Where did he went?", "Where did he go?", "Where he went?", "Where he go?"], "a": "Where did he go?", "explanation": "After auxiliary 'did' the verb must be the base form."}, {"type": "mc", "q": "Choose the correct question:", "options": ["How long are you living here?", "How long do you live here?", "How long have you been living here?", "How long lived you here?"], "a": "How long have you been living here?", "explanation": "Use present perfect continuous for ongoing duration up to now."}, {"type": "rewrite", "q": "Make a subject question: 'JOHN broke the window.'", "a": ["Who broke the window?"], "explanation": "When the question word is the subject, no auxiliary inversion: 'Who + verb'."}, {"type": "rewrite", "q": "Make a question for: 'They have lived here for ten years.'", "a": ["How long have they lived here?"], "explanation": "Present perfect duration question: how long + have + subject + past participle."}, {"type": "correct", "q": "Do you know why is he upset?", "a": ["Do you know why he is upset?"], "explanation": "Indirect question — keep subject + verb."}, {"type": "correct", "q": "You went to the meeting yesterday?", "a": ["Did you go to the meeting yesterday?"], "explanation": "In writing/formal speech, form a proper past simple question with 'did'."}, {"type": "rewrite", "q": "Form a question with 'how often': 'I go to the gym three times a week.'", "a": ["How often do you go to the gym?"], "explanation": "'How often' + auxiliary + subject + base verb."}, {"type": "correct", "q": "What means 'mandatory'?", "a": ["What does 'mandatory' mean?"], "explanation": "Use auxiliary 'does' + base form 'mean'."}, {"type": "correct", "q": "How much costs this laptop?", "a": ["How much does this laptop cost?"], "explanation": "Use auxiliary 'does' + base form 'cost'."}, {"type": "correct", "q": "Why you don't tell me before?", "a": ["Why didn't you tell me before?"], "explanation": "Past simple negative question: didn't + subject + base verb."}, {"type": "correct", "q": "Where did you went last summer?", "a": ["Where did you go last summer?"], "explanation": "After 'did' use the base form, not the past form."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

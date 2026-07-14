@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Conditionals — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Conditionals — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Conditionals</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "mc", "q": "If it rains tomorrow, we ___ the trip indoors.", "options": ["have", "will have", "would have", "had"], "a": "will have", "explanation": "First conditional: if + present simple, will + base."}, {"type": "mc", "q": "If I ___ more time, I would learn a new language.", "options": ["have", "had", "would have", "will have"], "a": "had", "explanation": "Second conditional: if + past simple, would + base."}, {"type": "mc", "q": "If I ___ earlier, I would have caught the train.", "options": ["left", "had left", "would leave", "leave"], "a": "had left", "explanation": "Third conditional: if + past perfect, would have + past participle."}, {"type": "mc", "q": "If I were you, I ___ accept the offer.", "options": ["will", "would", "would have", "had"], "a": "would", "explanation": "Second conditional with 'were' (formal for all persons)."}, {"type": "mc", "q": "If she ___ harder, she would pass the exam.", "options": ["studies", "studied", "had studied", "would study"], "a": "studied", "explanation": "Second conditional: past simple in the if-clause."}, {"type": "mc", "q": "If you heat ice to 0°C, it ___ .", "options": ["melts", "will melt", "would melt", "melted"], "a": "melts", "explanation": "Zero conditional for scientific truths."}, {"type": "mc", "q": "If they had told me earlier, I ___ different plans.", "options": ["make", "would make", "would have made", "had made"], "a": "would have made", "explanation": "Third conditional: would have + past participle."}, {"type": "mc", "q": "If I ___ richer, I would buy a house in Palawan.", "options": ["am", "was", "were", "had been"], "a": "were", "explanation": "Second conditional with 'be' uses 'were' for all persons (formal)."}, {"type": "mc", "q": "If I had studied medicine, I ___ a doctor now.", "options": ["will be", "would be", "would have been", "am"], "a": "would be", "explanation": "Mixed conditional: past condition + present result."}, {"type": "mc", "q": "If you ___ to me, you wouldn't be in this mess.", "options": ["listened", "had listened", "listen", "would listen"], "a": "had listened", "explanation": "Mixed conditional: past hypothetical condition + present result."}, {"type": "rewrite", "q": "Rewrite as a second conditional: 'I don't have a car, so I can't drive to the beach.'", "a": ["If I had a car, I would drive to the beach.", "If I had a car, I could drive to the beach."], "explanation": "Second conditional for hypothetical present."}, {"type": "rewrite", "q": "Rewrite as a third conditional: 'I didn't know about the discount, so I paid the full price.'", "a": ["If I had known about the discount, I would have paid less.", "If I had known about the discount, I wouldn't have paid the full price."], "explanation": "Third conditional for hypothetical past."}, {"type": "correct", "q": "If I would have time, I would help you.", "a": ["If I had time, I would help you."], "explanation": "Don't use 'would' in the if-clause of a second conditional."}, {"type": "correct", "q": "If I will see her, I will tell her.", "a": ["If I see her, I will tell her."], "explanation": "Don't use 'will' in the if-clause of a first conditional."}, {"type": "correct", "q": "If I would have known, I would have come.", "a": ["If I had known, I would have come."], "explanation": "Third conditional uses 'had + past participle' in the if-clause."}, {"type": "mc", "q": "Unless you ___ now, you'll miss the flight.", "options": ["leave", "will leave", "would leave", "left"], "a": "leave", "explanation": "'Unless' = 'if not'; takes present simple."}, {"type": "mc", "q": "I wish I ___ more languages.", "options": ["speak", "spoke", "had spoken", "would speak"], "a": "spoke", "explanation": "'I wish + past simple' for unreal present."}, {"type": "mc", "q": "I wish I ___ harder at school.", "options": ["studied", "had studied", "would study", "study"], "a": "had studied", "explanation": "'I wish + past perfect' for regret about the past."}, {"type": "mc", "q": "If only I ___ rich!", "options": ["am", "were", "would be", "had been"], "a": "were", "explanation": "'If only + were' for unreal present wish."}, {"type": "mc", "q": "If you ___ me, what would you do?", "options": ["are", "were", "would be", "had been"], "a": "were", "explanation": "Second conditional with 'be' uses 'were'."}, {"type": "rewrite", "q": "Rewrite as third conditional: 'I didn't go to the meeting. I didn't meet the new manager.'", "a": ["If I had gone to the meeting, I would have met the new manager."], "explanation": "Third conditional for unreal past."}, {"type": "mc", "q": "Had I known about the storm, I ___ home earlier.", "options": ["will go", "would go", "would have gone", "had gone"], "a": "would have gone", "explanation": "Inverted third conditional: 'Had I known' = 'If I had known'."}, {"type": "correct", "q": "If I would be you, I would accept it.", "a": ["If I were you, I would accept it.", "If I was you, I would accept it."], "explanation": "Second conditional: 'were' or informally 'was' — never 'would be' in the if-clause."}, {"type": "mc", "q": "If she ___ harder, she would have got the promotion.", "options": ["worked", "had worked", "would work", "works"], "a": "had worked", "explanation": "Third conditional: past perfect in the if-clause."}, {"type": "rewrite", "q": "Form a third conditional: 'We didn't book early. We didn't get cheap tickets.'", "a": ["If we had booked early, we would have got cheap tickets.", "If we had booked early, we could have got cheap tickets."], "explanation": "Third conditional: 'had + past participle' / 'would have + past participle'."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

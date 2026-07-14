@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Comparatives (no &#x27;more + -er&#x27;) — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Comparatives (no &#x27;more + -er&#x27;) — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Comparatives (no &#x27;more + -er&#x27;)</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "Your cells become feel more better.", "a": ["Your cells feel better.", "Your cells start to feel better."], "explanation": "Don't double comparatives. Use 'better' OR 'more good' (but 'good' is irregular — 'better' is the only form)."}, {"type": "correct", "q": "Every change makes cost more higher than before.", "a": ["Every change makes the cost higher than before.", "Every change makes it more expensive than before."], "explanation": "Don't use 'more + -er'. Either 'higher' or 'more expensive' — never both."}, {"type": "correct", "q": "Turkey is much more better than Korea.", "a": ["Turkey is much better than Korea."], "explanation": "'Better' is already comparative. Use 'much better' (with intensifier), not 'much more better'."}, {"type": "correct", "q": "Our skin becomes more younger and shinier.", "a": ["Our skin becomes younger and shinier.", "Our skin looks younger and shinier."], "explanation": "'Younger' is already the comparative form — never add 'more'."}, {"type": "correct", "q": "This phone is more cheaper than my old one.", "a": ["This phone is cheaper than my old one."], "explanation": "Short adjectives use -er ('cheaper'), never 'more cheaper'."}, {"type": "correct", "q": "His new car is more faster.", "a": ["His new car is faster.", "His new car is much faster."], "explanation": "'Faster' is already comparative. Use 'much faster' for emphasis."}, {"type": "correct", "q": "The weather here is more colder than in Istanbul.", "a": ["The weather here is colder than in Istanbul."], "explanation": "'Colder' is the comparative — don't add 'more'."}, {"type": "mc", "q": "My new phone is ___ than my old one.", "options": ["more big", "bigger", "more bigger", "biggest"], "a": "bigger", "explanation": "Short adjectives: add -er. Never combine with 'more'."}, {"type": "mc", "q": "This dish is ___ than the one we had yesterday.", "options": ["more delicious", "deliciouser", "more deliciouser", "most delicious"], "a": "more delicious", "explanation": "Long adjectives (3+ syllables) use 'more + adjective'."}, {"type": "mc", "q": "Istanbul is ___ than Ankara.", "options": ["more crowded", "crowdeder", "more crowdeder", "crowdedest"], "a": "more crowded", "explanation": "Two-syllable adjectives ending in -ed/-ing use 'more'."}, {"type": "mc", "q": "I'm feeling ___ today than yesterday.", "options": ["good", "more better", "better", "best"], "a": "better", "explanation": "Irregular comparative: good → better. (Not 'more better'.)"}, {"type": "mc", "q": "The weather is getting ___ every day.", "options": ["bad", "worser", "worse", "more worse"], "a": "worse", "explanation": "Irregular comparative: bad → worse. (Not 'worser' or 'more worse'.)"}, {"type": "mc", "q": "My new commute is ___ than the old one.", "options": ["short", "shorter", "more shorter", "most short"], "a": "shorter", "explanation": "Short adjective: add -er."}, {"type": "mc", "q": "Fruit in Turkey is ___ than fruit in the UK.", "options": ["cheap", "more cheap", "cheaper", "more cheaper"], "a": "cheaper", "explanation": "One-syllable adjective: add -er."}, {"type": "mc", "q": "This presentation was ___ than the last one.", "options": ["interesting", "interestinger", "more interesting", "more interestinger"], "a": "more interesting", "explanation": "Three-syllable adjective: 'more + adjective'."}, {"type": "mc", "q": "I am ___ now than I was last year.", "options": ["happy", "happier", "more happy", "more happier"], "a": "happier", "explanation": "Two-syllable adjective ending in -y: change y → i + er."}, {"type": "correct", "q": "This route is more longer than the other one.", "a": ["This route is longer than the other one."], "explanation": "'Longer' is the comparative of 'long'. Never 'more longer'."}, {"type": "correct", "q": "London is more bigger than Istanbul? I don't think so.", "a": ["Is London bigger than Istanbul? I don't think so."], "explanation": "'Bigger' is comparative — never add 'more'."}, {"type": "mc", "q": "The new model is ___ powerful than the old one.", "options": ["more", "most", "much", "very"], "a": "more", "explanation": "'More + powerful' (three syllables)."}, {"type": "mc", "q": "Tea is ___ than coffee in the morning.", "options": ["best", "good", "better", "more good"], "a": "better", "explanation": "Irregular comparative: better."}, {"type": "mc", "q": "This year's summer is ___ than last year's.", "options": ["hot", "hotter", "more hotter", "most hot"], "a": "hotter", "explanation": "Short adjective: double the consonant and add -er → hotter."}, {"type": "correct", "q": "Fruit here is even more cheaper than in Istanbul.", "a": ["Fruit here is even cheaper than in Istanbul."], "explanation": "'Even' is an intensifier; use it with the comparative form ('cheaper'), not with 'more + -er'."}, {"type": "mc", "q": "He is ___ student in the class.", "options": ["the best", "the better", "the most good", "the most best"], "a": "the best", "explanation": "Superlative of 'good' is 'the best' — irregular."}, {"type": "correct", "q": "It's more easier to learn English when you are young.", "a": ["It's easier to learn English when you are young."], "explanation": "'Easier' is comparative — never 'more easier'."}, {"type": "mc", "q": "The new house is ___ than the old one.", "options": ["much expensive", "more expensiver", "much more expensive", "more expensive much"], "a": "much more expensive", "explanation": "Long adjective: 'much more + adjective' (with intensifier)."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

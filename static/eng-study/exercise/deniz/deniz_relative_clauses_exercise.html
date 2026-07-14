@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Relative Clauses (who / which / that / where) — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Relative Clauses (who / which / that / where) — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Relative Clauses (who / which / that / where)</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "The people which wear suits are professional.", "a": ["The people who wear suits are professional.", "The people that wear suits are professional."], "explanation": "Use 'who' (or 'that') for people, not 'which'."}, {"type": "correct", "q": "I look at the companies which I worked before.", "a": ["I look at the companies where I worked before.", "I look at the companies I worked at before."], "explanation": "For places use 'where'; or use 'that/which' with the preposition 'at' at the end."}, {"type": "correct", "q": "My friend which lives in Berlin is a doctor.", "a": ["My friend who lives in Berlin is a doctor.", "My friend, who lives in Berlin, is a doctor."], "explanation": "'Who' for people. Add commas for non-defining clauses."}, {"type": "mc", "q": "Choose the correct relative pronoun: 'The woman ___ called me is my colleague.'", "options": ["which", "who", "what", "whose"], "a": "who", "explanation": "'Who' for people."}, {"type": "mc", "q": "Choose the correct relative pronoun: 'The book ___ I read last week was amazing.'", "options": ["who", "which", "what", "whose"], "a": "which", "explanation": "'Which' or 'that' for things."}, {"type": "mc", "q": "Choose the correct relative pronoun: 'The town ___ I grew up is small.'", "options": ["which", "who", "where", "whose"], "a": "where", "explanation": "'Where' for places."}, {"type": "mc", "q": "Choose the correct relative pronoun: 'I remember the day ___ we met.'", "options": ["which", "who", "when", "whose"], "a": "when", "explanation": "'When' for time."}, {"type": "mc", "q": "Choose the correct relative pronoun: 'That's the man ___ car was stolen.'", "options": ["which", "who", "whose", "that"], "a": "whose", "explanation": "'Whose' for possession (animate or inanimate)."}, {"type": "correct", "q": "I have a Mazda which I love it.", "a": ["I have a Mazda which I love.", "I have a Mazda that I love."], "explanation": "In a relative clause, don't repeat the object pronoun ('it') — the relative pronoun replaces it."}, {"type": "correct", "q": "The restaurant where we ate there was great.", "a": ["The restaurant where we ate was great.", "The restaurant we ate at was great."], "explanation": "Don't repeat the adverb 'there' — 'where' already includes it."}, {"type": "rewrite", "q": "Combine using 'who': 'I have a colleague. She speaks four languages.'", "a": ["I have a colleague who speaks four languages."], "explanation": "Use 'who' for people."}, {"type": "rewrite", "q": "Combine using 'which': 'I bought a phone. It has a great camera.'", "a": ["I bought a phone which has a great camera.", "I bought a phone that has a great camera."], "explanation": "Use 'which/that' for things."}, {"type": "rewrite", "q": "Combine using 'where': 'I want to visit Palawan. We snorkelled there last year.'", "a": ["I want to visit Palawan where we snorkelled last year.", "I want to visit Palawan, where we snorkelled last year."], "explanation": "'Where' for places."}, {"type": "rewrite", "q": "Combine using 'whose': 'I met a man. His son works in Istanbul.'", "a": ["I met a man whose son works in Istanbul."], "explanation": "'Whose' for possession."}, {"type": "rewrite", "q": "Use a reduced relative: 'The people who are living next door are friendly.'", "a": ["The people living next door are friendly."], "explanation": "Drop 'who are' before -ing forms — reduced relative."}, {"type": "rewrite", "q": "Use a reduced relative: 'The project that was finished last week impressed everyone.'", "a": ["The project finished last week impressed everyone."], "explanation": "Drop 'that was' before past participles."}, {"type": "rewrite", "q": "Use a reduced relative: 'The car that was parked outside is mine.'", "a": ["The car parked outside is mine."], "explanation": "Drop 'that was' before a past participle."}, {"type": "mc", "q": "Choose the correct sentence (non-defining):", "options": ["My sister who lives in Ankara, called me.", "My sister, who lives in Ankara, called me.", "My sister, which lives in Ankara, called me.", "My sister that lives in Ankara, called me."], "a": "My sister, who lives in Ankara, called me.", "explanation": "Non-defining relative clauses use commas and never 'that'. 'Who' for people."}, {"type": "correct", "q": "The girl whose I met yesterday is a teacher.", "a": ["The girl who I met yesterday is a teacher.", "The girl whom I met yesterday is a teacher.", "The girl I met yesterday is a teacher."], "explanation": "'Whose' = possession only. For the object of 'meet' use 'who/whom' or drop it entirely."}, {"type": "correct", "q": "London, that is the capital of England, is huge.", "a": ["London, which is the capital of England, is huge."], "explanation": "Non-defining relative clauses (with commas) never use 'that'. Use 'which' for things, 'who' for people."}, {"type": "correct", "q": "The reason which I left was the weather.", "a": ["The reason why I left was the weather.", "The reason I left was the weather."], "explanation": "'Why' for reasons; or drop the pronoun."}, {"type": "rewrite", "q": "Combine using a non-defining relative clause: 'The Mazda is fuel-efficient. We bought it last month.'", "a": ["The Mazda, which we bought last month, is fuel-efficient."], "explanation": "Non-defining: extra information, set off by commas."}, {"type": "correct", "q": "That's the place which I told you about it.", "a": ["That's the place I told you about.", "That's the place which I told you about.", "That's the place that I told you about."], "explanation": "Don't repeat 'it' — the relative pronoun replaces the object."}, {"type": "mc", "q": "Which sentence is correct?", "options": ["The student which won the prize is here.", "The student who won the prize is here.", "The student whose won the prize is here.", "The student where won the prize is here."], "a": "The student who won the prize is here.", "explanation": "'Who' is for people."}, {"type": "rewrite", "q": "Use a reduced relative: 'The questions that were asked at the interview were difficult.'", "a": ["The questions asked at the interview were difficult."], "explanation": "Drop 'that were' before a past participle."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

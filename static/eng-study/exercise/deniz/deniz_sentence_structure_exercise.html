@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sentence Structure &amp; Subordination — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Sentence Structure &amp; Subordination — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Sentence Structure &amp; Subordination</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "rewrite", "q": "Rewrite as two clean sentences (drop the 'like' fillers): 'Religion makes people a bit silly, like because we don't question what's going on around the world and this is really is really true.'", "a": ["Religion can make people a bit unthinking. We rarely question what is going on around the world.", "Religion makes people a bit unthinking because we don't question what's going on in the world."], "explanation": "Break long chains. Drop sentence-internal 'like'. Use a full stop or 'because'."}, {"type": "rewrite", "q": "Rewrite using 'although': 'It rained all day. We still went snorkelling.'", "a": ["Although it rained all day, we still went snorkelling."], "explanation": "'Although + clause' for concession instead of chaining with 'but'."}, {"type": "rewrite", "q": "Rewrite using 'despite': 'It rained all day. We went snorkelling.'", "a": ["Despite the rain, we went snorkelling.", "Despite it raining all day, we went snorkelling."], "explanation": "'Despite + noun/-ing' — never 'despite + clause'."}, {"type": "rewrite", "q": "Rewrite using a relative clause with 'who': 'I have a friend. She works in Istanbul.'", "a": ["I have a friend who works in Istanbul."], "explanation": "Use 'who' for people, not 'which'."}, {"type": "correct", "q": "The people which wear suit are professional.", "a": ["The people who wear suits are professional.", "The people wearing suits are professional."], "explanation": "Use 'who' for people, not 'which'. Add -s to 'suits' (plural)."}, {"type": "rewrite", "q": "Replace 'and then' chains: 'We went to the market and then we bought fruit and then we made breakfast.'", "a": ["We went to the market, bought fruit, and made breakfast.", "After buying fruit at the market, we made breakfast."], "explanation": "Avoid 'and then … and then'. Use commas or subordination."}, {"type": "rewrite", "q": "Combine with 'while': 'I was cooking dinner. My husband called.'", "a": ["While I was cooking dinner, my husband called."], "explanation": "'While + past continuous' as a background-action subordinator."}, {"type": "rewrite", "q": "Combine using 'because of': 'The traffic was bad. We were late.'", "a": ["Because of the traffic, we were late.", "We were late because of the traffic."], "explanation": "'Because of + noun phrase'. (Not 'because of' + clause.)"}, {"type": "correct", "q": "Because of this is very expensive, I didn't buy it.", "a": ["Because this is very expensive, I didn't buy it.", "Because of the price, I didn't buy it."], "explanation": "'Because of' takes a noun phrase; 'because' takes a clause."}, {"type": "rewrite", "q": "Rewrite using 'so that': 'I bought a Mazda. I wanted to save fuel.'", "a": ["I bought a Mazda so that I could save fuel."], "explanation": "'So that + clause' = purpose."}, {"type": "rewrite", "q": "Combine using 'after': 'I finished the podcast. I started cooking.'", "a": ["After I finished the podcast, I started cooking.", "After finishing the podcast, I started cooking."], "explanation": "'After + clause' or 'after + -ing'."}, {"type": "rewrite", "q": "Rewrite into 3 sentences: 'I went to Palawan and we snorkelled and the water was hot and the weather was cloudy and we were tired and we went back to the hotel.'", "a": ["I went to Palawan and we snorkelled. The water was hot, but the weather was cloudy. We were tired, so we went back to the hotel."], "explanation": "Break long chains into 2–3 clauses per sentence. Use contrast/cause connectors."}, {"type": "rewrite", "q": "Rewrite using a participle clause: 'She was sitting next to me. She started talking.'", "a": ["Sitting next to me, she started talking."], "explanation": "Reduced relative — drop 'she was', keep -ing."}, {"type": "rewrite", "q": "Rewrite as one clean sentence with a relative clause: 'I have a colleague. He lives in Berlin. He is a doctor.'", "a": ["I have a colleague who lives in Berlin and is a doctor.", "I have a colleague, a doctor, who lives in Berlin."], "explanation": "Subordinate with 'who' instead of chaining sentences."}, {"type": "rewrite", "q": "Replace 'and then' with subordination: 'I was talking and then she interrupted me.'", "a": ["She interrupted me while I was talking."], "explanation": "Subordinate the background action with 'while + past continuous'."}, {"type": "correct", "q": "I have a Mazda which I love it very much.", "a": ["I have a Mazda which I love very much.", "I have a Mazda that I love very much."], "explanation": "In a relative clause, don't repeat the object ('it') — the relative pronoun replaces it."}, {"type": "rewrite", "q": "Use a reduced relative: 'The fruit that is sold at the market is fresh.'", "a": ["The fruit sold at the market is fresh."], "explanation": "Reduced relative — drop 'that is' for past participles."}, {"type": "rewrite", "q": "Use a reduced relative: 'The people who are living next door are friendly.'", "a": ["The people living next door are friendly."], "explanation": "Drop 'who are' for -ing forms."}, {"type": "rewrite", "q": "Combine using 'even though': 'I was tired. I finished the project.'", "a": ["Even though I was tired, I finished the project."], "explanation": "'Even though + clause' for strong concession."}, {"type": "correct", "q": "Even I saw natives do a lot of grammar mistakes.", "a": ["Even though I saw natives making a lot of grammar mistakes.", "I have even seen natives making a lot of grammar mistakes."], "explanation": "'Even + clause' is a Turkish calque. Use 'even though' for concession, or place 'even' before the verb for emphasis."}, {"type": "rewrite", "q": "Front the time expression: 'We bought the Mazda last month, and it has 8,000 mileage which is very low.'", "a": ["Last month we bought a Mazda with very low mileage — only 8,000.", "We bought a Mazda last month. Its mileage is only 8,000 — very low."], "explanation": "Break up the run-on; front the time expression; use a dash for the parenthetical detail."}, {"type": "rewrite", "q": "Use a cleft sentence: 'I really like the weather here.'", "a": ["What I really like is the weather here.", "It's the weather here that I really like."], "explanation": "Cleft sentences foreground the part you want to emphasise."}, {"type": "rewrite", "q": "Use a cleft sentence: 'Cosmopolitan cities give us diversity.'", "a": ["What cosmopolitan cities give us is diversity.", "It is diversity that cosmopolitan cities give us."], "explanation": "Cleft sentences are a C1-level emphasis tool."}, {"type": "correct", "q": "Generally religion makes people a bit silly like because we don't question.", "a": ["Generally, religion makes people a bit unthinking because we don't question things."], "explanation": "Drop the filler 'like'. Use a comma after 'Generally'. Replace vague 'silly' with 'unthinking'."}, {"type": "rewrite", "q": "Use signposting (firstly / secondly / finally): 'I like the UK because of the weather. The food is good. The people are friendly.'", "a": ["Firstly, I like the UK because of the weather. Secondly, the food is good. Finally, the people are friendly."], "explanation": "Add discourse signposts to make a structured opinion answer (C1 marker)."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

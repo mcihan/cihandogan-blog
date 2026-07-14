@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+            <meta charset="UTF-8">
+            <title>Deniz &mdash; English Tutor Report</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="deniz--english-tutor-report">Deniz — English Tutor Report</h1>
+<p><strong>Corpus:</strong> 43 lessons (<code>denizs_lessons_transcripts/lesson1.json</code> → <code>lesson43.json</code>)
+<strong>Sample:</strong> 8,362 student utterances, 74,693 words, ~1,737 words per lesson
+<strong>Date:</strong> 2026-05-17</p>
+<hr>
+<h2 id="1-overall-assessment">1. Overall Assessment</h2>
+<p>Deniz, you are a comfortable, opinionated <strong>B2+ (upper-intermediate moving towards C1)</strong> speaker who handles a wide range of topics: UK pub culture, AI redundancies, aesthetic surgery in Turkey, Pilates, paragliding in Fethiye, environmental sustainability, holiday in Thailand and Vietnam, your job in software, real estate negotiations, family memories from childhood. You have <strong>richer everyday vocabulary</strong> than most B2 students at this stage — words like <em>hospitality, savoury, unpredictable, tradespeople, facial expressions, sustainable, scary, chubby, hangover, sweet tooth</em> are all in active use, and they're all natural.</p>
+<p>The gap between you and C1 isn't vocabulary. It's three habits that pile up and slow the listener down:</p>
+<ol>
+<li><strong>&quot;Like&quot; everywhere.</strong> 2,122 uses across 43 lessons (~2.89 per 100 words; native baseline ~1–2). Three flavours: filler, approximation marker, mid-clause hesitation. None of them are wrong individually — the <em>density</em> is the problem.</li>
+<li><strong>&quot;Basically&quot; as a sentence-starter and clause-restart.</strong> 483 uses (vs Cihan's 1 — this is <em>your</em> signature, not a shared one). Often it adds nothing.</li>
+<li><strong>&quot;This / these kind of things&quot;</strong> — number agreement on demonstratives. 19 wrong vs 8 right.</li>
+</ol>
+<p>There are smaller things — article slips with &quot;gym&quot;, a few &quot;if I would&quot; conditionals, a &quot;more happier&quot; — but those are minor compared to the rhythm issues. Tame the fillers and you sound like a different speaker.</p>
+<hr>
+<h2 id="2-strengths">2. Strengths</h2>
+<table>
+<thead>
+<tr>
+<th>What you do well</th>
+<th>Evidence from your lessons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Genuinely wide everyday vocabulary.</td>
+<td><em>&quot;...because they say it's the worst fruit which you've ever seen. And it's so bad. They say something like this to take attention. But that's why I have lots of prejudice…&quot;</em> (L17) — &quot;prejudice&quot;, &quot;take attention&quot; not far off &quot;grab attention&quot;, solid range.</td>
+</tr>
+<tr>
+<td>Natural use of <em>used to</em> for past habits.</td>
+<td><em>&quot;In Turkey it's not like that — it used to be.&quot;</em> (L1). <em>&quot;I used to enjoy when I meet my friends…&quot;</em> (L1). <em>&quot;My memory used to be bright when I was a child.&quot;</em> (L13) — correct, natural form.</td>
+</tr>
+<tr>
+<td>Strong narrative storytelling — you bring scenes to life.</td>
+<td><em>&quot;The taxi driver asked us what happened because I had a 40-degree fever and runny nose. And also I felt so, how can I say…&quot;</em> (L35) — vivid, with real time-place anchoring.</td>
+</tr>
+<tr>
+<td>Confident with comparative structures.</td>
+<td><em>&quot;Compared to the UK, yes — but compared to the past in Turkey, also yes.&quot;</em> (L1) — comparison + qualification in one sentence.</td>
+</tr>
+<tr>
+<td>You hedge well — sounds British-natural.</td>
+<td><em>&quot;Maybe&quot;, &quot;probably&quot;, &quot;kind of&quot;, &quot;basically&quot;, &quot;I think&quot;</em> — over-used, but you have the right <em>register</em> for hedging.</td>
+</tr>
+<tr>
+<td>Topic range is impressive.</td>
+<td>Drinking culture (L1), AI redundancy (L11), aesthetic surgery (L2), gym/Pilates (L21, L40), paragliding (L19), Thailand travel (L34), real-estate haggling (L16), water shortages in Turkey (L12) — none of this is starter vocabulary.</td>
+</tr>
+<tr>
+<td>You produce more lessons than Cihan and 30% more total words.</td>
+<td>43 lessons, 74,693 words — you put the hours in.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-statistical-x-ray">3. Statistical X-Ray</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Your value</th>
+<th>Native baseline</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Words per lesson</td>
+<td><strong>1,737</strong></td>
+<td>~1,500–2,000</td>
+<td>Healthy — not over-talking</td>
+</tr>
+<tr>
+<td>Type-token ratio (unique ÷ total)</td>
+<td><strong>0.057</strong></td>
+<td>~0.08–0.10</td>
+<td>Recycling the same words</td>
+</tr>
+<tr>
+<td>Unique words across corpus</td>
+<td>4,272</td>
+<td>—</td>
+<td>Decent range; held back by repeated function words</td>
+</tr>
+<tr>
+<td><code>yeah</code> per 100 words</td>
+<td><strong>4.21</strong></td>
+<td>&lt;1.0</td>
+<td>Heavy backchannel filler</td>
+</tr>
+<tr>
+<td><code>like</code> per 100 words</td>
+<td><strong>2.84</strong> (avg), peaks <strong>4.43</strong> in L30</td>
+<td>1–2</td>
+<td><strong>High — your dominant filler</strong></td>
+</tr>
+<tr>
+<td><code>basically</code> per 100 words</td>
+<td><strong>0.65</strong></td>
+<td>&lt;0.05</td>
+<td><strong>~13× native rate — your signature filler</strong></td>
+</tr>
+<tr>
+<td><code>actually</code> per 100 words</td>
+<td>0.40</td>
+<td>~0.15</td>
+<td>Over-used</td>
+</tr>
+<tr>
+<td><code>generally</code> per 100 words</td>
+<td>0.36</td>
+<td>~0.05</td>
+<td>Used as a clause-opener</td>
+</tr>
+<tr>
+<td><code>really</code> per 100 words</td>
+<td>0.67</td>
+<td>~0.35</td>
+<td>Healthy, slightly over</td>
+</tr>
+<tr>
+<td><code>very</code> per 100 words</td>
+<td>0.18</td>
+<td>~0.15</td>
+<td>Right level (Cihan is at 0.75 — you're correct, he's wrong)</td>
+</tr>
+<tr>
+<td><code>kind of</code> per 100 words</td>
+<td>0.25</td>
+<td>&lt;0.1</td>
+<td>Over-used as a hedge</td>
+</tr>
+<tr>
+<td><code>this/these kind of things</code></td>
+<td>19 wrong vs 8 right</td>
+<td>—</td>
+<td>Number-agreement gap</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-the-recurring-mistakes">4. The Recurring Mistakes</h2>
+<h3 id="41-like-filler-density-2122-uses-across-43-lessons">4.1 &quot;Like&quot; filler density (2,122 uses across 43 lessons)</h3>
+<p>You use &quot;like&quot; in five different ways, and the cumulative density is what makes the speech feel less polished than it could.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Your usage</th>
+<th>Example</th>
+<th>Native fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Approximation</td>
+<td>&quot;like 30 years old&quot;, &quot;like 200&quot;</td>
+<td><em>&quot;And now they call us, they call like 30 years old.&quot;</em> (L11)</td>
+<td>&quot;<strong>about</strong> 30 years old&quot;, &quot;<strong>roughly</strong> 200&quot;, &quot;<strong>around</strong> 8 p.m.&quot;</td>
+</tr>
+<tr>
+<td>Mid-clause filler</td>
+<td>&quot;, like ,&quot;</td>
+<td><em>&quot;you know someone who works, like, a very long time in the company?&quot;</em> (L11)</td>
+<td>Cut entirely — say &quot;someone who's worked in the company for a long time&quot;</td>
+</tr>
+<tr>
+<td>Quotative / illustrative</td>
+<td>&quot;like a kind&quot;</td>
+<td><em>&quot;generally do Turkey sauté, like a kind.&quot;</em> (L42)</td>
+<td>&quot;<strong>a sort of</strong> Turkish sauté&quot;, or just &quot;<strong>a Turkish-style</strong> sauté&quot;</td>
+</tr>
+<tr>
+<td>Comparison stand-in for &quot;such as&quot;</td>
+<td>&quot;like a lot of countries&quot;</td>
+<td><em>&quot;like a lot of countries, the UK is experiencing…&quot;</em> (L1)</td>
+<td>&quot;<strong>Like many countries</strong>&quot; or &quot;<strong>As with many countries</strong>&quot;</td>
+</tr>
+<tr>
+<td>Sentence-starter</td>
+<td>&quot;Like, the thing were rotten&quot;</td>
+<td><em>&quot;weeks, like, the thing were, like, rotten&quot;</em> (L13)</td>
+<td>Cut both &quot;likes&quot; — say &quot;After weeks, the things were rotten&quot;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Worst lesson:</strong> L30 at 4.43 likes per 100 words. <strong>Best:</strong> L8 at 0.47. The variability is encouraging — you <em>can</em> do without it. The goal isn't to delete &quot;like&quot; entirely; it's to push the average from 2.89 down to under 1.5.</p>
+<h3 id="42-basically-as-filler-483-uses--your-signature">4.2 &quot;Basically&quot; as filler (483 uses — your signature)</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What's actually happening</th>
+<th>Native version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;I'm basically calorie things even I don't drink&quot;</em> (L1)</td>
+<td>&quot;basically&quot; adds nothing</td>
+<td><em>&quot;I'm careful about calorie things — I don't even drink…&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;It was on my route when I went to gym and <strong>basically</strong> I suffer&quot;</em> (L1)</td>
+<td>restart filler</td>
+<td><em>&quot;…and honestly, I suffer.&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;And it's <strong>basically</strong> like 80 % of the work.&quot;</em> (L18)</td>
+<td>hedge</td>
+<td><em>&quot;It's about 80% of the work.&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;You can experience a really good sunrise. And also, <strong>basically</strong>…&quot;</em> (L18)</td>
+<td>sentence-restart</td>
+<td>drop &quot;basically&quot;</td>
+</tr>
+<tr>
+<td><em>&quot;Yeah, <strong>basically</strong>, yeah, <strong>basically</strong>…&quot;</em> (L29)</td>
+<td>doubled stalling</td>
+<td>one &quot;yeah&quot; is enough</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why &quot;basically&quot; is over-used:</strong> in conversational English, &quot;basically&quot; is a <em>summarising</em> word — <em>&quot;basically, what happened was…&quot;</em>, <em>&quot;basically, it's free.&quot;</em> — used once or twice per topic. You're using it 11 times per lesson on average. The pattern is: every time you reset a clause or hedge a thought, &quot;basically&quot; comes out. Build a substitution menu:</p>
+<ul>
+<li>For summarising: <strong>essentially, in short, the long and short of it</strong></li>
+<li>For hedging: <strong>roughly, more or less, sort of</strong></li>
+<li>For restarting: just stop and restart cleanly, no marker</li>
+</ul>
+<h3 id="43-thisthese-kind-of-things--number-agreement-on-demonstratives">4.3 &quot;This/these kind of things&quot; — number agreement on demonstratives</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you should say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;making profit from <strong>this kind of things</strong>&quot;</em> (L1)</td>
+<td>&quot;<strong>these kinds of things</strong>&quot; — both halves plural</td>
+</tr>
+<tr>
+<td><em>&quot;people make beer at home as a hobby and <strong>these kind of things</strong>&quot;</em> (L1)</td>
+<td>&quot;<strong>these kinds of things</strong>&quot;</td>
+</tr>
+<tr>
+<td><em>&quot;these are <strong>these kind of</strong>, yeah&quot;</em> (L11)</td>
+<td>&quot;<strong>these kinds of</strong>…&quot;</td>
+</tr>
+<tr>
+<td><em>&quot;dealing with <strong>this kind of situations</strong>&quot;</em> (L16)</td>
+<td>&quot;<strong>these kinds of situations</strong>&quot;</td>
+</tr>
+<tr>
+<td><em>&quot;I've never played guitar or piano or <strong>this kind of thing</strong>&quot;</em> (L10)</td>
+<td>✓ correct as singular</td>
+</tr>
+<tr>
+<td><em>&quot;It's not sustainable to spend <strong>this kind of money</strong>&quot;</em> (L12)</td>
+<td>✓ correct (money is uncountable)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule:</strong> demonstrative + kind/sort/type + noun must match in number.</p>
+<ul>
+<li>Singular both: <em>&quot;this kind of thing&quot;</em> / <em>&quot;this sort of problem&quot;</em></li>
+<li>Plural both: <em>&quot;these kinds of things&quot;</em> / <em>&quot;those sorts of issues&quot;</em></li>
+<li>Mixed = wrong: <s>these kind of things</s> / <s>this kinds of thing</s></li>
+</ul>
+<h3 id="44-article-omission-with-gym-and-similar-venues">4.4 Article omission with &quot;gym&quot; (and similar venues)</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you should say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;I went to gym&quot;</em> (L1, L10, L34, L38) — 6 occurrences</td>
+<td><em>&quot;I went to <strong>the</strong> gym&quot;</em> — &quot;gym&quot; is a specific place, takes &quot;the&quot;</td>
+</tr>
+<tr>
+<td><em>&quot;I can't go to gym&quot;</em> (L26, L40)</td>
+<td><em>&quot;I can't go to <strong>the</strong> gym&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;My session starts 7:40 a.m.&quot;</em> (L38)</td>
+<td><em>&quot;My session <strong>starts at</strong> 7:40 a.m.&quot;</em></td>
+</tr>
+</tbody>
+</table>
+<p>The general rule: <strong>school / hospital / prison / church</strong> can drop &quot;the&quot; when used institutionally (UK English), but <strong>gym / cinema / pub / station / market / shop</strong> keep it. So <em>&quot;go to school&quot;</em> ✓ but <em>&quot;go to gym&quot;</em> ✗.</p>
+<p>Same pattern: <em>&quot;we went to market&quot;</em> (L34) → <em>&quot;we went to <strong>the</strong> market&quot;</em> / <em>&quot;a market&quot;</em>; <em>&quot;went to salsa course&quot;</em> (L10) → <em>&quot;went to <strong>a</strong> salsa course&quot;</em>.</p>
+<h3 id="45-conditional--hypothetical-tense-mismatches">4.5 Conditional / hypothetical tense mismatches</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you should say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;If I have remembered correctly&quot;</em> (L13)</td>
+<td><em>&quot;If I <strong>remember</strong> correctly&quot;</em> — bare present after &quot;if&quot; for hypothetical recall</td>
+</tr>
+<tr>
+<td><em>&quot;If I will remember everything&quot;</em> (L13)</td>
+<td><em>&quot;If I <strong>remember</strong> everything&quot;</em> — never &quot;will&quot; after &quot;if&quot; in real conditionals</td>
+</tr>
+<tr>
+<td><em>&quot;If you would like to live unhealthily&quot;</em> (L12)</td>
+<td>✓ correct — &quot;would like to&quot; with second conditional is fine</td>
+</tr>
+<tr>
+<td><em>&quot;if I am talking for Turkey&quot;</em> (L12)</td>
+<td><em>&quot;if I'm <strong>talking about</strong> Turkey&quot;</em> — &quot;talk about&quot; not &quot;talk for&quot;; also &quot;speaking about&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="46-it-was-nightmare--i-had-40-degree-fever--missing-a-before-singular-countable">4.6 &quot;It was nightmare&quot; / &quot;I had 40-degree fever&quot; — missing &quot;a&quot; before singular countable</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you should say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;So it was nightmare&quot;</em> (L29)</td>
+<td><em>&quot;So it was <strong>a</strong> nightmare&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;It was different type of rock&quot;</em> (L10)</td>
+<td><em>&quot;It was <strong>a</strong> different type of rock&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;I had 40-degree fever&quot;</em> (L35)</td>
+<td><em>&quot;I had <strong>a</strong> 40-degree fever&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;I have Turkish number&quot;</em> (L13)</td>
+<td><em>&quot;I have <strong>a</strong> Turkish number&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;Find what you interest&quot;</em> (L12)</td>
+<td><em>&quot;Find <strong>what interests you</strong>&quot;</em> — interest is a verb here, needs object</td>
+</tr>
+</tbody>
+</table>
+<h3 id="47-she-stay-there--3rd-person--s-drop">4.7 &quot;She stay there&quot; — 3rd-person -s drop</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you should say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;She stay there, like, two months, three months, and come back&quot;</em> (L11)</td>
+<td><em>&quot;She <strong>stays</strong> there for two or three months and <strong>comes</strong> back…&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;a person who sings song&quot;</em> (L10)</td>
+<td><em>&quot;a person who <strong>sings songs</strong>&quot;</em> (plural object)</td>
+</tr>
+<tr>
+<td><em>&quot;my company <strong>did redundancy</strong> today&quot;</em> (L29)</td>
+<td><em>&quot;my company <strong>did redundancies</strong> today&quot;</em> (UK: countable plural)</td>
+</tr>
+</tbody>
+</table>
+<p>This is mostly under control — but slips when you speed up.</p>
+<h3 id="48-comparative-doubles-rare-but-present">4.8 Comparative doubles (rare but present)</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you should say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;they become <strong>more happier</strong>&quot;</em> (L1)</td>
+<td><em>&quot;they become <strong>happier</strong>&quot;</em> (or <em>more happy</em> but never both)</td>
+</tr>
+<tr>
+<td><em>&quot;<strong>more better</strong>&quot;</em> (×2)</td>
+<td><em>&quot;better&quot;</em> alone is the comparative</td>
+</tr>
+</tbody>
+</table>
+<h3 id="49-how-can-i-say-search-hesitation-4-uses">4.9 &quot;How can I say&quot; search hesitation (4 uses)</h3>
+<p><em>&quot;I didn't basically, <strong>how can I say</strong>, rest enough.&quot;</em> (L33)
+<em>&quot;I don't buy like some, <strong>how can I say</strong>, packaging products.&quot;</em> (L34)
+<em>&quot;I felt so, <strong>how can I say</strong>…&quot;</em> (L35)</p>
+<p>Rotate with: <strong>what's the word</strong>, <strong>let me think</strong>, <strong>how do I put it</strong>, <strong>what do you call it</strong>.</p>
+<h3 id="410-lexical-collocation-mismatches">4.10 &quot;Lexical collocation&quot; mismatches</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you meant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;I gave butt to elephant&quot;</em> (L13)</td>
+<td><em>&quot;I patted the elephant&quot;</em> / <em>&quot;I petted an elephant&quot;</em> — collocate &quot;pat/pet + animal&quot;. &quot;Give butt&quot; doesn't exist in English.</td>
+</tr>
+<tr>
+<td><em>&quot;have a really good quality and people who come there also really quality people&quot;</em> (L1)</td>
+<td><em>&quot;the pubs are really high quality and the people who go there are too&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;It's like a long street market&quot;</em> (L34)</td>
+<td>✓ — fine, just drop the leading &quot;It's like&quot; if you're confident</td>
+</tr>
+<tr>
+<td><em>&quot;the temperature drops on Sunday&quot;</em> (L19)</td>
+<td>✓ correct</td>
+</tr>
+<tr>
+<td><em>&quot;I describe myself&quot;</em> as a topic-opener (L21)</td>
+<td><em>&quot;Let me describe myself&quot;</em> / <em>&quot;To describe myself…&quot;</em> — bare &quot;I describe&quot; sounds like reporting</td>
+</tr>
+</tbody>
+</table>
+<h3 id="411-at-the-same-time-overuse-70-uses">4.11 &quot;At the same time&quot; overuse (70 uses)</h3>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>When over-used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;becoming more health conscious while <strong>at the same time</strong> many just can't afford…&quot;</em> (L1)</td>
+<td>✓ correct contrast</td>
+</tr>
+<tr>
+<td><em>&quot;It's a stressful job at the same time&quot;</em> (L1)</td>
+<td>✗ — what's being contrasted? You probably meant &quot;but at the same time&quot; or just &quot;but&quot;</td>
+</tr>
+<tr>
+<td><em>&quot;At the same time, same old, everything…&quot;</em> (L11)</td>
+<td>✗ — drift; &quot;Then again, same old…&quot; works better</td>
+</tr>
+</tbody>
+</table>
+<p>When the contrast isn't real, swap for: <strong>on the other hand, then again, that said, mind you</strong>.</p>
+<h3 id="412-heavy-adverbial-fillers-actually--generally--probably--definitely">4.12 Heavy adverbial fillers: actually / generally / probably / definitely</h3>
+<p>You use:</p>
+<ul>
+<li><em>actually</em> 300×</li>
+<li><em>generally</em> 272×</li>
+<li><em>probably</em> 146×</li>
+<li><em>definitely</em> 25×</li>
+<li><em>basically</em> 483×</li>
+</ul>
+<p>That's <strong>1,226 hedging-adverb uses</strong> across 74,693 words — <strong>roughly 1 in 60 words is a hedge</strong>. Native conversational rate is ~1 in 200. Halving this would dramatically tighten your delivery.</p>
+<hr>
+<h2 id="5-top-priorities-for-the-next-60-days">5. Top Priorities for the Next 60 Days</h2>
+<ol>
+<li>
+<p><strong>The &quot;basically&quot; detox.</strong> For one full lesson, refuse to say &quot;basically&quot;. Track every time you almost did. Within a week you'll start noticing the urge before it leaves your mouth — that's the win.</p>
+</li>
+<li>
+<p><strong>&quot;Like&quot; surgery.</strong> You don't have to delete &quot;like&quot; — you have to <em>halve</em> it. Target: under 1.5 per 100 words. Quickest wins:</p>
+<ul>
+<li>When you mean an approximate number, say <strong>&quot;about&quot;</strong> or <strong>&quot;around&quot;</strong>.</li>
+<li>When you're hesitating mid-clause, replace &quot;, like, &quot; with a silent breath.</li>
+<li>Keep &quot;like&quot; for genuine comparison: &quot;like many countries…&quot;.</li>
+</ul>
+</li>
+<li>
+<p><strong>Demonstrative + kind/sort drill.</strong> Repeat out loud daily for two weeks: <em>&quot;these kinds of things&quot;</em>, <em>&quot;those kinds of issues&quot;</em>, <em>&quot;this kind of thing&quot;</em>, <em>&quot;this sort of problem&quot;</em>. Force agreement.</p>
+</li>
+<li>
+<p><strong>Article + venue drill.</strong> Say out loud, until automatic: <em>&quot;to the gym&quot;, &quot;to the cinema&quot;, &quot;to the pub&quot;, &quot;to the market&quot;, &quot;to the office&quot;</em>. Only <em>to school / to hospital / to church / to prison</em> drop the article in UK English.</p>
+</li>
+<li>
+<p><strong>&quot;If&quot; + bare present.</strong> Drill: <em>&quot;If I remember correctly…&quot;, &quot;If I'm honest…&quot;, &quot;If you ask me…&quot;</em> — never <em>if I will / if I would</em>.</p>
+</li>
+</ol>
+<hr>
+<h2 id="6-expressions-you-almost-got-right">6. Expressions You Almost Got Right</h2>
+<table>
+<thead>
+<tr>
+<th>What you said</th>
+<th>What you meant</th>
+<th>Native version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>&quot;my motto is live longer in healthy lifestyle&quot;</em> (L21)</td>
+<td>aspirational</td>
+<td><em>&quot;my motto is <strong>to</strong> live longer <strong>and</strong> lead a healthy lifestyle&quot;</em></td>
+</tr>
+<tr>
+<td><em>&quot;they take attention&quot;</em> (L17)</td>
+<td>grab attention</td>
+<td><strong>&quot;grab attention&quot;</strong> / <strong>&quot;draw attention&quot;</strong></td>
+</tr>
+<tr>
+<td><em>&quot;I have lots of prejudice about&quot;</em> (L17)</td>
+<td>strong negative bias</td>
+<td><em>&quot;I have lots of prejudices <strong>against</strong>&quot;</em> (plural; preposition)</td>
+</tr>
+<tr>
+<td><em>&quot;if my memory serves me correctly&quot;</em> (L13) — used 3x in one sentence!</td>
+<td>recalling</td>
+<td>✓ correct idiom, just stop repeating it — once per topic</td>
+</tr>
+<tr>
+<td><em>&quot;my company did redundancy today&quot;</em> (L29)</td>
+<td>did layoffs</td>
+<td><em>&quot;my company <strong>made redundancies</strong> today&quot;</em> (UK)</td>
+</tr>
+<tr>
+<td><em>&quot;these are <strong>the thing</strong> which I choose&quot;</em> (L11)</td>
+<td>these are what I'd choose</td>
+<td><em>&quot;these are <strong>the things</strong> I'd choose&quot;</em> — plural + cleaner relative</td>
+</tr>
+<tr>
+<td><em>&quot;I am out of basically TV series&quot;</em> (L12)</td>
+<td>I'm not into TV right now</td>
+<td><em>&quot;I'm <strong>off</strong> TV series at the moment&quot;</em> / <em>&quot;I've <strong>fallen off</strong> TV series&quot;</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="7-vocabulary-upgrades--b1--b2c1">7. Vocabulary Upgrades — B1 → B2/C1</h2>
+<p>You actually have a good lexical base. The upgrades target the words you <em>repeat</em> most.</p>
+<table>
+<thead>
+<tr>
+<th>Your default</th>
+<th>Frequency</th>
+<th>C1-grade alternatives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>basically</code></td>
+<td>483</td>
+<td>essentially, in short, more or less, really, ultimately, in essence</td>
+</tr>
+<tr>
+<td><code>actually</code></td>
+<td>300</td>
+<td>in fact, to be honest, as it happens, in reality</td>
+</tr>
+<tr>
+<td><code>generally</code></td>
+<td>272</td>
+<td>usually, on the whole, by and large, as a rule, typically</td>
+</tr>
+<tr>
+<td><code>kind of</code></td>
+<td>187</td>
+<td>sort of, somewhat, more or less, a bit, <em>(or drop it entirely)</em></td>
+</tr>
+<tr>
+<td><code>really</code></td>
+<td>500</td>
+<td>particularly, especially, genuinely, truly, exceptionally</td>
+</tr>
+<tr>
+<td><code>at the same time</code></td>
+<td>70</td>
+<td>meanwhile, then again, that said, by contrast, on the other hand</td>
+</tr>
+<tr>
+<td><code>like</code> (approximation)</td>
+<td>many</td>
+<td>about, around, roughly, somewhere near, in the region of</td>
+</tr>
+<tr>
+<td><code>because of that</code></td>
+<td>84</td>
+<td>that's why, as a result, hence, which is why</td>
+</tr>
+<tr>
+<td><code>I would like to</code></td>
+<td>146</td>
+<td>I'd like to, I want to, I'm hoping to, I'm keen to</td>
+</tr>
+<tr>
+<td><code>for example</code></td>
+<td>62</td>
+<td>for instance, take X, say, by way of example</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-topic-specific-notes">8. Topic-Specific Notes</h2>
+<p><strong>Pubs / drinking culture (L1).</strong> You said <em>&quot;really quality people&quot;</em> — colloquial but in English we'd say <em>&quot;a really good crowd&quot;</em> or <em>&quot;a nice bunch&quot;</em>. <em>&quot;Calorie things&quot;</em> → <em>&quot;calorie-heavy&quot;</em> or <em>&quot;high-calorie&quot;</em>.</p>
+<p><strong>AI / work (L11, L29).</strong> <em>&quot;if I have to speak, yeah, depends on the company&quot;</em> → <em>&quot;If I had to speak generally — it depends on the company.&quot;</em> You used &quot;redundancy&quot; correctly, but: <em>&quot;my company did redundancy today&quot;</em> should be <strong>&quot;my company made redundancies today&quot;</strong> (plural noun, verb is &quot;make/announce&quot;).</p>
+<p><strong>Real estate / negotiating (L16).</strong> <em>&quot;tradespeople, they say I come at this time&quot;</em> → ✓ near-perfect; would be slightly cleaner as <em>&quot;Tradespeople say they'll come at a specific time, but they often don't.&quot;</em></p>
+<p><strong>Travel (L34, L35).</strong> <em>&quot;It's like a long street market&quot;</em> — drop the <em>&quot;It's like&quot;</em>, you can be direct: <em>&quot;It's a long street market&quot;</em>. <em>&quot;We went to hospital in Philippines&quot;</em> → in British English, <em>&quot;we went to hospital&quot;</em> is fine without &quot;the&quot; when speaking institutionally, but <strong>&quot;the Philippines&quot;</strong> must have &quot;the&quot; (it's a plural-form country name).</p>
+<p><strong>Childhood memories (L13).</strong> You said <em>&quot;I gave butt to elephant&quot;</em>. Beautiful image but the verb is wrong — you meant <em>&quot;I patted the elephant&quot;</em> (gentle touch) or <em>&quot;I petted an elephant&quot;</em> (US English). &quot;Give butt&quot; is not an English collocation.</p>
+<p><strong>Pilates / fitness (L21, L40).</strong> Vocabulary is solid: <em>&quot;Pilates session&quot;</em>, <em>&quot;chubby&quot;</em>, <em>&quot;weights&quot;</em>, <em>&quot;machines&quot;</em>. One slip: <em>&quot;I don't go to gym&quot;</em> → <em>&quot;I don't go to <strong>the</strong> gym&quot;</em>.</p>
+<p><strong>Aesthetic surgery in Turkey (L2).</strong> <em>&quot;everybody do their nose&quot;</em> → <em>&quot;everybody <strong>gets</strong> their nose <strong>done</strong>&quot;</em> — the construction is <em>get something done</em> for cosmetic procedures.</p>
+<p><strong>Weather (L14, L15, L19).</strong> <em>&quot;so windy and so cold&quot;</em> — fine, but you do this in nearly every weather utterance. Rotate: <em>&quot;howling wind&quot;, &quot;bitter cold&quot;, &quot;chilly&quot;, &quot;biting&quot;, &quot;freezing&quot;, &quot;balmy&quot;</em>.</p>
+<hr>
+<h2 id="9-drills-to-do-this-week">9. Drills To Do This Week</h2>
+<ol>
+<li>
+<p><strong>&quot;Basically&quot; ban.</strong> One full lesson. Tell your tutor before the lesson: &quot;Please stop me every time I say 'basically'.&quot; After 30 minutes of being stopped, your brain rewires.</p>
+</li>
+<li>
+<p><strong>&quot;Like&quot; approximation swap.</strong> Pick lesson 30 (your worst at 4.43/100w). Find every &quot;like + number&quot; and rewrite as &quot;about&quot; or &quot;around&quot;. <em>&quot;like 30 years old&quot;</em> → <em>&quot;about 30&quot;</em>. <em>&quot;like 80%&quot;</em> → <em>&quot;around 80%&quot;</em>.</p>
+</li>
+<li>
+<p><strong>Demonstrative + kind drill.</strong> Write five sentences with each form, say them out loud:</p>
+<ul>
+<li><em>&quot;These kinds of things annoy me.&quot;</em></li>
+<li><em>&quot;This sort of problem is common.&quot;</em></li>
+<li><em>&quot;Those kinds of people make me laugh.&quot;</em></li>
+</ul>
+</li>
+<li>
+<p><strong>&quot;To the gym&quot; drill.</strong> For one week, every gym/cinema/pub/shop mention must have &quot;the&quot;. If you slip, restart the sentence.</p>
+</li>
+<li>
+<p><strong>&quot;If I&quot; conditionals.</strong> Drill out loud: <em>&quot;If I'm honest…&quot;, &quot;If I remember correctly…&quot;, &quot;If you ask me…&quot;, &quot;If I had more time…&quot;</em> (never <em>if I will</em>, never <em>if I would have</em> + present).</p>
+</li>
+</ol>
+<hr>
+<h2 id="10-final-note-from-your-tutor">10. Final Note from Your Tutor</h2>
+<p>Deniz, you have an <em>interesting</em> English voice — you draw on idioms, you risk vivid descriptions (&quot;I gave butt to elephant&quot; is wrong but it's <em>a picture</em>, which is what storytelling needs), you push into topics most B2 students avoid. The lexical breadth on display in your 43 lessons — drinking culture, aesthetic surgery, Pilates, sustainable products, redundancy, paragliding, memory loss — is genuinely impressive.</p>
+<p>What's holding you back from sounding <em>fully</em> C1 is rhythm, not range. You hedge with &quot;basically&quot; and &quot;like&quot; so often that the listener has to wait for the content to emerge. The words you'd substitute in are already in your active vocabulary — &quot;around&quot;, &quot;essentially&quot;, &quot;sort of&quot;, &quot;more or less&quot;, &quot;roughly&quot;. Your brain knows them. It just reaches for &quot;basically&quot; first under pressure.</p>
+<p>One change at a time. Start with &quot;basically&quot; — it's the cleanest win, and you'll hear it the moment you start listening for it. Within four weeks of conscious effort, that 483 drops by half. That alone changes how your English sounds.</p>
+<p>Keep storytelling. Keep risking the unusual phrase. Just give the listener a clean path to the picture.</p>
+<p>— Your tutor</p>
+
+            
+            
+        </body>
+        </html>

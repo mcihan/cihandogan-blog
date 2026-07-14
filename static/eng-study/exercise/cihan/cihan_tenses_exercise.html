@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verb Tenses — Personalised Exercise for Cihan</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #2563eb; }
+  .question-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #2563eb; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #2563eb; background: #eff6ff; }
+  .option.selected { border-color: #2563eb; background: #dbeafe; }
+  .check-btn {
+    margin-top: 12px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #1d4ed8; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #eff6ff;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #1e40af; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Verb Tenses — Personalised Exercise for Cihan</h1>
+    <div class="meta">
+      <span>Student: Cihan</span>
+      <span>Topic: Verb Tenses</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "mc", "q": "I ___ on the beach when suddenly I saw storm clouds.", "options": ["was relaxing", "relaxed", "had relaxed", "am relaxing"], "a": "was relaxing", "explanation": "Past continuous for the background action; past simple for the sudden event."}, {"type": "mc", "q": "Previously, they ___ it that way.", "options": ["are doing", "did", "were doing", "do"], "a": "did", "explanation": "Past simple for completed past habit ('used to' is also fine). 'In previously, they are doing' is a Turkish calque."}, {"type": "mc", "q": "His behaviour ___ when he goes back home.", "options": ["is changing", "changes", "changed", "change"], "a": "changes", "explanation": "Present simple for habitual/general truths; 3rd-person -s required."}, {"type": "mc", "q": "By the time I arrived, the meeting ___ .", "options": ["already started", "had already started", "was already starting", "already starts"], "a": "had already started", "explanation": "Past perfect for an action completed before another past event."}, {"type": "mc", "q": "I ___ in this company since 2019.", "options": ["work", "am working", "have been working", "worked"], "a": "have been working", "explanation": "Present perfect continuous for an action started in the past and still continuing."}, {"type": "mc", "q": "Yesterday, while I ___ TV, my brother called me.", "options": ["watched", "was watching", "had watched", "watch"], "a": "was watching", "explanation": "Past continuous for the longer background action interrupted by another."}, {"type": "mc", "q": "When I was a child, I ___ play football every weekend.", "options": ["used to", "was using to", "used", "am using to"], "a": "used to", "explanation": "'used to + base form' for past habits no longer true."}, {"type": "mc", "q": "He ___ his keys this morning, so he can't come in.", "options": ["lost", "has lost", "was losing", "had lost"], "a": "has lost", "explanation": "Present perfect for a past action with present relevance."}, {"type": "mc", "q": "I ___ to the UK three times.", "options": ["went", "have been", "was going", "had been"], "a": "have been", "explanation": "Present perfect for life experience up to now."}, {"type": "mc", "q": "While the team ___ the deployment, the server crashed.", "options": ["finished", "was finishing", "had finished", "finishes"], "a": "was finishing", "explanation": "Past continuous for an interrupted ongoing action."}, {"type": "correct", "q": "In previously, they are doing like that much.", "a": ["Previously, they did it that much.", "Previously, they used to do that.", "In the past, they did that."], "explanation": "'In previously' is not English. Use 'Previously' or 'In the past'. Use past simple, not present continuous, for past habits."}, {"type": "correct", "q": "I was seeing storm clouds coming.", "a": ["I saw storm clouds coming."], "explanation": "'See' is a stative perception verb — use past simple for a sudden, completed event."}, {"type": "correct", "q": "His behavior is changed when he go back to home.", "a": ["His behaviour changes when he goes back home.", "His behaviour has changed since he went back home."], "explanation": "Use present simple ('changes', 'goes') for habits; no article in 'go home'."}, {"type": "mc", "q": "I'm exhausted because I ___ all day.", "options": ["worked", "have been working", "was working", "work"], "a": "have been working", "explanation": "Present perfect continuous explains a present state from a recent ongoing action."}, {"type": "mc", "q": "When I called, he ___ a shower.", "options": ["had", "was having", "has had", "has"], "a": "was having", "explanation": "Past continuous for an action in progress at the moment of another past event."}, {"type": "mc", "q": "By next year, I ___ here for ten years.", "options": ["will work", "will have worked", "will be working", "work"], "a": "will have worked", "explanation": "Future perfect for an action completed before a future point."}, {"type": "mc", "q": "She ___ English for five years before she moved abroad.", "options": ["studied", "had studied", "was studying", "has studied"], "a": "had studied", "explanation": "Past perfect for an action completed before another past action."}, {"type": "mc", "q": "At 9 pm tomorrow, I ___ dinner with my family.", "options": ["have", "will have", "will be having", "am having"], "a": "will be having", "explanation": "Future continuous for an action in progress at a specific future time."}, {"type": "correct", "q": "They they they paying at one thousand dollars.", "a": ["They pay one thousand dollars.", "They are paying one thousand dollars."], "explanation": "Avoid the repetition loop. Choose present simple (general fact) or present continuous (right now)."}, {"type": "mc", "q": "I usually ___ to the office by metro.", "options": ["am going", "go", "was going", "have gone"], "a": "go", "explanation": "Present simple for habits and routines."}, {"type": "mc", "q": "Look! It ___ outside.", "options": ["rains", "is raining", "rained", "has rained"], "a": "is raining", "explanation": "Present continuous for an action happening right now."}, {"type": "mc", "q": "I ___ in Turkey for 30 years before moving abroad.", "options": ["lived", "had lived", "was living", "have lived"], "a": "had lived", "explanation": "Past perfect for a completed duration before another past event."}, {"type": "mc", "q": "While I ___ the presentation, my laptop died.", "options": ["gave", "was giving", "had given", "give"], "a": "was giving", "explanation": "Past continuous for an interrupted ongoing action."}, {"type": "correct", "q": "I had seen storm clouds coming.", "a": ["I saw storm clouds coming."], "explanation": "Past perfect doesn't fit a single sudden observation. Use past simple."}, {"type": "mc", "q": "They ___ this software since last March.", "options": ["use", "are using", "have been using", "were using"], "a": "have been using", "explanation": "Present perfect continuous for a continuing action that began in the past."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

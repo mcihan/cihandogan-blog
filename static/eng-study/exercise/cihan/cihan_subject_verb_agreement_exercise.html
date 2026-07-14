@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Subject–Verb Agreement — Personalised Exercise for Cihan</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #2563eb; }
+  .question-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #2563eb; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #2563eb; background: #eff6ff; }
+  .option.selected { border-color: #2563eb; background: #dbeafe; }
+  .check-btn {
+    margin-top: 12px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #1d4ed8; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #eff6ff;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #1e40af; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Subject–Verb Agreement — Personalised Exercise for Cihan</h1>
+    <div class="meta">
+      <span>Student: Cihan</span>
+      <span>Topic: Subject–Verb Agreement</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "He don't have it.", "a": ["He doesn't have it."], "explanation": "Third-person singular: don't → doesn't."}, {"type": "correct", "q": "He say I don't know.", "a": ["He says I don't know."], "explanation": "Third-person singular: say → says."}, {"type": "correct", "q": "He need to be more energetic.", "a": ["He needs to be more energetic."], "explanation": "Add -s to the verb after he/she/it."}, {"type": "correct", "q": "He don't need to run that much.", "a": ["He doesn't need to run that much."], "explanation": "Third-person singular negative: doesn't, not don't."}, {"type": "correct", "q": "60% of the people is like that.", "a": ["60% of the people are like that."], "explanation": "'People' is plural in English → 'are'."}, {"type": "correct", "q": "My brother go to work by metro.", "a": ["My brother goes to work by metro."], "explanation": "Third-person singular: go → goes."}, {"type": "correct", "q": "She like watching football.", "a": ["She likes watching football."], "explanation": "Third-person singular: like → likes."}, {"type": "correct", "q": "My team work very fast.", "a": ["My team works very fast.", "My team work very fast."], "explanation": "In US English 'team' is singular ('works'). In UK English collective nouns can be plural — singular is the safer default."}, {"type": "mc", "q": "She ___ tea every morning.", "options": ["drink", "drinks", "drinking", "is drink"], "a": "drinks", "explanation": "3rd-person singular: add -s."}, {"type": "mc", "q": "He ___ understand what you mean.", "options": ["don't", "doesn't", "not", "aren't"], "a": "doesn't", "explanation": "Third-person negative present simple uses 'doesn't'."}, {"type": "mc", "q": "My father ___ in a hospital.", "options": ["work", "works", "working", "are working"], "a": "works", "explanation": "3rd-person singular: add -s."}, {"type": "mc", "q": "People in our office ___ very friendly.", "options": ["is", "are", "was", "has"], "a": "are", "explanation": "'People' is plural → 'are'."}, {"type": "mc", "q": "One of my friends ___ in the UK.", "options": ["live", "lives", "are living", "living"], "a": "lives", "explanation": "The subject is 'one' (singular), not 'friends'."}, {"type": "mc", "q": "Everyone in the team ___ working from home today.", "options": ["are", "is", "were", "have"], "a": "is", "explanation": "'Everyone' is grammatically singular."}, {"type": "mc", "q": "My brother and I ___ to play football on Sundays.", "options": ["likes", "like", "liking", "is liking"], "a": "like", "explanation": "Compound subject with 'and' = plural → no -s."}, {"type": "correct", "q": "Each of the candidates have a strong CV.", "a": ["Each of the candidates has a strong CV."], "explanation": "'Each' is singular → 'has'."}, {"type": "correct", "q": "Neither of them know the answer.", "a": ["Neither of them knows the answer."], "explanation": "'Neither' is singular in formal English → 'knows'."}, {"type": "correct", "q": "There is many reasons to learn English.", "a": ["There are many reasons to learn English."], "explanation": "With plural subjects, use 'are', not 'is'."}, {"type": "correct", "q": "The news are bad today.", "a": ["The news is bad today."], "explanation": "'News' is uncountable singular → 'is'."}, {"type": "correct", "q": "Two thing is important for him.", "a": ["Two things are important for him."], "explanation": "Plural noun ('things') + plural verb ('are')."}, {"type": "correct", "q": "He always say the same thing.", "a": ["He always says the same thing."], "explanation": "Third-person singular: say → says."}, {"type": "mc", "q": "My manager ___ to start the meeting on time.", "options": ["want", "wants", "wanting", "is want"], "a": "wants", "explanation": "3rd-person singular: want → wants."}, {"type": "correct", "q": "She liked it like this kind of things.", "a": ["She liked these kinds of things.", "She likes this kind of thing."], "explanation": "'This kind of thing' (singular) or 'these kinds of things' (plural) — keep agreement consistent."}, {"type": "correct", "q": "The team have decided to release on Monday.", "a": ["The team has decided to release on Monday.", "The team have decided to release on Monday."], "explanation": "In US English, collective nouns are singular ('has'). UK English also allows plural — but be consistent."}, {"type": "mc", "q": "Nobody ___ what to do in this situation.", "options": ["know", "knows", "are knowing", "known"], "a": "knows", "explanation": "'Nobody' is grammatically singular → 'knows'."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

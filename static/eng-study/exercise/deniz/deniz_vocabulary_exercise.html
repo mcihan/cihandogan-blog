@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vocabulary &amp; Filler Reduction — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Vocabulary &amp; Filler Reduction — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Vocabulary &amp; Filler Reduction</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "rewrite", "q": "Rewrite without the filler 'like': 'It was like really like good, like the best snorkelling I've like ever done.'", "a": ["It was really good — the best snorkelling I've ever done.", "It was the best snorkelling I've ever done."], "explanation": "Drop sentence-internal 'like'. Use a pause or a more precise phrase."}, {"type": "rewrite", "q": "Rewrite without 'basically': 'Basically, the food in the UK basically is more expensive basically.'", "a": ["The food in the UK is more expensive.", "Food in the UK is significantly more expensive."], "explanation": "'Basically' is over-used (295 hits in your data). Keep one in five; drop the rest."}, {"type": "mc", "q": "Replace 'good' with a stronger word: 'The dinner was good.'", "options": ["okay", "decent", "big", "random"], "a": "decent", "explanation": "'Decent / solid / excellent / lovely' are more specific alternatives."}, {"type": "mc", "q": "Replace 'kind of': 'It was kind of cold yesterday.'", "options": ["sort of", "very", "extremely", "big"], "a": "sort of", "explanation": "Rotate hedgers: sort of, a bit, somewhat, in a way."}, {"type": "mc", "q": "Replace 'thing': 'The most important thing is honesty.'", "options": ["aspect", "stuff", "place", "time"], "a": "aspect", "explanation": "Use 'aspect / point / quality / factor' for precision."}, {"type": "mc", "q": "Replace 'because of that' with a formal connector:", "options": ["consequently", "however", "whereas", "moreover"], "a": "consequently", "explanation": "'Consequently' is the formal equivalent."}, {"type": "mc", "q": "Replace 'a lot of': 'There were a lot of immigrants at the event.'", "options": ["plenty of", "big", "many many", "small"], "a": "plenty of", "explanation": "'Plenty of / numerous / a significant number of'."}, {"type": "mc", "q": "Replace 'at the moment' with a synonym:", "options": ["currently", "previously", "historically", "never"], "a": "currently", "explanation": "'Currently / these days / right now' all work as alternatives."}, {"type": "mc", "q": "Replace 'very expensive' with a single, more vivid word:", "options": ["pricey", "cheap", "modest", "plain"], "a": "pricey", "explanation": "'Pricey / costly / steep / exorbitant' — varies the register."}, {"type": "mc", "q": "Choose a precise verb: 'Can you ___ this email by tomorrow?'", "options": ["do", "handle", "make", "take"], "a": "handle", "explanation": "'Handle a task / email / situation' is more precise than 'do'."}, {"type": "mc", "q": "Choose the closest meaning to 'spectacular':", "options": ["boring", "ordinary", "stunning", "cheap"], "a": "stunning", "explanation": "'Spectacular' = strikingly impressive."}, {"type": "mc", "q": "Choose the closest meaning to 'eligible':", "options": ["qualified", "forbidden", "optional", "expired"], "a": "qualified", "explanation": "'Eligible' = meeting the criteria; qualified to receive something."}, {"type": "mc", "q": "Choose the closest meaning to 'cosmopolitan':", "options": ["rural", "international", "empty", "ancient"], "a": "international", "explanation": "'Cosmopolitan' = sophisticated and international in character."}, {"type": "mc", "q": "Replace 'I think' with a more formal hedge:", "options": ["I'd argue", "Definitely", "Absolutely", "Whatever"], "a": "I'd argue", "explanation": "C1-style hedges: 'I'd argue / In my view / It strikes me / What I'd say is'."}, {"type": "mc", "q": "Choose the closest meaning to 'mandatory':", "options": ["optional", "required", "useful", "extra"], "a": "required", "explanation": "'Mandatory' = required by rule or law."}, {"type": "mc", "q": "Choose the closest meaning to 'recyclable':", "options": ["able to be reused", "throwaway", "expensive", "fragile"], "a": "able to be reused", "explanation": "'Recyclable' = can be processed and used again."}, {"type": "correct", "q": "They are look really creepy.", "a": ["They look really creepy.", "They are really creepy-looking."], "explanation": "Don't use 'are' + 'look' together. Use 'look' as a verb, or 'creepy-looking' as a compound adjective."}, {"type": "correct", "q": "It was so spectacular to snorkeling there.", "a": ["It was so spectacular for snorkelling there.", "It was so spectacular to snorkel there."], "explanation": "'Spectacular for + -ing' or 'spectacular to + base form'."}, {"type": "correct", "q": "I'm interesting in immigration policy.", "a": ["I'm interested in immigration policy."], "explanation": "-ed for feelings: I'm interested. (-ing describes the topic: 'immigration policy is interesting'.)"}, {"type": "correct", "q": "I was very boring at the meeting.", "a": ["I was very bored at the meeting.", "The meeting was very boring."], "explanation": "'-ed' for how you feel; '-ing' for what causes the feeling."}, {"type": "mc", "q": "Replace 'really big' with a stronger single word:", "options": ["massive", "tiny", "modest", "mild"], "a": "massive", "explanation": "'Massive / huge / enormous / substantial' — stronger alternatives."}, {"type": "mc", "q": "Choose the formal hedge: 'Climate change ___ to affect everyone.'", "options": ["definitely", "tends", "is going", "absolutely"], "a": "tends", "explanation": "'Tends to + base' is a softer, more academic claim."}, {"type": "mc", "q": "Choose the precise verb: 'The new policy will ___ many lives.'", "options": ["affect", "effect", "impact on", "do"], "a": "affect", "explanation": "'Affect' is the verb ('to influence'); 'effect' is normally a noun."}, {"type": "mc", "q": "Replace 'nice weather' with a more vivid alternative:", "options": ["pleasant", "cold", "plain", "random"], "a": "pleasant", "explanation": "'Pleasant / lovely / delightful / glorious' — more descriptive."}, {"type": "correct", "q": "At the moment of the moment, we are not buying a new car.", "a": ["At the moment, we are not buying a new car.", "Currently, we are not buying a new car."], "explanation": "'At the moment of the moment' doesn't exist. Use 'at the moment' or 'currently'."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

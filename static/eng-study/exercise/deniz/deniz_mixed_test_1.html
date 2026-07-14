@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mixed Comprehensive Test 1 — Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Mixed Comprehensive Test 1 — Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Mixed (All Weakness Areas)</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "I can't keep up with the technology.", "a": ["I can't keep up with technology."], "explanation": "Abstract / general nouns ('technology' meaning technology in general) take zero article.", "topic": "articles"}, {"type": "correct", "q": "Because of the technology, life is faster.", "a": ["Because of technology, life is faster."], "explanation": "'Technology' in a general sense — no 'the'.", "topic": "articles"}, {"type": "correct", "q": "I look at my past. I look at which I worked before. I look at the companies which I worked before, and they are still working.", "a": ["I look back at my past. I think about the companies where I worked before, and they are still operating."], "explanation": "Use 'where I worked' (relative adverb), and 'still operating' (present continuous for current ongoing state).", "topic": "tenses"}, {"type": "mc", "q": "I ___ to that company for five years before I moved abroad.", "options": ["worked", "had worked", "was working", "have worked"], "a": "had worked", "explanation": "Past perfect for a completed duration before another past action.", "topic": "tenses"}, {"type": "correct", "q": "I actively listen podcast when I am cooking.", "a": ["I actively listen to podcasts when I am cooking."], "explanation": "'Listen' always takes 'to' before an object.", "topic": "prepositions"}, {"type": "correct", "q": "We need to familiar the new words.", "a": ["We need to become familiar with the new words.", "We need to get used to the new words."], "explanation": "'Familiar' is an adjective, not a verb. Use 'become familiar with' or 'get used to'.", "topic": "prepositions"}, {"type": "correct", "q": "I don't buy so much things.", "a": ["I don't buy so many things."], "explanation": "'Many' goes with countable plural nouns; 'much' goes with uncountables.", "topic": "plurals"}, {"type": "correct", "q": "There were much people at the conference.", "a": ["There were many people at the conference.", "There were a lot of people at the conference."], "explanation": "'People' is countable plural → 'many' or 'a lot of'.", "topic": "plurals"}, {"type": "rewrite", "q": "Rewrite as two clean sentences (drop the 'like' fillers): 'Religion makes people a bit silly, like because we don't question what's going on around the world and this is really is really true.'", "a": ["Religion can make people a bit unthinking. We rarely question what is going on around the world.", "Religion makes people a bit unthinking because we don't question what's going on in the world."], "explanation": "Break long chains. Drop sentence-internal 'like'. Use a full stop or 'because'.", "topic": "sentence_structure"}, {"type": "rewrite", "q": "Rewrite using 'although': 'It rained all day. We still went snorkelling.'", "a": ["Although it rained all day, we still went snorkelling."], "explanation": "'Although + clause' for concession instead of chaining with 'but'.", "topic": "sentence_structure"}, {"type": "correct", "q": "You can able to reach your sources at home.", "a": ["You can reach your sources at home.", "You are able to reach your sources at home."], "explanation": "Never combine 'can' and 'be able to'. Choose one: 'can' (modal) OR 'be able to' (paraphrasis).", "topic": "modal_verbs"}, {"type": "correct", "q": "They can able to walk inside the farm.", "a": ["They can walk inside the farm.", "They are able to walk inside the farm."], "explanation": "Drop one of the two. 'Can be able to' / 'can able to' is a fossilised double modal.", "topic": "modal_verbs"}, {"type": "mc", "q": "If it rains tomorrow, we ___ the trip indoors.", "options": ["have", "will have", "would have", "had"], "a": "will have", "explanation": "First conditional: if + present simple, will + base.", "topic": "conditionals"}, {"type": "mc", "q": "If I ___ more time, I would learn a new language.", "options": ["have", "had", "would have", "will have"], "a": "had", "explanation": "Second conditional: if + past simple, would + base.", "topic": "conditionals"}, {"type": "correct", "q": "Even I push myself, I still feel tired.", "a": ["Even though I push myself, I still feel tired.", "Even if I push myself, I still feel tired."], "explanation": "'Even + clause' is a Turkish calque. Use 'even though' (concession) or 'even if' (hypothetical).", "topic": "connectors"}, {"type": "correct", "q": "Even I saw natives do a lot of grammar mistakes.", "a": ["Even though I saw natives making grammar mistakes, …", "I have even seen natives making grammar mistakes."], "explanation": "For concession use 'even though + clause'; or move 'even' before the verb for emphasis.", "topic": "connectors"}, {"type": "correct", "q": "Your cells become feel more better.", "a": ["Your cells feel better.", "Your cells start to feel better."], "explanation": "Don't double comparatives. Use 'better' OR 'more good' (but 'good' is irregular — 'better' is the only form).", "topic": "comparatives"}, {"type": "correct", "q": "Every change makes cost more higher than before.", "a": ["Every change makes the cost higher than before.", "Every change makes it more expensive than before."], "explanation": "Don't use 'more + -er'. Either 'higher' or 'more expensive' — never both.", "topic": "comparatives"}, {"type": "correct", "q": "If we give the right decision, we can move.", "a": ["If we make the right decision, we can move."], "explanation": "Collocation: 'make a decision' (Turkish 'karar vermek' literally is 'give a decision' — wrong in English).", "topic": "collocations"}, {"type": "correct", "q": "We need to familiar the words.", "a": ["We need to become familiar with the words.", "We need to get used to the words."], "explanation": "'Familiar' is an adjective, not a verb. Use 'become familiar with' or 'get used to'.", "topic": "collocations"}, {"type": "rewrite", "q": "Rewrite without the filler 'like': 'It was like really like good, like the best snorkelling I've like ever done.'", "a": ["It was really good — the best snorkelling I've ever done.", "It was the best snorkelling I've ever done."], "explanation": "Drop sentence-internal 'like'. Use a pause or a more precise phrase.", "topic": "vocabulary"}, {"type": "rewrite", "q": "Rewrite without 'basically': 'Basically, the food in the UK basically is more expensive basically.'", "a": ["The food in the UK is more expensive.", "Food in the UK is significantly more expensive."], "explanation": "'Basically' is over-used (295 hits in your data). Keep one in five; drop the rest.", "topic": "vocabulary"}, {"type": "correct", "q": "Another shirt is light blue or gray, which is really look good, looks good on them.", "a": ["Another shirt is light blue or grey, which really looks good on them."], "explanation": "Hold ONE form for the whole clause: 'looks' (3rd-person singular agreeing with 'which').", "topic": "word_form"}, {"type": "correct", "q": "This food taste good but it doesn't looks good.", "a": ["This food tastes good but it doesn't look good."], "explanation": "After 'doesn't' use the base form: 'look'. With 'this food' (singular) use 'tastes'.", "topic": "word_form"}, {"type": "correct", "q": "The people which wear suits are professional.", "a": ["The people who wear suits are professional.", "The people that wear suits are professional."], "explanation": "Use 'who' (or 'that') for people, not 'which'.", "topic": "relative_clauses"}];
+const SHOW_TOPIC_PILL = true;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

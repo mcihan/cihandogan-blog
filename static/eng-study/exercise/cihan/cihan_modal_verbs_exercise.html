@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modal Verbs — Personalised Exercise for Cihan</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #2563eb; }
+  .question-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #2563eb; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #2563eb; background: #eff6ff; }
+  .option.selected { border-color: #2563eb; background: #dbeafe; }
+  .check-btn {
+    margin-top: 12px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #1d4ed8; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #eff6ff;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #1e40af; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Modal Verbs — Personalised Exercise for Cihan</h1>
+    <div class="meta">
+      <span>Student: Cihan</span>
+      <span>Topic: Modal Verbs</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "I can be able to finish it today.", "a": ["I can finish it today.", "I am able to finish it today."], "explanation": "Don't double modals: 'can' or 'be able to', not both."}, {"type": "mc", "q": "You ___ smoke here — it's a hospital.", "options": ["mustn't", "don't have to", "shouldn't have", "needn't"], "a": "mustn't", "explanation": "'Mustn't' = prohibition; 'don't have to' = no obligation."}, {"type": "mc", "q": "You ___ wear a tie — it's a casual office.", "options": ["mustn't", "don't have to", "shouldn't", "can't"], "a": "don't have to", "explanation": "'Don't have to' = it's not required (no obligation)."}, {"type": "mc", "q": "I ___ told him — now he's angry.", "options": ["shouldn't have", "wouldn't have", "mustn't", "needn't"], "a": "shouldn't have", "explanation": "'Shouldn't have + past participle' = past regret about an action taken."}, {"type": "mc", "q": "He ___ be at home — his car is in the driveway.", "options": ["must", "might", "can", "should"], "a": "must", "explanation": "'Must' for strong certainty / logical deduction in the present."}, {"type": "mc", "q": "She ___ have arrived already; the train was delayed.", "options": ["can't", "mustn't", "shouldn't", "needn't"], "a": "can't", "explanation": "'Can't have + past participle' = impossible deduction about the past."}, {"type": "mc", "q": "I ___ have bought it; I already have one.", "options": ["needn't", "mustn't", "can't", "shouldn't"], "a": "needn't", "explanation": "'Needn't have + past participle' = it wasn't necessary, but you did it."}, {"type": "mc", "q": "You ___ relax — the deadline is next month.", "options": ["can", "may", "ought", "should"], "a": "can", "explanation": "'Can' for permission/possibility."}, {"type": "mc", "q": "___ I borrow your charger?", "options": ["May", "Should", "Would", "Need"], "a": "May", "explanation": "'May/can/could I…' for asking permission."}, {"type": "correct", "q": "You should to call him.", "a": ["You should call him."], "explanation": "After modal verbs use the base form, no 'to'."}, {"type": "correct", "q": "He must to leave now.", "a": ["He must leave now.", "He has to leave now."], "explanation": "After 'must' use the base form; 'have to' takes 'to + base'."}, {"type": "mc", "q": "If I had time, I ___ help you.", "options": ["will", "would", "can", "must"], "a": "would", "explanation": "Second conditional: 'would + base'."}, {"type": "mc", "q": "If I had known, I ___ come earlier.", "options": ["will", "would", "would have", "had"], "a": "would have", "explanation": "Third conditional: 'would have + past participle'."}, {"type": "mc", "q": "You ___ better leave now if you want to catch the train.", "options": ["should", "had", "would", "must"], "a": "had", "explanation": "'Had better + base' = strong advice."}, {"type": "mc", "q": "He ___ speak three languages when he was a child.", "options": ["can", "could", "may", "must"], "a": "could", "explanation": "'Could' = past ability."}, {"type": "correct", "q": "I can swimming.", "a": ["I can swim."], "explanation": "After a modal use the base form, not -ing."}, {"type": "mc", "q": "It ___ rain later — take an umbrella.", "options": ["might", "must", "ought", "should"], "a": "might", "explanation": "'Might' = future possibility."}, {"type": "mc", "q": "You ___ have told me earlier — I would have helped.", "options": ["could", "must", "can", "need"], "a": "could", "explanation": "'Could have + pp' = past possibility / mild reproach."}, {"type": "mc", "q": "You ___ pay if you don't want to.", "options": ["mustn't", "don't have to", "shouldn't", "can't"], "a": "don't have to", "explanation": "No obligation → 'don't have to'."}, {"type": "correct", "q": "Even I can be able to do it.", "a": ["Even I can do it.", "Even I am able to do it."], "explanation": "Avoid the double modal 'can be able to'."}, {"type": "mc", "q": "The lights are off — they ___ be asleep.", "options": ["must", "can", "need", "ought"], "a": "must", "explanation": "'Must' = strong logical certainty."}, {"type": "mc", "q": "You ___ ask permission before entering.", "options": ["should", "would", "will", "may"], "a": "should", "explanation": "'Should' = advice / mild obligation."}, {"type": "mc", "q": "I ___ help you with the bug if you want.", "options": ["can", "must", "ought", "need"], "a": "can", "explanation": "'Can' = ability / willingness to help."}, {"type": "mc", "q": "He ___ have left already — his coat is gone.", "options": ["must", "can", "ought", "should"], "a": "must", "explanation": "'Must have + pp' = strong past deduction."}, {"type": "correct", "q": "I would can finish it tomorrow.", "a": ["I could finish it tomorrow.", "I will be able to finish it tomorrow."], "explanation": "Don't combine two modals; use 'could' or 'will be able to'."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>

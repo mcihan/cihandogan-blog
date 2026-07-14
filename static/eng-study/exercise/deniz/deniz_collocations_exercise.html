@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("engstudy-auth")!=="ea3312fe029acf5e863a0e7f32a9b9985abff30fb711897cbc19eb64a982c36d")location.replace("/eng-study/");</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Collocations &amp; Turkish Calques — Personalised Exercise for Deniz</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #fdf6f9 0%, #f3eaf2 100%);
+    color: #1f2937;
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    padding: 32px;
+  }
+  header { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+  h1 { margin: 0 0 4px; font-size: 22px; color: #111827; }
+  .meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #6b7280; }
+  .meta span { background: #f3f4f6; padding: 4px 10px; border-radius: 999px; }
+  .progress { font-weight: 600; color: #be185d; }
+  .question-card {
+    background: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .qtype { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .qtext { font-size: 16px; margin-bottom: 12px; line-height: 1.5; }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: #be185d; }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 10px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .option:hover { border-color: #be185d; background: #fdf2f8; }
+  .option.selected { border-color: #be185d; background: #fce7f3; }
+  .check-btn {
+    margin-top: 12px;
+    background: #be185d;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .check-btn:hover { background: #9d174d; }
+  .check-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+  .feedback.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+  .feedback .answer { font-style: italic; margin-top: 4px; }
+  .feedback .explain { margin-top: 6px; color: #4b5563; }
+  .summary {
+    margin-top: 24px;
+    padding: 20px;
+    background: #fdf2f8;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  .summary h2 { margin: 0 0 8px; color: #9d174d; }
+  .topic-pill {
+    display: inline-block;
+    font-size: 11px;
+    background: #fce7f3;
+    color: #9d174d;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Collocations &amp; Turkish Calques — Personalised Exercise for Deniz</h1>
+    <div class="meta">
+      <span>Student: Deniz</span>
+      <span>Topic: Collocations &amp; Turkish Calques</span>
+      <span>Level: B2</span>
+      <span class="progress" id="progress">Question 1 / 25</span>
+      <span id="score">Score: 0 / 0</span>
+    </div>
+  </header>
+  <div id="quiz"></div>
+  <div class="summary" id="summary">
+    <h2>🎉 Exercise complete!</h2>
+    <p id="summary-text"></p>
+  </div>
+</div>
+<script>
+const QUESTIONS = [{"type": "correct", "q": "If we give the right decision, we can move.", "a": ["If we make the right decision, we can move."], "explanation": "Collocation: 'make a decision' (Turkish 'karar vermek' literally is 'give a decision' — wrong in English)."}, {"type": "correct", "q": "We need to familiar the words.", "a": ["We need to become familiar with the words.", "We need to get used to the words."], "explanation": "'Familiar' is an adjective, not a verb. Use 'become familiar with' or 'get used to'."}, {"type": "correct", "q": "We always make joke about this situation.", "a": ["We always make a joke about this situation.", "We always crack a joke about this situation."], "explanation": "Collocation: 'make a joke' (with article) or 'crack a joke'."}, {"type": "correct", "q": "She gave a birth to twins.", "a": ["She gave birth to twins."], "explanation": "'Give birth' takes no article."}, {"type": "correct", "q": "He wants to open a business in London.", "a": ["He wants to start a business in London.", "He wants to set up a business in London."], "explanation": "Collocation: 'start/set up a business'."}, {"type": "correct", "q": "We will do a party for her birthday.", "a": ["We will throw a party for her birthday.", "We will have a party for her birthday."], "explanation": "Collocation: 'throw/have a party'."}, {"type": "correct", "q": "I do sport three times a week.", "a": ["I do sport three times a week.", "I play sport three times a week."], "explanation": "Both 'do sport' (general) and 'play sport' are acceptable. NEVER 'make sport'."}, {"type": "correct", "q": "We took a decision to relocate.", "a": ["We made a decision to relocate.", "We decided to relocate."], "explanation": "Collocation: 'make a decision'. ('Take a decision' exists but is rarer/more formal in some varieties.)"}, {"type": "correct", "q": "Let's take a holiday next month.", "a": ["Let's go on holiday next month.", "Let's take a holiday next month.", "Let's have a holiday next month."], "explanation": "Collocations: 'go on holiday', 'take a holiday', 'have a holiday' are all fine."}, {"type": "correct", "q": "I want to do a course in marketing.", "a": ["I want to take a course in marketing.", "I want to do a course in marketing."], "explanation": "Both 'take a course' and 'do a course' are correct."}, {"type": "mc", "q": "He always ___ a decision quickly.", "options": ["gives", "makes", "does", "takes"], "a": "makes", "explanation": "Collocation: 'make a decision'."}, {"type": "mc", "q": "She wants to ___ a chance and apply.", "options": ["give", "make", "take", "do"], "a": "take", "explanation": "'Take a chance' / 'take a risk' — fixed."}, {"type": "mc", "q": "You should ___ care of yourself.", "options": ["take", "make", "give", "do"], "a": "take", "explanation": "'Take care of' is fixed."}, {"type": "mc", "q": "He wants to ___ his own business.", "options": ["open", "make", "start", "do"], "a": "start", "explanation": "'Start a business' or 'set up a business' — never 'open'."}, {"type": "mc", "q": "She likes to ___ jokes at meetings.", "options": ["do", "make", "give", "tell"], "a": "make", "explanation": "'Make jokes' or 'tell jokes' — never 'do jokes' or 'give jokes'."}, {"type": "mc", "q": "They are going to ___ a party this weekend.", "options": ["do", "make", "throw", "give"], "a": "throw", "explanation": "Collocation: 'throw a party' / 'have a party' / 'host a party'."}, {"type": "mc", "q": "She ___ birth to a baby boy last week.", "options": ["gave", "made", "took", "did"], "a": "gave", "explanation": "'Give birth' is fixed."}, {"type": "mc", "q": "I need to ___ a doctor's appointment.", "options": ["do", "make", "take", "give"], "a": "make", "explanation": "'Make an appointment'."}, {"type": "mc", "q": "He wants to ___ a presentation tomorrow.", "options": ["do", "make", "give", "take"], "a": "give", "explanation": "'Give a presentation' is the standard collocation. ('Make a presentation' is also acceptable in some contexts.)"}, {"type": "correct", "q": "Can you give me an advice?", "a": ["Can you give me some advice?", "Can you give me a piece of advice?"], "explanation": "'Advice' is uncountable — no 'an'. Use 'some advice' or 'a piece of advice'."}, {"type": "correct", "q": "I will make my best to help you.", "a": ["I will do my best to help you."], "explanation": "Collocation: 'do your best' (never 'make your best')."}, {"type": "correct", "q": "He does a lot of mistakes when he speaks.", "a": ["He makes a lot of mistakes when he speaks."], "explanation": "Collocation: 'make a mistake' (never 'do a mistake')."}, {"type": "correct", "q": "She makes a shower every morning.", "a": ["She has a shower every morning.", "She takes a shower every morning."], "explanation": "Collocation: 'have/take a shower'."}, {"type": "correct", "q": "They are making research on AI.", "a": ["They are doing research on AI.", "They are conducting research on AI."], "explanation": "Collocation: 'do research' or 'conduct research'."}, {"type": "correct", "q": "Let's make a walk in the park.", "a": ["Let's go for a walk in the park.", "Let's take a walk in the park."], "explanation": "Collocation: 'go for a walk' or 'take a walk' (never 'make a walk')."}];
+const SHOW_TOPIC_PILL = false;
+let answered = 0;
+let correct = 0;
+
+function normalise(s) {
+  return s.trim().toLowerCase().replace(/[.,!?;:'"`]/g, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(idx, userAnswer) {
+  const q = QUESTIONS[idx];
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const userN = normalise(userAnswer);
+  return accepted.some(a => normalise(a) === userN);
+}
+
+function renderQuestion(q, idx) {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.id = 'q-' + idx;
+
+  const typeLabel = {
+    mc: 'Multiple Choice',
+    fill: 'Fill in the Blank',
+    correct: 'Sentence Correction',
+    choose: 'Choose the Correct Word',
+    rewrite: 'Rewrite the Sentence'
+  }[q.type] || 'Question';
+
+  let topicPill = '';
+  if (SHOW_TOPIC_PILL && q.topic) topicPill = '<span class="topic-pill">' + q.topic.replace(/_/g, ' ') + '</span>';
+
+  card.innerHTML = '<div class="qtype">' + (idx + 1) + '. ' + typeLabel + topicPill + '</div>' +
+                   '<div class="qtext">' + q.q + '</div>';
+
+  if (q.type === 'mc' || q.type === 'choose') {
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    let selected = null;
+    q.options.forEach(opt => {
+      const el = document.createElement('div');
+      el.className = 'option';
+      el.textContent = opt;
+      el.onclick = () => {
+        if (card.dataset.done) return;
+        optsDiv.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        selected = opt;
+      };
+      optsDiv.appendChild(el);
+    });
+    card.appendChild(optsDiv);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      if (!selected) { alert('Please choose an option.'); return; }
+      finish(card, idx, selected);
+    };
+    card.appendChild(btn);
+  } else {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = q.type === 'rewrite' ? 'Type your full rewrite…' :
+                        q.type === 'correct' ? 'Type the corrected sentence…' :
+                        'Your answer…';
+    card.appendChild(input);
+
+    const btn = document.createElement('button');
+    btn.className = 'check-btn';
+    btn.textContent = 'Check Answer';
+    btn.onclick = () => {
+      const val = input.value.trim();
+      if (!val) { alert('Please type an answer.'); return; }
+      finish(card, idx, val);
+    };
+    card.appendChild(btn);
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    });
+  }
+
+  const fb = document.createElement('div');
+  fb.className = 'feedback';
+  card.appendChild(fb);
+  return card;
+}
+
+function finish(card, idx, userAnswer) {
+  if (card.dataset.done) return;
+  card.dataset.done = '1';
+  const q = QUESTIONS[idx];
+  const ok = checkAnswer(idx, userAnswer);
+  const fb = card.querySelector('.feedback');
+  const accepted = Array.isArray(q.a) ? q.a : [q.a];
+  const primaryAnswer = accepted[0];
+  if (ok) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '<strong>✅ Correct</strong>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+    correct++;
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '<strong>❌ Incorrect</strong>' +
+                   '<div class="answer">Correct answer: ' + primaryAnswer + '</div>' +
+                   '<div class="explain">' + q.explanation + '</div>';
+  }
+  fb.style.display = 'block';
+  card.querySelectorAll('.option, input, button').forEach(el => {
+    if (el.tagName === 'BUTTON') el.disabled = true;
+    else if (el.tagName === 'INPUT') el.readOnly = true;
+  });
+  answered++;
+  document.getElementById('score').textContent = 'Score: ' + correct + ' / ' + answered;
+  if (answered === QUESTIONS.length) {
+    const s = document.getElementById('summary');
+    document.getElementById('summary-text').textContent =
+      'You scored ' + correct + ' out of ' + QUESTIONS.length + '. (' +
+      Math.round(100 * correct / QUESTIONS.length) + '%)';
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function init() {
+  const quiz = document.getElementById('quiz');
+  QUESTIONS.forEach((q, idx) => quiz.appendChild(renderQuestion(q, idx)));
+  document.getElementById('progress').textContent = 'Total: ' + QUESTIONS.length + ' questions';
+}
+init();
+</script>
+</body>
+</html>
