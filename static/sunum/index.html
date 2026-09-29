@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Talk prep</title>
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --text:#1e2433; --muted:#64748b;
+    --border:#e2e8f0; --primary:#2563eb; --primary-dark:#1d4ed8;
+    --teal:#0d9488; --teal-soft:#ecfaf8; --blue-soft:#eff4ff;
+    --shadow:0 1px 3px rgba(30,41,59,.08), 0 4px 14px rgba(30,41,59,.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh}
+  header{background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 55%,#0d9488 100%);
+         color:#fff;padding:48px 24px 40px;text-align:center}
+  header .kicker{font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;opacity:.8}
+  header h1{font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-top:8px}
+  header p{margin-top:10px;opacity:.88;font-size:1rem}
+  main{max-width:900px;margin:0 auto;padding:0 24px 60px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:-26px}
+  a.card{display:block;background:var(--card);border:1px solid var(--border);border-radius:16px;
+         padding:28px 26px;text-decoration:none;color:inherit;box-shadow:var(--shadow);
+         transition:transform .12s,box-shadow .12s,border-color .12s}
+  a.card:hover{transform:translateY(-3px);box-shadow:0 6px 22px rgba(30,41,59,.12)}
+  a.card .ico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;
+              justify-content:center;font-size:1.3rem;margin-bottom:16px}
+  a.card.shadow .ico{background:var(--blue-soft);color:var(--primary)}
+  a.card.study .ico{background:var(--teal-soft);color:var(--teal)}
+  a.card h2{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+  a.card p{margin-top:8px;color:var(--muted);font-size:.94rem}
+  a.card .go{margin-top:18px;display:inline-flex;align-items:center;gap:6px;
+             font-size:.86rem;font-weight:600;letter-spacing:.02em}
+  a.card.shadow .go{color:var(--primary)}
+  a.card.study .go{color:var(--teal)}
+  .meta{margin-top:34px;color:var(--muted);font-size:.86rem;text-align:center;line-height:1.7}
+  .meta b{color:var(--text)}
+  /* password gate */
+  #pw-gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;
+           justify-content:center;padding:24px;z-index:999}
+  #pw-gate .box{background:var(--card);border-radius:16px;box-shadow:var(--shadow);
+                padding:36px 30px;max-width:380px;width:100%;text-align:center;
+                border:1px solid var(--border)}
+  #pw-gate .lock{font-size:2.2rem;margin-bottom:10px}
+  #pw-gate h2{font-size:1.2rem;margin-bottom:6px}
+  #pw-gate p{font-size:.88rem;color:var(--muted);margin-bottom:22px}
+  #pw-gate input{width:100%;border:1px solid var(--border);border-radius:10px;
+                 padding:12px 14px;font-size:1rem;outline:none;margin-bottom:12px;
+                 transition:border-color .15s,box-shadow .15s}
+  #pw-gate input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  #pw-gate button{width:100%;border:0;border-radius:10px;background:var(--primary);color:#fff;
+                  padding:12px 14px;font-size:.98rem;font-weight:600;cursor:pointer}
+  #pw-gate button:hover{background:var(--primary-dark)}
+  #pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:10px}
+  @media(max-width:560px){header{padding:36px 20px 34px}header h1{font-size:1.6rem}}
+</style>
+<style id="gate-hide">body > header, body > main { display:none }</style>
+</head>
+<body>
+
+<div id="pw-gate">
+  <div class="box">
+    <div class="lock">&#128274;</div>
+    <h2>Private</h2>
+    <p>This page is not public. Enter the password to continue.</p>
+    <form id="pw-form">
+      <input type="password" id="pw-input" placeholder="Password" autocomplete="current-password" autofocus>
+      <button type="submit">Open</button>
+      <div id="pw-error"></div>
+    </form>
+  </div>
+</div>
+
+<header>
+  <div class="kicker">FOST London &nbsp;/&nbsp; 1 October, 12:20</div>
+  <h1>AI &middot; Spec-Driven Development</h1>
+  <p>Lessons from &pound;Billions in payments</p>
+</header>
+
+<main>
+  <div class="cards">
+    <a class="card shadow" href="shadowing.html">
+      <div class="ico">&#127908;</div>
+      <h2>Shadowing</h2>
+      <p>Every line of the talk and of the questions, lined up with the recordings.
+         Tap a line to hear it, loop it, and say it back.</p>
+      <span class="go">Open shadowing &rarr;</span>
+    </a>
+    <a class="card study" href="study.html">
+      <div class="ico">&#128218;</div>
+      <h2>Study</h2>
+      <p>Questions to expect with answers you can say out loud, the skills in our
+         repository, the SDD steps, and the words to know.</p>
+      <span class="go">Open study &rarr;</span>
+    </a>
+  </div>
+  <p class="meta">
+    Everything here is for practice before the talk.<br>
+    Press <b>Shadowing</b> to listen and repeat, <b>Study</b> to read and answer.
+  </p>
+</main>
+
+<script>
+(function () {
+  var KEY = 'sunum-auth';
+  var HASH = 'adefc9c27201801b3a22856c6920abf17984145d539df672a5e88a3af710fcc0';
+
+  function sha256(text) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
+      return Array.from(new Uint8Array(buf)).map(function (b) {
+        return b.toString(16).padStart(2, '0');
+      }).join('');
+    });
+  }
+  function unlock() {
+    var h = document.getElementById('gate-hide');
+    if (h) h.remove();
+    var g = document.getElementById('pw-gate');
+    if (g) g.remove();
+  }
+  try {
+    if (localStorage.getItem(KEY) === HASH) { unlock(); return; }
+  } catch (e) {}
+
+  document.getElementById('pw-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('pw-input');
+    var error = document.getElementById('pw-error');
+    sha256(input.value).then(function (h) {
+      if (h === HASH) {
+        try { localStorage.setItem(KEY, HASH); } catch (err) {}
+        unlock();
+      } else {
+        error.textContent = 'Wrong password, try again.';
+        input.value = '';
+        input.focus();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
