@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISTQB CTFL v4.0 — Görsel Çalışma Rehberi</title>
+<style>
+:root{
+  --bg:#f7f7fb; --surface:#ffffff; --ink:#1c1c28; --muted:#5f5f74; --line:#e5e4ee;
+  --shadow:0 1px 2px rgba(28,28,60,.06), 0 8px 24px -12px rgba(28,28,60,.14);
+  --amber:#92400e; --amber-bg:#fef3e2; --amber-line:#f5d9ab;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#131320; --surface:#1c1c2c; --ink:#ececf4; --muted:#a3a3b8; --line:#2e2e42;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+    --amber:#fbbf24; --amber-bg:#2c2010; --amber-line:#5c451f; }
+}
+:root[data-theme="dark"]{ --bg:#131320; --surface:#1c1c2c; --ink:#ececf4; --muted:#a3a3b8; --line:#2e2e42;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+  --amber:#fbbf24; --amber-bg:#2c2010; --amber-line:#5c451f; }
+:root[data-theme="light"]{ --bg:#f7f7fb; --surface:#ffffff; --ink:#1c1c28; --muted:#5f5f74; --line:#e5e4ee;
+  --shadow:0 1px 2px rgba(28,28,60,.06), 0 8px 24px -12px rgba(28,28,60,.14);
+  --amber:#92400e; --amber-bg:#fef3e2; --amber-line:#f5d9ab; }
+*{box-sizing:border-box}
+html{background:var(--bg)}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.6;font-size:1rem}
+
+/* chapter hue system */
+section.ch{--c:#6366f1;--cd:#4338ca;--cs:#eef2ff;--cl:#c7d2fe}
+#ch1{--c:#6366f1;--cd:#4338ca;--cs:#eef2ff;--cl:#c7d2fe}
+#ch2{--c:#0ea5e9;--cd:#0369a1;--cs:#e8f6fe;--cl:#bae6fd}
+#ch3{--c:#8b5cf6;--cd:#6d28d9;--cs:#f3efff;--cl:#ddd6fe}
+#ch4{--c:#ec4899;--cd:#be185d;--cs:#fdf0f6;--cl:#fbcfe4}
+#ch5{--c:#f59e0b;--cd:#b45309;--cs:#fef6e7;--cl:#fde68a}
+#ch6{--c:#10b981;--cd:#047857;--cs:#e9faf3;--cl:#a7f3d0}
+:root[data-theme="dark"] section.ch, :root[data-theme="dark"] #ch1{--cs:#232345;--cl:#3f3f7a}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) #ch1{--c:#818cf8;--cd:#a5b4fc;--cs:#22224a;--cl:#3b3b78}
+  :root:not([data-theme="light"]) #ch2{--c:#38bdf8;--cd:#7dd3fc;--cs:#12283a;--cl:#1c4258}
+  :root:not([data-theme="light"]) #ch3{--c:#a78bfa;--cd:#c4b5fd;--cs:#251c44;--cl:#3d2e6b}
+  :root:not([data-theme="light"]) #ch4{--c:#f472b6;--cd:#f9a8d4;--cs:#3a1428;--cl:#5c2140}
+  :root:not([data-theme="light"]) #ch5{--c:#fbbf24;--cd:#fcd34d;--cs:#33240c;--cl:#57400f}
+  :root:not([data-theme="light"]) #ch6{--c:#34d399;--cd:#6ee7b7;--cs:#0e2f22;--cl:#14543c}
+}
+:root[data-theme="dark"] #ch1{--c:#818cf8;--cd:#a5b4fc;--cs:#22224a;--cl:#3b3b78}
+:root[data-theme="dark"] #ch2{--c:#38bdf8;--cd:#7dd3fc;--cs:#12283a;--cl:#1c4258}
+:root[data-theme="dark"] #ch3{--c:#a78bfa;--cd:#c4b5fd;--cs:#251c44;--cl:#3d2e6b}
+:root[data-theme="dark"] #ch4{--c:#f472b6;--cd:#f9a8d4;--cs:#3a1428;--cl:#5c2140}
+:root[data-theme="dark"] #ch5{--c:#fbbf24;--cd:#fcd34d;--cs:#33240c;--cl:#57400f}
+:root[data-theme="dark"] #ch6{--c:#34d399;--cd:#6ee7b7;--cs:#0e2f22;--cl:#14543c}
+
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(120deg,#312e81 0%,#4338ca 34%,#0e7490 100%);color:#fff;padding:3.4rem 1.5rem 2.8rem}
+.hero-in{max-width:1140px;margin:0 auto}
+.hero .kicker{font-size:.75rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .8rem}
+.hero h1{font-size:clamp(2.1rem,5.5vw,3.3rem);line-height:1.05;margin:0 0 .8rem;font-weight:900;letter-spacing:-.02em;text-wrap:balance}
+.hero .lede{max-width:60ch;color:#dbe3ff;margin:0 0 1.8rem;font-size:1.08rem}
+.pills{display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:2rem}
+.pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(4px);border-radius:14px;padding:.55rem 1.05rem}
+.pill b{display:block;font-size:1.3rem;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.pill span{font-size:.76rem;color:#c7d2fe}
+.distwrap{background:rgba(10,10,30,.28);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:1.05rem 1.2rem;max-width:56rem}
+.distwrap p{margin:0 0 .7rem;font-size:.86rem;font-weight:700;color:#e0e7ff}
+.distbar{display:flex;height:34px;border-radius:9px;overflow:hidden;gap:2px}
+.distbar div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.86rem;font-variant-numeric:tabular-nums}
+.distkey{display:flex;flex-wrap:wrap;gap:.4rem .95rem;margin-top:.65rem;font-size:.76rem;color:#dbe3ff}
+.distkey span{display:flex;align-items:center;gap:.35rem}
+.distkey i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1140px;margin:0 auto;padding:2rem 1.5rem 5rem;display:grid;grid-template-columns:220px minmax(0,1fr);gap:2.6rem;align-items:start}
+main{min-width:0}
+@media (max-width:940px){ .wrap{grid-template-columns:1fr;gap:1rem} }
+#toc{position:sticky;top:1rem;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow);padding:1rem 1rem;font-size:.85rem}
+@media (max-width:940px){ #toc{position:static} }
+.toc-title{margin:0 0 .55rem;font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+#toc ol{margin:0;padding:0;list-style:none}
+#toc a{display:flex;gap:.6rem;align-items:center;color:var(--muted);text-decoration:none;padding:.3rem .45rem;border-radius:9px;line-height:1.3}
+#toc a i{flex:none;width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.72rem;font-weight:900;color:#fff}
+#toc a:hover,#toc a.active{color:var(--ink);background:var(--bg);font-weight:650}
+
+/* ---------- chapters ---------- */
+section.ch{margin-top:3.2rem}
+section.ch:first-of-type{margin-top:.4rem}
+.chhead{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.chnum{flex:none;width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;box-shadow:var(--shadow)}
+.chhead .t p{margin:0;font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+.chhead .t h2{margin:.1rem 0 0;font-size:clamp(1.45rem,3.4vw,1.9rem);font-weight:900;letter-spacing:-.015em;line-height:1.15}
+h3{font-size:1.12rem;margin:2.3rem 0 .6rem;font-weight:800;letter-spacing:-.01em;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+h3::before{content:"";width:14px;height:14px;border-radius:5px;background:linear-gradient(135deg,var(--c),var(--cd));align-self:center;flex:none}
+h3 small{font-weight:600;color:var(--c);font-size:.78rem;background:var(--cs);padding:.14rem .6rem;border-radius:99px}
+p{margin:.55rem 0;max-width:72ch}
+code{font-family:var(--mono);font-size:.85em;background:var(--cs);color:var(--cd);padding:.08em .4em;border-radius:6px}
+strong{font-weight:750}
+ul{margin:.5rem 0;padding-left:1.3rem}
+li{margin:.24rem 0}
+.term{font-weight:800;color:var(--cd)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.8rem;margin:1rem 0}
+.card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:.9rem 1rem;box-shadow:var(--shadow)}
+.card b{display:block;font-size:.95rem;margin-bottom:.3rem;letter-spacing:-.01em}
+.card b i{font-style:normal;display:inline-flex;width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;font-size:.78rem;font-weight:900;align-items:center;justify-content:center;margin-right:.5rem;vertical-align:-.3em}
+.card p{margin:0;font-size:.86rem;color:var(--muted)}
+/* compare tables */
+table.cmp{width:100%;border-collapse:separate;border-spacing:0;margin:1rem 0;font-size:.9rem;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+table.cmp th{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;text-align:left;padding:.55rem .9rem;font-size:.85rem}
+table.cmp td{padding:.6rem .9rem;border-top:1px solid var(--line);vertical-align:top;width:50%}
+table.cmp td ul{margin:.2rem 0;padding-left:1.1rem}
+.tablewrap{overflow-x:auto;margin:1rem 0}
+.tablewrap table.cmp{margin:0;min-width:38rem}
+/* traps + notes */
+.trap{margin:1.6rem 0;padding:1rem 1.15rem;border:1px solid var(--amber-line);border-radius:14px;background:var(--amber-bg);font-size:.92rem;box-shadow:var(--shadow)}
+.trap b.t{color:var(--amber);display:flex;align-items:center;gap:.5rem;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+.trap b.t::before{content:"⚠";font-size:1rem}
+.trap ul{margin:.2rem 0 0;padding-left:1.25rem}
+.trap li{margin:.32rem 0}
+.note{margin:1.1rem 0;padding:.85rem 1.1rem;border-radius:14px;background:var(--cs);border:1px solid var(--cl);font-size:.92rem}
+.note p{margin:.2rem 0}
+/* flows */
+.flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:stretch;margin:1rem 0}
+.flow .step{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.6rem .85rem;font-size:.84rem;text-align:center;flex:1 1 8.5rem;min-width:8rem;box-shadow:var(--shadow);position:relative}
+.flow .step em{display:flex;font-style:normal;width:26px;height:26px;margin:0 auto .35rem;border-radius:50%;background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;font-weight:900;font-size:.8rem;align-items:center;justify-content:center}
+.flow .step b{display:block;font-size:.88rem;letter-spacing:-.01em}
+.flow .step small{color:var(--muted);font-size:.76rem;line-height:1.4;display:block;margin-top:.15rem}
+.flow .arr{align-self:center;color:var(--c);font-weight:900;font-size:1.1rem;flex:0 0 auto}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.7rem 0}
+.chips span{background:var(--cs);border:1px solid var(--cl);border-radius:99px;padding:.22rem .8rem;font-size:.82rem;color:var(--ink)}
+.chips span b{color:var(--cd);font-weight:900}
+
+/* figures = illustration panels (always light, like printed images) */
+figure.fig{margin:1.4rem 0;background:#fff;border:1px solid #e8e6f2;border-radius:18px;padding:1.2rem 1.2rem .9rem;overflow-x:auto;box-shadow:var(--shadow)}
+figure.fig svg{display:block;margin:0 auto;max-width:100%;height:auto}
+figure.fig figcaption{font-size:.82rem;color:#6a6a80;text-align:center;margin-top:.7rem;max-width:60ch;margin-left:auto;margin-right:auto}
+figure.fig figcaption strong{color:#3c3c50}
+
+/* quadrants */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1rem 0;font-size:.85rem;max-width:46rem}
+.quad .q{border-radius:14px;padding:.85rem 1rem;color:#fff;box-shadow:var(--shadow)}
+.quad .q b{display:block;margin-bottom:.3rem;font-size:.95rem}
+.quad .q ul{margin:0;padding-left:1.1rem;font-size:.82rem;opacity:.95}
+.quad .q2{background:linear-gradient(135deg,#6366f1,#4338ca)}
+.quad .q3{background:linear-gradient(135deg,#ec4899,#be185d)}
+.quad .q1{background:linear-gradient(135deg,#0ea5e9,#0369a1)}
+.quad .q4{background:linear-gradient(135deg,#10b981,#047857)}
+.quadaxes{display:flex;justify-content:space-between;max-width:46rem;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:.2rem 0}
+/* risk matrix */
+.risk{display:grid;grid-template-columns:auto repeat(3,minmax(5.5rem,7.5rem));gap:.4rem;margin:1rem 0;font-size:.82rem}
+.risk .lab{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.74rem;font-weight:800;text-align:center;line-height:1.25}
+.risk .cell{border-radius:10px;padding:.8rem .4rem;text-align:center;font-weight:800;color:#fff;box-shadow:var(--shadow)}
+.risk .lo{background:#059669}.risk .md{background:#d97706}.risk .hi{background:#dc2626}
+/* decision/state tables */
+table.dt{border-collapse:separate;border-spacing:0;font-size:.88rem;margin:0 auto;background:#fff;color:#1c1c28;border-radius:12px;overflow:hidden;border:1px solid #e8e6f2}
+table.dt th,table.dt td{border-bottom:1px solid #eceaf4;border-right:1px solid #eceaf4;padding:.45rem .85rem;text-align:center}
+table.dt tr&gt;*:last-child{border-right:none}
+table.dt tr:last-child&gt;*{border-bottom:none}
+table.dt th{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;font-size:.8rem}
+table.dt td:first-child,table.dt th:first-child{text-align:left;font-weight:650}
+table.dt .sec td{background:#f4f2fa;font-weight:800;text-align:left;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:#6a6a80}
+table.dt td.x{color:var(--cd);font-weight:900}
+/* defect ticket */
+.ticket{background:var(--surface);border:1px solid var(--line);border-radius:16px;max-width:40rem;margin:1.1rem 0;overflow:hidden;font-size:.87rem;box-shadow:var(--shadow)}
+.ticket .th{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;padding:.65rem 1.1rem;font-weight:800;display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap}
+.ticket .th span{font-weight:700;font-size:.72rem;background:rgba(255,255,255,.22);padding:.15rem .7rem;border-radius:99px}
+.ticket dl{display:grid;grid-template-columns:12rem 1fr;margin:0;padding:.7rem 1.1rem .9rem}
+.ticket dt{color:var(--muted);padding:.24rem 0;font-size:.8rem;font-weight:650}
+.ticket dd{margin:0;padding:.24rem 0}
+.ticket .hl{color:var(--cd);font-weight:800}
+@media (max-width:560px){ .ticket dl{grid-template-columns:1fr} .ticket dt{padding-bottom:0} }
+/* formula */
+.formula{background:linear-gradient(135deg,var(--c),var(--cd));color:#fff;border-radius:16px;padding:1.1rem 1.3rem;margin:1.1rem 0;max-width:38rem;box-shadow:var(--shadow)}
+.formula .f{font-family:var(--mono);font-size:1.25rem;font-weight:800;letter-spacing:.01em}
+.formula p{margin:.5rem 0 0;font-size:.88rem;opacity:.95}
+footer{max-width:1140px;margin:0 auto;padding:0 1.5rem 4rem;font-size:.92rem}
+footer .fcard{border-radius:18px;background:linear-gradient(120deg,#312e81,#0e7490);color:#dbe3ff;padding:1.5rem 1.7rem;max-width:76ch;box-shadow:var(--shadow)}
+footer .fcard strong{color:#fff}
+a{color:var(--cd,#4338ca)}
+a:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+</style>
+
+<header class="hero">
+  <div class="hero-in">
+    <p class="kicker">ISTQB® Certified Tester · Foundation Level · v4.0</p>
+    <h1>CTFL sınavının tamamı,<br>tek bir görsel sayfada.</h1>
+    <p class="lede">Resmî müfredattan hazırlandı ve dört resmî örnek sınavın tamamıyla karşılaştırılarak kontrol edildi — sınavda çıkan her konu burada, fazlası yok. Görsellerden öğren; metin yalnızca boşlukları dolduruyor.</p>
+    <div class="pills">
+      <div class="pill"><b>40</b><span>soru · her biri 1 puan</span></div>
+      <div class="pill"><b>26/40</b><span>geçmek için (%65)</span></div>
+      <div class="pill"><b>60 dk</b><span>ana dilin İngilizce değilse +%25 ek süre</span></div>
+      <div class="pill"><b>8 / 24 / 8</b><span>hatırlama / anlama / uygulama</span></div>
+    </div>
+    <div class="distwrap">
+      <p>40 soru hangi bölümlerden geliyor — her sınavda sabit</p>
+      <div class="distbar">
+        <div style="flex:8;background:#6366f1">8</div>
+        <div style="flex:6;background:#0ea5e9">6</div>
+        <div style="flex:4;background:#8b5cf6">4</div>
+        <div style="flex:11;background:#ec4899">11</div>
+        <div style="flex:9;background:#f59e0b">9</div>
+        <div style="flex:2;background:#10b981">2</div>
+      </div>
+      <div class="distkey">
+        <span><i style="background:#6366f1"></i>1 Temeller</span>
+        <span><i style="background:#0ea5e9"></i>2 YGYD</span>
+        <span><i style="background:#8b5cf6"></i>3 Statik test</span>
+        <span><i style="background:#ec4899"></i>4 Teknikler</span>
+        <span><i style="background:#f59e0b"></i>5 Yönetim</span>
+        <span><i style="background:#10b981"></i>6 Araçlar</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<nav id="toc" aria-label="Bölümler">
+  <p class="toc-title">Bölümler</p>
+  <ol>
+    <li><a href="#ch1"><i style="background:#6366f1">1</i>Yazılım testinin temelleri</a></li>
+    <li><a href="#ch2"><i style="background:#0ea5e9">2</i>YGYD boyunca test</a></li>
+    <li><a href="#ch3"><i style="background:#8b5cf6">3</i>Statik testler</a></li>
+    <li><a href="#ch4"><i style="background:#ec4899">4</i>Test analizi &amp; tasarımı</a></li>
+    <li><a href="#ch5"><i style="background:#f59e0b">5</i>Test aktivitelerini yönetme</a></li>
+    <li><a href="#ch6"><i style="background:#10b981">6</i>Test araçları</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ==================== BÖLÜM 1 ==================== -->
+<section class="ch" id="ch1">
+  <div class="chhead"><div class="chnum">1</div><div class="t"><p>Bölüm 1 · 8 sınav sorusu</p><h2>Yazılım testinin temelleri</h2></div></div>
+
+  <h3>Test etmek nedir</h3>
+  <p><span class="term">Test etme</span> = <strong>kusur bulmaya</strong> ve <strong>kaliteyi değerlendirmeye</strong> yönelik faaliyetler. Program çalıştırmaktan çok daha fazlasıdır — planlamayı, analizi, tasarımı ve belgeleri gözden geçirmeyi de kapsar.</p>
+  <div class="cards">
+    <div class="card"><b>Dinamik test</b><p>Yazılım <strong>çalışır</strong>. Arızalar yürütme sırasında ortaya çıkar.</p></div>
+    <div class="card"><b>Statik test</b><p>Hiçbir şey çalışmaz — belgeler ve kod <strong>gözden geçirilir</strong> ya da araçlarla analiz edilir.</p></div>
+    <div class="card"><b>Doğrulama</b><p>Ürünü <strong>doğru şekilde</strong> mi inşa ettik? (belirtilen gereksinimleri karşılıyor mu)</p></div>
+    <div class="card"><b>Geçerleme</b><p><strong>Doğru</strong> ürünü mü inşa ettik? (kullanıcıların gerçek ihtiyacını karşılıyor mu)</p></div>
+  </div>
+  <p>Tipik <span class="term">test hedefleri</span>: kusur bulmak ve arızalara yol açmak · çalışma ürünlerini (gereksinimler, hikâyeler, tasarımlar, kod) değerlendirmek · güven oluşturmak · riski azaltmak · kapsamı denetlemek · yasal/sözleşmesel gereksinimleri doğrulamak · paydaşlara karar için bilgi vermek (ör. sürüm yayınlama kararı).</p>
+
+  <h3>Hata → Kusur → Arıza</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 270" role="img" aria-label="Kök nedenden hataya, kusura ve arızaya uzanan zincir">
+      <defs>
+        <linearGradient id="g1a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient>
+        <linearGradient id="g1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#db2777"/></linearGradient>
+        <linearGradient id="g1c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb923c"/><stop offset="1" stop-color="#ea580c"/></linearGradient>
+      </defs>
+      <rect x="25" y="45" width="200" height="150" rx="18" fill="#f4f4fb" stroke="#c9c9de" stroke-width="1.5" stroke-dasharray="7 5"/>
+      <circle cx="125" cy="92" r="22" fill="#e3e3f2"/>
+      <text x="125" y="100" text-anchor="middle" font-size="22">⏱</text>
+      <text x="125" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#3c3c55">Kök neden</text>
+      <text x="125" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#70708a">zaman baskısı, karmaşıklık,</text>
+      <text x="125" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#70708a">yorgunluk, eğitim eksikliği</text>
+
+      <path d="M232 120 L268 120" stroke="#9a9ab8" stroke-width="3" fill="none"/><path d="M262 113 L273 120 L262 127" fill="none" stroke="#9a9ab8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <rect x="280" y="45" width="200" height="150" rx="18" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+      <circle cx="380" cy="92" r="22" fill="url(#g1a)"/>
+      <circle cx="380" cy="86" r="7" fill="#fff"/><path d="M366 103 C 366 94, 394 94, 394 103 Z" fill="#fff"/>
+      <text x="380" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#3730a3">Hata (insan hatası)</text>
+      <text x="380" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#6366a8">bir <tspan font-weight="800">insan</tspan> yanlış</text>
+      <text x="380" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#6366a8">bir şey yapar</text>
+
+      <path d="M487 120 L523 120" stroke="#9a9ab8" stroke-width="3" fill="none"/><path d="M517 113 L528 120 L517 127" fill="none" stroke="#9a9ab8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <rect x="535" y="45" width="200" height="150" rx="18" fill="#fdf0f6" stroke="#fbcfe4" stroke-width="1.5"/>
+      <circle cx="635" cy="92" r="22" fill="url(#g1b)"/>
+      <ellipse cx="635" cy="94" rx="9" ry="11" fill="#fff"/>
+      <path d="M622 86 L611 80 M622 94 L609 94 M622 102 L611 108 M648 86 L659 80 M648 94 L661 94 M648 102 L659 108" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+      <text x="635" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#9d174d">Kusur (bug, fault)</text>
+      <text x="635" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#b05387"><tspan font-weight="800">kod</tspan>da ya da</text>
+      <text x="635" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#b05387"><tspan font-weight="800">belge</tspan>de bir kusur</text>
+
+      <path d="M742 120 L778 120" stroke="#9a9ab8" stroke-width="3" fill="none"/><path d="M772 113 L783 120 L772 127" fill="none" stroke="#9a9ab8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <rect x="790" y="45" width="150" height="150" rx="18" fill="#fff4ec" stroke="#fed7aa" stroke-width="1.5"/>
+      <path d="M865 72 L888 112 L842 112 Z" fill="url(#g1c)"/>
+      <rect x="862.6" y="86" width="5" height="14" rx="2.5" fill="#fff"/><circle cx="865" cy="106" r="3" fill="#fff"/>
+      <text x="865" y="145" text-anchor="middle" font-family="system-ui" font-size="17" font-weight="800" fill="#9a3412">Arıza</text>
+      <text x="865" y="168" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#c2703d">çalışırken ortaya</text>
+      <text x="865" y="184" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#c2703d">çıkan yanlış davranış</text>
+
+      <text x="480" y="240" text-anchor="middle" font-family="system-ui" font-size="13.5" fill="#70708a">Her kusur arızaya yol açmaz — ve arızalar yalnızca kusurlardan değil, çevreden de (ör. radyasyon) kaynaklanabilir.</text>
+    </svg>
+    <figcaption><strong>Sıralamayı karıştırma</strong> — bir insan <strong>hata</strong> yapar, bu koda bir <strong>kusur</strong> bırakır, o da çalışma anında <strong>arızaya</strong> yol açabilir.</figcaption>
+  </figure>
+
+  <h3>Test etme, hata ayıklama değildir</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Test etme</b><small>bir arızayı tetikler ya da kusuru doğrudan bulur</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Hata ayıklama</b><small>yeniden üret → teşhis et → düzelt (bir geliştirme faaliyeti)</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Onaylama testi</b><small>düzeltme gerçekten işe yaradı mı?</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>Regresyon testi</b><small>düzeltme başka bir şeyi bozdu mu?</small></div>
+  </div>
+
+  <h3>Test etme ile kalite güvencesi</h3>
+  <table class="cmp">
+    <tr><th>Test etme (kalite kontrol)</th><th>Kalite güvencesi (QA)</th></tr>
+    <tr><td><strong>Ürün odaklı · düzeltici.</strong> Odağı çalışma ürünüdür: kusurları bul, kaliteyi değerlendir. Test sonuçları → <strong>kusurları düzeltmek</strong> için kullanılır.</td><td><strong>Süreç odaklı · önleyici.</strong> İyi bir süreç, doğru uygulanırsa → iyi bir ürün. Test sonuçları → <strong>sürecin ne kadar iyi işlediğine</strong> dair geri bildirim. Herkesin sorumluluğudur.</td></tr>
+  </table>
+
+  <h3>Yedi test prensibi</h3>
+  <div class="cards">
+    <div class="card"><b><i>1</i>Test, kusurların varlığını gösterir, yokluğunu değil</b><p>Testler kusurların var olduğunu kanıtlayabilir — hiç olmadığını asla.</p></div>
+    <div class="card"><b><i>2</i>Kapsamlı (exhaustive) test imkânsızdır</b><p>Her şeyi test edemezsin. Tekniklerle, önceliklerle ve riskle odaklan.</p></div>
+    <div class="card"><b><i>3</i>Erken test zaman &amp; para kazandırır</b><p>Erken bulunan kusur ucuz kusurdur. "shift left" kavramına bak.</p></div>
+    <div class="card"><b><i>4</i>Kusurlar kümelenir</b><p>Kusurların çoğu birkaç bileşende toplanır (Pareto). Testlerini oraya yönelt.</p></div>
+    <div class="card"><b><i>5</i>Testler yıpranır</b><p>Tekrarlanan testler yeni kusur bulmaz olur — onları tazele. (Otomatik regresyon testleri işe yarar istisnadır.)</p></div>
+    <div class="card"><b><i>6</i>Test bağlama bağlıdır</b><p>Evrensel reçete yoktur: bir banka, bir oyun uygulamasıyla aynı değildir.</p></div>
+    <div class="card"><b><i>7</i>Kusursuzluk yanılgısı</b><p>Bulunan her kusuru düzeltmek, ürünü kullanıcıların ihtiyaç duyduğu şey hâline getirmez. Hem <strong>doğrula</strong> hem geçerle.</p></div>
+  </div>
+
+  <h3>Test süreci — 7 faaliyet grubu</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Planlama</b><small>hedefler + yaklaşım</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Analiz</b><small><strong>neyi</strong> test etmeli → test koşulları</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Tasarım</b><small><strong>nasıl</strong> test etmeli → test senaryoları</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>Uygulama</b><small>prosedürler, setler, veri, takvim</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>5</em><b>Yürütme</b><small>çalıştır · karşılaştır · kaydet</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>6</em><b>Tamamlama</b><small>raporla · arşivle · öğren</small></div>
+  </div>
+  <div class="note"><p><strong>İzleme &amp; kontrol</strong> 7. faaliyettir — <strong>baştan sona</strong> sürer: ilerlemeyi planla karşılaştır ve düzeltici eylemlerle yönlendir. Faaliyetler yinelemelidir, katı bir çizgi değil.</p></div>
+
+  <h3>Test çalışma ürünleri (testware) — her faaliyet ne üretir</h3>
+  <div class="tablewrap"><table class="cmp">
+    <tr><th style="width:13rem">Faaliyet</th><th>Çıktılar (testware)</th></tr>
+    <tr><td><strong>Planlama</strong></td><td>test planı, takvim, risk kaydı, giriş &amp; çıkış kriterleri</td></tr>
+    <tr><td><strong>İzleme &amp; kontrol</strong></td><td>test ilerleme raporları, kontrol direktifleri</td></tr>
+    <tr><td><strong>Analiz</strong></td><td>önceliklendirilmiş <strong>test koşulları</strong>, test esasına ilişkin kusur raporları</td></tr>
+    <tr><td><strong>Tasarım</strong></td><td>önceliklendirilmiş <strong>test senaryoları</strong>, tüzükler, kapsam öğeleri, test verisi <em>gereksinimleri</em>, ortam <em>gereksinimleri</em></td></tr>
+    <tr><td><strong>Uygulama</strong></td><td>prosedürler, betikler, test setleri, <strong>test verisi</strong>, yürütme takvimi, stub'lar &amp; sürücüler &amp; simülatörler</td></tr>
+    <tr><td><strong>Yürütme</strong></td><td>test kayıtları, kusur raporları</td></tr>
+    <tr><td><strong>Tamamlama</strong></td><td>test tamamlama raporu, alınan dersler, değişiklik talepleri</td></tr>
+  </table></div>
+
+  <h3>İzlenebilirlik, roller &amp; beceriler</h3>
+  <p><span class="term">İzlenebilirlik</span> şunları birbirine bağlar: test esası ↔ test koşulları ↔ test senaryoları ↔ sonuçlar ↔ kusurlar ↔ riskler. Kapsamı ölçülebilir kılar ("her gereksinim karşılandı mı?"), etki analizine, daha net raporlara ve denetimlere imkân verir.</p>
+  <table class="cmp">
+    <tr><th>Test yönetimi rolü</th><th>Test etme rolü</th></tr>
+    <tr><td><strong>Süreç &amp; takımın</strong> sahibidir: planlama, izleme &amp; kontrol, tamamlama. Çevik yaklaşımda bu işleri takımın kendisi üstlenebilir.</td><td><strong>Mühendislik tarafının</strong> sahibidir: analiz, tasarım, uygulama, yürütme.</td></tr>
+  </table>
+  <p><span class="term">Temel beceriler</span>: test bilgisi · titizlik &amp; merak · <strong>iletişim</strong> (testçiler "kötü haber" taşır — bunu yapıcı biçimde yap) · analitik &amp; eleştirel düşünme · teknik bilgi · alan bilgisi. <span class="term">Tüm takım yaklaşımı</span> (XP'den gelir): uygun beceriye sahip olan herkes her işi yapar, kalite herkesin işidir — ancak güvenlik açısından kritik işlerde bunun yerine daha fazla bağımsızlık gerekebilir.</p>
+
+  <h3>Testin bağımsızlığı</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 270" role="img" aria-label="Test bağımsızlığının yükselen dört basamağı">
+      <defs><linearGradient id="g1d" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs>
+      <rect x="40" y="170" width="200" height="60" rx="12" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+      <rect x="270" y="140" width="200" height="90" rx="12" fill="#dfe5fd" stroke="#c7d2fe" stroke-width="1.5"/>
+      <rect x="500" y="110" width="200" height="120" rx="12" fill="#c9d3fb" stroke="#aab8f5" stroke-width="1.5"/>
+      <rect x="730" y="80" width="200" height="150" rx="12" fill="url(#g1d)"/>
+      <text x="140" y="197" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#3730a3">Yok</text>
+      <text x="140" y="216" text-anchor="middle" font-family="system-ui" font-size="12" fill="#6366a8">yazar kendi işini test eder</text>
+      <text x="370" y="172" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#3730a3">Biraz</text>
+      <text x="370" y="191" text-anchor="middle" font-family="system-ui" font-size="12" fill="#5a5ea0">aynı takımdan meslektaşlar</text>
+      <text x="600" y="145" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#312e81">Yüksek</text>
+      <text x="600" y="164" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4a4e8f">takım dışından testçiler,</text>
+      <text x="600" y="180" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4a4e8f">aynı kuruluş içinde</text>
+      <text x="830" y="115" text-anchor="middle" font-family="system-ui" font-size="15" font-weight="800" fill="#fff">Çok yüksek</text>
+      <text x="830" y="134" text-anchor="middle" font-family="system-ui" font-size="12" fill="#dbe0ff">kuruluş dışından</text>
+      <text x="830" y="150" text-anchor="middle" font-family="system-ui" font-size="12" fill="#dbe0ff">gelen testçiler</text>
+      <path d="M60 60 L880 30" stroke="#9a9ab8" stroke-width="2.5" fill="none" stroke-dasharray="8 6"/>
+      <path d="M868 24 L886 30 L871 39" fill="none" stroke="#9a9ab8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="470" y="28" text-anchor="middle" font-family="system-ui" font-size="14" font-weight="800" fill="#5f5f80">daha fazla bağımsızlık → farklı gözler → farklı kusurlar bulunur</text>
+    </svg>
+    <figcaption>Bağımsızlık işe yarar, çünkü yazar ile testçinin <strong>bilişsel önyargıları farklıdır</strong> — ama aşırı yalıtım iş birliğine zarar verir ve geliştiriciler kaliteye dair sorumluluk hissini yitirebilir.</figcaption>
+  </figure>
+
+  <div class="trap"><b class="t">Sınav tuzakları — bölüm 1</b>
+    <ul>
+      <li>Statik test doğrudan <strong>kusur</strong> bulur; dinamik test ise <strong>arızaya</strong> yol açar. Bu iki kelimeyi yer değiştiren şıklar yanlıştır.</li>
+      <li>Hata ayıklama <strong>kusurları düzeltir</strong> — asla "arızaları düzeltmez" ve test etme de değildir.</li>
+      <li>Doğrulama = belirtilen gereksinimler · geçerleme = kullanıcı ihtiyaçları. Klasik yer değiştirme.</li>
+      <li>Düzenleyicinin kestiği ceza bir <em>sonuçtur</em>, arıza değil. Zincirin sırasını tam tut.</li>
+      <li>Test verisi <em>gereksinimleri</em> → tasarım. Asıl test <em>verisi</em> → uygulama.</li>
+    </ul>
+  </div>
+</section>
+<!-- ==================== BÖLÜM 2 ==================== -->
+<section class="ch" id="ch2">
+  <div class="chhead"><div class="chnum">2</div><div class="t"><p>Bölüm 2 · 6 sınav sorusu</p><h2>Yazılım geliştirme yaşam döngüsü boyunca test</h2></div></div>
+
+  <h3>YGYD modelleri, test etme biçimini değiştirir</h3>
+  <div class="cards">
+    <div class="card"><b>Sıralı</b><p>Şelale, V-modeli. Dokümanlar erkenden gözden geçirilebilir, ama çalışan kod <strong>geç</strong> gelir — bu yüzden dinamik test de geç başlar.</p></div>
+    <div class="card"><b>Yinelemeli</b><p>Spiral, prototipleme. Her döngü çalışan bir sürüm teslim eder → <strong>her yinelemede, her seviyede</strong> statik + dinamik test.</p></div>
+    <div class="card"><b>Artımlı</b><p>Birleşik Süreç. Ürün parça parça büyür → hızlı geri bildirim ve bol bol <strong>regresyon testi</strong>.</p></div>
+  </div>
+  <p>YGYD seçimi; testin kapsamını ve zamanlamasını, dokümantasyonun ayrıntı düzeyini, teknikleri, otomasyonu ve test uzmanının rolünü etkiler. Çevik yaklaşım hafif dokümantasyonu, yoğun <strong>test otomasyonunu</strong> ve deneyime dayalı manuel testi tercih eder.</p>
+  <div class="note"><p><strong>Her YGYD'de geçerli iyi uygulamalar:</strong> her geliştirme etkinliğinin karşılık gelen bir test etkinliği vardır · her test seviyesinin kendi hedefleri vardır · bir seviyenin test analizi &amp; tasarımı, karşılık gelen geliştirme aşaması <em>sırasında</em> başlar · test uzmanları taslakları var olur olmaz gözden geçirir.</p></div>
+
+  <h3>Önce test — yalnızca üç yaklaşım var</h3>
+  <div class="cards">
+    <div class="card"><b>TDD</b><p><strong>Test güdümlü geliştirme.</strong> Geliştirici küçük bir test yazar → onu geçirecek kodu yazar → kodu yeniden düzenler. Testler <em>kodu</em> yönlendirir.</p></div>
+    <div class="card"><b>ATDD</b><p><strong>Kabul testi güdümlü geliştirme.</strong> Takım, geliştirmeden önce testleri <strong>kabul kriterlerinden</strong> yazar.</p></div>
+    <div class="card"><b>BDD</b><p><strong>Davranış güdümlü geliştirme.</strong> Davranış, sade doğal dille test olarak yazılır: <strong>Given / When / Then</strong> → sonra otomatikleştirilir.</p></div>
+  </div>
+
+  <h3>DevOps</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 340" role="img" aria-label="Geliştirme ve operasyon duraklarıyla DevOps döngüsü">
+      <defs>
+        <linearGradient id="g2a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#4f46e5"/></linearGradient>
+        <linearGradient id="g2b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
+      </defs>
+      <rect x="60" y="70" width="840" height="200" rx="100" fill="none" stroke="#d4d4e6" stroke-width="3"/>
+      <path d="M893 158 L902 172 L893 186" fill="none" stroke="#9a9ab8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M67 182 L58 168 L67 154" fill="none" stroke="#9a9ab8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g font-family="system-ui" font-size="14.5" font-weight="800" text-anchor="middle">
+        <rect x="120" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="190" y="76" fill="#fff">Planla</text>
+        <rect x="320" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="390" y="76" fill="#fff">Kodla</text>
+        <rect x="520" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="590" y="76" fill="#fff">Derle</text>
+        <rect x="720" y="47" width="140" height="46" rx="23" fill="url(#g2a)"/><text x="790" y="76" fill="#fff">Test Et</text>
+        <rect x="720" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="790" y="276" fill="#fff">Yayınla</text>
+        <rect x="520" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="590" y="276" fill="#fff">Dağıt</text>
+        <rect x="320" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="390" y="276" fill="#fff">İşlet</text>
+        <rect x="120" y="247" width="140" height="46" rx="23" fill="url(#g2b)"/><text x="190" y="276" fill="#fff">İzle</text>
+      </g>
+      <text x="480" y="158" text-anchor="middle" font-family="system-ui" font-size="19" font-weight="900" fill="#3c3c55">Dev + Ops = tek takım</text>
+      <text x="480" y="184" text-anchor="middle" font-family="system-ui" font-size="13.5" fill="#70708a">otomatik CI/CD teslim hattı · hızlı geri bildirim · ortak hedefler</text>
+      <text x="480" y="206" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#9a9ab8">döngü hiç durmaz — izleme bir sonraki planı besler</text>
+    </svg>
+    <figcaption><strong>Test açısından faydaları:</strong> hızlı geri bildirim, CI sayesinde shift left, kararlı otomatik ortamlar, daha az tekrarlı manuel iş, düşük regresyon riski. <strong>Riskleri:</strong> hattın kurulması ve bakımı gerekir, otomasyon emek ister — üstelik kullanıcı gözüyle yapılan manuel teste hâlâ ihtiyaç vardır.</figcaption>
+  </figure>
+
+  <h3>Shift left</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 250" role="img" aria-label="Shift left: test, yaşam döngüsünde daha erkene kayar">
+      <defs><linearGradient id="g2c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></linearGradient></defs>
+      <g font-family="system-ui" font-size="14.5" font-weight="700" text-anchor="middle">
+        <rect x="45" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="120" y="185" fill="#3c3c55">Gereksinimler</text>
+        <rect x="225" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="300" y="185" fill="#3c3c55">Tasarım</text>
+        <rect x="405" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="480" y="185" fill="#3c3c55">Kod</text>
+        <rect x="585" y="150" width="150" height="58" rx="14" fill="url(#g2c)"/><text x="660" y="185" fill="#fff">Test</text>
+        <rect x="765" y="150" width="150" height="58" rx="14" fill="#f0f0f8" stroke="#d4d4e6" stroke-width="1.5"/><text x="840" y="185" fill="#3c3c55">Dağıtım</text>
+      </g>
+      <path d="M655 140 C 540 42, 240 42, 128 136" fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+      <path d="M143 122 L124 140 L149 145" fill="none" stroke="#0284c7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="392" y="30" text-anchor="middle" font-family="system-ui" font-size="17.5" font-weight="900" fill="#075985">Shift left — teste daha erken başla</text>
+      <text x="392" y="114" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#5f7c94">test gözüyle gözden geçirme · koddan önce test senaryoları · CI/CD</text>
+      <text x="392" y="134" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#5f7c94">önce statik analiz · erken fonksiyonel olmayan testler</text>
+    </svg>
+    <figcaption>Shift left = erken test ilkesinin uygulamaya dökülmüş hâli. <strong>Erkenden</strong> biraz daha fazla emek, <strong>sonradan</strong> çok daha az maliyet. Geç testin ihmal edilmesi anlamına <em>gelmez</em>.</figcaption>
+  </figure>
+  <p><span class="term">Retrospektifler</span> bir yinelemenin ya da projenin sonunda şunları sorar: ne iyi gitti? neyi iyileştirmeli? nasıl? Sonuçlar test tamamlama raporuna girer. Faydaları: daha iyi test etkinliği ve daha iyi test çalışma ürünleri (testware), takımın öğrenmesi, daha iyi bir test esası, geliştirme–test iş birliğinin güçlenmesi.</p>
+
+  <h3>Beş test seviyesi</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 545" role="img" aria-label="Solda geliştirme aşamaları, sağda test seviyeleri olan V-modeli">
+      <defs>
+        <linearGradient id="g2d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#1e293b"/></linearGradient>
+        <linearGradient id="g2e" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
+      </defs>
+      <g font-family="system-ui">
+        <rect x="30" y="30" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="155" y="56" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">Kullanıcı &amp; iş ihtiyaçları</text>
+        <text x="155" y="76" text-anchor="middle" font-size="12" fill="#4886a5">insanların gerçekte neye ihtiyacı var</text>
+        <rect x="85" y="135" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="210" y="161" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">Sistem gereksinimleri</text>
+        <text x="210" y="181" text-anchor="middle" font-size="12" fill="#4886a5">sistemin ne yapması gerektiği</text>
+        <rect x="140" y="240" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="265" y="266" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">Mimari</text>
+        <text x="265" y="286" text-anchor="middle" font-size="12" fill="#4886a5">parçaların nasıl bir araya geldiği</text>
+        <rect x="195" y="345" width="250" height="62" rx="14" fill="#e8f6fe" stroke="#bae6fd" stroke-width="1.5"/>
+        <text x="320" y="371" text-anchor="middle" font-size="15" font-weight="800" fill="#075985">Ayrıntılı tasarım</text>
+        <text x="320" y="391" text-anchor="middle" font-size="12" fill="#4886a5">her parçanın içeride nasıl çalıştığı</text>
+        <rect x="380" y="462" width="200" height="54" rx="14" fill="url(#g2d)"/>
+        <text x="480" y="495" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">Kod</text>
+        <rect x="515" y="345" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="640" y="371" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Bileşen testi</text>
+        <text x="640" y="391" text-anchor="middle" font-size="12" fill="#dff2fd">tek birimler · geliştiriciler yapar</text>
+        <rect x="570" y="240" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="695" y="266" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Bileşen entegrasyonu</text>
+        <text x="695" y="286" text-anchor="middle" font-size="12" fill="#dff2fd">bileşenler arasındaki arayüzler</text>
+        <rect x="625" y="135" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="750" y="161" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Sistem testi</text>
+        <text x="750" y="181" text-anchor="middle" font-size="12" fill="#dff2fd">+ diğer sistemlerle sistem entegrasyonu</text>
+        <rect x="680" y="30" width="250" height="62" rx="14" fill="url(#g2e)"/>
+        <text x="805" y="56" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">Kabul testi</text>
+        <text x="805" y="76" text-anchor="middle" font-size="12" fill="#dff2fd">geçerleme · kullanıcılar yapar</text>
+      </g>
+      <g stroke="#b9b9d4" stroke-width="2" stroke-dasharray="7 6">
+        <line x1="288" y1="61" x2="672" y2="61"/>
+        <line x1="343" y1="166" x2="617" y2="166"/>
+        <line x1="398" y1="271" x2="562" y2="271"/>
+        <line x1="453" y1="376" x2="507" y2="376"/>
+      </g>
+      <path d="M320 411 L432 460" stroke="#c9c9de" stroke-width="2.5" fill="none"/>
+      <path d="M640 411 L528 460" stroke="#c9c9de" stroke-width="2.5" fill="none"/>
+      <text x="480" y="442" text-anchor="middle" font-family="system-ui" font-size="12.5" fill="#9a9ab8">her geliştirme aşaması ↔ karşılık gelen bir test seviyesi</text>
+    </svg>
+    <figcaption>V-modeli: iş sol taraftan <strong>aşağı</strong> iner, test sağ taraftan <strong>yukarı</strong> tırmanır — her test seviyesi, karşılık gelen aşamanın işini denetler.</figcaption>
+  </figure>
+  <div class="tablewrap"><table class="cmp">
+    <tr><th style="width:14rem">Seviye</th><th>Odak</th></tr>
+    <tr><td><strong>Bileşen (birim)</strong></td><td>yalıtılmış tek bir bileşen · koşum takımı / birim test çatıları gerekir · genellikle geliştiriciler</td></tr>
+    <tr><td><strong>Bileşen entegrasyonu</strong></td><td>bileşenler arasındaki arayüzler · entegrasyon stratejisine bağlıdır: aşağıdan yukarıya, yukarıdan aşağıya, big-bang</td></tr>
+    <tr><td><strong>Sistem</strong></td><td>tüm sistemin uçtan uca davranışı, fonksiyonel + fonksiyonel olmayan · çoğu zaman bağımsız bir test takımı</td></tr>
+    <tr><td><strong>Sistem entegrasyonu</strong></td><td><strong>diğer sistemlere &amp; dış servislere</strong> açılan arayüzler · canlıya yakın bir ortam</td></tr>
+    <tr><td><strong>Kabul</strong></td><td><strong>geçerleme</strong> — kullanıcılar &amp; iş için hazır mı? · biçimleri: UAT, operasyonel, sözleşmeye dayalı, düzenleyici, alfa, beta</td></tr>
+  </table></div>
+  <p>Seviyeler şunlarla birbirinden ayrılır: test nesnesi, hedefler, test esası, tipik kusurlar ve sorumlunun kim olduğu.</p>
+
+  <h3>Dört test çeşidi</h3>
+  <div class="cards">
+    <div class="card"><b>Fonksiyonel</b><p>Sistemin <strong>ne</strong> yaptığı — eksiksizlik, doğruluk, uygunluk.</p></div>
+    <div class="card"><b>Fonksiyonel olmayan</b><p><strong>Ne kadar iyi</strong> davrandığı. ISO 25010: performans verimliliği, uyumluluk, kullanılabilirlik, güvenilirlik, güvenlik, bakım yapılabilirlik, taşınabilirlik, emniyet.</p></div>
+    <div class="card"><b>Kara kutu</b><p><strong>Spesifikasyondan</strong> yola çıkar — davranışı gereksinimlere göre denetler.</p></div>
+    <div class="card"><b>Beyaz kutu</b><p><strong>İç yapıdan</strong> yola çıkar — yapının kapsandığını denetler.</p></div>
+  </div>
+  <p>Dört çeşidin dördü de <strong>her test seviyesinde</strong> uygulanır. Fonksiyonel olmayan testlerin çoğu, üzerine tek bir denetim eklenmiş fonksiyonel testlerdir ("…ve 2 saniye içinde biter").</p>
+
+  <h3>Onaylama testi ile regresyon testi</h3>
+  <table class="cmp">
+    <tr><th>Onaylama testi — düzeltme gerçekten düzeldi mi?</th><th>Regresyon testi — başka bir yeri bozduk mu?</th></tr>
+    <tr><td>Düzeltmeden önce <strong>başarısız olan</strong> testleri yeniden çalıştır (en azından arızaya yol açan adımları tekrarla). Sırada <strong>önce</strong> bu gelir.</td><td><strong>Değişmemiş</strong> kısımlardaki yan etkileri denetler — aynı bileşen, diğer bileşenler, hatta bağlı sistemler. Kapsamı seçmek için <strong>etki analizi</strong> yap. Test kümeleri <strong>büyür</strong> → onları erkenden otomatikleştir.</td></tr>
+  </table>
+
+  <h3>Bakım testi — 3 tetikleyici</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Değişiklik</b><small>planlı iyileştirmeler, düzeltici yamalar, acil yamalar</small></div>
+    <div class="step"><em>2</em><b>Yükseltme / göç</b><small>yeni platform ya da ortam · veri dönüştürme testi</small></div>
+    <div class="step"><em>3</em><b>Hizmetten çıkarma</b><small>ömrün sonu · arşivleme, geri yükleme &amp; geri getirme testi</small></div>
+  </div>
+  <p>Kapsam şunlara bağlıdır: değişikliğin <strong>riski</strong>, <strong>sistemin büyüklüğü</strong> ve <strong>değişikliğin büyüklüğü</strong>.</p>
+
+  <div class="trap"><b class="t">Sınav tuzakları — bölüm 2</b>
+    <ul>
+      <li>Yalnızca <strong>TDD, ATDD, BDD</strong> vardır. "Sistem TDD" ve "Fonksiyon güdümlü geliştirme" uydurma çeldiricilerdir.</li>
+      <li>Given/When/Then <strong>BDD</strong>'ye aittir. ATDD ise kabul kriterlerinden yola çıkar.</li>
+      <li>Entegrasyon bir test <strong>seviyesidir</strong>, test çeşidi değil. "Ne kadar hızlı?" sorusu, kritik bir iş fonksiyonu için bile <strong>fonksiyonel olmayan</strong> bir sorudur.</li>
+      <li>Onaylama testi → <strong>değişen</strong> kod; regresyon testi → <strong>değişmeyen</strong> geri kalan. Regresyon kümeleri büyür, asla küçülmez.</li>
+      <li>Hizmetten çıkarma <strong>gerçek</strong> bir bakım tetikleyicisidir (arşivleme + geri yükleme testi).</li>
+      <li>Retrospektifler <strong>süreci</strong> iyileştirir; son kullanıcılar bunlara katılmaz.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== BÖLÜM 3 ==================== -->
+<section class="ch" id="ch3">
+  <div class="chhead"><div class="chnum">3</div><div class="t"><p>Bölüm 3 · 4 sınav sorusu</p><h2>Statik testler</h2></div></div>
+
+  <h3>Hiçbir şeyi çalıştırmadan test etmek</h3>
+  <p><span class="term">Statik test</span>, iş ürünlerini <strong>çalıştırmadan</strong> inceler — ya insanlar eliyle (<strong>gözden geçirmeler</strong>) ya da araçlarla (<strong>statik analiz</strong>). Okunabilen her şey gözden geçirilebilir: gereksinimler, kod, test planları, backlog maddeleri, sözleşmeler, modeller. Statik analizin ise denetleyebileceği resmî bir yapıya ihtiyacı vardır (kod, modeller); CI hatlarının içinde gayet mutlu yaşar.</p>
+  <table class="cmp">
+    <tr><th>Statik test</th><th>Dinamik test</th></tr>
+    <tr><td><strong>Kusurları doğrudan</strong> bulur — hiçbir şey çalışmaz, dolayısıyla hiçbir şey "arıza vermez".</td><td><strong>Arızalara</strong> yol açar; arkalarındaki kusur analizle bulunur.</td></tr>
+    <tr><td><strong>Okunabilir her iş ürününde</strong> işe yarar, çalıştırılamayanlarda bile.</td><td>Yalnızca <strong>çalışan</strong> yazılımda.</td></tr>
+    <tr><td><strong>Bakım yapılabilirlik</strong> gibi şeyleri ölçer.</td><td><strong>Performans</strong> gibi şeyleri ölçer.</td></tr>
+  </table>
+  <p><strong>En iyi (ya da yalnızca) statik olarak bulunanlar:</strong> gereksinim kusurları (çelişkiler, belirsizlikler, eksiklikler) · tasarım kusurları (kötü modülerleştirme) · erişilemeyen kod, tanımlanmamış değişkenler, yinelenen kod · standartlardan sapmalar · yanlış arayüz tanımları · bazı güvenlik açıkları (tampon taşmaları) · test esasındaki kapsam boşlukları.</p>
+  <div class="note"><p><strong>Neden kendini amorti eder:</strong> kusurlar <strong>mümkün olan en ucuz anda</strong> yakalanır, paydaşlar erkenden ortak bir anlayış geliştirir ve iletişim iyileşir. Gözden geçirmeler emek ister — ama toplam proje maliyeti <strong>düşer</strong>.</p></div>
+
+  <h3>Gözden geçirme süreci — 5 etkinlik</h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Planlama</b><small>kapsam · odak · çıkış kriterleri · efor</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Gözden geçirmenin başlatılması</b><small>herkeste iş ürünü var &amp; herkes rolünü biliyor</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Bireysel gözden geçirme</b><small>her gözden geçiren anormallikleri, soruları, fikirleri kaydeder</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>İletişim &amp; analiz</b><small>anormallikleri tartış · durum &amp; aksiyonlara karar ver</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>5</em><b>Düzeltme &amp; raporlama</b><small>kusur raporları · düzeltme · sonuçları raporla</small></div>
+  </div>
+  <p>Gözden geçirme ne kadar resmîyse bu görevlerin o kadar çoğunu kullanır. Bir anormallik <em>otomatik olarak</em> kusur değildir — buna 4. adımda karar verilir.</p>
+
+  <h3>Gözden geçirmede kim ne yapar</h3>
+  <div class="cards">
+    <div class="card"><b>Yönetici</b><p><strong>Neyin</strong> gözden geçirileceğine karar verir; insan ve zaman sağlar.</p></div>
+    <div class="card"><b>Yazar</b><p>İş ürününü oluşturur ve <strong>düzeltir</strong>.</p></div>
+    <div class="card"><b>Moderatör (kolaylaştırıcı)</b><p>Toplantıyı yürütür; arabuluculuk yapar; ortamı <strong>güvenli</strong> tutar.</p></div>
+    <div class="card"><b>Katip (kayıt tutan)</b><p>Anormallikleri toplar; kararları kayda geçirir.</p></div>
+    <div class="card"><b>Gözden geçiren</b><p>Asıl gözden geçirme işini yapar — ekip üyesi, uzman ya da herhangi bir paydaş.</p></div>
+    <div class="card"><b>Gözden geçirme lideri</b><p>Genel sorumluluk: <strong>kimin</strong> katılacağını seçer, <strong>ne zaman &amp; nerede</strong> olacağını düzenler.</p></div>
+  </div>
+
+  <h3>Gayri resmîden katıya dört gözden geçirme çeşidi</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 265" role="img" aria-label="Resmiyet derecesine göre sıralanmış gözden geçirme çeşitleri">
+      <defs><linearGradient id="g3a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ddd6fe"/><stop offset="1" stop-color="#6d28d9"/></linearGradient></defs>
+      <rect x="40" y="190" width="880" height="14" rx="7" fill="url(#g3a)"/>
+      <g font-family="system-ui">
+        <g>
+          <rect x="42" y="30" width="206" height="122" rx="14" fill="#faf9ff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="145" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Gayri resmî</text>
+          <text x="145" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">tanımlı süreç yok</text>
+          <text x="145" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">belgelenmiş çıktı gerekmez</text>
+          <text x="145" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">amaç: anormallik bulmak</text>
+          <line x1="145" y1="152" x2="145" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="272" y="30" width="206" height="122" rx="14" fill="#faf9ff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="375" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Walkthrough</text>
+          <text x="375" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">lider: <tspan font-weight="800">yazar</tspan></text>
+          <text x="375" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">bireysel hazırlık isteğe bağlı</text>
+          <text x="375" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">kalite · öğrenme · uzlaşı</text>
+          <line x1="375" y1="152" x2="375" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="502" y="30" width="206" height="122" rx="14" fill="#faf9ff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="605" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Teknik gözden geçirme</text>
+          <text x="605" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">lider: <tspan font-weight="800">moderatör</tspan></text>
+          <text x="605" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">teknik yetkin gözden geçirenler</text>
+          <text x="605" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">teknik sorunlara karar verme</text>
+          <line x1="605" y1="152" x2="605" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <g>
+          <rect x="732" y="30" width="206" height="122" rx="14" fill="#f3efff" stroke="#c4b5fd" stroke-width="2"/>
+          <text x="835" y="60" text-anchor="middle" font-size="15.5" font-weight="800" fill="#4c1d95">Teftiş</text>
+          <text x="835" y="84" text-anchor="middle" font-size="12" fill="#7c6db0">en resmî · tam süreç · metrikler</text>
+          <text x="835" y="102" text-anchor="middle" font-size="12" fill="#7c6db0">yazar ≠ lider, yazar ≠ katip</text>
+          <text x="835" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#6d28d9">en çok anormalliği bulmak</text>
+          <line x1="835" y1="152" x2="835" y2="188" stroke="#c4b5fd" stroke-width="2"/>
+        </g>
+        <text x="40" y="235" font-size="12.5" font-weight="700" fill="#9a8fc4">rahat</text>
+        <text x="920" y="235" text-anchor="end" font-size="12.5" font-weight="700" fill="#4c1d95">en resmî</text>
+      </g>
+    </svg>
+    <figcaption><strong>Liderleri ezberle:</strong> walkthrough → yazar · teknik gözden geçirme → moderatör · teftiş → yazarın asla liderlik ya da katiplik yapamadığı resmî roller.</figcaption>
+  </figure>
+  <p><strong>Gözden geçirmeyi başarılı kılan etkenler:</strong> net hedefler ve ölçülebilir çıkış kriterleri (<strong>asla</strong> insanları değerlendirmek değil) · doğru gözden geçirme çeşidi · her seferinde <strong>küçük parçalar</strong> · hazırlanmak için zaman · yazarlara geri bildirim · yönetim desteği · eğitim · gözden geçirmelerin kültürün parçası olması.</p>
+
+  <div class="trap"><b class="t">Sınav tuzakları — bölüm 3</b>
+    <ul>
+      <li>"Başkan (chairperson)" bir gözden geçirme rolü <strong>değildir</strong>. Yönetici <em>neyin</em> gözden geçirileceğine; gözden geçirme lideri <em>kim/ne zaman/nerede</em> sorularına karar verir.</li>
+      <li>Gözden geçirmeler <strong>kusur/anormallik</strong> bulur — asla "arıza" değil (hiçbir şey çalışmıyor).</li>
+      <li>Gayri resmî gözden geçirmelerde yine de hazırlık yapılabilir — sadece resmî bir sürece ya da belgelenmiş çıktıya ihtiyaçları yoktur.</li>
+      <li>Katılımcıları değerlendirmek <strong>asla</strong> bir gözden geçirme hedefi olmamalıdır.</li>
+    </ul>
+  </div>
+</section>
+<!-- ==================== BÖLÜM 4 ==================== -->
+<section class="ch" id="ch4">
+  <div class="chhead"><div class="chnum">4</div><div class="t"><p>Bölüm 4 · 11 sınav sorusu — en büyük bölüm, garantili hesaplamalarla</p><h2>Test analizi &amp; tasarımı</h2></div></div>
+
+  <h3>Test tekniklerinin üç ailesi</h3>
+  <div class="cards">
+    <div class="card"><b>Kara kutu</b><p><strong>Belirtilmiş davranıştan</strong> yola çıkar, iç yapıyı dikkate almaz. Testler, gerçekleştirim değişse bile ayakta kalır. Denklik paylarına ayırma · sınır değer analizi · karar tabloları · durum geçişleri.</p></div>
+    <div class="card"><b>Beyaz kutu</b><p><strong>İç yapıdan</strong> yola çıkar — ancak tasarım/kod var olduğunda mümkündür. Komut &amp; dal testi.</p></div>
+    <div class="card"><b>Deneyime dayalı</b><p><strong>Test uzmanının becerisinden</strong> yola çıkar. Diğerlerinin kaçırdığını bulur — tamamlayıcıdır. Hata tahminleme · keşif testi · kontrol listeleri.</p></div>
+  </div>
+
+  <h3>Denklik paylarına ayırma (EP) <small>garantili sınav hesaplaması</small></h3>
+  <p>Veriyi <span class="term">paylara</span> böl; sistem aynı payın içindeki değerlerin hepsini <strong>aynı şekilde</strong> işler. Bir paydaki bir değer kusur buluyorsa, oradaki başka herhangi bir değer de bulurdu — bu yüzden <strong>pay başına bir test yeterlidir</strong>.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 960 320" role="img" aria-label="Bir yaş alanının denklik payları ve her biri için birer test değeri">
+      <defs><linearGradient id="g4a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ec4899"/><stop offset="1" stop-color="#be185d"/></linearGradient></defs>
+      <g font-family="system-ui">
+        <g text-anchor="middle" font-size="16" font-weight="800">
+          <rect x="102" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#b91c1c" stroke-width="2"/><text x="140" y="54" fill="#b91c1c">−5</text>
+          <rect x="292" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#be185d" stroke-width="2"/><text x="330" y="54" fill="#be185d">10</text>
+          <rect x="512" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#be185d" stroke-width="2"/><text x="550" y="54" fill="#be185d">30</text>
+          <rect x="742" y="30" width="76" height="36" rx="18" fill="#fff" stroke="#be185d" stroke-width="2"/><text x="780" y="54" fill="#be185d">70</text>
+        </g>
+        <g stroke="#c9c9de" stroke-width="2">
+          <line x1="140" y1="66" x2="140" y2="104"/><line x1="330" y1="66" x2="330" y2="104"/><line x1="550" y1="66" x2="550" y2="104"/><line x1="780" y1="66" x2="780" y2="104"/>
+        </g>
+        <g font-size="15" font-weight="800" text-anchor="middle">
+          <rect x="60" y="110" width="160" height="64" rx="12" fill="#fdecec" stroke="#f3c1c1" stroke-width="1.5"/>
+          <text x="140" y="138" fill="#a03535">yaş &lt; 0</text><text x="140" y="158" font-size="12" font-weight="500" fill="#c07070">geçersiz — reddedilir</text>
+          <rect x="228" y="110" width="204" height="64" rx="12" fill="#fdf0f6" stroke="#fbcfe4" stroke-width="1.5"/>
+          <text x="330" y="138" fill="#9d174d">0 – 17</text><text x="330" y="158" font-size="12" font-weight="500" fill="#c65f95">çocuk bileti</text>
+          <rect x="440" y="110" width="220" height="64" rx="12" fill="#fce0ee" stroke="#f8b7d8" stroke-width="1.5"/>
+          <text x="550" y="138" fill="#9d174d">18 – 64</text><text x="550" y="158" font-size="12" font-weight="500" fill="#c65f95">yetişkin bileti</text>
+          <rect x="668" y="110" width="232" height="64" rx="12" fill="#fbcfe4" stroke="#f49cc8" stroke-width="1.5"/>
+          <text x="780" y="138" fill="#9d174d">65 +</text><text x="780" y="158" font-size="12" font-weight="500" fill="#b04a80">yaşlı bileti</text>
+        </g>
+        <g font-size="13" font-weight="700" fill="#70708a" text-anchor="middle">
+          <text x="224" y="200">0</text><text x="436" y="200">18</text><text x="664" y="200">65</text>
+        </g>
+        <rect x="205" y="238" width="550" height="44" rx="22" fill="url(#g4a)"/>
+        <text x="480" y="266" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">4 pay → 4 test değeri = %100 EP kapsamı</text>
+      </g>
+    </svg>
+    <figcaption>Paylar <strong>üst üste binmemeli</strong> ve boş olmamalıdır — ayrıca <strong>geçersiz paylar da sayılır</strong>: kapsam = test edilen paylar ÷ tüm paylar × 100%.</figcaption>
+  </figure>
+  <div class="note"><p><strong>Her Seçim kapsamı (Each Choice)</strong> — birden fazla girdi olduğunda (ör. zemin çeşidi × ödeme çeşidi), <em>her</em> girdinin her payına en az bir kez değinilmelidir. Tek bir test, aynı anda birden fazla girdinin paylarını işaretleyebilir ve <strong>kombinasyonlar gerekmez</strong>.</p></div>
+
+  <h3>Sınır değer analizi (BVA) <small>garantili sınav hesaplaması</small></h3>
+  <p>Geliştiriciler <strong>uçlarda</strong> hata yapar. BVA, <strong>sıralı</strong> her payın <span class="term">sınır değerlerini</span> — en küçüğünü ve en büyüğünü — test eder.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 960 480" role="img" aria-label="Yakınlaştırılmış uçlarla 2 değerli ve 3 değerli sınır değer analizi">
+      <g font-family="system-ui">
+        <g font-size="13" font-weight="700" fill="#70708a" text-anchor="middle">
+          <text x="200" y="52">1 – 100</text><text x="480" y="52">101 – 199</text><text x="760" y="52">200 – 500</text>
+        </g>
+        <g text-anchor="middle" font-size="14" font-weight="800">
+          <rect x="60" y="62" width="280" height="54" rx="12" fill="#fdf0f6" stroke="#fbcfe4" stroke-width="1.5"/><text x="200" y="95" fill="#9d174d">indirim yok</text>
+          <rect x="340" y="62" width="280" height="54" fill="#fce0ee" stroke="#f8b7d8" stroke-width="1.5"/><text x="480" y="95" fill="#9d174d">%10 indirim</text>
+          <rect x="620" y="62" width="280" height="54" rx="12" fill="#fbcfe4" stroke="#f49cc8" stroke-width="1.5"/><text x="760" y="95" fill="#9d174d">%20 indirim</text>
+        </g>
+        <g stroke="#b9b9d4" stroke-width="2" stroke-dasharray="6 5">
+          <line x1="340" y1="120" x2="255" y2="196"/>
+          <line x1="620" y1="120" x2="705" y2="196"/>
+        </g>
+        <g>
+          <rect x="110" y="200" width="290" height="158" rx="16" fill="#fbfaff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="255" y="228" text-anchor="middle" font-size="13" font-weight="800" fill="#5f5f80">yakınlaştır: 100 | 101 ucu</text>
+          <g text-anchor="middle" font-size="17" font-weight="800">
+            <rect x="127" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="157" y="279" fill="#b45309">99</text>
+            <rect x="195" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="225" y="279" fill="#fff">100</text>
+            <rect x="263" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="293" y="279" fill="#fff">101</text>
+            <rect x="331" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="361" y="279" fill="#b45309">102</text>
+          </g>
+          <text x="255" y="330" text-anchor="middle" font-size="12" fill="#8a8aa5">sınır 100 (maks) ile sınır 101 (min) buluşur</text>
+        </g>
+        <g>
+          <rect x="560" y="200" width="290" height="158" rx="16" fill="#fbfaff" stroke="#e4defc" stroke-width="1.5"/>
+          <text x="705" y="228" text-anchor="middle" font-size="13" font-weight="800" fill="#5f5f80">yakınlaştır: 199 | 200 ucu</text>
+          <g text-anchor="middle" font-size="17" font-weight="800">
+            <rect x="577" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="607" y="279" fill="#b45309">198</text>
+            <rect x="645" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="675" y="279" fill="#fff">199</text>
+            <rect x="713" y="244" width="60" height="56" rx="10" fill="#ec4899"/><text x="743" y="279" fill="#fff">200</text>
+            <rect x="781" y="244" width="60" height="56" rx="10" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/><text x="811" y="279" fill="#b45309">201</text>
+          </g>
+          <text x="705" y="330" text-anchor="middle" font-size="12" fill="#8a8aa5">her pay ucunda aynı hikâye</text>
+        </g>
+        <g font-size="13.5">
+          <rect x="180" y="390" width="18" height="18" rx="5" fill="#ec4899"/>
+          <text x="208" y="404" fill="#3c3c55"><tspan font-weight="800">2 değerli BVA</tspan> = sınır değerlerin kendisini test et (her payın min &amp; maks değeri)</text>
+          <rect x="180" y="422" width="18" height="18" rx="5" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="208" y="436" fill="#3c3c55"><tspan font-weight="800">3 değerli BVA</tspan> = ayrıca her sınırın iki komşusunu da test et</text>
+          <text x="480" y="468" text-anchor="middle" font-size="12.5" fill="#8a8aa5">dış uçlar da sayılır: 1 ve 500 birer sınırdır, komşuları 0 / 2 ve 499 / 501</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption><strong>Kapsam %</strong> = çalıştırılan sınır değerler (3 değerlide komşular dâhil) ÷ toplam. BVA yalnızca <strong>sıralı</strong> paylarda işe yarar.</figcaption>
+  </figure>
+  <div class="note"><p><strong>3 değerli neden daha güçlü</strong> (müfredatın kendi örneği): <code>if (x &lt;= 10)</code> yanlışlıkla <code>if (x == 10)</code> olarak kodlanırsa, 2 değerli testlerde x=10 ve x=11 ikisi de geçer — hatayı yalnızca 3 değerlinin eklediği komşu olan <strong>x=9</strong> yakalar.</p></div>
+
+  <h3>Karar tablosu testi <small>garantili sınav hesaplaması</small></h3>
+  <p>Sonucu <strong>koşul kombinasyonlarının</strong> belirlediği iş kuralları için. Koşullar ve aksiyonlar satırlardır; <strong>her sütun = bir kural = bir test</strong>.</p>
+  <figure class="fig">
+    <table class="dt">
+      <tr><th style="text-align:left">Çevrim içi mağaza kuralları</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr>
+      <tr class="sec"><td colspan="5">Koşullar</td></tr>
+      <tr><td>Müşteri üyedir</td><td>T</td><td>T</td><td>F</td><td>F</td></tr>
+      <tr><td>Sipariş ≥ €100</td><td>T</td><td>F</td><td>T</td><td>F</td></tr>
+      <tr class="sec"><td colspan="5">Aksiyonlar</td></tr>
+      <tr><td>%5 indirim uygula</td><td class="x">X</td><td class="x">X</td><td></td><td></td></tr>
+      <tr><td>Ücretsiz kargo</td><td class="x">X</td><td></td><td class="x">X</td><td></td></tr>
+    </table>
+    <figcaption><strong>Tam tabloda</strong> her kombinasyon için bir sütun bulunur (2 koşul → 2² = 4 sütun; <strong>üstel</strong> olarak büyür). Gösterim: T / F · "–" = önemsiz · "N/A" = uygulanamaz · X = aksiyon gerçekleşir.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Kapsam = çalıştırılan sütunlar ÷ uygulanabilir sütunlar × 100%.</strong> Aynı sütuna denk gelen ikinci bir test <strong>hiçbir şey</strong> katmaz.</li>
+    <li>Bir koşulun sonucu değiştirmediği sütunlar birleştirilerek tablolar <strong>küçültülebilir</strong> ("–").</li>
+    <li>Karar tabloları <strong>boşlukları</strong> (hiçbir kuralın kapsamadığı bir kombinasyon) ve <strong>çelişkileri</strong> (aynı kombinasyonla eşleşen, ama farklı aksiyonlar üreten iki kural) ortaya çıkarır.</li>
+  </ul>
+
+  <h3>Durum geçişi testi <small>garantili sınav hesaplaması</small></h3>
+  <p>Bazı sistemler aynı olaya, içinde bulundukları <span class="term">duruma</span> göre farklı yanıt verir. Geçiş etiketinin yazımı: <code>olay [koruma koşulu] / eylem</code>.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 960 380" role="img" aria-label="Dört durumu ve dört geçişi olan bir siparişin durum diyagramı">
+      <defs><linearGradient id="g4b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs>
+      <g font-family="system-ui">
+        <circle cx="42" cy="112" r="9" fill="#3c3c55"/>
+        <line x1="51" y1="112" x2="74" y2="112" stroke="#3c3c55" stroke-width="2.5"/>
+        <path d="M68 106 L78 112 L68 118" fill="none" stroke="#3c3c55" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="80" y="80" width="180" height="64" rx="32" fill="url(#g4b)"/>
+        <text x="170" y="119" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">OLUŞTURULDU</text>
+        <rect x="396" y="80" width="170" height="64" rx="32" fill="url(#g4b)"/>
+        <text x="481" y="119" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">ÖDENDİ</text>
+        <rect x="712" y="80" width="170" height="64" rx="32" fill="url(#g4b)"/>
+        <text x="797" y="119" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">SEVK EDİLDİ</text>
+        <rect x="396" y="272" width="170" height="64" rx="32" fill="#3c3c55"/>
+        <text x="481" y="311" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">KAPATILDI</text>
+        <line x1="260" y1="112" x2="388" y2="112" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M382 106 L392 112 L382 118" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="228" y="18" width="200" height="48" rx="14" fill="#fff" stroke="#fbcfe4" stroke-width="1.5"/>
+        <text x="328" y="38" text-anchor="middle" font-size="12.5" font-weight="800" fill="#9d174d">öde [kart uygun]</text>
+        <text x="328" y="56" text-anchor="middle" font-size="12.5" fill="#c65f95">/ makbuz gönder</text>
+        <line x1="328" y1="66" x2="328" y2="108" stroke="#f8b7d8" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <line x1="566" y1="112" x2="704" y2="112" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M698 106 L708 112 L698 118" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="635" y="100" text-anchor="middle" font-size="13" font-weight="800" fill="#9d174d">sevk et</text>
+        <path d="M797 144 C 797 250, 660 304, 574 304" fill="none" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M582 298 L570 304 L582 311" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="856" y="240" text-anchor="middle" font-size="13" font-weight="800" fill="#9d174d">teslim et</text>
+        <path d="M170 144 C 170 250, 302 304, 388 304" fill="none" stroke="#db2777" stroke-width="2.5"/>
+        <path d="M380 298 L392 304 L380 311" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="116" y="240" text-anchor="middle" font-size="13" font-weight="800" fill="#9d174d">iptal et</text>
+        <text x="480" y="366" text-anchor="middle" font-size="12.5" fill="#8a8aa5">bir test senaryosu = bir olay dizisi, örn. öde → sevk et → teslim et (3 geçişi kapsar)</text>
+      </g>
+    </svg>
+    <figcaption>4 durum · 4 geçerli geçiş. Aşağıdaki <strong>durum tablosu</strong> da aynı modeli gösterir — orada <strong>boş hücreler geçersiz geçişlerdir</strong>.</figcaption>
+  </figure>
+  <figure class="fig">
+    <table class="dt">
+      <tr><th style="text-align:left">Durum ↓ · Olay →</th><th>öde</th><th>sevk et</th><th>teslim et</th><th>iptal et</th></tr>
+      <tr><td>OLUŞTURULDU</td><td class="x">→ ÖDENDİ</td><td></td><td></td><td class="x">→ KAPATILDI</td></tr>
+      <tr><td>ÖDENDİ</td><td></td><td class="x">→ SEVK EDİLDİ</td><td></td><td></td></tr>
+      <tr><td>SEVK EDİLDİ</td><td></td><td></td><td class="x">→ KAPATILDI</td><td></td></tr>
+      <tr><td>KAPATILDI</td><td></td><td></td><td></td><td></td></tr>
+    </table>
+    <figcaption>12 boş hücre = 12 <strong>geçersiz</strong> geçiş (örn. sipariş hâlâ OLUŞTURULDU durumundayken "sevk et" reddedilmeli).</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><b>Tüm durumlar kapsamı</b><p>Her duruma uğra. <strong>En zayıf</strong> ölçüt — her geçişi kullanmadan da sağlanabilir.</p></div>
+    <div class="card"><b>Geçerli geçişler ("0-switch")</b><p>Her geçerli geçişi çalıştır. <strong>En yaygın kullanılanı</strong>. Tüm durumlar kapsamını da içerir.</p></div>
+    <div class="card"><b>Tüm geçişler</b><p>Geçerli olanlar <strong>+ geçersiz olanları deneme</strong>. Görev kritik ve güvenlik kritik yazılımda asgari ölçüt. Her testte <strong>yalnızca bir geçersiz geçiş</strong> — yoksa bir kusur bir başkasını gizleyebilir (<em>kusur maskeleme</em>).</p></div>
+  </div>
+
+  <h3>Beyaz kutu: komut &amp; dal kapsamı</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 400" role="img" aria-label="Komut kapsamının tam, dal kapsamının eksik olduğunu gösteren kontrol akış grafiği">
+      <g font-family="system-ui">
+        <rect x="40" y="40" width="310" height="132" rx="16" fill="#1e293b"/>
+        <g font-family="ui-monospace,Menlo,monospace" font-size="14.5" fill="#e2e8f0">
+          <text x="66" y="75">read x;</text>
+          <text x="66" y="100">if (x &gt; 100)</text>
+          <text x="66" y="125">    x = x - 10;</text>
+          <text x="66" y="150">print x;</text>
+        </g>
+        <rect x="40" y="200" width="310" height="158" rx="16" fill="#fff" stroke="#e8e6f2" stroke-width="1.5"/>
+        <text x="66" y="238" font-size="16.5" font-weight="900" fill="#1c1c28">Tek test: x = 200</text>
+        <text x="66" y="272" font-size="14" font-weight="700" fill="#047857">✓ komut kapsamı 4/4 = %100</text>
+        <text x="66" y="302" font-size="14" font-weight="700" fill="#b91c1c">✗ dal kapsamı 3/4 = %75</text>
+        <text x="66" y="330" font-size="12.5" fill="#8a8aa5">Yanlış kenarından hiç geçilmedi</text>
+        <rect x="520" y="40" width="170" height="50" rx="12" fill="#fff" stroke="#c9c9de" stroke-width="2"/>
+        <text x="605" y="71" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3c3c55">read x</text>
+        <rect x="520" y="150" width="170" height="50" rx="25" fill="#fdf0f6" stroke="#ec4899" stroke-width="2"/>
+        <text x="605" y="181" text-anchor="middle" font-size="14.5" font-weight="800" fill="#9d174d">x &gt; 100 ?</text>
+        <rect x="760" y="150" width="170" height="50" rx="12" fill="#fff" stroke="#c9c9de" stroke-width="2"/>
+        <text x="845" y="181" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3c3c55">x = x − 10</text>
+        <rect x="520" y="308" width="170" height="50" rx="12" fill="#fff" stroke="#c9c9de" stroke-width="2"/>
+        <text x="605" y="339" text-anchor="middle" font-size="14.5" font-weight="700" fill="#3c3c55">print x</text>
+        <line x1="605" y1="90" x2="605" y2="144" stroke="#059669" stroke-width="3"/>
+        <path d="M599 138 L605 148 L611 138" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="690" y1="175" x2="754" y2="175" stroke="#059669" stroke-width="3"/>
+        <path d="M748 169 L758 175 L748 181" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="722" y="160" text-anchor="middle" font-size="12.5" font-weight="800" fill="#047857">Doğru ✓</text>
+        <path d="M845 200 C 845 320, 750 333, 698 333" fill="none" stroke="#059669" stroke-width="3"/>
+        <path d="M706 327 L694 333 L706 340" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="605" y1="200" x2="605" y2="302" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 6"/>
+        <path d="M599 296 L605 306 L611 296" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="592" y="248" text-anchor="end" font-size="12.5" font-weight="800" fill="#b91c1c">Yanlış ✗</text>
+        <text x="592" y="266" text-anchor="end" font-size="11.5" fill="#d47070">hiç geçilmedi</text>
+      </g>
+    </svg>
+    <figcaption><strong>else'siz bir if</strong>: tek test her komutu çalıştırır, yine de bir dal test edilmeden kalır. İşte bu yüzden <strong>%100 dal ⇒ %100 komut — tersi asla</strong>.</figcaption>
+  </figure>
+  <div class="cards">
+    <div class="card"><b>Komut kapsamı</b><p>= çalıştırılan komutlar ÷ çalıştırılabilir tüm komutlar. %100 bile veriye bağlı kusurları kaçırabilir (örn. sıfıra bölme).</p></div>
+    <div class="card"><b>Dal kapsamı</b><p>= çalıştırılan dallar ÷ tüm dallar. Dallar, kontrol akış grafiğinin <strong>kenarlarıdır</strong> — koşullu <em>ve</em> koşulsuz olanlar.</p></div>
+    <div class="card"><b>Değeri &amp; sınırı</b><p>Beyaz kutu gerçek koda bakar, <strong>nesnel bir kapsam sayısı</strong> verir — ama <strong>eksiklik kusurlarını</strong> (hiç gerçeklenmemiş gereksinimleri) bulamaz.</p></div>
+  </div>
+
+  <h3>Deneyime dayalı teknikler</h3>
+  <div class="cards">
+    <div class="card"><b>Hata tahminleme</b><p>Deneyimine dayanarak olası hataları, kusurları ve arızaları önceden kestir: uygulama daha önce nasıl davrandı, bu geliştiriciler hangi hataları yapar, benzer uygulamalarda hangi arızalar çıktı. Yöntemli hâli: <strong>kusur ortaya çıkarmaya yönelik saldırılar</strong> — yazılı bir olası kusur/arıza listesinden test et.</p></div>
+    <div class="card"><b>Keşif testi</b><p>Tasarla, çalıştır ve öğren — hepsi <strong>aynı anda</strong>. Yapılandırılmış biçimi <strong>oturum tabanlı test</strong>: zaman kutusu + <strong>test tüzüğü</strong> + değerlendirme toplantısı. Şartnameler zayıfken ya da zaman darken parlar; testçinin becerisine bağlıdır.</p></div>
+    <div class="card"><b>Kontrol listesine dayalı test</b><p>Test koşulları bir <strong>kontrol listesinden</strong> gelir (çoğu zaman soru biçiminde). Otomatikleştirilebilir maddeler, giriş/çıkış kriterleri ve belirsiz ifadeler listede yer almaz. Listeyi düzenli güncelle — eski maddeler yıpranır. Daha çok kapsam, daha az yinelenebilirlik.</p></div>
+  </div>
+
+  <h3>İş birliğine dayalı yaklaşımlar</h3>
+  <p>Yukarıdaki teknikler kusurları <strong>bulur</strong>. İş birliği ise onları <strong>önler</strong> — iletişim yoluyla.</p>
+  <div class="cards">
+    <div class="card"><b><i>C</i>Kart</b><p>Kullanıcı hikâyesini taşıyan ortam (fiş kartı, panodaki madde).</p></div>
+    <div class="card"><b><i>C</i>Konuşma</b><p>Yazılımın nasıl kullanılacağına dair ortak anlayışı kuran sohbet.</p></div>
+    <div class="card"><b><i>C</i>Onay</b><p><strong>Kabul kriterleri</strong> — işin bittiğini nereden anlarız.</p></div>
+  </div>
+  <p>Hikâye biçimi: <em>"Bir [rol] olarak, [hedef] istiyorum, böylece [iş değeri] elde edebilirim"</em>. İyi hikâyeler <span class="term">INVEST</span> özelliklerini taşır:</p>
+  <div class="chips"><span><b>I</b>ndependent (bağımsız)</span><span><b>N</b>egotiable (pazarlığa açık)</span><span><b>V</b>aluable (değerli)</span><span><b>E</b>stimable (tahmin edilebilir)</span><span><b>S</b>mall (küçük)</span><span><b>T</b>estable (test edilebilir)</span></div>
+  <p><span class="term">Kabul kriterleri</span> = hikâyenin test koşulları. Sınavda sınıflandırman gereken iki biçim var:</p>
+  <table class="cmp">
+    <tr><th>Senaryo odaklı</th><th>Kural odaklı</th></tr>
+    <tr><td><strong>Given / When / Then</strong> biçimi (BDD):<br><em>Given oturum açmış durumdayım, When kartla ödeme yaparım, Then bir makbuz görürüm.</em></td><td>Madde madde bir doğrulama listesi ya da girdileri çıktılara eşleyen bir tablo.</td></tr>
+  </table>
+  <p><span class="term">ATDD</span>, adım adım: <strong>1)</strong> bir <em>şartname atölyesi</em> kullanıcı hikâyesini ve kabul kriterlerini inceler, kusurlarını giderir; <strong>2)</strong> ekip <strong>kodlamadan önce test senaryolarını yazar</strong> — önce pozitif senaryolar, sonra negatifler, sonra fonksiyonel olmayanlar. Otomatikleştirildiğinde testler <strong>çalıştırılabilir gereksinimlere</strong> dönüşür. Testler hikâyenin tamamını kapsamalı ve <strong>asla onun dışına çıkmamalı</strong>; iki test aynı şeyi denetlememeli.</p>
+
+  <div class="trap"><b class="t">Sınav tuzakları — bölüm 4</b>
+    <ul>
+      <li>Denklik payı (EP) kapsamı <strong>geçersiz payları da</strong> sayar; Her Seçim (Each Choice) <strong>hiçbir kombinasyon</strong> gerektirmez.</li>
+      <li>Sınır değer analizi: dikkatli say — bir sınırın komşusu genellikle <em>bir sonraki payın kendi sınırıdır</em>. Açık uçlu aralıkların da sınırları vardır.</li>
+      <li>Karar tabloları: zaten kapsanmış bir sütun için ikinci bir test hiçbir şey katmaz. Boşluk = hiçbir kuralın eşleşmemesi; çelişki = iki kuralın farklı eylemlerle eşleşmesi.</li>
+      <li>Durum geçişleri: bir olayı tekrarlamak <strong>aynı</strong> geçişi yeniden kullanıyor olabilir (yeni kapsam yok); bitiş durumundan sonra devam eden her dizi <strong>uygulanamazdır</strong>.</li>
+      <li><strong>%100 komut kapsamı, %100 dal kapsamı anlamına GELMEZ.</strong> Dal kapsamı komut kapsamını içerir — yönü iyi bil.</li>
+      <li>Keşif testi <strong>deneyime dayalıdır</strong>, kara kutu değil. Yazılı bir arıza listesi = <strong>kusur ortaya çıkarmaya yönelik saldırı</strong>, kontrol listesine dayalı test değil.</li>
+      <li>ATDD: <strong>kabul kriterlerinin dışına çıkan</strong> makul görünümlü bir test, klasik yanlış şıktır.</li>
+    </ul>
+  </div>
+</section>
+<!-- ==================== BÖLÜM 5 ==================== -->
+<section class="ch" id="ch5">
+  <div class="chhead"><div class="chnum">5</div><div class="t"><p>Bölüm 5 · 9 sınav sorusu — hesaplamalı</p><h2>Test aktivitelerini yönetme</h2></div></div>
+
+  <h3>Test planı</h3>
+  <p>Bir <span class="term">test planı</span> = test projesinin amaçları, kaynakları ve süreçleri. Takvimi belgeler, paydaşlarla iletişimi sağlar ve test etmenin test politikası ile stratejisini nasıl izlediğini (ya da onlardan nasıl saptığını) gösterir. İçerik: bağlam (kapsam, amaçlar, test esası) · varsayımlar &amp; kısıtlar · paydaşlar · iletişim · <strong>risk kütüğü</strong> · <strong>test yaklaşımı</strong> (seviyeler, çeşitler, teknikler, giriş/çıkış kriterleri, metrikler, veri &amp; ortam ihtiyaçları) · bütçe &amp; takvim.</p>
+  <p><strong>Test uzmanları da planlamaya katkı verir</strong> — <em>sürüm planlamasında</em>: test edilebilir kullanıcı hikâyeleri &amp; kabul kriterleri, risk analizi, eforun tahminlenmesi, test yaklaşımı. <em>Yineleme planlamasında</em>: ayrıntılı risk analizi, test edilebilirlik kontrolleri, hikâyeleri test görevlerine bölme ve bunları tahminleme.</p>
+
+  <h3>Giriş kriterleri ile çıkış kriterleri</h3>
+  <table class="cmp">
+    <tr><th>Giriş — başlayabilir miyiz?</th><th>Çıkış — bitirdik mi?</th></tr>
+    <tr><td><strong>Başlamadan önce hazır olması gerekenler:</strong> kaynaklar (insanlar, araçlar, ortamlar, veri, bütçe, zaman), test çalışma ürünleri (test esası, test senaryoları), başlangıç kalitesi (duman testleri geçti).<br>Çevik karşılığı: <strong>Hazır Olma Tanımı</strong>.</td><td><strong>Ulaşılan kapsamlılık:</strong> erişilen kapsam, çözülmemiş kusurlar, kusur yoğunluğu, başarısız testler — ayrıca evet/hayır kontrolleri (planlanan tüm testler koşuldu, regresyon otomatikleştirildi).<br>Çevik karşılığı: <strong>Bitti Tanımı</strong>. Zamanın ya da bütçenin tükenmesi, paydaşlar riski kabul ediyorsa geçerli bir çıkış olabilir.</td></tr>
+  </table>
+
+  <h3>Tahminleme — dört teknik <small>garantili sınav hesaplaması</small></h3>
+  <div class="cards">
+    <div class="card"><b>Oranlar</b><p>Kendi kuruluşundan gelen geçmiş oranlar. Geliştirme:test oranı 3:2 idiyse → 600 adam-günlük geliştirme, test için <strong>400</strong> demektir.</p></div>
+    <div class="card"><b>Dışdeğerbiçim</b><p>Erken ölç, ileriye yansıt — ör. sonraki yineleme ≈ son üç yinelemenin ortalaması.</p></div>
+    <div class="card"><b>Geniş bantlı Delphi</b><p>Uzmanlar <strong>birbirinden bağımsız</strong> tahmin yapar → aykırı değerler tartışılır → yeniden tahmin → uzlaşıya varılana dek tekrarlanır. <strong>Planlama Pokeri</strong> = çevik kart sürümü.</p></div>
+    <div class="card"><b>Üç noktalı tahmin</b><p>İyimser <em>a</em> · en olası <em>m</em> · kötümser <em>b</em> → bilinen bir hata aralığıyla ağırlıklı ortalama.</p></div>
+  </div>
+  <div class="formula">
+    <div class="f">E = (a + 4m + b) ÷ 6&nbsp;&nbsp;&nbsp;&nbsp;SD = (b − a) ÷ 6</div>
+    <p>Müfredattaki örnek: a=6, m=9, b=18 → E = (6+36+18)÷6 = <strong>10</strong>, SD = 12÷6 = <strong>2</strong> → tahmin <strong>10 ± 2 adam-saat</strong>.</p>
+  </div>
+
+  <h3>Test senaryolarının önceliklendirilmesi <small>uygulama seviyesi</small></h3>
+  <div class="cards">
+    <div class="card"><b>Risk tabanlı</b><p>Önce <strong>en büyük risklere</strong> yönelik testler.</p></div>
+    <div class="card"><b>Kapsam tabanlı</b><p>Önce en yüksek kapsam (bir sürümünde: sırada en çok <em>ek</em> kapsam sağlayan).</p></div>
+    <div class="card"><b>Gereksinim tabanlı</b><p>Önce en önemli gereksinimlerin testleri.</p></div>
+  </div>
+  <div class="note"><p><strong>Sınavdaki kıvrım: bağımlılıklar önceliği yener.</strong> Yüksek öncelikli TC3, TC1'in sonucuna ihtiyaç duyuyorsa, öncelik ne olursa olsun önce TC1 koşulur. Kaynakların uygunluğu da sırayı kısıtlar.</p></div>
+
+  <h3>Test piramidi</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 960 445" role="img" aria-label="Altta çok sayıda hızlı birim testi, üstte az sayıda yavaş uçtan uca test bulunan test piramidi">
+      <g font-family="system-ui">
+        <polygon points="480,50 590,163 370,163" fill="#fecdd3" stroke="#fda4af" stroke-width="1.5"/>
+        <polygon points="370,163 590,163 700,277 260,277" fill="#fde68a" stroke="#fcd34d" stroke-width="1.5"/>
+        <polygon points="260,277 700,277 810,390 150,390" fill="#a7f3d0" stroke="#6ee7b7" stroke-width="1.5"/>
+        <text x="480" y="130" text-anchor="middle" font-size="14.5" font-weight="800" fill="#9f1239">Arayüz / Uçtan uca</text>
+        <text x="480" y="150" text-anchor="middle" font-size="11.5" fill="#be5b6e">az · yavaş</text>
+        <text x="480" y="212" text-anchor="middle" font-size="15.5" font-weight="800" fill="#92400e">Servis / Entegrasyon</text>
+        <text x="480" y="233" text-anchor="middle" font-size="12" fill="#b07a30">API'ler · bileşen etkileşimleri</text>
+        <g fill="#d97706"><circle cx="450" cy="255" r="5"/><circle cx="465" cy="255" r="5"/><circle cx="480" cy="255" r="5"/><circle cx="495" cy="255" r="5"/><circle cx="510" cy="255" r="5"/></g>
+        <text x="480" y="322" text-anchor="middle" font-size="16" font-weight="800" fill="#065f46">Birim / Bileşen</text>
+        <text x="480" y="343" text-anchor="middle" font-size="12" fill="#3d8f6e">çok · hızlı · izole</text>
+        <g fill="#059669"><circle cx="397" cy="366" r="5"/><circle cx="412" cy="366" r="5"/><circle cx="427" cy="366" r="5"/><circle cx="442" cy="366" r="5"/><circle cx="457" cy="366" r="5"/><circle cx="472" cy="366" r="5"/><circle cx="487" cy="366" r="5"/><circle cx="502" cy="366" r="5"/><circle cx="517" cy="366" r="5"/><circle cx="532" cy="366" r="5"/><circle cx="547" cy="366" r="5"/><circle cx="562" cy="366" r="5"/></g>
+        <line x1="95" y1="350" x2="95" y2="100" stroke="#9a9ab8" stroke-width="2.5"/>
+        <path d="M89 110 L95 96 L101 110" fill="none" stroke="#9a9ab8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text transform="rotate(-90 62 225)" x="62" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#70708a">daha az test · daha yavaş · daha az izole</text>
+        <line x1="865" y1="100" x2="865" y2="350" stroke="#9a9ab8" stroke-width="2.5"/>
+        <path d="M859 340 L865 354 L871 340" fill="none" stroke="#9a9ab8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text transform="rotate(90 898 225)" x="898" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#70708a">daha çok test · daha hızlı · otomasyonu kolay</text>
+        <text x="480" y="425" text-anchor="middle" font-size="12.5" fill="#8a8aa5">özgün adlandırma (Cohn): birim testleri · servis testleri · arayüz testleri — katman adları ve sayısı değişebilir</text>
+      </g>
+    </svg>
+    <figcaption>Piramit <strong>test otomasyonu eforuna</strong> yön verir: altta bol miktarda küçük, hızlı, izole test kur — büyük ve yavaş uçtan uca testleri az tut.</figcaption>
+  </figure>
+
+  <h3>Test çeyrekleri</h3>
+  <div class="quadaxes"><span>◀ ekibi destekle (geliştirmeye yön ver)</span><span>ürünü eleştir (ölç) ▶</span></div>
+  <div class="quad">
+    <div class="q q2"><b>Q2 · iş odaklı · destek</b><ul><li>fonksiyonel testler, örnekler</li><li>kullanıcı hikâyesi testleri, UX prototipleri</li><li>API testi · manuel veya otomatik</li></ul></div>
+    <div class="q q3"><b>Q3 · iş odaklı · eleştiri</b><ul><li>keşif testi</li><li>kullanılabilirlik testi</li><li>kullanıcı kabul testi · çoğunlukla manuel</li></ul></div>
+    <div class="q q1"><b>Q1 · teknoloji odaklı · destek</b><ul><li>bileşen testleri</li><li>bileşen entegrasyon testleri</li><li>otomatik, CI içinde</li></ul></div>
+    <div class="q q4"><b>Q4 · teknoloji odaklı · eleştiri</b><ul><li>duman testleri</li><li>fonksiyonel olmayan testler (kullanılabilirlik hariç)</li><li>çoğunlukla otomatik</li></ul></div>
+  </div>
+  <p>Üst sıra = <strong>iş odaklı</strong>, alt sıra = <strong>teknoloji odaklı</strong>. Çeyrekler (Marick) her paydaşın <strong>hiçbir test çeşidinin veya seviyesinin unutulmadığını</strong> görmesine yardım eder.</p>
+
+  <h3>Risk yönetimi</h3>
+  <p><span class="term">Risk</span> = olumsuz etkisi olabilecek olası bir olay. <strong>Risk seviyesi = olasılık × etki</strong> — birbirinden <strong>bağımsız</strong> iki etken. <span class="term">Risk tabanlı test</span>, test işini riske göre seçer ve önceliklendirir.</p>
+  <div class="risk">
+    <div class="lab"></div><div class="lab">Düşük etki</div><div class="lab">Orta etki</div><div class="lab">Yüksek etki</div>
+    <div class="lab">Yüksek<br>olasılık</div><div class="cell md">Orta</div><div class="cell hi">Yüksek</div><div class="cell hi">Yüksek</div>
+    <div class="lab">Orta<br>olasılık</div><div class="cell lo">Düşük</div><div class="cell md">Orta</div><div class="cell hi">Yüksek</div>
+    <div class="lab">Düşük<br>olasılık</div><div class="cell lo">Düşük</div><div class="cell lo">Düşük</div><div class="cell md">Orta</div>
+  </div>
+  <table class="cmp">
+    <tr><th>Proje riskleri — teslim edebilir miyiz?</th><th>Ürün riskleri — ürün iyi mi?</th></tr>
+    <tr><td>Kurumsal (gecikmeler, kötü tahminler, maliyet kısıntısı) · insan (beceriler, anlaşmazlıklar, personel eksikliği) · teknik (<strong>kapsam kayması, zayıf araç desteği</strong>) · tedarikçiler. <strong>Takvimi, bütçeyi veya kapsamı</strong> vururlar.</td><td>Eksik/yanlış işlevsellik, hatalı hesaplamalar, çalışma zamanı hataları, <strong>kötü mimari</strong>, yavaş yanıt, kötü kullanıcı deneyimi, güvenlik açıkları. Kullanıcı memnuniyetsizliğine, gelir &amp; güven kaybına, cezalara — uç durumlarda yaralanma veya ölüme yol açarlar.</td></tr>
+  </table>
+  <p><span class="term">Risk analizi</span> = <strong>tanımlama</strong> (beyin fırtınası, görüşmeler…) + <strong>değerlendirme</strong> (kategorilere ayır, olasılık &amp; etkiyi derecelendir, önceliklendir). Test etmenin <strong>kapsamını ve kapsamlılığını</strong> belirler: hangi seviyeler, çeşitler, teknikler, kapsam ve önce ne koşulacak.</p>
+  <p><span class="term">Risk kontrolü</span> = <strong>azaltma</strong> (planlanan eylemleri yap) + <strong>izleme</strong> (işe yarıyorlar mı? yeni risk var mı?). Olası yanıtlar: test ederek <strong>azalt</strong> · <strong>kabul et</strong> · <strong>devret</strong> (ör. sigorta) · acil durum planı. Test etme riski şunlarla azaltır: doğru test uzmanları, doğru bağımsızlık seviyesi, gözden geçirmeler &amp; statik analiz, doğru teknikler/kapsam/çeşitler, regresyon testi.</p>
+
+  <h3>İzleme, kontrol &amp; raporlar</h3>
+  <p><span class="term">İzleme</span> ilerleme ve çıkış kriterleri hakkında veri toplar · <span class="term">kontrol</span> buna göre harekete geçer (yeniden önceliklendir, takvimi ayarla, kaynak ekle) · <span class="term">tamamlama</span> kilometre taşlarında her şeyi derler. Metrik aileleri: proje ilerlemesi · test ilerlemesi (koşulan/geçen/kalan) · ürün kalitesi (ör. arızalar arası ortalama süre) · kusurlar (yoğunluk, tespit %) · risk (artık risk seviyesi) · kapsam · maliyet.</p>
+  <table class="cmp">
+    <tr><th>Test ilerleme raporu — süreç boyunca</th><th>Test tamamlama raporu — sonunda</th></tr>
+    <tr><td>Düzenli (günlük/haftalık): plana karşı ilerleme, engeller, metrikler, yeni riskler, sonraki dönem. Süregelen kontrolü destekler.</td><td>Bir kilometre taşında (seviye / yineleme / sürüm bitti, ideal olarak çıkış kriterleri karşılandı): özet, plana karşı değerlendirme, sapmalar, çözülmemiş kusurlar &amp; riskler, <strong>alınan dersler</strong>. İlerleme raporlarından derlenir.</td></tr>
+  </table>
+  <p>Mesajı hedef kitleye göre uyarla — iş tarafındaki kişilerin dal kapsamına ihtiyacı yok. Kanallar: sohbet, gösterge panoları &amp; burn-down grafikleri, mesajlaşma/e-posta, resmi raporlar.</p>
+
+  <h3>Yapılandırma yönetimi</h3>
+  <p>Yapılandırma yönetimi test etmeyi <strong>yeniden üretilebilir</strong> kılar: her öğe (test planları, senaryolar, betikler, sonuçlar, ortamlar) <strong>benzersiz şekilde tanımlanır, sürüm kontrolüne alınır, değişiklikleri izlenir ve izlenebilir olur</strong>. Onaylanan sürümler <strong>temel çizgi (baseline)</strong> hâline gelir ve yalnızca değişiklik kontrolüyle değişir — ayrıca <strong>eski sonuçları yeniden üretmek için bir temel çizgiye dönebilirsin</strong>. DevOps'ta yapılandırma yönetimi hattın içine gömülüdür.</p>
+
+  <h3>Kusur yönetimi <small>garantili sınav görevi: bir raporu eleştir</small></h3>
+  <div class="flow">
+    <div class="step"><em>1</em><b>Kaydet</b><small>anormallik bildirilir</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>2</em><b>Analiz et &amp; sınıflandır</b><small>gerçek kusur mu? mükerrer mi? değişiklik talebi mi? yanlış pozitif mi?</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>3</em><b>Karar ver</b><small>düzelt — ya da olduğu gibi bırak</small></div>
+    <div class="arr">→</div>
+    <div class="step"><em>4</em><b>Kapat</b><small>onaylama testinden sonra</small></div>
+  </div>
+  <div class="ticket">
+    <div class="th">DEF-1042 · Sıralama mükerrer satırları kaybediyor <span>AÇIK</span></div>
+    <dl>
+      <dt>Tarih · yazar · rol</dt><dd>2026-07-08 · D. Dogan · test uzmanı</dd>
+      <dt>Test nesnesi + ortam</dt><dd>WebShop v2.3.1 · Chrome 126 / Windows 11 <span class="hl">← herkesin unuttuğu alan!</span></dd>
+      <dt>Bağlam</dt><dd>TC-17 · sistem testi · sipariş listesinin sıralanması</dd>
+      <dt>Yeniden üretim adımları + veri</dt><dd>Siparişleri aç → 2026-07-01 tarihli 3 sipariş ekle → "tarihe göre sırala"ya tıkla <span class="hl">← girdi verisi geliştiricinin sorunu yeniden üretmesini sağlar</span></dd>
+      <dt>Beklenen ile gerçekleşen</dt><dd>Beklenen: kararlı sıralanmış liste · Gerçekleşen: mükerrer satırlar kayboluyor</dd>
+      <dt>Önem · öncelik</dt><dd>Önem: yüksek (paydaşlar üzerindeki etki) · Öncelik: sonraki sürümde düzeltilsin</dd>
+      <dt>Referanslar</dt><dd>TC-17 · gereksinim R-88</dd>
+    </dl>
+  </div>
+  <p>Durumlar: açık · ertelendi · mükerrer · düzeltilmeyi bekliyor · onaylama testini bekliyor · yeniden açıldı · kapandı · reddedildi. İyi bir rapor <strong>yeniden üretimi</strong> mümkün kılar, çalışma ürünü kalitesini izler ve süreç iyileştirmesini besler.</p>
+
+  <div class="trap"><b class="t">Sınav tuzakları — bölüm 5</b>
+    <ul>
+      <li>Giriş = başlamadan önce <strong>hazır olan</strong> · çıkış = sonunda <strong>ulaşılan</strong>. Klasik yer değiştirme.</li>
+      <li>Piramit = <strong>ayrıntı düzeyi &amp; otomasyon</strong> · çeyrekler = <strong>test çeşitlerine paydaş bakışı</strong>. Çeldiriciler ikisinin özelliklerini değiştirir.</li>
+      <li><strong>Kapsam kayması ve zayıf araç desteği PROJE riskidir</strong> — yalnızca kulağa ürünle ilgiliymiş gibi gelirler.</li>
+      <li>Olasılık ve etki <strong>bağımsızdır</strong>; ikisinden birini hesaplamaya hazır ol (risk ÷ olasılık = etki).</li>
+      <li>Önem/severity (etki) ≠ öncelik/priority (düzeltmenin aciliyeti).</li>
+      <li>Sürümler + temel çizgiler + geri alma = <strong>yapılandırma yönetimi</strong>; kusur kimlikleri ve iş akışı = <strong>kusur yönetimi</strong>.</li>
+      <li>Kabul kriterleri <strong>kullanıcı hikâyesinde</strong> bulunur — test planında değil. Somut test verisi de test planına ait değildir.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== BÖLÜM 6 ==================== -->
+<section class="ch" id="ch6">
+  <div class="chhead"><div class="chnum">6</div><div class="t"><p>Bölüm 6 · 2 sınav sorusu</p><h2>Test araçları</h2></div></div>
+
+  <h3>Araç çeşitleri</h3>
+  <div class="cards">
+    <div class="card"><b>Test yönetimi</b><p>YGYD'yi, gereksinimleri, testleri, kusurları ve yapılandırmayı yönetir.</p></div>
+    <div class="card"><b>Statik test</b><p>Gözden geçirmeleri ve statik analizi destekler.</p></div>
+    <div class="card"><b>Tasarım &amp; gerçekleştirme</b><p>Test senaryoları, test verileri ve prosedürler üretir.</p></div>
+    <div class="card"><b>Yürütme &amp; kapsam</b><p>Testleri otomatik çalıştırır, kapsamı ölçer.</p></div>
+    <div class="card"><b>Fonksiyonel olmayan test</b><p>Elle yapması zor olanı yapar — örn. performans yükü.</p></div>
+    <div class="card"><b>DevOps</b><p>Teslim hattı, derleme otomasyonu, CI/CD.</p></div>
+    <div class="card"><b>İş birliği</b><p>İletişimi destekler.</p></div>
+    <div class="card"><b>Ölçeklenebilirlik &amp; dağıtım</b><p>Sanal makineler, konteynerler. Bir hesap tablosu bile test aracı olabilir.</p></div>
+  </div>
+
+  <h3>Test otomasyonu — faydalar ve riskler</h3>
+  <table class="cmp">
+    <tr><th>Faydalar ✓</th><th>Riskler ✗</th></tr>
+    <tr><td><ul>
+      <li><strong>Tekrarlayan elle işlerde</strong> zaman tasarrufu (regresyon koşuları, veriyi yeniden girme, sonuçları karşılaştırma)</li>
+      <li><strong>Tutarlılık &amp; tekrarlanabilirlik</strong> basit insan hatalarını önler</li>
+      <li>İnsan gücünün yetmediği <strong>nesnel</strong> ölçümler (örn. kapsam)</li>
+      <li>Test bilgisine kolay erişim: istatistikler, grafikler, toplu veriler</li>
+      <li><strong>Daha hızlı yürütme</strong> → kusurlar daha erken, geri bildirim &amp; pazara çıkış daha hızlı</li>
+      <li>Test uzmanına <strong>yeni, daha derin testler</strong> için daha çok zaman</li>
+    </ul></td><td><ul>
+      <li>Araçtan <strong>gerçekçi olmayan beklentiler</strong></li>
+      <li>Aracı (ve betikleri) <strong>devreye alma &amp; bakım</strong> maliyetinin hafife alınması</li>
+      <li><strong>Elle testin daha uygun olduğu</strong> yerde otomasyona gitmek</li>
+      <li>Aşırı güven — <strong>insanın eleştirel düşünmesini</strong> yitirmek</li>
+      <li><strong>Tedarikçiye bağımlılık</strong> (işi bırakır, aracı emekliye ayırır, desteği kötüdür); terk edilmiş açık kaynak</li>
+      <li>Aracın geliştirme platformuyla <strong>uyumsuz</strong> olması ya da <strong>mevzuat / güvenlik</strong> gereksinimlerini karşılamaması</li>
+    </ul></td></tr>
+  </table>
+
+  <div class="trap"><b class="t">Sınav tuzakları — bölüm 6</b>
+    <ul>
+      <li>Araçlar test uzmanlarını <strong>destekler</strong> — sorumluluğu paylaşmaz, eleştirel düşünmenin yerini almaz, yoktan beklenen sonuçlarıyla birlikte test senaryosu üretmez.</li>
+      <li>Çeldiriciler faydaları risk, riskleri fayda gibi yazar — "daha az tekrarlayan elle iş" bir <strong>faydadır</strong>.</li>
+      <li>Eşleştirme soruları: sanal makine/konteyner = ölçeklenebilirlik &amp; dağıtım · CI/CD = DevOps araçları.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div class="fcard">
+    <p><strong>Müfredatın tamamı bu</strong> — dört resmî örnek sınavla soru soru karşılaştırılarak kontrol edildi.</p>
+    <p>Sınavdan önce: <strong>7 ilkeyi</strong>, <strong>gözden geçirme çeşitlerini &amp; liderlerini</strong> ve <strong>E = (a + 4m + b) ÷ 6</strong> formülünü ezberle. Denklik paylarına ayırma, sınır değer analizi, karar tabloları ve durum geçişlerini kâğıt üzerinde, sayma işi kolay gelene kadar çalış — bu hesaplar kesinlikle çıkacak. Sonra resmî örnek sınavları (bu klasörde) gerçek koşullarda çöz: 40 soru, 60 dakika, 26 doğru = geçti. Bunu başarırsın. 🧪</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var links = {};
+  document.querySelectorAll('#toc a').forEach(function (a) {
+    links[a.getAttribute('href').slice(1)] = a;
+  });
+  if ('IntersectionObserver' in window) {
+    var current = null;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          if (current) current.classList.remove('active');
+          current = links[en.target.id];
+          if (current) current.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -75% 0px' });
+    document.querySelectorAll('section.ch').forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</html>
