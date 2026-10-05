@@ -63,10 +63,6 @@ buildFuture = true
     name = "Contact"
     url = "/contact/"
     weight = 6
-  [[menus.main]]
-    name = "Deniz"
-    url = "/deniz/"
-    weight = 7
 
 [outputs]
   home = ["HTML", "RSS"]
