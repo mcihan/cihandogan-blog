@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CTFL Çözüm Yöntemleri (TR)</title>
+<style>
+:root{
+  --bg:#f6f6fb; --surface:#fff; --ink:#1c1c2c; --muted:#61617a; --line:#e5e4ef;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -14px rgba(28,28,60,.18);
+  --good:#059669; --good-soft:#e7f6ef; --bad:#dc2626; --bad-soft:#fdecec;
+  --warn:#d97706; --warn-soft:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
+  --dim:#b9b7c9; --nodebg:#eef0ff; --nodeln:#cfd2f0; --nodefg:#1d1d33;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+  --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+  --warn:#fbbf24; --warn-soft:#2e2210;
+  --dim:#4a4a63; --nodebg:#262641; --nodeln:#3b3b5c; --nodefg:#eceaf5; } }
+[data-accent="A"]{--c:#4f46e5;--cd:#3730a3;--cs:#eef2ff;--cl:#c7d2fe}
+[data-accent="B"]{--c:#0284c7;--cd:#075985;--cs:#e8f6fe;--cl:#bae6fd}
+[data-accent="D"]{--c:#db2777;--cd:#9d174d;--cs:#fdf0f6;--cl:#fbcfe4}
+[data-accent="E"]{--c:#059669;--cd:#065f46;--cs:#e7f6ef;--cl:#a7f3d0}
+[data-accent="F"]{--c:#d97706;--cd:#92400e;--cs:#fdf3e3;--cl:#fde3ab}
+@media (prefers-color-scheme: dark){
+  [data-accent="A"]{--c:#818cf8;--cd:#a5b4fc;--cs:#222247;--cl:#3b3b78}
+  [data-accent="B"]{--c:#38bdf8;--cd:#7dd3fc;--cs:#12283a;--cl:#1c4258}
+  [data-accent="D"]{--c:#f472b6;--cd:#f9a8d4;--cs:#3a1428;--cl:#5c2140}
+  [data-accent="E"]{--c:#34d399;--cd:#6ee7b7;--cs:#0e2b20;--cl:#17553d}
+  [data-accent="F"]{--c:#fbbf24;--cd:#fcd34d;--cs:#2e2210;--cl:#5a4413}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+
+/* ---------- HERO ---------- */
+header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 42%,#0e7490 100%);padding:3.2rem 1.3rem 2.6rem}
+.in{max-width:1000px;margin:0 auto}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .7rem}
+.hero h1{color:#fff;font-size:clamp(1.9rem,5.2vw,2.9rem);line-height:1.07;margin:0 0 .7rem;font-weight:900;letter-spacing:-.02em}
+.hero p.lede{color:#dbe3ff;max-width:62ch;margin:0 0 1.8rem;font-size:1.03rem}
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,178px),1fr));gap:.6rem}
+.jump a{display:flex;gap:.65rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:.65rem .8rem;color:#fff;
+  transition:background .15s,transform .15s;min-width:0}
+.jump a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.jump .n{width:26px;height:26px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:900;background:rgba(255,255,255,.22)}
+.jump b{display:block;font-size:.88rem;font-weight:800;line-height:1.25}
+.jump span{font-size:.7rem;color:#c7d2fe;font-family:var(--mono)}
+
+/* ---------- NAV ---------- */
+nav.sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.sticky .in{display:flex;gap:.4rem;align-items:center;padding:.55rem 1.3rem;overflow-x:auto;scrollbar-width:none}
+nav.sticky .in::-webkit-scrollbar{display:none}
+nav.sticky a{white-space:nowrap;text-decoration:none;font-size:.82rem;font-weight:700;color:var(--muted);
+  border-radius:9px;padding:.3rem .65rem}
+nav.sticky a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+/* ---------- SECTION ---------- */
+main{max-width:1000px;margin:0 auto;padding:2.2rem 1.3rem 4rem}
+section{margin-bottom:3rem;scroll-margin-top:66px}
+.shead{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem}
+.shead .num{width:44px;height:44px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.15rem;font-weight:900;color:#fff;background:var(--c)}
+.shead h2{margin:0;font-size:1.42rem;letter-spacing:-.015em;line-height:1.2}
+.shead .lo{font-size:.74rem;font-weight:700;color:var(--muted);font-family:var(--mono)}
+.lead{margin:0 0 1.1rem;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:1.15rem 1.3rem;
+  box-shadow:var(--shadow);margin-bottom:1rem;min-width:0}
+.card > h3{margin:0 0 .7rem;font-size:.76rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.card.q{border-left:4px solid var(--c)}
+.card.sol{background:color-mix(in srgb,var(--c) 4%,var(--surface))}
+.card p{margin:.55rem 0}
+.card ul,.card ol{margin:.5rem 0;padding-left:1.25rem}
+.card li{margin:.25rem 0}
+.recog{background:var(--cs);border-radius:12px;padding:.7rem .9rem;margin:0 0 1rem;font-size:.92rem}
+.recog b{color:var(--cd)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.55rem}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:.7rem;align-items:start;
+  padding:.6rem .75rem;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,transparent)}
+ol.steps li::before{content:counter(s);width:24px;height:24px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.78rem;font-weight:900;color:#fff;background:var(--c)}
+ol.steps li > b{grid-column:2;display:block;font-size:.94rem}
+ol.steps li > span{grid-column:2;display:block;font-size:.88rem;color:var(--muted)}
+
+pre.num,pre.code{font-family:var(--mono);font-size:.84rem;background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:11px;padding:.7rem .9rem;margin:.7rem 0;overflow-x:auto;line-height:1.55}
+pre.fx{background:var(--cs);color:var(--cd);font-weight:600;border:1px dashed var(--cl)}
+code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .35em;border-radius:5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.7rem 0}
+table.dt{border-collapse:collapse;width:100%;font-size:.86rem;margin:.7rem 0}
+.scroll table.dt{margin:0}
+.scroll table.dtab{min-width:400px}
+table.dt th,table.dt td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top;
+  word-break:break-word;overflow-wrap:anywhere}
+table.dt th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.78rem}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+table.dtab td.lead,table.dtab th.lead{text-align:left;font-weight:700;white-space:nowrap}
+table.dtab td.dtv,table.dtab td.dta,table.dtab th{text-align:center}
+table.dtab tr.sep td{background:color-mix(in srgb,var(--muted) 10%,transparent);height:.4rem;padding:.1rem}
+table.dtab .hi{background:var(--warn-soft)!important;color:var(--warn)}
+table.dtab th.hi{background:var(--warn)!important;color:#fff}
+svg.stsvg{width:100%;height:auto;display:block;margin:.9rem 0}
+.card.trap{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.card.trap > h3{color:var(--bad)}
+
+/* ---------- OZET ---------- */
+.summary{background:var(--surface);border:1px solid var(--line);border-radius:19px;padding:1.4rem;box-shadow:var(--shadow)}
+.summary h2{margin:0 0 .3rem;font-size:1.3rem}
+.summary > p{margin:0 0 1.1rem;color:var(--muted);font-size:.92rem}
+.sgrid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.sgrid .b{border:1px solid var(--line);border-radius:14px;padding:.85rem .95rem;min-width:0}
+.sgrid .b h4{margin:0 0 .4rem;font-size:.92rem;display:flex;align-items:center;gap:.45rem}
+.sgrid .b h4 i{width:9px;height:9px;border-radius:3px;background:var(--c);font-style:normal;flex:none}
+.sgrid .b pre{margin:0;font-size:.75rem;background:color-mix(in srgb,var(--ink) 5%,transparent);
+  border-radius:9px;padding:.6rem .7rem;font-family:var(--mono);line-height:1.55;
+  white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* ---------- CTA ---------- */
+.ctas{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));margin-top:1.6rem}
+.cta{display:flex;align-items:center;gap:.9rem;text-decoration:none;background:var(--surface);
+  border:1px solid var(--line);border-radius:17px;padding:1rem 1.15rem;color:var(--ink);
+  box-shadow:var(--shadow);transition:transform .15s,border-color .15s;min-width:0}
+.cta:hover{transform:translateY(-3px);border-color:var(--c)}
+.cta .ci{width:42px;height:42px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.3rem;color:#fff}
+.cta.p .ci{background:linear-gradient(135deg,#059669,#065f46)}
+.cta.s .ci{background:linear-gradient(135deg,#e11d48,#9f1239)}
+.cta .ct{flex:1;min-width:0}
+.cta .ct b{display:block;font-size:.98rem}
+.cta .ct span{font-size:.8rem;color:var(--muted)}
+.cta .ar{color:var(--muted);font-size:1.15rem;flex:none}
+footer{color:var(--muted);font-size:.8rem;margin-top:2rem;line-height:1.7}
+@media (max-width:620px){
+  .card{padding:1rem .95rem}
+  table.dt{font-size:.8rem}
+  ol.steps li{grid-template-columns:24px 1fr}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="in">
+    <p class="kicker">ISTQB CTFL v4.0 &middot; Türkçe</p>
+    <h1>Çözüm Yöntemleri</h1>
+    <p class="lede">Sınavın hesap isteyen beş konusu için adım adım reçeteler. Her konuda önce
+      soruyu nasıl tanıyacağın, sonra yöntem, sonra <b>tek bir basit örnek</b> üzerinden tam çözüm,
+      en sonda da o konunun klasik tuzakları var.</p>
+    <div class="jump"><a href="#reg" data-accent="B"><span class="n">1</span><span style="min-width:0"><b>Onaylama & Regresyon Testi</b><span>FL-2.2.3</span></span></a><a href="#ep" data-accent="A"><span class="n">2</span><span style="min-width:0"><b>Denklik Paylarına Ayırma</b><span>FL-4.2.1</span></span></a><a href="#bva" data-accent="E"><span class="n">3</span><span style="min-width:0"><b>Sınır Değer Analizi</b><span>FL-4.2.2</span></span></a><a href="#dt" data-accent="F"><span class="n">4</span><span style="min-width:0"><b>Karar Tablosu Testi</b><span>FL-4.2.3</span></span></a><a href="#st" data-accent="D"><span class="n">5</span><span style="min-width:0"><b>Durum Geçişi Testi</b><span>FL-4.2.4</span></span></a></div>
+  </div>
+</header>
+
+<nav class="sticky"><div class="in"><a href="#reg">1. Onaylama & Regresyon Testi</a><a href="#ep">2. Denklik Paylarına Ayırma</a><a href="#bva">3. Sınır Değer Analizi</a><a href="#dt">4. Karar Tablosu Testi</a><a href="#st">5. Durum Geçişi Testi</a><a href="#ozet">Tek sayfalık özet</a></div></nav>
+
+<main>
+
+<section id="reg" data-accent="B">
+  <div class="shead">
+    <span class="num">1</span>
+    <div><h2>Onaylama & Regresyon Testi</h2><span class="lo">FL-2.2.3</span></div>
+  </div>
+  <p class="lead">Bu konuda soru tek bir şeyi ölçer: bir test <b>koşumunun</b> hangi çeşit olduğunu
+ söyleyebiliyor musun? Sınav bunu neredeyse her zaman <b>numaralı koşum geçmişi tablosu</b> ile sorar.</p>
+  <div class="recog"><b>Soruyu nasıl tanırsın:</b> Tabloda satırlar test senaryoları (TC1, TC2…), sütunlar ardışık sürümler (Koşum 1, Koşum 2…),
+ hücrelerde <code>(numara) Başarılı/Başarısız</code> yazıyorsa bu sorudur.</div>
+
+  <div class="card"><h3>Yöntem</h3><ol class="steps"><li><b>Tabloyu satır satır oku</b><span>Her test senaryosunun <u>kendi</u> geçmişi vardır. TC1'in Koşum 2'deki sonucu TC2'yi ilgilendirmez. Sütuna tek etiket yapıştırma.</span></li><li><b>Her koşum için soldaki dolu hücreye bak</b><span>O senaryonun bir önceki sonucu neydi? Cevabı etiketi belirler.</span></li><li><b>Etiketi yaz</b><span>Önceki <b>Başarısız</b> → onaylama. Önceki <b>Başarılı</b> → regresyon. Önceki <b>yok</b> → ilk koşum, ikisi de değil.</span></li><li><b>Sağdaki sonucu etiket için kullanma</b><span>Bu seferki sonuç yalnızca kusurun giderilip giderilmediğini söyler; koşumun çeşidini değiştirmez.</span></li></ol>
+    <pre class="num fx">önceki Başarısız → ONAYLAMA
+önceki Başarılı  → REGRESYON
+önceki yok       → ilk koşum (ikisi de değil)</pre></div>
+
+  <div class="card q"><h3>Örnek soru</h3><p>Bir kullanıcı hikâyesinin iki test senaryosu var. Koşum geçmişi:</p><div class="scroll"><table class="dt"><thead><tr><th></th><th>Koşum 1</th><th>Koşum 2</th></tr></thead><tbody><tr><td><b>TC1</b></td><td class="no">(1) Başarısız</td><td class="ok">(3) Başarılı</td></tr><tr><td><b>TC2</b></td><td class="ok">(2) Başarılı</td><td class="ok">(4) Başarılı</td></tr></tbody></table></div><p>Koşum 1'den sonra bulunan kusur düzeltilmiş, yeni sürüm çıkmış ve iki test de yeniden koşulmuştur.</p>
+  <p><b>(3)</b> ve <b>(4)</b> numaralı koşumlar hangi çeşittir?</p></div>
+
+  <div class="card sol"><h3>Adım adım çözüm</h3><p><b>1 · Satır satır ilerle.</b> Önce TC1 satırı, sonra TC2 satırı — sütunları karıştırma.</p><div class="scroll"><table class="dt"><thead><tr><th>Koşum</th><th>Senaryo</th><th>Soldaki (önceki) sonuç</th><th>Çeşidi</th></tr></thead><tbody><tr><td>(1)</td><td>TC1</td><td>—</td><td>İlk koşum</td></tr><tr><td><b>(3)</b></td><td>TC1</td><td class="no">Başarısız</td><td><b>Onaylama testi</b></td></tr><tr><td>(2)</td><td>TC2</td><td>—</td><td>İlk koşum</td></tr><tr><td><b>(4)</b></td><td>TC2</td><td class="ok">Başarılı</td><td><b>Regresyon testi</b></td></tr></tbody></table></div><p><b>2 · Cümleye çevir.</b></p>
+  <ul><li><b>(3):</b> TC1 kalmıştı, kusur düzeltildi, yeniden koşuldu → “kusur gerçekten gitti mi?” → onaylama.</li>
+  <li><b>(4):</b> TC2 zaten geçiyordu, düzeltme onu bozdu mu diye koşuluyor → “bir yeri kırdık mı?” → regresyon.</li></ul>
+  <p><b>3 · Sonuçları yorumla.</b> (3) geçti → kusur giderilmiş. (4) geçti → yan etki yok.</p></div>
+
+  <div class="card trap"><h3>Tuzaklar</h3><ul>
+ <li><b>Bu seferki sonuca bakmak.</b> Bir onaylama testi başarısız olabilir — bu onu regresyon yapmaz, sadece kusurun hâlâ durduğunu söyler.</li>
+ <li><b>Tüm sütuna tek etiket.</b> Aynı koşumda bir senaryo onaylama, diğeri regresyon olabilir.</li>
+ <li><b>“Kusur düzeltilmedi, o zaman regresyon yok” sanmak.</b> Ortam değişikliği (kütüphane, veritabanı, işletim sistemi) da regresyon gerektirir — ama onaylama testi gerektirmez, çünkü onaylanacak bir düzeltme yoktur.</li>
+ <li><b>Atlanan koşum.</b> Bir test bir sürümde koşulmadıysa sıfırlanmaz; kaydedilmiş <u>son</u> sonucuna göre sınıflandırılır.</li>
+ </ul></div>
+</section>
+<section id="ep" data-accent="A">
+  <div class="shead">
+    <span class="num">2</span>
+    <div><h2>Denklik Paylarına Ayırma (EP)</h2><span class="lo">FL-4.2.1</span></div>
+  </div>
+  <p class="lead">Girdi alanını, sistemin <b>aynı şekilde işlediği</b> gruplara böler ve her gruptan
+ bir değer test edersin. Sınavda genellikle iki açılır liste verilir ve <b>en az kaç test</b>
+ gerektiği sorulur (Each Choice kapsamı).</p>
+  <div class="recog"><b>Soruyu nasıl tanırsın:</b> İki açılır liste / seçenek kümesi var, aralarında bir kısıt var (“X seçilirse Y görünmez”)
+ ve soru “Each Choice” veya “her pay en az bir kez” diyorsa bu sorudur.</div>
+
+  <div class="card"><h3>Yöntem</h3><ol class="steps"><li><b>Payları say</b><span>Her listenin her değeri bir paydır. <code>toplam pay = satır payı + sütun payı</code></span></li><li><b>Izgarayı çiz</b><span>Satır = birinci liste, sütun = ikinci liste. Geçerli kombinasyonlara ✓, yasaklananlara ✗.</span></li><li><b>m'yi bul</b><span><b>m</b> = birbiriyle <u>ne satır ne sütun paylaşan</u> en fazla ✓ hücre sayısı. Parmağınla seç: bir hücre al, o satırı ve sütunu kapat, kalanlardan bir tane daha al…</span></li><li><b>Formülü uygula</b><span><code>en az test = toplam pay − m</code></span></li><li><b>Testleri yaz</b><span>Seçtiğin m hücre + kalan payları tek tek ekleyen testler.</span></li></ol>
+    <pre class="num fx">toplam pay = satır payı + sütun payı
+m          = satır/sütun paylaşmayan en fazla ✓ hücre
+en az test = toplam pay − m
+
+kısıt yoksa:  en az test = max(satır, sütun)</pre></div>
+
+  <div class="card q"><h3>Örnek soru</h3><p>Bir fatura tercih formunda iki açılır liste var:</p>
+ <ul><li><b>Müşteri tipi:</b> Bireysel · Kurumsal</li>
+ <li><b>Fatura tipi:</b> E-arşiv · E-fatura · Kağıt</li></ul>
+ <p><b>Bireysel</b> müşteriler E-fatura seçemez; diğer tüm kombinasyonlar geçerlidir.</p>
+ <p>Each Choice kapsamı için en az kaç test senaryosu gerekir?</p></div>
+
+  <div class="card sol"><h3>Adım adım çözüm</h3><p><b>1 · Payları say.</b> 2 müşteri tipi + 3 fatura tipi = <b>5 pay</b>.</p>
+ <p><b>2 · Izgarayı çiz.</b></p><div class="scroll"><table class="dt"><thead><tr><th>Müşteri ↓ · Fatura →</th><th>E-arşiv</th><th>E-fatura</th><th>Kağıt</th></tr></thead><tbody><tr><td><b>Bireysel</b></td><td class="ok">✓</td><td class="no">✗</td><td class="ok">✓</td></tr><tr><td><b>Kurumsal</b></td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr></tbody></table></div><p><b>3 · m'yi bul.</b> <code>Bireysel + E-arşiv</code> seç → Bireysel satırı ve E-arşiv sütunu kapandı.
+  Kalanlardan <code>Kurumsal + E-fatura</code> seç → Kurumsal satırı da kapandı. Üçüncü hücre için
+  yeni bir satır gerekir, ama satır kalmadı → <b>m = 2</b>.</p>
+  <p><b>4 · Formül.</b></p>
+  <pre class="num">en az test = 5 − 2 = 3</pre>
+  <p><b>5 · Testleri yaz.</b></p><div class="scroll"><table class="dt"><thead><tr><th>Test</th><th>Müşteri</th><th>Fatura</th><th>Yeni kapsanan paylar</th></tr></thead><tbody><tr><td>1</td><td>Bireysel</td><td>E-arşiv</td><td>Bireysel, E-arşiv</td></tr><tr><td>2</td><td>Kurumsal</td><td>E-fatura</td><td>Kurumsal, E-fatura</td></tr><tr><td>3</td><td>Kurumsal</td><td>Kağıt</td><td>Kağıt</td></tr></tbody></table></div><p>Kontrol: 5 payın hepsi en az bir kez kullanıldı ✓</p></div>
+
+  <div class="card trap"><h3>Tuzaklar</h3><ul>
+ <li><b>Çarpmak.</b> <code>2 × 3 = 6</code> <i>tüm kombinasyonlar</i> kapsamıdır. Each Choice sorulduğunda çarpma.</li>
+ <li><b>Kısıtı unutup <code>max(2,3)=3</code> demek.</b> Bu örnekte tesadüfen aynı çıktı, ama kısıt bir sütuna iki satırı sıkıştırırsa sonuç <code>max</code>'ın üstüne çıkar.</li>
+ <li><b>Geçersiz kombinasyonu test olarak yazmak.</b> <code>Bireysel + E-fatura</code> formda seçilemez; o satır koşulamaz.</li>
+ <li><b>Kapsam yüzdesi sorulursa</b> payda <b>pay sayısıdır</b>, test sayısı değil: <code>kapsanan pay / toplam pay</code>.</li>
+ </ul></div>
+</section>
+<section id="bva" data-accent="E">
+  <div class="shead">
+    <span class="num">3</span>
+    <div><h2>Sınır Değer Analizi (BVA)</h2><span class="lo">FL-4.2.2</span></div>
+  </div>
+  <p class="lead">Kusurlar payın ortasında değil <b>kenarlarında</b> toplanır — çünkü geliştiricinin
+ karıştırdığı şey <code>&lt;</code> mi <code>&lt;=</code> mi sorusudur. BVA, EP'nin devamıdır:
+ önce payları bulursun, sonra uçlarını test edersin.</p>
+  <div class="recog"><b>Soruyu nasıl tanırsın:</b> Girdi <b>sıralı</b> (sayı, tarih, uzunluk, tutar) ve bir aralık/kademe tablosu verilmişse bu sorudur.
+ Açılır liste gibi <b>kategorik</b> girdilerde BVA uygulanmaz.</div>
+
+  <div class="card"><h3>Yöntem</h3><ol class="steps"><li><b>Payları sayı doğrusuna diz</b><span>Geçersiz paylar da dâhil. Davranışın değiştiği her yerde böl.</span></li><li><b>Her payın min ve max'ını yaz</b><span><b>Sınır değeri = bir payın minimumu veya maksimumu.</b> Açık uçta (… ve üzeri) o tarafta sınır yoktur.</span></li><li><b>Sınır sayısını hesapla</b><span><code>pay sayısı × 2 − açık uç sayısı</code></span></li><li><b>Tekniğe göre değer üret</b><span><b>2-value:</b> sınırların kendisi. <b>3-value:</b> her sınır + iki komşusu, tekrarları bir kez say.</span></li><li><b>Kapsam sorulduysa böl</b><span><code>kapsanan öğe / toplam öğe × 100</code> — payda <u>kapsam öğesi</u> sayısıdır, test sayısı değil.</span></li></ol>
+    <pre class="num fx">sınır değeri = pay sayısı × 2 − açık uç sayısı
+
+2-value → değerler = sınırların kendisi
+3-value → değerler = her sınır + (sınır−1) + (sınır+1)
+
+kapsam % = kapsanan öğe / toplam öğe × 100</pre></div>
+
+  <div class="card q"><h3>Örnek soru</h3><p>Bir üyelik formunda <b>yaş</b> alanı tam sayı alır ve alanın tanımlı bir alt/üst sınırı yoktur:</p><div class="scroll"><table class="dt"><thead><tr><th>Yaş</th><th>Sonuç</th></tr></thead><tbody><tr><td>17 ve altı</td><td>Reddedilir</td></tr><tr><td>18 – 65</td><td>Kabul edilir</td></tr><tr><td>66 ve üzeri</td><td>Reddedilir</td></tr></tbody></table></div><p><b>a)</b> Kaç sınır değeri vardır? <b>b)</b> 2-value BVA ile hangi değerler test edilir?
+  <b>c)</b> Testler <b>17, 18, 40</b> ise 2-value kapsam yüzdesi nedir?</p></div>
+
+  <div class="card sol"><h3>Adım adım çözüm</h3><p><b>1 · Sayı doğrusu.</b></p>
+ <pre class="num">… 16   17 │ 18 ............ 65 │ 66   67 …
+   REDDET   │      KABUL         │   REDDET</pre>
+ <p><b>2 · Payların uçları.</b></p><div class="scroll"><table class="dt"><thead><tr><th>Pay</th><th>Min</th><th>Max</th></tr></thead><tbody><tr><td>Reddedilir (alt)</td><td>— <i>(açık uç)</i></td><td><b>17</b></td></tr><tr><td>Kabul edilir</td><td><b>18</b></td><td><b>65</b></td></tr><tr><td>Reddedilir (üst)</td><td><b>66</b></td><td>— <i>(açık uç)</i></td></tr></tbody></table></div><p><b>3 · Sınır sayısı.</b></p>
+  <pre class="num">3 pay × 2 − 2 açık uç = 4   →   17, 18, 65, 66</pre>
+  <p><b>a) 4 sınır değeri.</b></p>
+  <p><b>4 · 2-value değerleri</b> = sınırların kendisi:</p>
+  <p><b>b) 17, 18, 65, 66</b> — bu dört değer <code>&gt;</code>/<code>&gt;=</code> karışıklığını anında yakalar.</p>
+  <p><b>5 · Kapsamı hesapla.</b></p><div class="scroll"><table class="dt"><thead><tr><th>Sınır değeri</th><th>Kapsayan test</th></tr></thead><tbody><tr><td>17</td><td class="ok">17 ✓</td></tr><tr><td>18</td><td class="ok">18 ✓</td></tr><tr><td>65</td><td class="no">— ✗</td></tr><tr><td>66</td><td class="no">— ✗</td></tr></tbody></table></div><p><b>40</b> payın ortasındadır, hiçbir öğeye denk gelmez.</p>
+  <pre class="num">c) Kapsam = 2 / 4 × 100 = %50</pre>
+  <p><b>Bonus — 3-value olsaydı:</b> her sınır ±1 → {16,17,18} ∪ {17,18,19} ∪ {64,65,66} ∪ {65,66,67}
+  = <b>8 öğe</b> (16,17,18,19,64,65,66,67). Aynı testlerle kapsam <code>2/8 = %25</code> olurdu.</p></div>
+
+  <div class="card trap"><h3>Tuzaklar</h3><ul>
+ <li><b>Paydaya test sayısını koymak.</b> <code>2/3</code> değil <code>2/4</code>. Payda kapsam öğesi sayısıdır.</li>
+ <li><b>Açık uç / kapalı uç ayrımını kaçırmak.</b> “18 – 65 arası girilebilir” kapalıdır; “17 ve altı” açıktır. Soru metninde somut sayı varsa o uç sınırdır.</li>
+ <li><b>17 ve 18'i tek sınır saymak.</b> İkisi ayrı payların uçlarıdır → iki ayrı sınır değeri.</li>
+ <li><b>3-value'da tekrarları iki kez saymak.</b> <code>4 × 3 = 12</code> değil; birleşik küme 8 eleman.</li>
+ <li><b>Açılır listeye BVA uygulamak.</b> “Türkiye”nin bir öncesi yoktur — orada EP kullanılır.</li>
+ </ul></div>
+</section>
+<section id="dt" data-accent="F">
+  <div class="shead">
+    <span class="num">4</span>
+    <div><h2>Karar Tablosu Testi</h2><span class="lo">FL-4.2.3</span></div>
+  </div>
+  <p class="lead">Çıktı tek bir girdiye değil, girdilerin <b>birlikte</b> aldığı değerlere bağlıysa karar tablosu
+ kullanılır. Tablo, <code>2ⁿ</code> kombinasyonun hiçbirini unutmanı engeller ve spesifikasyondaki
+ boşlukları/çelişkileri görünür kılar.</p>
+  <div class="recog"><b>Soruyu nasıl tanırsın:</b> “Koşullar / Aksiyonlar” satırları, R1–Rn sütunları, hücrelerde E-H (veya D-Y) ve aksiyonlarda X
+ varsa bu sorudur. Soru ya bir kuralın aksiyonunu, ya kapsam yüzdesini, ya da imkânsız/çelişkili kuralı sorar.</div>
+
+  <div class="card"><h3>Yöntem</h3><ol class="steps"><li><b>Senaryoyu koşul değerlerine çevir</b><span>Tablodaki <b>sırayla</b>: birinci koşul E mi H mi, ikinci koşul…</span></li><li><b>Sütunu bul</b><span>Soldan sağa tara. “–” olan koşul her değerle eşleşir; eşleşme için “–” olmayan tüm koşullar tutmalı.</span></li><li><b>Aksiyonları oku</b><span>Sütundaki X'ler gerçekleşir, boşluklar gerçekleşmez. Boşluk “bilinmiyor” değil, “olmayacak” demektir.</span></li><li><b>Kapsam sorulduysa</b><span>Testleri kurallara eşle, <b>farklı</b> kuralları say: <code>farklı kural / uygulanabilir kural × 100</code>.</span></li><li><b>İmkânsız kural sorulduysa</b><span>Her aksiyonun ön şartını yaz, sonra <u>yalnızca aksiyonu dolu</u> sütunları kontrol et. Ön şartı sağlanmayan aksiyon = imkânsız.</span></li></ol>
+    <pre class="num fx">tam tablo        = 2^(koşul sayısı) kural
+%100 kapsam      = her uygulanabilir kural için 1 test
+kapsam %         = farklı kural / uygulanabilir kural × 100
+"–" (koşul)      = o girdi sonucu etkilemez
+boşluk (aksiyon) = bu aksiyon gerçekleşmez</pre></div>
+
+  <div class="card q"><h3>Örnek soru</h3><p>Bir e-ticaret sitesinin kampanya motoru şu karar tablosuyla tanımlanmıştır
+ <i>(E = Evet, H = Hayır)</i>:</p><div class="scroll"><table class="dt dtab"><tr><th class="lead">Koşullar</th><th class="">R1</th><th class="">R2</th><th class="">R3</th><th class="">R4</th></tr><tr><td class="lead">Sepet tutarı 200 TL üzeri mi?</td><td class="dtv ">E</td><td class="dtv ">E</td><td class="dtv ">H</td><td class="dtv ">H</td></tr><tr><td class="lead">Üye mi?</td><td class="dtv ">E</td><td class="dtv ">H</td><td class="dtv ">E</td><td class="dtv ">H</td></tr><tr class="sep"><td class="lead">Aksiyonlar</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="lead">Ücretsiz kargo</td><td class="dta "><b>X</b></td><td class="dta "><b>X</b></td><td class="dta "></td><td class="dta "></td></tr><tr><td class="lead">İndirim kuponu</td><td class="dta "><b>X</b></td><td class="dta "></td><td class="dta "><b>X</b></td><td class="dta "></td></tr></table></div><p><b>a)</b> 250 TL'lik sepeti olan, <b>üye olmayan</b> bir müşteri ne alır?
+  <b>b)</b> %100 kapsam için kaç test gerekir?
+  <b>c)</b> Testler R1, R1 ve R3'e düşüyorsa kapsam yüzdesi nedir?</p></div>
+
+  <div class="card sol"><h3>Adım adım çözüm</h3><p><b>1 · Senaryoyu çevir.</b></p><div class="scroll"><table class="dt"><thead><tr><th>Koşul</th><th>Müşterinin durumu</th><th>Değer</th></tr></thead><tbody><tr><td>Sepet tutarı 200 TL üzeri mi?</td><td>250 TL</td><td><b>E</b></td></tr><tr><td>Üye mi?</td><td>Üye değil</td><td><b>H</b></td></tr></tbody></table></div><p><b>2 · Sütunu bul.</b> Aranan imza <code>E · H</code> → <b>R2</b>.</p><div class="scroll"><table class="dt dtab"><tr><th class="lead">Koşullar</th><th class="">R1</th><th class="hi">R2</th><th class="">R3</th><th class="">R4</th></tr><tr><td class="lead">Sepet tutarı 200 TL üzeri mi?</td><td class="dtv ">E</td><td class="dtv hi">E</td><td class="dtv ">H</td><td class="dtv ">H</td></tr><tr><td class="lead">Üye mi?</td><td class="dtv ">E</td><td class="dtv hi">H</td><td class="dtv ">E</td><td class="dtv ">H</td></tr><tr class="sep"><td class="lead">Aksiyonlar</td><td class=""></td><td class="hi"></td><td class=""></td><td class=""></td></tr><tr><td class="lead">Ücretsiz kargo</td><td class="dta "><b>X</b></td><td class="dta hi"><b>X</b></td><td class="dta "></td><td class="dta "></td></tr><tr><td class="lead">İndirim kuponu</td><td class="dta "><b>X</b></td><td class="dta hi"></td><td class="dta "><b>X</b></td><td class="dta "></td></tr></table></div><p><b>3 · Aksiyonları oku.</b> R2'de yalnızca “Ücretsiz kargo” işaretli; indirim kuponu satırı boş.</p>
+  <p><b>a) Ücretsiz kargo alır, indirim kuponu almaz.</b></p>
+  <p><b>4 · Kural sayısı.</b> 2 koşul → <code>2² = 4</code> kural, hepsi uygulanabilir.</p>
+  <p><b>b) 4 test senaryosu.</b></p>
+  <p><b>5 · Kapsam.</b> Üç test var ama ikisi aynı sütuna (R1) düşüyor → farklı kural sayısı <b>2</b>.</p>
+  <pre class="num">c) Kapsam = 2 / 4 × 100 = %50</pre></div>
+
+  <div class="card trap"><h3>Tuzaklar</h3><ul>
+ <li><b>Paydaya test sayısını koymak.</b> <code>3/4</code> değil <code>2/4</code> — aynı kurala düşen ikinci test hiçbir şey katmaz.</li>
+ <li><b>Koşul sırasını karıştırmak.</b> Üyeliği ilk koşul sanarsan yanlış sütuna düşersin.</li>
+ <li><b>“–” ile boşluğu karıştırmak.</b> Koşul satırındaki “–” girdinin önemsiz olduğunu; aksiyon satırındaki boşluk aksiyonun olmayacağını söyler.</li>
+ <li><b>İmkânsız kuralları paydaya katmak.</b> Çıkarılan kurallar için test yazılmaz ve paydadan da düşer.</li>
+ <li><b>Metinde yazmayan kuralı eklemek.</b> “YALNIZCA özellik tanımına dayanarak” diyorsa kendi sezgini karıştırma.</li>
+ </ul></div>
+</section>
+<section id="st" data-accent="D">
+  <div class="shead">
+    <span class="num">5</span>
+    <div><h2>Durum Geçişi Testi</h2><span class="lo">FL-4.2.4</span></div>
+  </div>
+  <p class="lead">Sistemin aynı olaya, içinde bulunduğu <b>duruma</b> göre farklı yanıt verdiği yerlerde kullanılır.
+ Sınavda geçişler <b>metin listesi</b> olarak verilir — diyagramı sen çizeceksin.</p>
+  <div class="recog"><b>Soruyu nasıl tanırsın:</b> “BAŞLANGIÇ --olay--&gt; DURUM” biçiminde bir liste veya satır=durum / sütun=olay tablosu varsa bu sorudur.
+ Soru ya geçiş/geçersiz geçiş sayısını, ya en az test sayısını, ya da bir dizinin kapsamını sorar.</div>
+
+  <div class="card"><h3>Yöntem</h3><ol class="steps"><li><b>Diyagramı çiz</b><span>Her durumu bir kutu, her geçişi bir ok yap. Geçişleri <b>T1…Tn</b> diye numaralandır — payda budur.</span></li><li><b>Her durumun çıkış sayısını yaz</b><span>Çıkışı yalnızca son duruma giden durumlar “çıkmaz sokak”tır.</span></li><li><b>Çıkmaz sokakları SON'a yapıştır</b><span>Oraya girdin mi test bitmeye mahkûmdur; zincirleme uygula.</span></li><li><b>İki sayıyı al</b><span>a = BAŞLANGIÇ'tan çıkan ok sayısı · b = SON bölgesine giren ok sayısı</span></li><li><b>En az testi hesapla</b><span><code>en az test = max(a, b)</code> — sonra o kadar yol çizip kontrol listesiyle doğrula.</span></li><li><b>Kapsam sorulduysa</b><span>Diziyi yürüt, <b>ilk kez</b> kullanılan okları say: <code>farklı geçiş / toplam geçiş × 100</code>.</span></li></ol>
+    <pre class="num fx">her test = BAŞLANGIÇ'tan SON'a bir yol
+0-switch = her geçerli geçiş en az bir kez
+
+en az test = max( BAŞLANGIÇ'tan çıkan , SON'a giren )
+  (önce tek çıkışı SON'a giden durumları SON'a yapıştır)
+
+kapsam % = farklı geçiş / toplam geçiş × 100
+geçersiz geçiş = (durum × olay) − geçerli geçiş</pre></div>
+
+  <div class="card q"><h3>Örnek soru</h3><p>Bir blog yorumunun yaşam döngüsü şöyledir. Sistem <b>BAŞLANGIÇ</b> durumunda başlar,
+ <b>SİLİNDİ</b> durumunda sona erer.</p>
+ <pre class="num">BAŞLANGIÇ   --yaz-->       BEKLEMEDE
+BEKLEMEDE   --onayla-->    YAYINDA
+BEKLEMEDE   --reddet-->    SİLİNDİ
+YAYINDA     --şikayet-->   BEKLEMEDE
+YAYINDA     --kaldır-->    SİLİNDİ</pre>
+ <p><b>a)</b> Geçerli geçiş kapsamı için en az kaç test gerekir?
+ <b>b)</b> <code>yaz → onayla → kaldır</code> dizisinin kapsamı nedir?</p></div>
+
+  <div class="card sol"><h3>Adım adım çözüm</h3><p><b>1 · Diyagramı çiz ve geçişleri numaralandır.</b></p><svg viewBox="0 0 910 353" class="stsvg" role="img" aria-label="durum gecis diyagrami"><defs><marker id="m140608351209152_0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/></marker><marker id="m140608351209152_1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0284c7"/></marker><marker id="m140608351209152_2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker><marker id="m140608351209152_3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker><marker id="m140608351209152_4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker><marker id="moff140608351209152" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--dim)"/></marker></defs><path d="M203,80 Q275,80 347,80" fill="none" stroke="#4f46e5" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_0)"/><text x="275" y="70" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4f46e5" opacity="1">T1 · yaz</text><path d="M428,106 Q464,165 428,224" fill="none" stroke="#0284c7" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_1)"/><text x="478" y="165" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0284c7" opacity="1">T2 · onayla</text><path d="M503,98 Q584,89 649,139" fill="none" stroke="#059669" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_2)"/><text x="602" y="90" text-anchor="middle" font-size="11.5" font-weight="700" fill="#059669" opacity="1">T3 · reddet</text><path d="M422,224 Q386,165 422,106" fill="none" stroke="#d97706" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_3)"/><text x="364" y="165" text-anchor="middle" font-size="11.5" font-weight="700" fill="#d97706" opacity="1">T4 · şikayet</text><path d="M503,232 Q584,241 649,191" fill="none" stroke="#dc2626" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_4)"/><text x="598" y="246" text-anchor="middle" font-size="11.5" font-weight="700" fill="#dc2626" opacity="1">T5 · kaldır</text><rect x="50" y="57" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="125" y="84" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">BAŞLANGIÇ</text><rect x="350" y="57" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="425" y="84" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">BEKLEMEDE</text><rect x="350" y="227" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="425" y="254" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">YAYINDA</text><rect x="650" y="142" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="725" y="170" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">SİLİNDİ</text></svg><p>Toplam <b>5 geçerli geçiş</b> — payda bu.</p>
+  <p><b>2 · Çıkış sayıları.</b></p><div class="scroll"><table class="dt"><thead><tr><th>Durum</th><th>Çıkışlar</th><th>Çıkmaz sokak mı?</th></tr></thead><tbody><tr><td>BAŞLANGIÇ</td><td>T1</td><td>—</td></tr><tr><td>BEKLEMEDE</td><td>T2, T3</td><td>hayır (2 çıkış)</td></tr><tr><td>YAYINDA</td><td>T4, T5</td><td>hayır (2 çıkış)</td></tr><tr><td>SİLİNDİ</td><td>yok</td><td>son durum</td></tr></tbody></table></div><p>Yapıştırılacak durum yok.</p>
+  <p><b>3 · İki sayı.</b></p><div class="scroll"><table class="dt"><thead><tr><th>Sayım</th><th>Oklar</th><th>Adet</th></tr></thead><tbody><tr><td>BAŞLANGIÇ'tan çıkan</td><td>T1 (yaz)</td><td><b>1</b></td></tr><tr><td>SİLİNDİ'ye giren</td><td>T3 (reddet), T5 (kaldır)</td><td><b>2</b></td></tr></tbody></table></div><pre class="num">a) en az test = max(1, 2) = 2</pre>
+  <p><b>4 · Yolları çiz ve doğrula.</b> “Sonu getiren oku en sona sakla” kuralıyla ilk yolu uzat:</p><div class="scroll"><table class="dt"><thead><tr><th>Test</th><th>Olay dizisi</th><th>Kapsadığı</th></tr></thead><tbody><tr><td>TC1</td><td>yaz → onayla → şikayet → reddet</td><td>T1, T2, T4, T3</td></tr><tr><td>TC2</td><td>yaz → onayla → kaldır</td><td>T5</td></tr></tbody></table></div><svg viewBox="0 0 910 353" class="stsvg" role="img" aria-label="durum gecis diyagrami"><defs><marker id="m140608351209152_0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/></marker><marker id="m140608351209152_1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0284c7"/></marker><marker id="m140608351209152_2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#059669"/></marker><marker id="m140608351209152_3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker><marker id="m140608351209152_4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker><marker id="moff140608351209152" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--dim)"/></marker></defs><path d="M203,80 Q275,80 347,80" fill="none" stroke="#4f46e5" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_0)"/><text x="275" y="70" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4f46e5" opacity="1">T1 · yaz</text><circle cx="275" cy="83" r="8.5" fill="#4f46e5"/><text x="275" y="86" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">1</text><path d="M428,106 Q464,165 428,224" fill="none" stroke="#0284c7" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_1)"/><text x="478" y="165" text-anchor="middle" font-size="11.5" font-weight="700" fill="#0284c7" opacity="1">T2 · onayla</text><circle cx="478" cy="178" r="8.5" fill="#0284c7"/><text x="478" y="182" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">2</text><path d="M503,98 Q584,89 649,139" fill="none" stroke="#059669" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_2)"/><text x="602" y="90" text-anchor="middle" font-size="11.5" font-weight="700" fill="#059669" opacity="1">T3 · reddet</text><circle cx="602" cy="103" r="8.5" fill="#059669"/><text x="602" y="106" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">4</text><path d="M422,224 Q386,165 422,106" fill="none" stroke="#d97706" stroke-width="2.6" opacity="1" marker-end="url(#m140608351209152_3)"/><text x="364" y="165" text-anchor="middle" font-size="11.5" font-weight="700" fill="#d97706" opacity="1">T4 · şikayet</text><circle cx="364" cy="178" r="8.5" fill="#d97706"/><text x="364" y="182" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">3</text><path d="M503,232 Q584,241 649,191" fill="none" stroke="var(--dim)" stroke-width="1.5" opacity=".32" marker-end="url(#moff140608351209152)"/><text x="598" y="246" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dim)" opacity=".32">T5 · kaldır</text><rect x="50" y="57" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="125" y="84" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">BAŞLANGIÇ</text><rect x="350" y="57" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="425" y="84" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">BEKLEMEDE</text><rect x="350" y="227" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="425" y="254" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">YAYINDA</text><rect x="650" y="142" width="150" height="46" rx="13" fill="var(--nodebg)" stroke="var(--nodeln)" stroke-width="1.5"/><text x="725" y="170" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--nodefg)">SİLİNDİ</text></svg><p>Yukarıda TC1'in yolu renkli; geriye yalnızca <b>kaldır</b> kalıyor ve onu TC2 kapsıyor → 5/5 ✓</p>
+  <p><b>5 · Dizinin kapsamı.</b> <code>yaz → onayla → kaldır</code>:</p><div class="scroll"><table class="dt"><thead><tr><th>Adım</th><th>Olay</th><th>Nereden → Nereye</th><th>Geçiş</th></tr></thead><tbody><tr><td>1</td><td>yaz</td><td>BAŞLANGIÇ → BEKLEMEDE</td><td>T1 ✓</td></tr><tr><td>2</td><td>onayla</td><td>BEKLEMEDE → YAYINDA</td><td>T2 ✓</td></tr><tr><td>3</td><td>kaldır</td><td>YAYINDA → SİLİNDİ</td><td>T5 ✓</td></tr></tbody></table></div><pre class="num">b) Kapsam = 3 / 5 × 100 = %60</pre>
+  <p>Eksik kalanlar: <b>reddet</b> ve <b>şikayet</b>.</p></div>
+
+  <div class="card trap"><h3>Tuzaklar</h3><ul>
+ <li><b>Geçiş sayısını test sayısı sanmak.</b> 5 geçiş ≠ 5 test; bir test birden fazla oku süpürür.</li>
+ <li><b>Çıkmaz sokağı yapıştırmamak.</b> Tek çıkışı SON'a giden bir durum varsa, oraya giren <u>her</u> ok bir testi bitirir.</li>
+ <li><b>Son duruma erken düşmek.</b> SON'a varan dizi orada biter; kalan olaylar geçersizdir ve kapsama katkı yapmaz.</li>
+ <li><b>Aynı olay adını tek geçiş saymak.</b> “kapat” iki farklı durumdan çıkıyorsa bunlar <b>iki ayrı geçiştir</b>.</li>
+ <li><b>Tekrarlanan oku saymak.</b> Bir ok ikinci kez kullanıldığında kapsama hiçbir şey eklemez.</li>
+ <li><b>Ölçütleri karıştırmak.</b> Tüm durumlar kapsamı en zayıfı; geçerli geçiş kapsamı onu <u>içerir</u>; tüm geçişler kapsamı geçersizleri de dener.</li>
+ </ul></div>
+</section>
+
+<section id="ozet" data-accent="A">
+  <div class="summary">
+    <h2>Tek sayfalık özet</h2>
+    <p>Sınavdan hemen önce bakılacak formüller.</p>
+    <div class="sgrid">
+      <div class="b" data-accent="B"><h4><i></i>Onaylama &amp; Regresyon</h4>
+        <pre>aynı senaryonun ÖNCEKİ sonucu:
+  Başarısız → ONAYLAMA
+  Başarılı  → REGRESYON
+  yok       → ilk koşum
+
+bu seferki sonuç çeşidi değiştirmez
+tabloyu satır satır oku</pre></div>
+
+      <div class="b" data-accent="A"><h4><i></i>Denklik Payları (EP)</h4>
+        <pre>toplam pay = satır + sütun
+m = satır/sütun paylaşmayan
+    en fazla ✓ hücre
+
+en az test = toplam pay − m
+kısıt yoksa = max(satır, sütun)
+
+kapsam % = kapsanan pay
+           / toplam pay</pre></div>
+
+      <div class="b" data-accent="E"><h4><i></i>Sınır Değer Analizi</h4>
+        <pre>sınır = pay × 2 − açık uç
+
+2-value: sınırların kendisi
+3-value: sınır, sınır−1, sınır+1
+         (tekrarı bir kez say)
+
+kapsam % = kapsanan öğe
+           / toplam öğe
+"X ve üzeri" → o uç AÇIK</pre></div>
+
+      <div class="b" data-accent="F"><h4><i></i>Karar Tablosu</h4>
+        <pre>kural sayısı = 2^(koşul sayısı)
+%100 kapsam = her uygulanabilir
+              kural için 1 test
+
+kapsam % = FARKLI kural /
+           uygulanabilir kural
+
+"–" koşulda = önemsiz
+boşluk aksiyonda = olmaz</pre></div>
+
+      <div class="b" data-accent="D"><h4><i></i>Durum Geçişi</h4>
+        <pre>her test = BAŞLANGIÇ → SON yolu
+
+çıkmaz sokağı SON'a yapıştır
+en az test = max(
+  BAŞLANGIÇ'tan çıkan ok,
+  SON'a giren ok )
+
+kapsam % = farklı geçiş
+           / toplam geçiş
+geçersiz = durum×olay − geçerli</pre></div>
+
+      <div class="b" data-accent="A"><h4><i></i>Hangi teknik?</h4>
+        <pre>aralık, sınır     → BVA
+kategorik seçenek → EP
+koşul kombinasyonu
+                  → karar tablosu
+geçmiş duruma bağlı
+                  → durum geçişi
+testin önceki sonucu
+                  → onaylama / regresyon</pre></div>
+    </div>
+
+    <div class="ctas">
+      <a class="cta p" href="pratik_testler_tr.html">
+        <span class="ci">&#127919;</span>
+        <span class="ct"><b>Konu Pratikleri</b><span>10 test &middot; 50 soru &middot; bu beş konudan</span></span>
+        <span class="ar">&rarr;</span>
+      </a>
+      <a class="cta s" href="questions_tr.html">
+        <span class="ci">&#9201;</span>
+        <span class="ct"><b>Sınav Simülatörü</b><span>8 sınav &middot; 320 soru &middot; 60 dakika</span></span>
+        <span class="ar">&rarr;</span>
+      </a>
+    </div>
+  </div>
+  <footer>ISTQB&reg; CTFL v4.0 syllabus'una göre hazırlanmıştır. Örnek sorular resmî sınav soruları değildir.</footer>
+</section>
+</main>
+</body>
+</html>
