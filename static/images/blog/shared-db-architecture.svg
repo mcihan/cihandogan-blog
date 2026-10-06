@@ -78,5 +78,5 @@
 
   <!-- Cost label -->
   <rect x="265" y="370" width="270" height="36" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
-  <text x="400" y="393" text-anchor="middle" font-size="12" font-weight="700" fill="#991B1B">&#128176; High DB2 licensing cost — ~$1M/year</text>
+  <text x="400" y="393" text-anchor="middle" font-size="12" font-weight="700" fill="#991B1B">&#128176; High DB2 licensing cost — millions per year</text>
 </svg>

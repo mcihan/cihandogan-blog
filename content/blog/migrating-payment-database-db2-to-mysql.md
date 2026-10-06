@@ -1,7 +1,7 @@
 ---
-title: "AI-Powered Database Migration: That Saved $1M"
+title: "AI-Powered Database Migration: That Saved Millions"
 date: 2025-05-15
-description: "How I led the migration of a payment system database from IBM DB2 to MySQL, handling PCI-scoped data, building custom validation tooling that got adopted company-wide, and using AI to speed up the process. The result: roughly $1M in annual savings."
+description: "How I led the migration of a payment system database from IBM DB2 to MySQL, handling PCI-scoped data, building custom validation tooling that got adopted company-wide, and using AI to speed up the process. The result: millions in annual savings."
 tags:
   - database-migration
   - payment-systems
@@ -39,7 +39,7 @@ The problems were real:
 - **Tight coupling.** Services were joining to tables they didn't own. That made independent deployments painful.
 - **Cost.** DB2 licensing was expensive. Really expensive.
 
-The fix: give each domain its own MySQL database. Smaller PCI scope, operational independence, and roughly **$1M in annual savings** by dropping the DB2 licence.
+The fix: give each domain its own MySQL database. Smaller PCI scope, operational independence, and **millions in annual savings** by dropping the DB2 licence.
 
 ## Technical Approach
 
@@ -156,7 +156,7 @@ We fixed the issue and **went live successfully on 23 April 2025**.
 
 | Outcome | Detail |
 |---------|--------|
-| **Cost savings** | ~$1M/year by dropping DB2 licensing |
+| **Cost savings** | Millions per year by dropping DB2 licensing |
 | **PCI scope** | Reduced. Separated database means smaller compliance surface |
 | **Independence** | Payment domain fully decoupled from the shared database |
 | **Data integrity** | Zero data loss, validated by the quality checker |

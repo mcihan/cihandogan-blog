@@ -10,7 +10,7 @@ career:
     items:
       - "Developed payment and wallet components for a high-transaction online gambling platform"
       - "Built integrations with multiple payment providers to handle user deposits and withdrawals across different regions and currencies"
-      - 'Led the migration of the payment database from IBM DB2 to MySQL, building custom validation tooling and leveraging AI, resulting in <strong>~$1M annual cost savings</strong>'
+      - 'Led the migration of the payment database from IBM DB2 to MySQL, building custom validation tooling and leveraging AI, resulting in <strong>millions in annual cost savings</strong>'
       - "Managed 10+ microservices across 7 regions (UK, EU, North America)"
       - "Monitored system performance using Dynatrace and Splunk, resolving live issues"
       - "Developed comprehensive unit, medium, and large tests using TDD"

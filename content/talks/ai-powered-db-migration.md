@@ -1,5 +1,5 @@
 ---
-title: "Talk: AI-Powered Database Migration That Saved $1M"
+title: "Talk: AI-Powered Database Migration That Saved Millions"
 date: 2025-05-28
 description: "Tech talk on leading the payment database migration from IBM DB2 to MySQL. Covered the AI-assisted conversion workflow, the custom DB Migration Quality Checker I built, the production deployment strategy, and how we handled a failed first attempt."
 image: "/images/blog/tech-talk-db-migration.jpeg"
@@ -39,6 +39,6 @@ The audience included engineers, staff engineers, and the data operations team f
 
 ## Impact
 
-The migration delivered roughly $1M in annual cost savings by eliminating DB2 licensing. The tooling and approaches I developed during this project were adopted by other teams across the company for their own database migrations.
+The migration delivered millions in annual cost savings by eliminating DB2 licensing. The tooling and approaches I developed during this project were adopted by other teams across the company for their own database migrations.
 
 The talk itself led to direct adoption of the DB Migration Quality Checker by two other domain teams who were planning their own migrations.
