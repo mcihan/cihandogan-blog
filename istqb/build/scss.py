@@ -170,6 +170,11 @@ details.ans > summary:hover{color:var(--ink)}
 .lang.glob{margin:0;flex:none}
 .lang.glob button{font-size:.72rem;padding:.2rem .5rem;background:var(--bg)}
 .lang.glob button.on{background:var(--c);color:#fff}
+/* --- sayfa dili (konu metni) --- */
+.body > .s-tr,.body > .s-en{display:contents}
+.body > .s-tr > *:first-child,.body > .s-en > *:first-child{margin-top:0}
+.body > .s-tr > *:last-child,.body > .s-en > *:last-child{margin-bottom:0}
+body[data-lang="en"] .s-tr,body[data-lang="tr"] .s-en{display:none}
 .qitem[data-lang="tr"] .l-en,.qitem[data-lang="en"] .l-tr{display:none}
 details.ans .l-en,details.ans .l-tr{display:inline}
 .qitem[data-lang="tr"] details.ans .l-en,.qitem[data-lang="en"] details.ans .l-tr{display:none}

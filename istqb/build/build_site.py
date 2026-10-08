@@ -10,6 +10,15 @@ def jd(n): return json.load(io.open(os.path.join(DATA, n), encoding="utf-8"))
 
 TREE = jd("syllabus_tree.json")
 BODY = jd("syllabus_body.json")
+TREE_EN = jd("syllabus_tree_en.json")
+BODY_EN = jd("syllabus_body_en.json")
+CH_EN = {c["no"]: c for c in TREE_EN}
+SEC_EN = {}
+for _c in TREE_EN:
+    for _s in _c["sections"]:
+        SEC_EN[_s["no"]] = _s["title"]
+        for _sb in _s["subsections"]: SEC_EN[_sb["no"]] = _sb["title"]
+LO_EN = {l["id"]: l for c in TREE_EN for l in c["los"]}
 QD   = jd("questions_by_lo.json")
 BY   = QD["byLo"]
 
@@ -48,6 +57,8 @@ for c in T:
 
 # ---------- capraz referans linkleri ----------
 RX_SEC  = re.compile(r"(bkz\.?\s*bölüm\s*)(\d\.\d(?:\.\d)?)", re.I)
+RX_SEC_EN  = re.compile(r"((?:see|in)\s+section\s+)(\d\.\d(?:\.\d)?)", re.I)
+RX_CHAP_EN = re.compile(r"((?:see|in)\s+chapter\s+)(\d)\b", re.I)
 RX_CHAP = re.compile(r"(bkz\.?\s*konu\s*)(\d)", re.I)
 RX_SEC2 = re.compile(r"(bölüm\s*)(\d\.\d(?:\.\d)?)('[dt]e|'da|'ta|’de|’da)", re.I)
 
@@ -61,6 +72,7 @@ def xref(t):
         no = m.group(2)
         return m.group(1) + ('<a class="xref" href="#%s">%s</a>' % (sid(no), no) if no in NODES else no) + m.group(3)
     t = RX_SEC.sub(f1, t); t = RX_SEC2.sub(f3, t); t = RX_CHAP.sub(f2, t)
+    t = RX_SEC_EN.sub(f1, t); t = RX_CHAP_EN.sub(f2, t)
     return t
 
 TERMS = None
@@ -69,6 +81,15 @@ def mark(t):                     # anahtar kelimeleri kalinlastir
         t = re.sub(r"(?<![\w>])(" + re.escape(w) + r")(?![\w<])",
                    r'<b class="term">\1</b>', t, count=1, flags=re.I)
     return t
+
+def bodybi(tr, en):
+    if not tr: return en or ""
+    if not en: return tr
+    return '<div class="s-tr">%s</div><div class="s-en">%s</div>' % (tr, en)
+
+def body_html_en(no):
+    b = BODY_EN.get(no)
+    return body_html(b["blocks"]) if b else ""
 
 def body_html(blocks, terms_on=True):
     global TERMS
@@ -110,11 +131,16 @@ for _k, _w2, _ch in _order:
     PCT[_k] = max(1, min(100, int(round(_cum * 100.0 / _total))))
     CH_RANGE[_ch][1] = PCT[_k]
 
+def bi(tr, en):
+    """iki dilli metin parcasi"""
+    return '<span class="s-tr">%s</span><span class="s-en">%s</span>' % (tr, en)
+
 def pbadge(key):
     v = PCT.get(key)
     if v is None: return ""
     return ('<span class="pct" title="Bu b&ouml;l&uuml;m&uuml; bitirdiğinde sayfanın '
-            '%%%d\'ini okumuş olursun">%%%d</span>' % (v, v))
+            '%%%d\'ini okumuş olursun  /  when you finish this section you have read '
+            '%d%% of the page">%s</span>' % (v, v, bi("%%%d" % v, "%d%%" % v)))
 
 # ---------- soru akordiyonu ----------
 def acc(node_no):
@@ -151,18 +177,24 @@ def acc(node_no):
           '<span class="ex %s">%s</span><span class="kk">%s · %s</span>%s%s</div>%s%s</div>'
           % (q["kind"], esc(q["ref"]), esc(q["set"]), q["k"], mk, sw, bodies, abox))
     lolist = ", ".join(l["id"] for l in los)
-    return ('<details class="qa"><summary>Sınavlarda çıkmış sorular'
-            '<span class="cnt">%d</span></summary><div class="qwrap">%s'
-            '<p class="qfoot">%s · Ayrıntılı çözümler için '
-            '<a href="https://cihandogan.co.uk/deniz/istqub/questions_tr.html" target="_blank" rel="noopener">'
-            'sınav simülatörü</a>.</p></div></details>'
-            % (len(qs), "".join(items), esc(lolist)))
+    tpl = ('<details class="qa"><summary>'
+           + bi('Sınavlarda çıkmış sorular', 'Questions asked in the exams')
+           + '<span class="cnt">%d</span></summary><div class="qwrap">%s'
+             '<p class="qfoot">%s &middot; '
+           + bi('Ayrıntılı çözümler için ', 'For detailed solutions see the ')
+           + '<a href="https://cihandogan.co.uk/deniz/istqub/questions_tr.html"'
+             ' target="_blank" rel="noopener">'
+           + bi('sınav simülatörü', 'exam simulator')
+           + '</a>.</p></div></details>')
+    return tpl % (len(qs), "".join(items), esc(lolist))
 
 def lobadges(no):
     los = LO_OF.get(no, [])
     if not los: return ""
     return '<span class="los">' + "".join(
-        '<span title="%s">%s · %s</span>' % (esc(l["text"]), l["id"], l["k"]) for l in los) + "</span>"
+        '<span title="%s">%s · %s</span>'
+        % (esc(l["text"] + "  /  " + LO_EN.get(l["id"], l)["text"]), l["id"], l["k"])
+        for l in los) + '</span>'
 
 def nq(no):
     return sum(len(BY.get(l["id"], [])) for l in LO_OF.get(no, []))
@@ -173,33 +205,48 @@ def render():
     for c in T:
         global TERMS
         TERMS = [w.strip() for w in c["kw"].split(",") if 3 < len(w.strip()) < 40]
-        kws = "".join("<span>%s</span>" % esc(w) for w in TERMS)
+        cen  = CH_EN.get(c["no"], {})
+        kwen = [w.strip() for w in cen.get("keywords", []) if w.strip()]
+        kws  = '<div class="kws s-tr">%s</div>' % "".join("<span>%s</span>" % esc(w) for w in TERMS)
+        if kwen:
+            kws += '<div class="kws s-en">%s</div>' % "".join("<span>%s</span>" % esc(w) for w in kwen)
         los = "".join(
             '<li><a class="loid" href="#%s">%s</a><span class="kb %s">%s</span><span>%s</span></li>'
-            % (sid(lo_target(l["id"])), l["id"], l["k"], l["k"], esc(l["text"])) for l in c["los"])
+            % (sid(lo_target(l["id"])), l["id"], l["k"], l["k"],
+               bi(esc(l["text"]), esc(LO_EN.get(l["id"], l)["text"]))) for l in c["los"])
+        nqc = sum(len(BY.get(l["id"], [])) for l in c["los"])
+        lo0, lo1 = CH_RANGE[c["no"]][0], CH_RANGE[c["no"]][1]
+        atr = ('<abbr title="ISTQB tarafından akredite eğitim kursları için önerilen asgari ders '
+               'süresi — sınav süresi değildir">eğitim süresi %s dk</abbr>' % SURE[c["no"]])
+        aen = ('<abbr title="ISTQB&rsquo;s recommended minimum teaching time for accredited '
+               'courses — not exam time">teaching time %s min</abbr>' % SURE[c["no"]])
+        meta = (bi(atr, aen) + " &middot; "
+                + bi("%d öğrenme hedefi" % len(c["los"]), "%d learning objectives" % len(c["los"]))
+                + " &middot; " + bi("%d soru" % nqc, "%d questions" % nqc)
+                + " &middot; " + bi("sayfanın %%%d&ndash;%%%d aralığı" % (lo0, lo1),
+                                    "%d%%&ndash;%d%% of the page" % (lo0, lo1)))
         out.append('<div class="chap" id="c%s"><div class="chead"><div class="n">%s</div><div>'
-                   '<h2>%s</h2><div class="meta"><abbr title="ISTQB taraf&#305;ndan akredite e&#287;itim '
-                   'kurslar&#305; i&ccedil;in &ouml;nerilen asgari ders s&uuml;resi &mdash; '
-                   's&#305;nav s&uuml;resi de&#287;ildir">e&#287;itim s&uuml;resi %s dk</abbr> &middot; %d &ouml;&#287;renme hedefi &middot; %d soru'
-                   ' &middot; sayfanın %%%d&ndash;%%%d aralığı'
-                   '</div></div></div>'
-                   '<div class="kws">%s</div>'
-                   '<div class="lobox"><h3>Öğrenme hedefleri</h3><ol>%s</ol></div>'
-                   % (c["no"], c["no"], esc(c["title"]), SURE[c["no"]], len(c["los"]),
-                      sum(len(BY.get(l["id"], [])) for l in c["los"]),
-                      CH_RANGE[c["no"]][0], CH_RANGE[c["no"]][1], kws, los))
+                   '<h2>%s</h2><div class="meta">%s</div></div></div>%s'
+                   '<div class="lobox"><h3>%s</h3><ol>%s</ol></div>'
+                   % (c["no"], c["no"], bi(esc(c["title"]), esc(cen.get("title", c["title"]))),
+                      meta, kws, bi("Öğrenme hedefleri", "Learning objectives"), los))
         for s in c["secs"]:
-            inner = body_html(s["blocks"])
+            bod = bodybi(body_html(s["blocks"]), body_html_en(s["no"]))
+            a   = acc(s["no"])
             out.append('<section class="sec" id="%s" data-no="%s"><div class="sh">'
                        '<span class="num">%s</span><h3>%s</h3>%s%s</div>%s'
-                       % (sid(s["no"]), s["no"], s["no"], esc(s["title"]), lobadges(s["no"]), pbadge(s["no"]),
-                          ('<div class="body">%s%s</div>' % (inner, acc(s["no"]))) if (inner or acc(s["no"])) else ""))
+                       % (sid(s["no"]), s["no"], s["no"],
+                          bi(esc(s["title"]), esc(SEC_EN.get(s["no"], s["title"]))),
+                          lobadges(s["no"]), pbadge(s["no"]),
+                          ('<div class="body">%s%s</div>' % (bod, a)) if (bod or a) else ""))
             for sb in s["subs"]:
                 out.append('<section class="sub" id="%s" data-no="%s"><div class="sh">'
                            '<span class="num">%s</span><h4>%s</h4>%s%s</div>'
                            '<div class="body">%s%s</div></section>'
-                           % (sid(sb["no"]), sb["no"], sb["no"], esc(sb["title"]), lobadges(sb["no"]), pbadge(sb["no"]),
-                              body_html(sb["blocks"]), acc(sb["no"])))
+                           % (sid(sb["no"]), sb["no"], sb["no"],
+                              bi(esc(sb["title"]), esc(SEC_EN.get(sb["no"], sb["title"]))),
+                              lobadges(sb["no"]), pbadge(sb["no"]),
+                              bodybi(body_html(sb["blocks"]), body_html_en(sb["no"])), acc(sb["no"])))
             out.append("</section>")
         out.append("</div>")
     return "".join(out)
@@ -212,13 +259,19 @@ def sidebar():
         for s in c["secs"]:
             n = nq(s["no"])
             lis.append('<li><a href="#%s">%s %s%s</a></li>'
-                       % (sid(s["no"]), s["no"], esc(s["title"]), (" · %d" % n) if n else ""))
+                       % (sid(s["no"]), s["no"],
+                          bi(esc(s["title"]), esc(SEC_EN.get(s["no"], s["title"]))),
+                          (" · %d" % n) if n else ""))
             for sb in s["subs"]:
                 n = nq(sb["no"])
                 lis.append('<li><a class="sub" href="#%s">%s %s%s</a></li>'
-                           % (sid(sb["no"]), sb["no"], esc(sb["title"]), (" · %d" % n) if n else ""))
+                           % (sid(sb["no"]), sb["no"],
+                              bi(esc(sb["title"]), esc(SEC_EN.get(sb["no"], sb["title"]))),
+                              (" · %d" % n) if n else ""))
         out.append('<div class="grp"><a href="#c%s"><i>%s</i>%s</a><ul>%s</ul></div>'
-                   % (c["no"], c["no"], esc(c["title"]), "".join(lis)))
+                   % (c["no"], c["no"],
+                      bi(esc(c["title"]), esc(CH_EN.get(c["no"], {}).get("title", c["title"]))),
+                      "".join(lis)))
     return "".join(out)
 
 JS = """
@@ -262,24 +315,6 @@ JS = """
   addEventListener('hashchange',function(){ requestAnimationFrame(sync); });
   sync();
 
-  /* soru dili: her soruda TR/EN, ust barda hepsi icin */
-  function setLang(box, l){
-    box.dataset.lang = l;
-    box.querySelectorAll(':scope > .qref .lang button').forEach(function(b){
-      b.classList.toggle('on', b.dataset.l === l);
-    });
-  }
-  document.addEventListener('click', function(ev){
-    var b = ev.target.closest('.lang button'); if(!b) return;
-    var l = b.dataset.l;
-    if(b.closest('#glob')){
-      document.querySelectorAll('#glob button').forEach(function(x){x.classList.toggle('on',x.dataset.l===l)});
-      document.querySelectorAll('.qitem[data-lang]').forEach(function(q){ setLang(q, l) });
-    } else {
-      setLang(b.closest('.qitem'), l);
-    }
-  });
-
   /* arama */
   var inp=document.getElementById('q'), nores=document.querySelector('.nores');
   var nodes=[].slice.call(document.querySelectorAll('main section[data-no]'));
@@ -309,6 +344,33 @@ JS = """
       nores.classList.toggle('show',hit===0);
     },140);
   });
+  /* soru dili: her soruda TR/EN, ust barda hepsi icin */
+  function setLang(box, l){
+    box.dataset.lang = l;
+    box.querySelectorAll(':scope > .qref .lang button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.l === l);
+    });
+  }
+  document.addEventListener('click', function(ev){
+    var b = ev.target.closest('.lang button'); if(!b) return;
+    var l = b.dataset.l;
+    if(b.closest('#glob')){
+      document.querySelectorAll('#glob button').forEach(function(x){x.classList.toggle('on',x.dataset.l===l)});
+      document.querySelectorAll('.qitem[data-lang]').forEach(function(q){ setLang(q, l) });
+      body.dataset.lang = l;
+      document.documentElement.lang = l;
+      inp.placeholder = (l==='en' ? 'Search topics…' : 'Konu ara…');
+      try{ localStorage.setItem('ctfl-lang', l) }catch(e){}
+      requestAnimationFrame(function(){ sync(); prog(); });
+    } else {
+      setLang(b.closest('.qitem'), l);
+    }
+  });
+
+  /* kayitli dil */
+  try{ var _l=localStorage.getItem('ctfl-lang');
+       if(_l==='en'){ var gb=document.querySelector('#glob button[data-l="en"]'); if(gb) gb.click(); }
+  }catch(e){}
 })();
 """
 
@@ -321,24 +383,30 @@ HTML = u"""<!doctype html>
 <meta name="description" content="ISTQB Temel Seviye Ders Programı v4.0.1'in sadeleştirilmiş, yapılandırılmış HTML sürümü. Her konunun altında o öğrenme hedefinden çıkmış sınav soruları.">
 <style>%(css)s</style>
 </head>
-<body>
+<body data-lang="tr">
 
 <header class="hero"><div class="hin">
   <p class="kick">ISTQB&reg; Certified Tester &middot; Foundation Level v4.0.1</p>
-  <h1>CTFL Ders Programı &mdash; konu konu, sorularıyla</h1>
-  <p>Resm&icirc; ders programının sadeleştirilmiş s&uuml;r&uuml;m&uuml;: telif, index ve tekrarlar atıldı,
+  <h1><span class="s-tr">CTFL Ders Programı &mdash; konu konu, sorularıyla</span><span class="s-en">CTFL Syllabus &mdash; topic by topic, with its questions</span></h1>
+  <p class="s-tr">Resm&icirc; ders programının sadeleştirilmiş s&uuml;r&uuml;m&uuml;: telif, index ve tekrarlar atıldı,
   geriye yalnızca konular kaldı. Her konunun altında, <b>o &ouml;ğrenme hedefinden</b> sekiz &ouml;rnek sınavda
   &ccedil;ıkmış soruları a&ccedil;ılır bir panelde bulacaksın.</p>
-  <div class="stats"><b>6 konu</b><b>%(nsec)d bölüm</b><b>64 öğrenme hedefi</b><b>%(nq)d soru</b><b>8 sınav</b></div>
-  <p class="hnote">Konu başlıklarındaki s&uuml;reler, ISTQB'nin <b>akredite eğitim kursları i&ccedil;in &ouml;nerdiği
+  <p class="s-en">A simplified version of the official syllabus: copyright pages, the index and the
+  repetition are gone, only the subject matter is left. Under each topic you will find, in a collapsible
+  panel, the questions that came up in eight sample exams <b>for that learning objective</b>.</p>
+  <div class="stats s-tr"><b>6 konu</b><b>%(nsec)d bölüm</b><b>64 öğrenme hedefi</b><b>%(nq)d soru</b><b>8 sınav</b></div><div class="stats s-en"><b>6 chapters</b><b>%(nsec)d sections</b><b>64 learning objectives</b><b>%(nq)d questions</b><b>8 exams</b></div>
+  <p class="hnote s-tr">Konu başlıklarındaki s&uuml;reler, ISTQB'nin <b>akredite eğitim kursları i&ccedil;in &ouml;nerdiği
   asgari ders s&uuml;releridir</b> (toplam 1135 dk &asymp; 19 saat). Sınav s&uuml;resi değildir &mdash; sınav
   40 soru i&ccedil;in 60 dakikadır (ana dili İngilizce olmayan adaylarda 75 dk).</p>
+  <p class="hnote s-en">The times on the chapter headings are ISTQB&rsquo;s <b>recommended minimum teaching
+  times for accredited training courses</b> (1135 min &asymp; 19 hours in total). They are not exam times
+  &mdash; the exam is 40 questions in 60 minutes (75 for candidates who are not native English speakers).</p>
 </div></header>
 
 <nav class="top"><div class="nin">
   <button class="menubtn" id="menu" aria-label="İçindekiler">&#9776;</button>
   <div class="chips">%(chips)s</div>
-  <span class="lang glob" id="glob" title="Tüm soruların dili"><button type="button" class="on" data-l="tr">TR</button><button type="button" data-l="en">EN</button></span>
+  <span class="lang glob" id="glob" title="Sayfanın dili / page language"><button type="button" class="on" data-l="tr">TR</button><button type="button" data-l="en">EN</button></span>
   <div class="srch"><input id="q" type="search" placeholder="Konu ara…" aria-label="Konu ara"></div>
   <div class="bar" id="bar" role="progressbar" aria-label="Okuma ilerlemesi"></div>
 </div></nav>
@@ -346,10 +414,12 @@ HTML = u"""<!doctype html>
 <div class="shell">
   <aside>%(side)s</aside>
   <main>%(body)s
-    <div class="nores">Aramanla eşleşen bölüm yok.</div>
-    <footer class="ft">Kaynak: ISTQB&reg; Temel Seviye Ders Programı v4.0.1 (T&uuml;rk&ccedil;e, Yazılım Test ve Kalite Derneği).
+    <div class="nores"><span class="s-tr">Aramanla eşleşen bölüm yok.</span><span class="s-en">No section matches your search.</span></div>
+    <footer class="ft"><span class="s-tr">Kaynak: ISTQB&reg; Temel Seviye Ders Programı v4.0.1 (T&uuml;rk&ccedil;e, Yazılım Test ve Kalite Derneği).
     Sorular resm&icirc; &ouml;rnek sınavlar A&ndash;D ve pratik setler E&ndash;H'den alınmıştır.
-    Bu sayfa kişisel &ccedil;alışma ama&ccedil;lıdır; &copy; ISTQB&reg;.</footer>
+    Bu sayfa kişisel &ccedil;alışma ama&ccedil;lıdır; &copy; ISTQB&reg;.</span><span class="s-en">Source: ISTQB&reg; Certified Tester
+    Foundation Level Syllabus v4.0.1 (English and Turkish editions). The questions are taken from the official
+    sample exams A&ndash;D and the practice sets E&ndash;H. This page is for personal study; &copy; ISTQB&reg;.</span></footer>
   </main>
 </div>
 <script>%(js)s</script>
@@ -357,7 +427,10 @@ HTML = u"""<!doctype html>
 </html>
 """
 
-chips = "".join('<a href="#c%s">%s. %s</a>' % (c["no"], c["no"], html.escape(c["title"])) for c in T)
+chips = "".join('<a href="#c%s">%s. %s</a>'
+                % (c["no"], c["no"],
+                   bi(html.escape(c["title"]),
+                      html.escape(CH_EN.get(c["no"], {}).get("title", c["title"])))) for c in T)
 nsec = len(NODES)
 page = HTML % dict(css=CSS, js=JS, chips=chips, side=sidebar(), body=render(),
                    nsec=nsec, nq=QD["meta"]["total"])

@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
-"""_tree.json -> data/syllabus_tree.json + data/syllabus_body.json"""
-import re, json, io, os
+"""_tree[_en].json -> data/syllabus_tree[_en].json + data/syllabus_body[_en].json
+
+Kullanim: python3 blocks.py [en]"""
+import re, json, io, os, sys
+
+LANG = "_en" if len(sys.argv) > 1 and sys.argv[1] == "en" else ""
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "..", "data")
 SURE = {"1":180,"2":130,"3":80,"4":390,"5":335,"6":20}
 
 BUL = re.compile(r"^\s*[•▪]\s*(.*)$")
-NUM = re.compile(r"^\s*(\d{1,2})\.\s+([A-ZÇĞİÖŞÜ].*)$")
+NUM = re.compile(r"^\s*(\d{1,2})\.\s+([A-ZÇĞİÖŞÜ].*)$" if not LANG else r"^\s*(\d{1,2})\.\s+([A-Z].*)$")
 
 def to_blocks(lines):
     blocks, cur = [], None
@@ -36,7 +40,7 @@ def to_blocks(lines):
     flush()
     return [b for b in blocks if b["t"] != "p" or len(b["text"]) > 25]
 
-T = json.load(io.open(os.path.join(HERE, "_tree.json"), encoding="utf-8"))
+T = json.load(io.open(os.path.join(HERE, "_tree%s.json" % LANG), encoding="utf-8"))
 NODES = {}
 for c in T:
     for s in c["secs"]:
@@ -68,6 +72,6 @@ for c in T:
             body[sb["no"]] = dict(title=sb["title"], chapter=c["no"], blocks=sb["blocks"])
 
 os.makedirs(DATA, exist_ok=True)
-json.dump(tree, io.open(os.path.join(DATA,"syllabus_tree.json"),"w",encoding="utf-8"), ensure_ascii=False, indent=1)
-json.dump(body, io.open(os.path.join(DATA,"syllabus_body.json"),"w",encoding="utf-8"), ensure_ascii=False, indent=1)
-print("syllabus_tree.json + syllabus_body.json:", len(tree), "konu,", len(body), "bolum")
+json.dump(tree, io.open(os.path.join(DATA,"syllabus_tree%s.json" % LANG),"w",encoding="utf-8"), ensure_ascii=False, indent=1)
+json.dump(body, io.open(os.path.join(DATA,"syllabus_body%s.json" % LANG),"w",encoding="utf-8"), ensure_ascii=False, indent=1)
+print("syllabus_tree%s.json + syllabus_body%s.json:" % (LANG, LANG), len(tree), "konu,", len(body), "bolum")
