@@ -10,6 +10,7 @@ Yayındaki sayfalar `static/deniz/` altındadır; burası onların **kaynağı v
 | `data/syllabus_body.json` | Her bölümün gövde metni, paragraf/madde blokları hâlinde |
 | `data/questions_by_lo.json` | 8 sınavdaki 320 sorunun tamamı, LO'ya göre gruplanmış (cevapsız) |
 | `tools/lookup.py` | Yayındaki HTML'lerde arama aracı |
+| `build/` | Ders programı sayfasını PDF'ten baştan üreten zincir |
 
 ## Arama aracı
 
@@ -28,6 +29,23 @@ python3 istqb/tools/lookup.py find "karar tablosu"
 `sec` doğrudan `static/deniz/istqub/ders_programi_tr.html` içinden, `ans` ise
 `static/deniz/istqub/questions_tr.html` içindeki `const DATA` nesnesinden okur —
 sayfalar değişince araç da güncel kalır.
+
+## Sayfayı yeniden üretme
+
+`static/deniz/istqub/ders_programi_tr.html` elle düzenlenmez — üretilir:
+
+```bash
+sh istqb/build/make.sh
+```
+
+Zincir: PDF → metin (`pdftotext`) → bölüm ağacı (`parse.py`) → sorular simülatör
+sayfasından (`extract_questions.py`) → `data/*.json` (`blocks.py`) → `syllabus.html`
+(`build_site.py`) → breadcrumb + şifre kapısı eklenip yayın kopyası (`publish.py`).
+
+Tek gereksinim `pdftotext` (poppler). Tasarım `build/scss.py`, sayfa iskeleti ve
+JavaScript `build/build_site.py` içindedir. Şifre kapısı ve breadcrumb, bitişikteki
+`cozum_yontemleri_tr.html` sayfasından kopyalanır, yani /deniz genelinde tek kaynaktan
+gelir.
 
 ## Skill'ler
 
