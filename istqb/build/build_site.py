@@ -95,15 +95,18 @@ def acc(node_no):
         opts = "".join('<li><b>%s)</b><span>%s</span></li>' % (k, esc(v))
                        for k, v in sorted(q["opts"].items()))
         mk = '<span class="mk">çoktan seçmeli</span>' if q["multi"] else ""
+        ans = ", ".join(a.upper() for a in q.get("ans", []))
+        abox = ('<details class="ans"><summary>Cevabı göster</summary>'
+                '<div class="av">Cevap: %s</div></details>' % esc(ans)) if ans else ""
         items.append(
           '<div class="qitem"><div class="qref">'
           '<span class="ex %s">%s</span><span class="kk">%s · %s</span>%s</div>%s'
-          '<ul class="qopts">%s</ul></div>'
-          % (q["kind"], esc(q["ref"]), esc(q["set"]), q["k"], mk, qhtml(q["q"]), opts))
+          '<ul class="qopts">%s</ul>%s</div>'
+          % (q["kind"], esc(q["ref"]), esc(q["set"]), q["k"], mk, qhtml(q["q"]), opts, abox))
     lolist = ", ".join(l["id"] for l in los)
     return ('<details class="qa"><summary>Sınavlarda çıkmış sorular'
             '<span class="cnt">%d</span></summary><div class="qwrap">%s'
-            '<p class="qfoot">%s · Cevaplar ve çözümler için '
+            '<p class="qfoot">%s · Ayrıntılı çözümler için '
             '<a href="https://cihandogan.co.uk/deniz/istqub/questions_tr.html" target="_blank" rel="noopener">'
             'sınav simülatörü</a>.</p></div></details>'
             % (len(qs), "".join(items), esc(lolist)))

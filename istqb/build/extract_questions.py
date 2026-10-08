@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-"""static/deniz/istqub/questions_tr.html -> data/questions_by_lo.json  (cevapsiz)"""
+"""static/deniz/istqub/questions_tr.html -> data/questions_by_lo.json
+
+Soru metni, siklar ve dogru sikkin HARFI alinir; gerekce ve ayrintili cozum alinmaz
+(onlar yalnizca simulator sayfasinda durur)."""
 import re, json, io, os, collections
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -22,7 +25,8 @@ for ex in sorted(D):
     for q in D[ex]["questions"]:
         out[q["lo"]].append(dict(
             exam=ex, n=q["n"], k=q.get("k",""), multi=bool(q.get("multi")),
-            q=q["q"], opts=q["opts"], set=META[ex][0], kind=META[ex][1],
+            q=q["q"], opts=q["opts"], ans=sorted(q["correct"]),
+            set=META[ex][0], kind=META[ex][1],
             ref=u"Örnek Sınav %s · Soru %d" % (ex, q["n"])))
 for lo in out: out[lo].sort(key=lambda x: (x["exam"], x["n"]))
 

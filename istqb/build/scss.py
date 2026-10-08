@@ -145,6 +145,17 @@ details.qa > summary .cnt{margin-left:auto;background:var(--c);color:#fff;border
 .qopts{list-style:none;margin:.55rem 0 0;padding:0;display:grid;gap:.25rem}
 .qopts li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:.5rem;font-size:.88rem;align-items:baseline}
 .qopts li b{font-family:var(--mono);font-size:.74rem;font-weight:800;color:var(--muted);text-transform:uppercase}
+details.ans{margin-top:.65rem;border-top:1px dashed var(--line);padding-top:.5rem}
+details.ans > summary{cursor:pointer;list-style:none;font-size:.78rem;font-weight:700;color:var(--muted);
+  display:inline-flex;gap:.35rem;align-items:center;user-select:none}
+details.ans > summary::-webkit-details-marker{display:none}
+details.ans > summary::before{content:"▸";font-size:.85rem;transition:transform .15s}
+details.ans[open] > summary::before{transform:rotate(90deg)}
+details.ans[open] > summary{color:var(--good)}
+details.ans > summary:hover{color:var(--ink)}
+.av{display:inline-flex;align-items:center;margin-top:.45rem;background:var(--good-s);color:var(--good);
+  border:1px solid color-mix(in srgb,var(--good) 35%,transparent);border-radius:9px;
+  padding:.24rem .65rem;font-size:.86rem;font-weight:800;letter-spacing:.02em}
 .qscroll{overflow-x:auto;margin:.5rem 0}
 table.qtbl{border-collapse:collapse;font-size:.82rem;min-width:320px}
 table.qtbl th,table.qtbl td{border:1px solid var(--line);padding:.3rem .55rem;text-align:left;white-space:nowrap}

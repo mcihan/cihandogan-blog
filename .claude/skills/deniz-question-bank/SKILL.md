@@ -14,7 +14,8 @@ kaynağıdır**. `istqb/data/*.json` yalnızca aynı içeriğin hızlı aranabil
 |---|---|
 | Syllabus ne diyor, bir konunun tam metni | `static/deniz/istqub/ders_programi_tr.html` |
 | Bir sorunun metni, şıkları, kaynağı | aynı sayfa — konunun altındaki akordiyon |
-| Bir sorunun **cevabı ve çözümü** | `static/deniz/istqub/questions_tr.html` (`const DATA`) |
+| Bir sorunun **doğru şık harfi** | aynı sayfa — sorunun altındaki kapalı `details.ans` paneli |
+| Bir sorunun **gerekçesi ve ayrıntılı çözümü** | `static/deniz/istqub/questions_tr.html` (`const DATA`) |
 | Bir tekniğin adım adım çözüm reçetesi | `static/deniz/istqub/cozum_yontemleri_tr.html` |
 | Sınır değer analizi, derinlemesine | `static/deniz/konular/bva.html` |
 | Konu pratik testleri | `static/deniz/istqub/pratik_testler_tr.html` |
@@ -38,6 +39,12 @@ python3 istqb/tools/lookup.py find "karar tablosu"   # konularda ve sorularda me
 `ans` komutu `questions_tr.html` içindeki `const DATA` nesnesini ayrıştırır. Yani sayfalar
 değişince araç da otomatik güncel kalır. Hafızadan cevap verme — önce bu aracı çalıştır.
 
+
+`istqb/data/questions_by_lo.json` her soruyu `ans` alanıyla tutar: **yalnızca doğru şıkkın
+harfi** (çoktan seçmelide birden çok harf). Gerekçe ve ayrıntılı çözüm o dosyada yoktur,
+yalnızca simülatör sayfasındadır. Ders programı sayfasında her sorunun altında, varsayılan
+olarak kapalı bir `details.ans` paneli sadece bu harfi gösterir — öğrenci önce kendi
+çözsün diye.
 
 ## /deniz sayfa haritası
 
