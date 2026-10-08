@@ -1,0 +1,1598 @@
+{
+ "1.1": {
+  "title": "Yazılım Testi Nedir?",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Yazılımlar günlük hayatımızın ayrılmaz bir parçasıdır. Çoğu insan, beklendiği gibi çalışmayan bir yazılım ile karşılaşmıştır. Düzgün çalışmayan yazılımlar; para, zaman veya ticari itibar kaybetme ve hatta en uç durumlarda yaralanma veya ölüm gibi birçok soruna yol açabilir. Yazılım testi yazılım kalitesini değerlendirir ve yazılımın kullanımı sırasında oluşabilecek yazılım hatası riskini azaltmaya yardımcı olur. Yazılım testi, hata bulmak ve yazılım geliştirme sırasında üretilen iş ürünlerinin kalitesini değerlendirmek için yapılan bir aktiviteler bütünüdür. Bu iş ürünlerine, test edilirken test nesnesi adı verilir. Yazılım testi hakkındaki yaygın yanlış kanılardan biri yazılım testinin yazılımı çalıştırmaktan ve test sonuçlarını kontrol etmekten ibaret olduğudur. Ancak yazılım testi aynı zamanda başka aktiviteleri de içerir ve yazılım geliştirme yaşam döngüsüyle uyumlu olmalıdır (bkz. konu 2). Test hakkındaki bir diğer yanlış kanı da test etme sürecinin tamamen test nesnesinin doğrulanmasına odaklı olduğudur. Her ne kadar yazılım testleri, doğrulamayı, diğer bir deyişle sistemin belirli gereksinimleri karşılayıp karşılamadığını kontrol etmeyi içerse de aynı zamanda sistemin operasyonel ortamda/ortamlarda kullanıcı ve diğer paydaş ihtiyaçlarını karşılayıp karşılamadığını kontrol etmek anlamına gelen sağlama yapmayı da içerir. Yazılım testleri dinamik veya statik olabilir. Dinamik test içerisinde yazılımın çalıştırılması yer alırken statik testte bu yoktur. Statik test, gözden geçirmeleri (bkz. konu 3) ve statik analizi içerir. Dinamik test, farklı test teknikleri ve yaklaşımları kullanarak test senaryolarını elde eder (bkz. konu 4). Yazılım testi sadece teknik bir aktivite değildir. Aynı zamanda uygun şekilde planlanması, yönetilmesi, tahmin edilmesi, izlenmesi ve kontrol edilmesi gerekir (bkz. konu 5). Test uzmanları araçlar kullanır (bkz. konu 6) ancak yazılım testinin büyük ölçüde düşünsel bir aktivite olduğu ve test uzmanının uzmanlık bilgisine sahip olması, analitik beceriler kullanması ve eleştirel ve sistemsel düşünme yaklaşımını uygulaması gerektiği unutulmamalıdır (Myers 2011, Roman 2018). ISO/IEC/IEEE 29119-1 standardı, yazılım testi kavramları hakkında daha fazla bilgi vermektedir."
+   }
+  ]
+ },
+ "1.1.1": {
+  "title": "Test Hedefleri",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "ul",
+    "items": [
+     "Gereksinimler, kullanıcı hikayeleri, tasarımlar ve kod gibi iş ürünlerini değerlendirmek",
+     "Arızaları tetiklemek ve hataları bulmak",
+     "Test nesnesinin gerekli kapsamını sağlamak",
+     "Yazılımın kalite kriterlerini karşılayamama risk seviyesini azaltmak",
+     "Belirtilen gereksinimlerin yerine getirilip getirilmediğini doğrulamak",
+     "Test nesnesinin sözleşmeden kaynaklanan, yasal veya düzenleyici gereksinimlere uyumluluğunu doğrulamak",
+     "Sağlıklı kararlar almalarını sağlamak için paydaşlara yeterli bilgiyi sunmak",
+     "Test nesnesinin kalitesi hakkında güven oluşturmak",
+     "Test nesnesinin eksiksiz olup olmadığının ve paydaşların beklediği şekilde çalıştığının sağlamasını yapmak"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test hedefleri; test edilen çalışma ürünü, test seviyesi, riskler ve takip edilen yazılım geliştirme yaşam döngüsünü (YGYD) içeren bağlama ve kurumsal yapı, rekabetçi hususlar veya pazara sürüm süresi gibi ticari bağlama ilişkin faktörlere bağlı olarak değişebilir."
+   }
+  ]
+ },
+ "1.1.2": {
+  "title": "Yazılım Testi ve Hata Ayıklama",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test etme ve hata ayıklama birbirinden farklı aktivitelerdir. Test etme süreci yazılımdaki hataların neden olduğu arızaları tetikleyebilir (dinamik test) veya test nesnesindeki hataları doğrudan bulabilir (statik test). Dinamik test (bkz. konu 4) bir arızayı tetiklediğinde hata ayıklama işlemi bu arızanın (hataların) nedenlerinin bulunması, bu nedenlerin analiz edilmesi ve giderilmesiyle ilgilenir. Bu durumda tipik hata ayıklama süreci şunları içerir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Arızanın yeniden oluşturulması",
+     "Teşhis (hatanın bulunması)",
+     "Hatanın düzeltilmesi"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Sonrasında gerçekleştirilen onaylama testleri düzeltmelerin problemi giderip gidermediğini kontrol eder. Tercihen onaylama testi başlangıçtaki testi gerçekleştiren aynı kişi tarafından yapılır. Düzeltmelerin test nesnesinin diğer bölümlerinde arızalara neden olup olmadığını kontrol etmek için daha sonra bir regresyon testi de yapılabilir (onaylama ve regresyon testine ilişkin daha detaylı bilgi için bkz. bölüm 2.2.3). Statik test bir hata bulduğunda hata ayıklama işlemi bu hatayı gidermekle ilgilenir. Statik test, hataları doğrudan bulduğundan ve arızalara neden olamayacağından yeniden oluşturmaya veya teşhise gerek yoktur (bkz. konu 3)."
+   }
+  ]
+ },
+ "1.2": {
+  "title": "Yazılım Testi Neden Gereklidir?",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Bir tür kalite kontrolü olarak test etme süreci belirlenen kapsam, zaman, kalite ve bütçe kısıtları dahilinde önceden kararlaştırılmış test hedeflerine ulaşılmasına yardımcı olur. Testin başarıya olan katkısı test ekibi aktiviteleriyle sınırlandırılmamalıdır. Her paydaş kendi test becerilerini kullanarak projeyi başarıya daha da yaklaştırabilir. Test bileşenleri, sistemleri ve ilgili iş ürünleri (ör; dokümantasyon), yazılımdaki hataların belirlenmesine yardımcı olur."
+   }
+  ]
+ },
+ "1.2.1": {
+  "title": "Yazılım Testinin Başarıya Katkısı",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test süreci, hataların bulunmasına ilişkin maliyet etkin bir yol sunar. Daha sonra bu hatalar, test sürecinin daha yüksek kaliteli test nesnelerine katkıda bulunması için (test dışı bir aktivite olan hata ayıklama yoluyla) giderilebilir. Test etme süreci, YGYD'nin çeşitli aşamalarında test nesnesinin kalitesini doğrudan değerlendirme imkanı sunar. Bu ölçümler, daha geniş bir proje yönetimi kapsamında kullanılarak YGYD’nin sürüm kararı gibi bir sonraki aşamasına geçiş kararlarına katkıda bulunur. Test, yazılım geliştirme projesinde kullanıcıların dolaylı olarak temsil edilebilmesini sağlar. Test uzmanları, kullanıcı ihtiyaçlarının yazılım geliştirme yaşam döngüsü boyunca göz önünde bulundurulduğundan emin olurlar. Bunun alternatifi, yazılım geliştirme projesinin bir parçası olarak temsili bir kullanıcı grubunu sürece dahil etmek olsa da yüksek maliyetler ve uygun kullanıcıların bulunamaması nedeniyle bu genellikle mümkün değildir. Yazılım testleri aynı zamanda sözleşmeye bağlı veya yasal gereksinimleri ya da düzenleyici standartları karşılamak için de gerekli olabilir."
+   }
+  ]
+ },
+ "1.2.2": {
+  "title": "Test Etme ve Kalite Güvence (KG)",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Her ne kadar \"test etme\" ve \"kalite güvence\" (KG) genellikle birbirinin yerine kullanılan terimler olsa da test etme ve kalite güvence aynı şey değildir. Test etme, uygun kalite seviyelerine ulaşılmasını destekleyen faaliyetlere odaklanan, ürün odaklı ve düzeltici bir yaklaşımdır. Test etme, kalite kontrolünün önemli bir biçimidir. Diğer kalite kontrol yöntemleri arasında resmî yöntemler (model denetimi ve doğruluk kanıtı), simülasyon ve prototipleme yer alır. KG, süreçlerin uygulanması ve iyileştirilmesine odaklanan süreç odaklı ve önleyici bir yaklaşımdır. İyi bir sürecin doğru uygulanıp uygulanmadığı esasına göre çalışır ve sonuçta iyi bir ürün ortaya çıkmasına odaklanır. KG hem yazılım geliştirme hem de test süreci için geçerli olup projedeki herkesin sorumluluğundadır. Test sonuçları hem KG hem de test etme sürecinde kullanılır. Test etme kapsamında test sonuçları hataların giderilmesi için kullanılırken; KG sürecinde ise yazılım geliştirme ve test süreçlerinin ne kadar iyi gerçekleştirildiği hakkında geri bildirim sağlar."
+   }
+  ]
+ },
+ "1.2.3": {
+  "title": "İnsan Hataları, Hatalar, Arızalar ve Kök Nedenler",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "İnsanlar hata (yanlışlık) yapar ve bu da yazılım hatalarına (arıza, hata) neden olur ve sonunda başarısızlık meydana gelir. İnsanlar zaman baskısı, iş ürünlerinin karmaşıklığı, süreçler, altyapı veya iletişim gibi birçok sebeple veya sadece yorgun oldukları ya da yeterli eğitime sahip olmadıkları için hata yapabilir. Hatalar, gereksinim veya test betiği gibi dokümantasyonda, kaynak kodda veya derleme dosyası gibi destekleyici bir eserde bulunabilir. YGYD’nin ilk aşamalarında üretilen iş ürünlerindeki hatalar tespit edilmezse genellikle yaşam döngüsünün ilerleyen aşamalarında da hatalı iş ürünlerinin ortaya çıkmasına sebep olur. Koddaki bir hata çalıştırılırsa sistem yapması gerekeni yapmayabilir veya yapmaması gereken bir şeyi yaparak bir arızaya neden olabilir. Bazı hatalar sistem çalıştırıldığında her zaman arızaya neden olurken, bazıları belirli koşullar altında arızaya neden olur, bazıları ise hiçbir zaman arızaya neden olmayabilir. Arızaların tek sebebi insan hataları ve yazılım hataları değildir. Arızalar, radyasyon veya elektromanyetik alanın donanım yazılımında hatalara neden olması gibi çevresel koşullardan da kaynaklanabilir. Kök neden, bir problemin ortaya çıkmasının temel sebebidir (ör. hataya yol açan bir durum). Kök nedenler genellikle bir arıza olduğunda veya bir hata tespit edildiğinde gerçekleştirilen kök neden analiziyle belirlenir. Kök nedenin ortadan kaldırılmasıyla benzer arızalar veya hatalar önlenebilir veya meydana gelme sıklıkları azaltılabilir."
+   }
+  ]
+ },
+ "1.3": {
+  "title": "Test Prensipleri",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Yıllar içinde tüm yazılım testleri için geçerli genel bir rehber sunan bir dizi test prensibi ortaya atılmıştır. Bu ders programında yedi prensip açıklanmaktadır."
+   },
+   {
+    "t": "ol",
+    "items": [
+     "Testin amacı, yazılımda hataların olduğunu göstermektir; yazılımda hata kalmadığını ispatlamak"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "değildir. Testler, test nesnesinde hataların mevcut olduğunu gösterebilir ancak hiç hata kalmadığını ispatlayamaz (Buxton 1970). Testler, test nesnesinde keşfedilmemiş hataların kalma olasılığını azaltır. Yazılımda yeni hatalar bulunamasa bile bu durum test nesnesinin, kullanıcıların ihtiyaçlarını karşılayacağı anlamına gelmez."
+   },
+   {
+    "t": "ol",
+    "items": [
+     "Yazılımı %100 test etmek imkansızdır Yazılımdaki her unsuru test etmek çok basit yazılımlar dışında"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "imkansızdır (Manna 1978). Herşeyi test etmeye çalışmak yerine, testten daha çok verim almak için test teknikleri (bkz. konu 4), test senaryosu önceliklendirme (bkz. bölüm 5.1.5) ve risk bazlı test yaklaşımı (bkz. bölüm 5.2) kullanılmalıdır."
+   },
+   {
+    "t": "ol",
+    "items": [
+     "Erken test, zaman ve para tasarrufu sağlar. Hataların sürecin erken aşamalarında giderilmesi,"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "türetilen iş ürünlerinde sonradan hata ortaya çıkma olasılığını düşürür. Bu da YGYD’nin sonraki aşamalarında daha az arızaya sebep olacağı için kalite maliyetini azaltacaktır (Boehm 1981). Hataları erken bulmak için hem statik test (bkz. konu 3) hem de dinamik test (bkz. konu 4) mümkün olduğunca erken başlatılmalıdır."
+   },
+   {
+    "t": "ol",
+    "items": [
+     "Hatalar yazılımın belli alanlarında yoğunlaşır. Bulunan hataların büyük çoğunluğu genellikle çok az"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "sayıda sistem bileşeninde bulunur veya çok az sayıda sistem bileşeni canlı kullanım sırasında ortaya çıkan arızalara sebep olur. (Enders 1975). Bu olgu Pareto prensibinin bir göstergesidir. Öngörülen hata kümeleri ile test ve canlı kullanım sırasında gözlemlenen gerçek hata kümeleri, risk-bazlı test için önemli bir girdidir (bkz. bölüm 5.2)."
+   },
+   {
+    "t": "ol",
+    "items": [
+     "Antibiyotik direnci. Aynı testler birçok kez tekrarlandığında yeni hataları bulmada giderek daha"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "etkisiz olurlar (Beizer 1990). Bu etkiyi önlemek için mevcut testler ve test verilerinin değiştirilmesi ve yeni testlerin yazılması gerekebilir. Ancak bazı durumlarda aynı testleri tekrar etmek faydalı olabilir (ör. otomatik regresyon testleri) (bkz. bölüm 2.2.3)."
+   },
+   {
+    "t": "ol",
+    "items": [
+     "Yazılım testi, projenin bağlamına, koşullarına göre değişiklik gösterir. Test konusunda evrensel"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "olarak uygulanan tek bir yaklaşım yoktur. Test, farklı proje bağlamlarında farklı şekillerde gerçekleştirilir (Kaner 2011)."
+   },
+   {
+    "t": "ol",
+    "items": [
+     "Yeni hata bulamıyoruz başarılı bir yazılım elde ettik yanılgısı. Testin bir yazılımın başarısını"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "garantileyeceğini beklemek bir yanılgıdır (yanlış bir kanıdır). Belirlenen tüm gereksinimleri titizlikle test etmek ve bulunan tüm hataları çözmek, kullanıcıların ihtiyaçlarını ve beklentilerini karşılamayan, müşterinin iş hedeflerine ulaşmasına yardımcı olmayan veya diğer rakip yazılımlara kıyasla daha zayıf bir yazılımın üretilmesini engelleyemeyebilir. Test sırasında doğrulamanın yanında sağlama da yapılmalıdır (Boehm 1981)."
+   }
+  ]
+ },
+ "1.4": {
+  "title": "Test Aktiviteleri, Test Çalışma Ürünleri ve Test Rolleri",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test süreci bağlama bağlıdır; ancak daha kapsamlı ele alındığında, test hedeflerine ulaşma olasılığını artıran bazı genel test aktivite grupları vardır. Bu test aktivitesi grupları bir test sürecini oluşturur. Test süreci çeşitli faktörlere dayalı olarak belirli bir duruma göre özelleştirilebilir. Hangi test sürecine hangi test aktivitelerinin dahil edileceğine, bunların nasıl uygulanacağına ve ne zaman gerçekleştirileceğine hazırlanan test planlaması kapsamında karar verilir (bkz. bölüm 5.1). Aşağıdaki bölümlerde test aktiviteleri ve görevler, bağlamın etkisi, test çalışma ürünleri, test esası ile test çalşma ürünleri arasındaki izlenebilirlik ve test rolleri açısından bu test sürecinin genel yönleri açıklanmaktadır. ISO/IEC/IEEE 29119-2 standardı, test süreçleri hakkında daha fazla bilgi sağlamaktadır."
+   }
+  ]
+ },
+ "1.4.1": {
+  "title": "Test Aktiviteleri ve Görevleri",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Bir test süreci genellikle aşağıdaki ana aktivite gruplarından oluşur. Her ne kadar bu aktivitelerin çoğu mantıklı bir sıra izliyor gibi görünse de bunlar genellikle tekrarlanarak veya paralel olarak uygulanır. Bu test aktivitelerinin genellikle sistem ve projeye uyarlanması gerekir. Test planlama test hedefini belirleyip ardından genel bağlam dahilinde gerekli olan kısıtlar kapsamında hedeflere en iyi şekilde ulaşılmasını sağlayacak yaklaşımı seçmektir. Test planlama bölüm 5.1'de ayrıntılı bir şekilde açıklanmıştır. Test gözetimi ve test kontrolü. Test gözetimi tüm test aktivitelerinin devamlı izlenmesini ve planlanan ile gerçekleşenin karşılaştırılmasını içerir. Test kontrolü, test hedeflerine ulaşmak için gerekli aksiyonları almayı içerir. Test gözetimi ve test kontrolü bölüm 5.3'te ayrıntılı bir şekilde açıklanmıştır. Test analizi test edilebilir özellikleri belirlemek ve ilgili riskler ve risk seviyeleri ile birlikte ilişkili test koşullarını tanımlamak ve önceliklendirmek üzere test esasının analiz edilmesini içerir (bkz. bölüm 5.2). Test esası ve test hedefleri aynı zamanda içerebilecekleri hataları belirlemek ve test edilebilirliği analiz etmek için de değerlendirilir. Test analizi genellikle test tekniklerinin kullanımıyla desteklenir (bkz. konu 4). Test analizi ölçülebilir kapsama kriterleri açısından \"ne test edilecek?\" sorusuna cevap verir. Test tasarımı test koşullarının test senaryoları ve diğer test çalışma ürünleri olarak detaylandırılmasını içerir (ör. test başlatma belgeleri). Bu aktivite genellikle test senaryosu girdilerini belirlemeye yönelik bir rehber işlevi gören kapsam öğelerinin belirlenmesini içerir. Test teknikleri (bkz. konu 4) bu aktiviteyi desteklemek için kullanılabilir. Test tasarım aynı zamanda test verisi gereksinimlerinin belirlenmesi, test ortamının tasarlanması ve diğer gerekli altyapı ve araçların tespitini içerir. Test tasarımı \"nasıl test edilecek\" sorusunu cevaplar. Test uyarlama test koşumu için gerekli test çalışma ürünlerini oluşturmayı veya edinmeyi içerir (bkz. test verisi). Test senaryoları test prosedürleri şeklinde düzenlenebilir ve test grupları halinde birleştirilebilir. Manuel ve otomatik test betikleri oluşturulur. Test prosedürleri, etkin test koşumu için test koşum çizelgesi kapsamında önceliklendirilip düzenlenir (bkz. bölüm 5.1.5). Test ortamı oluşturulur ve kurulumunun uygun bir şekilde yapıldığı doğrulanır. Test koşumu testleri test koşum çizelgesine göre çalıştırmayı içerir. Test koşumu manuel veya otomatik olabilir. Test koşumu sürekli test veya eşli test oturumları gibi birçok şekilde gerçekleşebilir. Gerçek test sonuçları beklenen sonuçlarla karşılaştırılır. Test sonuçları kaydedilir. Olası nedenlerin belirlenmesi için anomaliler analiz edilir. Bu analiz gözlemlenen arızlara dayalı olarak anomalileri raporlamamızı sağlar (bkz. bölüm 5.5). Test tamamlama aktiviteleri genellikle çözülmemiş hatalar, değişiklik talepleri veya oluşturulan ürün iş listesi öğelerine ilişkin olarak proje kilometre taşlarında (ör. sürüm, döngü sonu, test seviyesi tamamlama) gerçekleşir. Gelecekte faydalı olabilecek test çalışma ürünleri belirlenir ve arşivlenir ya da uygun ekiplere devredilir. Test ortamı kararlaştırıldığı şekilde kapatılır. Test aktiviteleri tecrübeleri ve gelecekteki döngüler, sürümler veya projelere yönelik iyileştirmeleri belirlemek için analiz edilir (bkz. bölüm 2.1.6). Test tamamlama raporu oluşturulur ve paydaşlara iletilir."
+   }
+  ]
+ },
+ "1.4.2": {
+  "title": "Proje Bağlamında Test Süreci",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test izole şekilde yapılmaz. Test aktiviteleri organizasyon içinde gerçekleştirilen yazılım geliştirme süreçlerinin ayrılmaz bir parçasıdır. Testler de proje paydaşları tarafından finanse edilir ve nihai hedefi proje paydaşlarının iş ihtiyaçlarını karşılamaya yardımcı olmaktır. Dolayısıyla testlerin yapılma şekli aşağıdakiler de dahil birçok bağlamsal faktöre bağlı olacaktır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Paydaşlar (ihtiyaçlar, beklentiler, gereksinimler, iş birliği isteği vb.)",
+     "Ekip üyeleri (beceri, bilgi, deneyim seviyesi, elverişlilik, eğitim ihtiyaçları vb.)",
+     "Kurumun faaliyet alanı (test nesnesinin kritiklik düzeyi, tanımlanan riskler, pazar ihtiyaçları, yasal düzenlemeler vb.)",
+     "Teknik faktörler (yazılım türü, ürün mimarisi, kullanılan teknoloji vb.)",
+     "Proje kısıtları (kapsam, zaman, bütçe, kaynaklar vb.)",
+     "Organizasyonel faktörler (organizasyonel yapı, mevcut politikalar, kullanılan pratikler vb.)",
+     "Yazılım geliştirme yaşam döngüsü (mühendislik uygulamaları, geliştirme yöntemleri vb.)",
+     "Araçlar (elverişlilik, kullanılabilirlik, uyumluluk vb.)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bu faktörler test stratejisi, kullanılan test teknikleri, test otomasyonu derecesi, gerekli kapsam seviyesi, test çalışma ürünlerinin ayrıntı düzeyi, test raporlama vb. gibi testle ilgili konulara etki edecektir."
+   }
+  ]
+ },
+ "1.4.3": {
+  "title": "Test Çalışma Ürünleri",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test çalışma ürünleri, 1.4.1 bölümünde açıklanan test aktivitelerinin çıktısı olarak iş ürünü şeklinde oluşturulur. Farklı organizasyonların iş ürünlerini nasıl ürettiği, şekillendirdiği, adlandırdığı, düzenlediği ve yönettiği konusunda ciddi farklılılar vardır. Uygun yapılandırma yönetimi (bkz. bölüm 5.4) iş ürünleri arasında tutarlılık ve bütünlük sağlar. Aşağıda kapsamlı olmayan bir iş ürünleri listesi verilmiştir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test planlama iş ürünleri şunları içerir: test planı, test zaman çizelgesi, risk kaydı ve giriş ve çıkış kriterleri (bkz. bölüm 5.1). Risk kaydı; risk olasılığı, risk etkisi ve riski azaltma bilgisini içeren bir riskler listesidir (bkz. bölüm 5.2). Test zaman çizelgesi, risk kaydı ile giriş ve çıkış kriterleri genellikle test planının bir parçasıdır.",
+     "Test gözetimi ve test kontrolü iş ürünleri şunları içerir: test ilerleme raporları (bkz. bölüm 5.3.2), kontrol direktifleri dokümantasyonu (bkz. bölüm 5.3) ve risk bilgisi (bkz. bölüm 5.2).",
+     "Test analizi iş ürünleri şunları içerir: (önceliklendirilmiş) test koşulları (ör. kabul kriteri, bkz. bölüm 4.5.2) ve test esasındaki hatalara ilişkin hata raporu.",
+     "Test tasarımı iş ürünleri şunları içerir: (önceliklendirilmiş) test senaryoları, test başlatma belgeleri, kapsam öğeleri, test verisi gereksinimleri ve test ortamı gereksinimleri.",
+     "Test uyarlama iş ürünleri şunları içerir: test prosedürleri, manuel ve otomatik test betikleri, test grupları, test verisi, test koşumu çizelgesi ve test ortamı öğeleri. Test ortamı öğelerine ilişkin örnekler: taklit uygulamalar, sürücüler, simülatörler ve servis sanallaştırması.",
+     "Test koşumu iş ürünleri şunları içerir: test kayıtları ve hata raporları (bkz. bölüm 5.5).",
+     "Test tamamlama iş ürünleri şunları içerir: test tamamlama raporu (bkz. bölüm 5.3.2), sonraki proje veya döngülerin iyileştirilmesine yönelik aksiyon öğeleri, tecrübeler ve değişiklik talepleri (ör. ürün iş listesi öğeleri)."
+    ]
+   }
+  ]
+ },
+ "1.4.4": {
+  "title": "Test Esası ve Test Çalışma Ürünleri Arasında İzlenebilirlik",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Etkili test gözetimi ve test kontrolü uygulamak için test süreci boyunca test esası unsurları, bu unsurlarla ilişkili test çalışma ürünleri (ör. test koşulları, riskler, test senaryoları), test sonuçları ve hatalar arasında izlenebilirliği sağlamak ve sürdürmek önemlidir. Doğru izlenebilirlik kapsam değerlendirmesini destekler ve dolayısıyla test esasında ölçülebilir kapsama kriterleri tanımlanmışsa bunların takip edilmesinde çok faydalı olur. Kapsama kriterleri, test hedeflerine ne ölçüde ulaşıldığını gösteren aktiviteleri yönlendirmek için anahtar performans göstergeleri olarak işlev görebilir (bkz. bölüm 1.1.1). Örnek:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test senaryolarının gereksinimlere göre izlenebilirliğine bakarak test senaryolarının gereksinimleri karşıladığını doğrulamak mümkündür.",
+     "Test sonuçlarının risklere göre izlenebilirliği bir test nesnesindeki kalan risk seviyesini değerlendirmede kullanılabilir."
+    ]
+   },
+   {
+    "t": "p",
+    "text": "İyi bir izlenebilirlik yalnızca kapsam değerlendirmesine değil, aynı zamanda etki analizine, test denetimlerine ve bilgi teknolojileri (BT) yönetişim gereksinimlerinin karşılanmasına da yardımcı olur. İyi bir izlenebilirlik, test esası unsurlarının durumunu da içerecek şekilde test ilerleme raporlarının ve test tamamlanma raporlarının daha kolay anlaşılmasını sağlar. Aynı zamanda testin teknik yönlerinin paydaşlara anlaşılır şekilde bildirilmesine de yardımcı olur. İzlenebilirlik, iş hedeflerine göre ürün kalitesinin, süreç kapasitesinin ve proje ilerlemesinin değerlendirilmesi için bilgi sağlar"
+   }
+  ]
+ },
+ "1.4.5": {
+  "title": "Test Etme Sürecindeki Roller",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Bu ders programında testteki iki önemli role yer verilmiştir: test yönetimi rolü ve test etme rolü. Bu iki role sahip kişilere atanan faaliyetler ve görevler, projenin ve ürünün bağlamı gibi faktörlere, o rolü üstlenen kişilerin becerilerine ve kuruma göre değişir."
+   },
+   {
+    "t": "p",
+    "text": "Test yönetimi rolü, genel olarak test sürecinden, test ekibinden ve test aktivitelerine liderlik edilmesinden sorumludur. Test yönetimi rolü temelde test planlama, test gözetimi ve kontrolü ve test tamamlama aktivitelerine odaklıdır. Test yönetimi rolünün yerine getirilme şekli, bağlama göre değişir. Örneğin, Çevik Yazılım Geliştirmede bazı test yönetimi görevleri Çevik ekip tarafından gerçekleştirilirken, birden fazla ekibi veya tüm organizasyonu ilgilendiren görevler geliştirme ekipleri dışındaki test yöneticileri tarafından yerine getirilebilir. Test etme rolü testin mühendislik (teknik) yönünün tüm sorumluluğuna sahiptir. Test etme rolü temelde test analizi, test tasarımı, test uyarlama ve test koşumu aktivitelerine odaklanır. Rollerin sorumluluğunu farklı zamanlarda farklı kişiler alabilirler. Örneğin, test yönetimi rolü bir ekip lideri, test yöneticisi, geliştirme yöneticisi vb. tarafından üstlenilebilir. Test etme ve test yönetimi rollerini aynı anda tek bir kişinin üstlenmesi de mümkündür."
+   }
+  ]
+ },
+ "1.5": {
+  "title": "Test Etme Sürecinde Gerekli Beceriler ve İyi Uygulamalar",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Beceri; kişinin bilgi birikiminden, pratiğinden ve kabiliyetinden ileri gelen, bir işi iyi yapma yeteneğidir. İyi test uzmanları işlerini iyi yapmak için bazı gerekli becerilere sahip olmalıdır. İyi test uzmanları etkin birer ekip üyesi olmalı ve çeşitli test bağımsızlığı seviyelerinde testler gerçekleştirebilmelidir."
+   }
+  ]
+ },
+ "1.5.1": {
+  "title": "Test Etme Sürecinde Gerekli Genel Beceriler",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Genel olmalarına rağmen, aşağıdaki beceriler test uzmanları için özellikle önemlidir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test bilgisi (test etmenin etkinliğini artırmak için, ör. test teknikleri kullanarak)",
+     "Titizlik, dikkat, merak, detaycı olmak, sistematik çalışmak (özellikle bulması zor olanlar başta olmak üzere hataları bulmak için)",
+     "İyi iletişim becerileri, aktif dinleme, ekip oyuncusu olma (tüm paydaşlarla etkin iletişim kurmak, diğeriyle bilgi paylaşmak, anlaşılmak ve hataları raporlayıp görüşmek için)",
+     "Analitik düşünce, eleştirel düşünce, yaratıcılık (test etmenin etkinliğini artırmak için)",
+     "Teknik bilgi (test etmenin etkinliğini artırmak için, ör. uygun test araçlarını kullanarak)",
+     "Alan bilgisi (son kullanıcıları/iş temsilcilerini anlayabilmek ve onlarla iletişim kurabilmek için)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test uzmanları genellikle kötü haberi veren taraftadırlar. Kötü haber verenleri suçlamak ise tipik bir insan davranışıdır Bu nedenle, test uzmanları için iletişim becerisi kritik önem taşır. Gerçekleştirilen testin sonucu, ürüne ve sahibine yöneltilmiş bir eleştiri olarak algılanabilir. Doğrulama yanlılığı, mevcut görüş ve inançlara uymayan bilgilerin kabul edilmesini zorlaştırabilir. Projenin başarısına ve ürün kalitesine büyük katkı sağlasa da, bazı insanlar testleri yıkıcı bir faaliyet olarak algılayabilir. Bu görüş doğrultusunda, hatalar ve arızalar hakkındaki bilgiler yapıcı bir şekilde iletilmelidir."
+   }
+  ]
+ },
+ "1.5.2": {
+  "title": "Tüm Ekip Yaklaşımı",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Bir test uzmanı için en önemli becerilerden biri, bir ekip bağlamında etkin çalışma ve ekip hedeflerine olumlu katkı sağlama becerisidir. Ekstrem Programlama (bkz. bölüm 2.1) metodolojisinden elde edilen bir pratik olan tüm ekip yaklaşımı bu beceriyi temel alır. Tüm ekip yaklaşımında, gerekli bilgi ve beceriye sahip tüm ekip üyeleri her türlü görevi yapabilir ve kaliteden herkes sorumludur. Ekip üyeleri aynı çalışma alanını (fiziksel veya sanal) paylaşır çünkü ortak çalışma alanı iletişim ve etkileşimi kolaylaştırır. Tüm ekip yaklaşımı ekip ilişkilerini geliştirir, ekip içinde iletişimi ve iş birliğini artırır ve ekibin farklı beceri setlerinin proje yararına kullanılmasına olanak sağlayarak sinerji yaratır. Test uzmanları, istenen kalite seviyelerine ulaşılabilmesi için diğer ekip üyeleriyle yakın iş birliği içinde çalışırlar. Bu, uygun kabul testleri oluşturmalarına yardımcı olmak için iş birimleriyle iş birliği yapmanın yanı sıra test stratejisi ve test otomasyonu metodolojilerine karar vermek için yazılımcılarla birlikte çalışmayı da içerir. Böylece test uzmanları, test alanındaki bilgilerini diğer ekip üyelerine aktarabilir ve ürünün gelişimine katkı sağlayabilir. Bağlama açısından tüm ekip yaklaşımı her zaman uygun olmayabilir. Örneğin, bazı emniyet hassasiyetli durumlarda, yüksek düzeyde test bağımsızlığı gerekli olabilir."
+   }
+  ]
+ },
+ "1.5.3": {
+  "title": "Testin Bağımsızlığı",
+  "chapter": "1",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Belli bir ölçüde bağımsızlık, yazarın ve test uzmanının bilişsel önyargıları arasındaki farklar nedeniyle test uzmanının hataları bulmada daha etkili olmasını sağlar (bkz. Salman 1995). Ancak bağımsızlık, aşina olmanın yerine geçemez. Örneğin yazılımcılar kendi kodlarındaki birçok hatayı verimli bir şekilde bulabilir. İş ürünleri; kendi yazarları (bağımsızlık yok), yazarın aynı ekipten arkadaşları (biraz bağımsız), yazarın ekibinin dışındaki fakat kurum içindeki test uzmanları (yüksek bağımsızlık) veya şirket dışından test uzmanları (çok yüksek bağımsızlık) tarafından test edilebilir. Çoğu proje için genellikle en iyi seçenek, testin birden çok bağımsızlık seviyesinde yapılmasıdır (ör. bileşen testi ve bileşen entegrasyon testi yazılımcılar tarafından, sistem ve sistem entegrasyon testi test ekibi tarafından, kabul testi ise iş temsilcileri tarafından yapılır). Bağımsız testin başlıca faydası farklı geçmiş deneyimleri, teknik bakış açıları ve eğilimleri nedeniyle bağımsız test uzmanlarının, yazılımcılara kıyasla farklı çeşitteki arızaları ve hataları bulma olasılıklarının daha yüksek olmasıdır. Ayrıca bağımsız bir test uzmanı, sistemin analiz edilmesi ve hayata geçirilmesi sırasında paydaşların yaptığı varsayımları doğrulayabilir, sorgulayabilir veya çürütebilir. Ancak bazı sakıncalar da söz konusudur. Bağımsız test uzmanları geliştirme ekibinden farklı hareket edebilir ve bu da iş birliği eksikliğine, iletişim problemlerine veya geliştirme ekibiyle olumsuz ilişkiler yaşanmasına yol açabilir. Yazılımcılar kalite konusunda sorumluluk bilincini kaybedebilir. Bağımsız test uzmanları bir dar boğaz olarak görülebilir veya sürümdeki gecikmelerden sorumlu tutulabilir."
+   }
+  ]
+ },
+ "2.1": {
+  "title": "Yazılım Geliştirme Yaşam Döngüsü Bağlamında Test",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Yazılım geliştirme yaşam döngüsü (YGYD) yazılım geliştirme sürecinin kavramsal, üst düzey bir tasviridir. Bir YGYD modeli, bu süreçte gerçekleştirilen farklı geliştirme aşamaları ve faaliyet türlerinin hem mantıksal hem de kronolojik olarak birbirleriyle nasıl ilişkili olduğunu gösterir. YGYD modellerine örnekler: sıralı yazılım geliştirme modelleri (ör. şelale modeli, V modeli), döngüsel geliştirme modeli (ör. spiral model, prototipleme) ve artımlı geliştirme modelleri (ör. Birleşik Süreç). Yazılım geliştirme süreçlerindeki bazı aktiviteler daha ayrıntılı yazılım geliştirme yöntemleri ve Çevik uygulamalarla da tanımlanabilir. Örnekler: kabul testi güdümlü yazılım geliştirme (ATDD), davranış güdümlü yazılım geliştirme (BDD), alan güdümlü tasarım (DDD), ekstrem programlama (XP), özellik güdümlü geliştirme (FDD), Kanban, Yalın BT, Scrum ve test güdümlü geliştirme (TDD)."
+   }
+  ]
+ },
+ "2.1.1": {
+  "title": "Yazılım Geliştirme Yaşam Döngüsünün Test Üzerindeki Etkisi",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Başarılı olması için testlerin YGYD'ye uyarlanması gerekir. YGYD seçimi aşağıdakilere etki eder:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test aktivitelerinin kapsamı ve zamanlaması (ör. test seviyeleri ve test çeşitleri)",
+     "Test dokümantasyonun ayrıntı düzeyi",
+     "Test tekniklerinin ve test yaklaşımının seçimi",
+     "Test otomasyonunun kapsamı",
+     "Test uzmanının rol ve sorumlulukları"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Sıralı yazılım geliştirme modellerinde, ilk aşamalarda test uzmanları genellikle gereksinim gözden geçirmelerine, test analizine ve test tasarımına katılır. Çalıştırılabilir kod genellikle sonraki aşamalarda oluşturulur, bu nedenle tipik olarak dinamik testler YGYD'nin erken aşamalarında gerçekleştirilemez. Bazı döngüsel geliştirme modelleri ve artımlı geliştirme modellerinde her döngünün bir çalışma prototipi veya ürün özelliği sağladığı varsayılır. Bu da her döngüde tüm test seviyelerinde hem statik hem de dinamik testlerin gerçekleştirilebileceği anlamına gelir. Yazılım özelliklerinin sık hayata geçirilmesi hızlı geri bildirim ve kapsamlı regresyon testleri gerektirir. Çevik yazılım geliştirme, projenin süresi boyunca değişikliklerin olabileceğini varsayar. Bu nedenle, çevik projelerde iş ürünü belgelerinin hafifletilmesi ve regresyon testlerini kolaylaştırmak için kapsamlı test otomasyonu tercih edilir. Ayrıca, manuel testlerin çoğu, tecrübeye dayalı test teknikleri kullanılarak yapılır ve bu teknikler, önceden kapsamlı test analizi ve tasarım gerektirmez (bkz. Bölüm 4.4)."
+   }
+  ]
+ },
+ "2.1.2": {
+  "title": "Yazılım Geliştirme Yaşam Döngüsü ve İyi Test Etme Uygulamaları",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Seçilen YGYD modelinden bağımsız iyi test uygulamaları aşağıdakileri içerir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Her yazılım geliştirme faaliyetine karşılık gelen bir test faaliyeti vardır ve böylece tüm geliştirme faaliyetlerinin kalite kontrole tabi olması sağlanır.",
+     "Farklı test seviyeleri (bkz. konu 2.2.1) belirli ve farklı test hedeflerine sahiptir ve bu da testin uygun şekilde kapsamlı olmasına olanak tanırken gereksiz tekrarlardan kaçınmayı sağlar.",
+     "Belirli bir test seviyesi için test analizi ve tasarımı YGYD’nin ilgili geliştirme aşamasında başlar ve böylece test “erken test” prensibine uygun şekilde test gerçekleşebilir. (bkz. bölüm 1.3)",
+     "Test uzmanları, iş ürünlerinin taslakları hazır olur olmaz iş ürünlerini gözden geçirme sürecine dahil olur, böylece erken test ve hata tespiti “shift-left” yaklaşımını destekleyebilir (bkz. bölüm 2.1.5)."
+    ]
+   }
+  ]
+ },
+ "2.1.3": {
+  "title": "Yazılım Geliştirme Faktörü Olarak Test",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "TDD, ATDD ve BDD benzer yazılım geliştirme yaklaşımlarıdır, burada testler geliştirme sürecini yönlendiren bir araç olarak tanımlanır. Bu yaklaşımların her biri erken test etme prensibini uygular (bkz. bölüm 1.3) ve shift-left yaklaşımını izler (bkz. bölüm 2.1.5), çünkü testler kod yazılmadan önce tanımlanır. Döngüsel bir geliştirme modelini desteklerler. Bu yaklaşımların karakteristik özellikleri aşağıdaki gibidir: Test Güdümlü Yazılım Geliştirme (TDD):"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Kodlamayı test senaryoları aracılığıyla yönlendirir (kapsamlı yazılım tasarımı yerine) (Beck 2003)",
+     "Önce testler yazılır, sonra testleri yerine getirmek için kod yazılır ve ardından testler ve kod yeniden düzenlenir"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Kabul Testi Güdümlü Yazılım Geliştirme (ATDD) (bkz. bölüm 4.5.3): - Kabul kriterlerinden testler türetilir ve bu, sistem tasarım sürecinin bir parçası olarak yapılır (Gärtner 2011) - Testler, uygulamanın ilgili bölümü geliştirilmeden önce yazılır ve ardından testleri karşılayacak şekilde kodlama yapılır. Davranış Güdümlü Yazılım Geliştirme (BDD): - Uygulamanın istenen davranışını, genellikle Given/When/Then formatı kullanılarak, paydaşlar tarafından anlaşılması kolay bir doğal dilin basit bir formunda yazılan test senaryoları ile ifade eder. (Chelimsky 2010) - Test senaryoları daha sonra otomatik olarak yürütülebilir testlere dönüştürülmelidir."
+   },
+   {
+    "t": "p",
+    "text": "Yukarıdaki yaklaşımların tümünde, testler gelecekteki uyarlama/yeniden düzenleme süreçlerinde kod kalitesini sağlamak için otomatikleştirilmiş testler olarak kalabilir."
+   }
+  ]
+ },
+ "2.1.4": {
+  "title": "DevOps ve Test Etme",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "DevOps, ortak hedeflere ulaşmak için yazılım geliştirme (test dahil) ve operasyonun birlikte çalışmasını sağlayarak sinerji oluşturmayı amaçlayan organizasyonel bir yaklaşımdır. DevOps, yazılım geliştirme (test dahil) ve operasyon arasında köprü görevi görmek ve işlevlerine eşit değerde muamele etmek için kuruluş içinde kültürel bir değişim gerektirir. DevOps ekip özerkliğini, hızlı geri bildirimi, entegre araç zincirlerini ve sürekli entegrasyon (CI) ve sürekli teslimat (CD) gibi teknik uygulamaları destekler. Bu, ekibin DevOps teslimat hattı aracılığıyla yüksek kaliteli kodları daha hızlı oluşturmasını, test etmesini ve yayınlamasını sağlar (Kim 2016). Test perspektifinden bakıldığında DevOps'un bazı faydaları şunlardır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Kod kalitesi hakkında hızlı geri bildirim sağlar ve değişikliklerin mevcut kodu olumsuz etkileyip etkilemediğini belirler.",
+     "Sürekli Entegrasyon (CI), yazılım geliştiricileri bileşen testleri ve statik analiz eşliğinde yüksek kaliteli kodlar sunmaya teşvik ederek test konusunda shift-left yaklaşımı uygulanmasını destekler (bkz. bölüm 2.1.5).",
+     "Stabil test ortamları oluşturmayı kolaylaştıran CI/CD gibi otomatik süreçleri destekler",
+     "Fonksiyonel olmayan kalite karakteristiklerine (ör. performans verimliliği ve güvenilirlik) ilişkin görünürlüğü artırır.",
+     "Teslimat hattında yapılan test otomasyonu, tekrarlayan manuel testlere ihtiyacı azaltır",
+     "Otomatik regresyon testlerinin ölçeği ve kapsamı dolayısıyla regresyon riski en aza indirilir"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "DevOps'un risk ve zorlukları da vardır; bunlar arasında:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "DevOps teslimat hattı tanımlanmalı ve kurulmalıdır",
+     "CI / CD araçları tanıtılmalı ve bakımı yapılmalıdır",
+     "Test otomasyonu ek kaynaklar gerektirir. Test otomasyonunun kurması ve sürdürmesi zor olabilir"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Her ne kadar DevOps kapsamında yüksek düzeyde test otomasyonu bulunsa da özellikle kullanıcı perspektifinden bakıldığında manuel testlere yine de ihtiyaç olacaktır."
+   }
+  ]
+ },
+ "2.1.5": {
+  "title": "Shift-Left Yaklaşımı",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Testin YGYD'nin başlarında gerçekleştirildiği bir yaklaşım olan “erken test” prensibi (bkz. bölüm 1.3) bazen shift-left olarak adlandırılır. Shift-left genellikle testlerin daha erken yapılmasını önerir (örneğin, kodun yazılmasını veya bileşenlerin entegre edilmesini beklemeden), ancak bu YGYD’nin ilerleyen aşamalarında testlerin ihmal edilmesi gerektiği anlamına gelmez. Testlerde \"shift-left\" yaklaşımının nasıl sağlanacağını gösteren birtakım iyi uygulamalar vardır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Testçilerin bakış açısıyla analizin gözden geçirilmesi. Analize ilişkin bu gözden geçirme aktiviteleri genelde belirsizlikler, eksiklikler ve tutarsızlıklar gibi potansiyel hataları tespit eder.",
+     "Kod yazılmadan önce test senaryolarının yazılması ve kodun yazılması sırasında kodun bir test kuluçkasında çalıştırılması",
+     "Kod deposuna gönderildiğinde kaynak koda eşlik edecek hızlı geri bildirim ve otomatik bileşen testleri sağladığı için CI'nin ve hatta daha da iyisi CD'nin kullanılması",
+     "Dinamik test öncesinde veya otomatik süreç kapsamında kaynak kodun statik analizinin tamamlanması",
+     "Mümkün olan durumlarda bileşen testi seviyesinden başlayarak fonksiyonel olmayan testlerin gerçekleştirilmesi. Bu bir tür shift-left uygulamasıdır. Çünkü fonksiyonel olmayan test türleri, YGYD’nin sonraki aşamalarında, eksiksiz bir sistem ve temsili bir test ortamı mevcut olduğunda gerçekleştirilmektedir."
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bir shift-left yaklaşımı süreç başında ilave eğitim, efor ve/veya maliyete yol açabilir ancak bu yaklaşımın sürecin sonraki aşamalarında efor ve/veya maliyet tasarrufu sağlaması beklenir. Shift-left yaklaşımı açısından paydaşların ikna edilmesi ve bu konsepte inanmaları önemlidir."
+   }
+  ]
+ },
+ "2.1.6": {
+  "title": "Geçmişe Dönük Öğeler ve Süreç İyileştirmesi",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Geçmişe dönük öğeler genelde bir proje veya döngü sonunda, bir sürüm kilometre taşında veya gerektiğinde ele alınır. Geçmişe dönük öğelerin zamanlaması ve organizasyonu, izlenen YGYD modeline bağlıdır. Bu toplantılarda katılımcılar (sadece test uzmanları değil, aynı zamanda ör. geliştiriciler, mimarlar, ürün sahibi ve iş analistleri) şunları görüşür:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Başarılı olan neydi ve bu nasıl sürdürülmeli?",
+     "Başarısız olan neydi ve bu konuda nasıl bir iyileştirme yapılabilir?",
+     "Başarıları nasıl sürdürebilir ve ileriye dönük iyileştirmeleri nasıl uygulayabiliriz?"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Sonuçlar kaydedilmelidir ve normalde test tamamlama raporunun bir parçasıdır (bkz. bölüm 5.3.2). Geçmişe dönük öğeler sürekli iyileştirmenin başarıyla uygulanmasında kritiktir ve tavsiye edilen her tür iyileştirmenin takip edilmesi önemlidir. Test sürecine tipik faydaları şunlardır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Daha yüksek test etkinliği / verimliliği (ör. süreç iyileştirmesi önerilerinin uygulanması)",
+     "Daha yüksek test çalışma ürünleri kalitesi (ör. test süreçlerinin birlikte gözden geçirilmesi)",
+     "Ekip kaynaşması ve öğrenmesi (ör. sorun bildirme ve iyileştirme noktaları önerme fırsatının bir sonucu olarak)",
+     "Daha yüksek test esası kalitesi (ör. gereksinimlerin kapsam ve kalitesindeki eksikliklerin ele alınıp çözülmesi)",
+     "Geliştirme ve test etme süreci arasında daha iyi iş birliği (ör. iş birliğinin düzenli olarak incelenip optimize edilmesi)"
+    ]
+   }
+  ]
+ },
+ "2.2": {
+  "title": "Test Seviyeleri ve Test Çeşitleri",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test seviyeleri, birlikte düzenlenen ve yönetilen test aktivitesi gruplarıdır. Her test seviyesi, belirli bir yazılım geliştirme aşamasındaki yazılımla ilgili olarak gerçekleştirilen, bağımsız bileşenlerden komple sistemlere veya bazı durumlarda sistemlerin sistemlerine kadar gerçekleştirilen test sürecinin bir örneğidir. Test seviyeleri, YGYD içindeki diğer aktivitelerle bağlantılıdır. Sıralı YGYD modellerinde, test seviyeleri genellikle bir seviyenin çıkış kriterleri bir sonraki seviyenin giriş kriterlerinin bir parçası olacak şekilde tanımlanır. Bazı döngüsel modellerde bu geçerli olmayabilir. Geliştirme aktiviteleri birden fazla test seviyesini kapsayabilir. Test seviyeleri zaman içinde çakışabilir. Test çeşitleri belirli kalite karakteristikleriyle ilişkili test aktivitelerinin gruplarıdır ve bu test aktivitelerinin çoğu her test seviyesinde yapılabilir."
+   }
+  ]
+ },
+ "2.2.1": {
+  "title": "Test Seviyeleri",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Bu ders programında aşağıdaki beş test seviyesi açıklanmaktadır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Bileşen testi (birim testi olarak da bilinir), bileşenleri ayrı olarak test etmeye odaklanır. Genelde test kuluçkası veya birim testi çerçeveleri gibi özel destek gerektirir. Bileşen testi normalde geliştiriciler tarafından kendi geliştirme ortamlarında yapılır.",
+     "Bileşen entegrasyon testi (birim entegrasyon testi olarak da bilinir) arayüzlerin ve bileşenler arasındaki etkileşimlerin testine odaklanır. Bileşen entegrasyon testi yoğunlukla aşağıdan yukarıya, yukarıdan aşağıya veya big-bang gibi entegrasyon stratejisi yaklaşımlarına bağlıdır.",
+     "Sistem testi bir sistemin veya ürünün genel davranışına ve yeteneklerine odaklanır, genellikle uçtan uca görevlerin fonksiyonel testlerini ve kalite karakteristiklerine ilişkin fonksiyonel olmayan testleri içerir. Bazı fonksiyonel olmayan kalite karakteristikleri için, bunların temsili bir test ortamında komple bir sistem üzerinde test edilmesi tercih edilir (ör. kullanılabilirlik). Alt sistemlerin simülasyonları da kullanılabilir. Sistem testi bağımsız bir test ekibi tarafından yapılabilir ve sisteme yönelik gereksinimlerle ilgilidir.",
+     "Sistem entegrasyon testi test edilen sistem ile diğer sistemler ve harici hizmetler arasındaki arayüzlerin test edilmesine odaklanır. Sistem entegrasyon testi için tercihen operasyonel ortama benzer uygun test ortamları gereklidir.",
+     "Kabul testi sistemin sağlamasını yapmaya ve kullanıcıya sunulmaya hazır olduğunu göstermeye odaklanır. Bunun sonucunda sistemin kullanıcı ihtiyaçlarını yerine getirebilir durumda olduğu kanıtlanmış olur. İdeal kabul testi, hedeflenen kullanıcılar tarafından gerçekleştirilmelidir. Başlıca kabul testi çeşitleri şunlardır: kullanıcı kabul testi (KKT), operasyonel kabul testi, sözleşmesel kabul testi ve düzenleyici kabul testi, alfa testi ve beta testi."
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test seviyelerini test aktivitelerinden ayırmak için aşağıdaki liste kullanılabilir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test nesnesi",
+     "Test hedefleri",
+     "Test esası",
+     "Hatalar ve arızalar",
+     "Yaklaşım ve sorumluluklar"
+    ]
+   }
+  ]
+ },
+ "2.2.2": {
+  "title": "Test Çeşitleri",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Birçok test çeşidi mevcuttur ve projelerde uygulanabilir. Bu ders programında aşağıdaki dört test çeşidi ele alınmıştır: Fonksiyonel testler bir bileşen ya da sistemin yerine getirmesi gereken fonksiyonları değerlendirir. Fonksiyonlar, test nesnesinin \"ne\" yapması gerektiğini tanımlar. Fonksiyonel testin ana hedefi fonksiyonel bütünlüğü, fonksiyonel doğruluğu ve fonksiyonel uygunluğu kontrol etmektir. Fonksiyonel olmayan testler bir bileşen veya sistemin fonksiyonel gereksinimleri dışındaki özelliklerini değerlendirir. Fonksiyonel olmayan testler sistemin yapılması gerekenleri \"ne kadar iyi\" yaptığını ölçümlemeye çalışır. Fonksiyonel olmayan testin ana hedefi fonksiyonel olmayan kalite karakteristiklerini kontrol etmektir. ISO/IEC 25010 standardı, fonksiyonel olmayan kalite karakteristiklerine ilişkin aşağıdaki sınıflandırmayı sunar:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Performans verimliliği",
+     "Uyumluluk",
+     "Kullanılabilirlik (aynı zamanda etkileşim yeteneği olarak da bilinir)",
+     "Güvenilirlik",
+     "Güvenlik",
+     "Sürdürülebilirlik",
+     "Taşınabilirlik (aynı zamanda esneklik olarak da bilinir)",
+     "Güvenlik"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Fonksiyonel olmayan testlerin yaşam döngüsünün erken aşamalarında başlaması bazen uygun olabilir (ör. gözden geçirmelerin ve bileşen testlerinin bir parçası olarak). Birçok fonksiyonel olmayan test, fonksiyonel testlerden türetilmiştir."
+   },
+   {
+    "t": "p",
+    "text": "Aynı fonksiyonel testleri kullanırlar, ancak fonksiyonu yerine getirirken fonksiyonel olmayan bir kısıtlamanın karşılanıp karşılanmadığını kontrol ederler (ör. bir fonksiyonun belirli bir süre içinde çalışıp çalışmadığını veya bir fonksiyonun yeni bir platforma taşınıp taşınamayacağını kontrol etmek gibi). Fonksiyonel olmayan hataların geç fark edilmesi bir projenin başarısı için ciddi tehdit oluşturabilir. Fonksiyonel olmayan testler bazen kullanılabilirlik testi için kullanılabilirlik laboratuvarı gibi çok özel bir test ortamına ihtiyaç duyar. Kara kutu testi (bkz. bölüm 4.2) gereksinim bazlıdır ve test nesnesinin iç yapısıyla ilişkili olmayan testleri elde eder. Kara kutu testinin ana hedefi, sistemin gereksinimlere karşı davranışını kontrol etmektir. Beyaz kutu testi (bkz. bölüm 4.3) yapı bazlıdır ve sistemin uygulama veya iç yapısından testler elde eder (ör. kod, mimari, iş akışları ve veri akışları). Beyaz kutu testinin ana hedefi, testlerin altta yatan yapıyı kabul edilebilir seviyeye kadar kapsamasını sağlamaktır. Yukarıda belirtilen dört test çeşidinin hepsi, her seviyede odak noktası farklı olsa da, tüm test seviyelerine uygulanabilir. Bahsedilen test çeşitlerinin her biri için, test koşulları ve test senaryoları elde etmek üzere çeşitli test teknikleri uygulanabilir."
+   }
+  ]
+ },
+ "2.2.3": {
+  "title": "Onaylama Testleri ve Regresyon Testleri",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Değişiklikler genelde yeni bir özellik ekleyerek bileşeni veya sistemi geliştirmek ya da bir hatayı gidererek bileşeni veya sistemi düzeltmek için yapılır. Test etme süreci ayrıca onaylama testi ve regresyon testini de içermelidir. Onaylama testi asıl hatanın başarıyla giderildiğini onaylamak için yapılır. Riske bağlı olarak, yazılımın düzeltilmiş versiyonu aşağıdakiler de dahil olmak üzere çeşitli şekillerde test edilebilir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "daha önce hata nedeniyle başarısız olmuş tüm test senaryolarını çalıştırarak veya",
+     "hatayı düzeltmek için gereken değişiklikleri kapsayacak şekilde yeni testler ekleyerek"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Ancak, hataları düzeltirken zaman veya para kısıtlı olduğunda onaylama testi, hatanın neden olduğu arızayı yeniden üretecek test adımları uygulamak ve hatanın meydana gelmediğini kontrol etmekle sınırlı olabilir. Regresyon testi halihazırda onaylama testinden geçirilmiş bir düzeltme de dahil olmak üzere bir değişikliğin herhangi bir olumsuz sonuca neden olmadığını teyit eder. Bu olumsuz sonuçlar, değişikliğin yapıldığı bileşeni, aynı sistemdeki diğer bileşenleri ve hatta diğer bağlı sistemleri etkileyebilir. Regresyon testi, test nesnesinin kendisiyle olduğu kadar ortamla da ilgili olabilir. Regresyon testinin kapsamını en iyi duruma getirmek için öncelikle bir etki analizi yapılması tavsiye edilir. Etki analizi, yazılımın hangi kısımlarının etkilenebileceğini gösterir. Regresyon test grupları birçok kez çalıştırılır ve genellikle regresyon test senaryolarının sayısı her döngüde veya sürümde artar, bu nedenle regresyon testi test otomasyonu için güçlü bir adaydır. Bu testlerin otomasyonu projenin erken aşamalarında başlamalıdır. DevOps (bkz. bölüm 2.1.4) gibi CI kullanılan durumlarda, otomatik regresyon testlerini de dahil etmek iyi bir uygulamadır. Duruma bağlı olarak bu, farklı seviyelerde regresyon testleri içerebilir. Test seviyelerinde hatalar düzeltilirse ve/veya değişiklikler yapılırsa tüm test seviyelerinde test nesnesi için onaylama testi ve/veya regresyon testi gereklidir."
+   }
+  ]
+ },
+ "2.3": {
+  "title": "Bakım Testleri",
+  "chapter": "2",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Farklı bakım kategorileri vardır. Bakım düzeltici olabilir, ortamdaki değişikliklere uyarlanabilir veya performansı veya sürdürülebilirliği artırabilir (ayrıntılar için bkz. ISO/IEC 14764). Bu nedenle bakım, planlı sürümleri/dağıtımları ve planlanmamış sürümleri/dağıtımları (düzeltmeler) içerebilir. Bir değişiklik yapılmadan önce, sistemin diğer alanlarında yaratacağı potansiyel sonuçlara dayanarak değişikliğin yapılıp yapılmayacağına karar vermek için etki analizi yapılabilir. Canlı ortamdaki bir sistemde yapılan değişikliklerin test edilmesi, hem değişikliğin uygulanma başarısının değerlendirilmesini hem de sistemin değişmeyen kısımlarında (ki bu genellikle sistemin büyük bir kısmıdır) olası regresyonların kontrol edilmesini içerir. Bakım testinin kapsamı genellikle şunlara bağlıdır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Değişikliğin risk derecesi",
+     "Mevcut sistemin boyutu",
+     "Değişikliğin boyutu"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bakım ve bakım testleri tetikleyicileri aşağıdaki gibi sınıflandırılabilir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Değişiklikler: planlı iyileştirmeler (ör. sürüm bazlı), düzeltici değişiklikler veya düzeltmeler.",
+     "Operasyonel ortam yükseltmeleri veya taşımaları: yeni ortam ve değiştirilen yazılımla ilgili testler veya başka bir uygulamadan gelen verilerin bakımı yapılan sisteme geçirilmesine yönelik testler gerektirebilen, bir platformdan diğerine taşıma gibi durumlar.",
+     "Kullanımdan kaldırma: bir uygulamanın kullanım ömrünün sonuna gelinmesi gibi durumlar. Bir sistemin kullanımı sonlandırılırken, verilerin uzun süre saklanması gerekliyse veri arşivlemenin test edilmesi gerekebilir. Arşivleme sırasında belirli verilere ihtiyaç duyulması halinde arşivleme sonrası geri yükleme ve geri alma prosedürlerinin test edilmesi de gerekebilir."
+    ]
+   }
+  ]
+ },
+ "3.1": {
+  "title": "Statik Testin Temelleri",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Dinamik testin aksine, statik testte test edilen yazılımın çalıştırılmasına gerek yoktur. Kod, süreç, sistem mimarisi veya diğer iş ürünleri manuel incelemeyle (ör. gözden geçirme) veya bir araç yardımıyla (ör. statik analiz) değerlendirilir. Test hedefleri arasında kaliteyi yükseltmek, hataları tespit etmek ve okunabilirlik, bütünlük, doğruluk, test edilebilirlik ve tutarlılık gibi özellikleri değerlendirmek yer alır. Statik test hem doğrulama hem sağlama için uygulanabilir. Test uzmanları, iş temsilcileri (ürün sahibi, iş analisti vb.) ve geliştiriciler; örnek eşleme, iş birliğine dayalı kullanıcı hikayesi yazma süreci ve iş listesi olgunlaştırma oturumları sırasında birlikte çalışarak kullanıcı hikayelerinin ve ilgili iş ürünlerinin tanımlanmış kriterleri [ör. Hazır Tanımı (bkz. bölüm 5.1.3)] karşıladığından emin olurlar. Kullanıcı hikayelerinin tam ve anlaşılır olmasını ve test edilebilir kabul kriterlerini içermesini sağlamak için gözden geçirme teknikleri uygulanabilir. Test uzmanları, doğru soruları sorarak önerilen kullanıcı hikayelerini inceler, sorgular ve iyileştirir. Statik analiz, dinamik testten önce problemleri belirleyebilir ve test senaryoları gerekmediğinden ve genellikle araçlar (bkz. konu 6) kullanıldığından genel olarak daha az efor gerektirir. Statik analiz genelde CI sürecine dahil edilir (bkz. bölüm 2.1.4). Her ne kadar büyük ölçüde belirli kod hatalarını tespit etmede kullanılsa da statik analiz aynı zamanda sürdürülebilirlik ve güvenliği değerlendirmede de kullanılır. Yazım denetleyici ve okunabilirlik araçları statik analiz araçlarına diğer örneklerdir."
+   }
+  ]
+ },
+ "3.1.1": {
+  "title": "Statik Testlerle İncelenebilen İş Ürünleri",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Hemen hemen her çalışma ürünü statik test kullanılarak incelenebilir. Örnekler arasında şunlar yer alır: gereksinimler, kaynak kod, test planları, test senaryoları, ürün iş listesi öğeleri, test başlatma belgeleri, proje dokümantasyonu, sözleşmeler ve modeller. Okunup anlaşılabilir olan her çalışma ürünü bir gözden geçirmeye tabi olabilir. Bununla birlikte, statik analiz için iş ürünlerinin kontrol mekanizması niteliğinde bir yapıya ihtiyacı vardır (ör. modeller, kod veya resmi bir söz dizimine sahip metin). Statik test için uygun olmayan iş ürünleri, insanlar tarafından yorumlanması zor olan ve araçlarla analiz edilemeyecek ürünleri içerir."
+   }
+  ]
+ },
+ "3.1.2": {
+  "title": "Statik Testin Önemi",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Statik test YGYD'nin erken aşamalarında hataları tespit ederek erken test prensibini yerine getirebilir (bkz. bölüm 1.3). Ayrıca, dinamik testle tespit edilemeyecek hataları da bulabilir (ör. ulaşılamayan kod, istenildiği gibi uygulanmayan tasarım örüntüleri, çalıştırılamayan iş ürünlerindeki hatalar)."
+   },
+   {
+    "t": "p",
+    "text": "Statik testler, iş ürünlerinin kalitesini değerlendirmeyi ve iş ürünlerine güven duymayı mümkün kılar. Aynı zamanda paydaşlar belgelenmiş gereksinimleri doğrulayarak, bu gereksinimlerin gerçek ihtiyaçlarını tanımladığından emin olabilirler. Statik testler, YGYD’nin erken aşamalarında yapılabildiği için ilgili paydaşlar arasında ortak bir anlayış oluşturabilir. İlgili paydaşlar arasındaki iletişim de güçlendirilir. Bu nedenle, statik testlere çok çeşitli paydaşların dahil edilmesi önerilir. Gözden geçirmelerin bir maliyeti olsa da toplam proje maliyeti gözönüne alındığında gözden geçirmelere yapılan yatırımın geri dönüş oranı çok yüksektir. Çünkü projenin ilerleyen aşamalarında hataları düzeltmek için daha fazla zaman ve efor harcanması gerekir."
+   },
+   {
+    "t": "p",
+    "text": "Belirli kod hataları dinamik test yerine statik analiz kullanılarak daha etkin şekilde tespit edilebilir ve bu da genelde daha az kod hatası ve daha düşük toplam geliştirme eforuyla sonuçlanır."
+   }
+  ]
+ },
+ "3.1.3": {
+  "title": "Statik Test ve Dinamik Test Arasındaki Farklar",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Statik test ve dinamik testler birbirlerini tamamlar. İş ürünlerindeki hataların tespitine yardımcı olmak gibi benzer hedefleri olsa da (bkz. bölüm 1.1.1) bazı farklar söz konusudur. Örneğin:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Statik ve dinamik testlerin (arıza analiziyle) her ikisi de hataların tespit edilmesini sağlayabilir ancak bazı hata çeşitleri ya statik testle ya da dinamik testle bulunabilir.",
+     "Dinamik testler, ilgili hataların daha sonra analiz yoluyla belirleneceği arızalara neden olurken, statik testler hataları doğrudan bulur.",
+     "Statik testler, kod üzerinde nadiren çalıştırılan veya dinamik testlerle zor ulaşılabilen yollar üzerindeki hataları daha kolay tespit edebilir.",
+     "Statik testler çalıştırılamayan iş ürünlerine uygulanabilirken, dinamik testler yalnızca çalıştırılabilir iş ürünlerine uygulanabilir.",
+     "Statik testler kodun çalıştırılmasına bağlı olmayan kalite karakteristiklerini ölçmek için kullanılabilir (ör. sürdürülebilirlik), dinamik testler ise kodun çalıştırılmasına bağlı olan kalite karakteristiklerini ölçmek için kullanılabilir (ör. Performans verimliliği)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Statik testler ile bulunması daha kolay ve/veya daha ucuz olan yaygın hatalar şunlardır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Gereksinimlerdeki hatalar (ör. tutarsızlıklar, belirsizlikler, çelişkiler, unutulan kısımlar, yanlışlıklar ve tekrarlar)",
+     "Tasarım hataları (ör. verimsiz veritabanı yapıları, zayıf modülerleştirme)",
+     "Kod hatalarının bazı çeşitleri (ör. tanımlanmamış değerlere sahip değişkenler, tanımlanmamış değişkenler, ulaşılamaz veya çoğaltılmış kod, aşırı kod karmaşıklığı)",
+     "Standartlardan sapmalar (ör. kodlama standartlarındaki adlandırma kurallarına bağlı kalmama)",
+     "Hatalı arayüz gereksinimleri (ör. eşleşmeyen parametre sayısı, çeşidi veya sırası)",
+     "Güvenlik açığı çeşitleri (ör. arabellek aşımları)",
+     "Test esası kapsamındaki boşluklar veya yanlışlıklar (ör. bir kabul kriteri için testlerin eksik olması)"
+    ]
+   }
+  ]
+ },
+ "3.2": {
+  "title": "Geri Bildirim ve Gözden Geçirme Süreci",
+  "chapter": "3",
+  "blocks": []
+ },
+ "3.2.1": {
+  "title": "Erken ve Sık Paydaş Geri Bildiriminin Faydaları",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Erken ve sık geri bildirimler potansiyel kalite problemlerinin erken iletilmesine olanak sağlar. YGYD boyunca paydaş katılımı çok azsa geliştirilen ürün paydaşın asıl veya mevcut vizyonunu karşılamayabilir. Paydaşın isteklerinin karşılanamaması, masraflı bir yeniden çalışma sürecine, teslim tarihlerinin kaçırılmasına, karşılıklı suçlamalara ve hatta projenin tamamen başarısız olmasına yol açabilir."
+   },
+   {
+    "t": "p",
+    "text": "YGYD boyunca sıkça verilen paydaş geri bildirimleri gereksinimler hakkındaki yanlış anlaşılmaları önleyebilir ve gereksinimlerdeki değişikliklerin daha erken anlaşılmasını ve uygulanmasını sağlayabilir. Bu da geliştirme ekibinin ne yaptıklarını daha iyi anlamalarına yardımcı olur. Paydaşlara en çok değer katacak ve belirlenen riskler üzerinde en olumlu katkıyı yapacak özelliklere odaklanmalarını sağlar."
+   }
+  ]
+ },
+ "3.2.2": {
+  "title": "Gözden Geçirme Süreci Faaliyetleri",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "ISO/IEC 20246 standardında, çerçeveleri belli ama duruma göre esnetilebilen yapısal bir gözden geçirme süreci tanımlanmıştır. Çoğu iş ürününün boyutu tek bir gözden geçirmede ele alınamayacak kadar büyüktür. Gözden geçirme süreci, iş ürününün tamamının gözden geçirilmesi için birden fazla kez tekrarlanabilir. Gözden geçirme süreci faaliyetleri:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Planlama. Planlama aşamasında amaç, gözden geçirilecek çalışma ürünü, değerlendirilecek kalite karakteristiği, odaklanılacak alanlar, çıkış kriterleri, standartlar, efor gibi destekleyici bilgiler ve gözden geçirmeye ilişkin zaman dilimlerini içeren gözden geçirme kapsamı tanımlanır.",
+     "Gözden geçirme başlangıcı. Gözden geçirme başlangıcında amaç, ilgili herkesin ve her şeyin gözden geçirmenin başlatılması için hazır olmasını sağlamaktır. Bu, her katılımcının gözden geçirilen çalışma ürününe erişebilmesini, rollerini ve sorumluluklarını anlamasını ve gözden geçirmenin yapılması için gereken her şeyin karşılanmasını da içerir.",
+     "Bireysel gözden geçirme. Her gözden geçirici, gözden geçirilen çalışma ürününün kalitesini değerlendirmek ve bir veya daha fazla gözden geçirme tekniğini uygulayarak (ör. kontrol listesine dayalı gözden geçirme, senaryoya dayalı gözden geçirme) anomalileri, önerileri ve soruları belirlemek için bireysel bir gözden geçirme yapar. ISO/IEC 20246 standardı, farklı gözden geçirme teknikleri hakkında daha fazla bilgi içerir. Gözden geçiriciler belirlenen anomalileri, tavsiyeleri ve soruları kayıt altına alır.",
+     "İletişim ve analiz. Gözden geçirme sırasında tespit edilen anomalilerin hata olması gerekmediğinden, tüm bu anomalilerin analiz edilmesi ve tartışılması gerekir. Her anomali için duruma, sahipliğe ve gerekli aksiyonlara göre karar verilmelidir. Bu genellikle, katılımcıların gözden geçirilen çalışma ürününün kalite seviyesine ve hangi takip aksiyonlarının gerekli olduğuna da karar verdikleri bir gözden geçirme toplantısında yapılır. Aksiyonların tamamlanması için bir takip gözden geçirmesi gerekebilir.",
+     "Düzeltme ve raporlama. Her hata için bir hata raporu oluşturulmalıdır; böylece düzeltici aksiyonlar takip edilebilir. Çıkış kriterleri sağlandığında çalışma ürünü kabul edilebilir. Gözden geçirme sonuçları raporlanır."
+    ]
+   }
+  ]
+ },
+ "3.2.3": {
+  "title": "Gözden Geçirmede Roller ve Sorumluluklar",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Gözden geçirmeler çeşitli roller üstlenebilecek farklı paydaşlar içerir. Başlıca roller ve sorumluluklar:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Yönetici, neyin gözden geçirileceğine karar verir ve gözden geçirme için personel ve zaman gibi kaynakları sağlar",
+     "Yazar, gözden geçirilecek çalışma ürününü oluşturur ve düzeltir",
+     "Moderatör (kolaylaştırıcı olarak da bilinir), arabuluculuk, zaman yönetimi ve herkesin özgürce konuşabileceği güvenli bir gözden geçirme ortamı da dahil olmak üzere gözden geçirme toplantılarının etkili bir şekilde yürütülmesini sağlar",
+     "Katip (kaydedici olarak da bilinir), gözden geçiricilerden gelen anomalileri derler ve gözden geçirme toplantısı sırasında alınan kararlar ve bulunan yeni anomaliler gibi gözden geçirme bilgilerini kaydeder",
+     "Gözden geçirici, gözden geçirmeyi gerçekleştirir. Gözden geçirici; projede çalışan herhangi bir kişi olabilir, konu uzmanı veya başka bir paydaş olabilir",
+     "Gözden geçirme lideri, kimin işe dahil olacağına karar vermek ve gözden geçirmenin ne zaman ve nerede yapılacağını organize etmek gibi gözden geçirmenin genel sorumluluğunu üstlenir"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Ayrıca, ISO/ EC 20246 standardında tanımlandığı gibi daha ayrıntılı roller de mümkündür."
+   }
+  ]
+ },
+ "3.2.4": {
+  "title": "Gözden Geçirme Çeşitleri",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Gayri resmi gözden geçirmelerden resmi gözden geçirmelere kadar birçok gözden geçirme çeşidi bulunur. Gerekli formalite seviyesi, takip edilen YGYD, geliştirme sürecinin olgunluğu, gözden geçirilen çalışma ürününün kritikliği ve karmaşıklığı, yasal veya düzenleyici gereksinimler ve denetim izlemesi ihtiyacı gibi faktörlere dayalıdır. Aynı çalışma ürünü, farklı gözden geçirme çeşitleri kullanılarak gözden geçirilebilir (ör. ilk olarak gayri resmi, ardından resmi gözden geçirme). Doğru gözden geçirme çeşidini seçmek, gerekli gözden geçirme hedeflerine ulaşmada kilit önem taşır (bkz. bölüm 3.2.5). Seçim sadece hedeflere değil, aynı zamanda proje ihtiyaçları, kullanılabilir kaynaklar, çalışma ürünü çeşidi ve riskleri, iş alanı ve şirket kültürü gibi faktörlere de dayanır. Yaygın olarak kullanılan gözden geçirme çeşitlerinden bazıları şunlardır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Gayri resmi gözden geçirme. Gayri resmi gözden geçirmelerde tanımlanmış bir süreç izlenmez ve bunlar resmi olarak belgelenmiş bir çıktı gerektirmez. Ana hedef anomalileri tespit etmektir.",
+     "Üzerinden geçme. Yazarın öncülüğündeki bir üzerinden geçme süreci kaliteyi değerlendirmek ve çalışma ürününe yönelik güven oluşturmak, gözden geçiricileri eğitmek, fikir birliğine varmak, yeni fikirler üretmek, yazarları durumları iyileştirmeye ve anomalileri tespit etmeye teşvik etmek ve bunu yapabilmelerini sağlamak gibi birçok amaca hizmet edebilir. Gözden geçiriciler, üzerinden geçme süreci öncesinde bireysel gözden geçirme yapabilir ancak bu gerekli değildir.",
+     "Teknik Gözden Geçirme. Teknik gözden geçirmeler teknik açıdan nitelikli gözden geçiriciler tarafından gerçekleştirilir ve bir moderatör tarafından yönetilir. Teknik gözden geçirmenin amaçları arasında teknik bir problemle ilgili fikir birliği sağlamak ve buna ilişkin karar almak, anomalileri tespit etmek, kaliteyi değerlendirmek ve çalışma ürününe yönelik güven oluşturmak, yeni fikirler üretmek, yazarları iyileştirmeler yapmaya teşvik etmek ve buna olanak sağlamak yer alır.",
+     "Teftiş. Teftişler en resmi gözden geçirme çeşidi olduğundan tanımlı gözden geçirme süreci eksiksiz olarak izlenir (bkz. bölüm 3.2.2). Ana hedef maksimum sayıda anomali bulmaktır. Diğer hedefler arasında kaliteyi değerlendirmek, çalışma ürününe yönelik güven oluşturmak, yazarları iyileştirmeler yapmaya teşvik etmek ve bunları yapabilmelerini sağlamak bulunur. Metrikler toplanır ve teftiş süreci de dahil olmak üzere YGYD'nü iyileştirmek için kullanılır. Teftişte yazar; gözden geçirme lideri veya katip olarak görev yapamaz."
+    ]
+   }
+  ]
+ },
+ "3.2.5": {
+  "title": "Gözden Geçirmelerin Başarı Faktörleri",
+  "chapter": "3",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Gözden geçirmelerin başarısını belirleyen çeşitli faktörler vardır ve bunların arasında şunlar yer alır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Net hedeflerin ve ölçülebilir çıkış kriterlerinin tanımlanması.",
+     "Verilen hedeflere uygun olan ve çalışma ürününün çeşidine, gözden geçirme katılımcılarına, proje ihtiyaçlarına ve bağlamına uyacak şekilde gözden geçirme türünün seçilmesi",
+     "Gözden geçiriciler bireysel gözden geçirme ve/veya (yapılıyorsa) gözden geçirme toplantısı sırasında konsantrasyonlarını kaybetmesinler diye gözden geçirmelerin küçük parçalar üzerinde gerçekleştirilmesi",
+     "Ürünü ve aktivitelerini iyileştirebilmeleri için paydaşlara ve yazarlara gözden geçirmelerden geri bildirim sağlanması (bkz. bölüm 3.2.1)",
+     "Gözden geçirmeye hazırlanmaları için katılımcılara yeterli sürenin verilmesi",
+     "Gözden geçirme süreci için yönetimden destek sağlanması",
+     "Öğrenme ve süreç iyileştirmesini desteklemek için gözden geçirmelerin şirket kültürünün bir parçası haline getirilmesi",
+     "Rollerini yerine getirmelerini sağlamak için tüm katılımcılara yeterli eğitimin verilmesi",
+     "Kolaylaştırıcı toplantılar"
+    ]
+   }
+  ]
+ },
+ "4.1": {
+  "title": "Test Tekniklerine Genel Bakış",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test teknikleri, test analizinde (ne test edilecek) ve test tasarımında (nasıl test edilecek) test uzmanına destek sağlar. Test teknikleri, nispeten az ancak yeterli sayıda test senaryosunun sistematik bir şekilde geliştirilmesine yardımcı olur. Test teknikleri ayrıca test uzmanının test analizi ve tasarımı sırasında test koşullarını tanımlamasına, kapsam öğelerini belirlemesine ve test verilerini tanımlamasına yardımcı olur. Test teknikleri ve ilgili ölçülere ilişkin ayrıntılı bilgiye ISO/IEC/IEEE 29119-4 standardında ve (Beizer 1990, Craig 2002, Copeland 2004, Koomen 2006, Jorgensen 2014, Ammann 2016, Forgács 2019) kaynaklarında da yer verilmiştir. Bu ders programında test teknikleri kara kutu, beyaz kutu ve tecrübeye dayalı olarak sınıflandırılmaktadır. Kara kutu test teknikleri (spesifikasyon bazlı teknikler olarak da bilinir) test nesnesinin iç yapısına atıfta bulunulmadan test nesnesinin davranışının analiz edilmesine dayanır. Bu nedenle test senaryoları yazılımın nasıl yazıldığından bağımsızdır. Sonuç olarak, kod değişir ancak test nesnesinin davranışı aynı kalırsa test senaryoları da hâlâ faydalı demektir. Beyaz kutu test teknikleri (yapı bazlı teknik olarak da bilinir) test nesnesinin iç yapısının ve işlemlerinin analizine dayanır. Test senaryoları yazılımın nasıl tasarlandığına bağlı olduğundan sadece test nesnesinin tasarımı veya kodlanmasından sonra oluşturulabilir. Tecrübeye dayalı test teknikleri test senaryolarının tasarımı ve uyarlanması süreci için test uzmanlarının bilgi ve deneyimlerini etkin bir şekilde kullanır. Bu tekniklerin etkinliği ağırlıklı olarak test uzmanının becerilerine dayalıdır. Tecrübeye dayalı test teknikleri kara kutu ve beyaz kutu test tekniklerinde gözden kaçırılabilecek hataları tespit edebilir. Dolayısıyla tecrübeye dayalı test teknikleri kara kutu ve beyaz kutu test tekniklerini tamamlayıcı niteliktedir."
+   }
+  ]
+ },
+ "4.2": {
+  "title": "Kara Kutu Test Teknikleri",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Yaygın olarak kullanılan kara kutu test teknikleri aşağıdaki bölümlerde ele alınmaktadır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Denklik Paylarına Ayırma",
+     "Sınır Değer Analizi",
+     "Karar Tablosu Testleri",
+     "Durum Geçişi Testleri"
+    ]
+   }
+  ]
+ },
+ "4.2.1": {
+  "title": "Denklik Paylarına Ayırma",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Denklik Paylarına Ayırma (DPA), belirli bir payın tüm unsurlarının test nesnesi tarafından aynı şekilde işleneceği beklentisine dayanarak verileri paylara (denklik payları olarak bilinir) ayırır. Bu tekniğin ardındaki teori, denklik payından bir değeri test eden bir test senaryosunun bir hata tespit etmesi halinde bu hatanın aynı paydan başka herhangi bir değeri test eden test senaryoları tarafından da tespit edilmesi gerektiği yaklaşımına dayanır. Dolayısıyla her pay için bir test yapılması yeterlidir. Denklik payları; girdiler, çıktılar, yapılandırma öğeleri, dahili değerler, zamana bağlı değerler ve arayüz parametreleri dahil olmak üzere test nesnesiyle ilgili herhangi bir veri öğesi için tanımlanabilir. Paylar sürekli veya ayrık, sıralı veya sırasız, sonlu veya sonsuz olabilir. Paylar birbiriyle çakışmamalı ve boş küme halinde olmamalıdır."
+   },
+   {
+    "t": "p",
+    "text": "Basit test öğeleri için DPA tekniğini kullanmak kolay olabilir ancak pratikte test nesnesinin farklı değerlerde nasıl davranacağını anlamak genelde karmaşıktır. Dolayısıyla paylara ayırma titizlikle yapılmalıdır. Geçerli değerler içeren paylara geçerli pay denir. Geçersiz değerler içeren paylara geçersiz pay denir. Geçerli ve geçersiz değerlerin tanımları ekipler ve kuruluşlar arasında değişiklik gösterebilir. Örneğin; geçerli değerler, test nesnesi tarafından işlenmesi gereken veya gereksinimlerin bunların işlenmesini tanımladığı değerler olarak yorumlanabilir. Geçersiz değerler, test nesnesi tarafından göz ardı edilmesi veya reddedilmesi gereken değerler ya da test nesnesi gereksiniminde hiçbir işlem tanımlamasına tabi tutulmayan değerler olarak yorumlanabilir. DPA'da kapsam öğeleri denklik paylarıdır. Bu teknikle kapsamın %100'üne ulaşmak için test senaryoları, her payı en az bir kez kapsama alarak, belirlenmiş tüm payları (geçersiz paylar dahil) denemesi gerekmektedir. Kapsam, denenen payların sayısının, tanımlanan payların toplam sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. Çoğu test öğesi birden fazla pay grubu içerir (ör. birden fazla girdi parametresine sahip test öğeleri); bu da bir test senaryosunun farklı pay gruplarından paylar kapsayacağı anlamına gelir. Birden fazla pay grubu olması durumunda en basit kapsam kriteri Each Choice kapsamı (Her Seçeneği Kapsama) olarak adlandırılır (Ammann 2016). Each Choice kapsamı, test senaryolarının her pay grubundan her bir payı en az bir kez denemesini gerektirir. Each Choice kapsamı pay kombinasyonlarını dikkate almaz."
+   }
+  ]
+ },
+ "4.2.2": {
+  "title": "Sınır Değer Analizi",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Sınır Değer Analizi (SDA) denklik paylarının sınırlarının denenmesine dayalı bir tekniktir. Dolayısıyla SDA sadece sıralı verilerden oluşan paylarda kullanılabilir. Bir payın minimum ve maksimum değerleri o payın sınır değerleridir. SDA payların sınır değerlerine odaklanır çünkü geliştiricilerin bu sınır değerlerde hata yapması daha olasıdır. SDA tarafından bulunan tipik hatalar, sınırların istenen değerlerin ü zerinde veya altında değerler olarak yanlış uygulandığı veya tamamen ihmal edildiğ i durumlarda görülmektedir."
+   },
+   {
+    "t": "p",
+    "text": "Bu ders programı SDA'nın iki versiyonunu içerir: 2 değerli ve 3 değerli SDA. Bunlar %100 kapsama ulaşmak için denenmesi gereken sınır başına kapsam öğeleri açısından farklılık gösterir. 2 değerli SDA'da (Craig 2002, Myers 2011) her sınır değer için iki kapsam öğesi vardır. Bunlar: sınır değer ve bitişik paya ait en yakın komşusu. 2 değerli SDA ile %100 kapsama ulaşmak için test senaryolarının tüm kapsam öğelerini, yani tanımlanan tüm sınır değerlerini denemesi gerekir. Kapsam, test senaryolarında denenen sınır değerlerin sayısının tanımlanan tüm sınır değerlerin sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. 3 değerli SDA'da (Koomen 2006, O'Regan 2019) her sınır değer için üç kapsam öğesi vardır. Bunlar: sınır değer ve bu sınır değerin her iki komşu sınır değeri. Dolayısıyla 3 değerli SDA'da bazı kapsam öğeleri sınır değerler olmayabilir. 3 değerli SDA ile %100 kapsama ulaşmak için test senaryolarının tüm kapsam öğelerini, yani tanımlanan sınır değerleri ve komşu değerlerini denemesi gerekir. Kapsam, denenen sınır değerlerin ve komşularının sayısının tanımlanan tüm sınır değerlerin ve komşularının sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. 3 değerli SDA, 2 değerli SDA'dan daha titiz bir analizdir çünkü 3 değerli SDA 2 değerli SDA'nın gözden kaçırdığı hataları tespit edebilir. Örneğin \"(x ≤ 10)\" olması gerekirken \"(x = 10) \" olarak hatalı şekilde kodlandıysa 2 değerli SDA'dan (x = 10, x = 11) elde edilen hiçbir test verisi hatayı bulamaz. Ancak 3 değerli SDA'dan elde edilen x = 9 hatayı bulabilir."
+   }
+  ]
+ },
+ "4.2.3": {
+  "title": "Karar Tablosu Testleri",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Karar tabloları, farklı test koşul kombinasyonlarının nasıl farklı çıktılar ürettiğini göstermek için kullanılır. Karar tabloları, ayrıca iş kuralları gibi karmaşık mantığa sahip bileşenleri göstermenin etkin bir yoludur. Karar tabloları oluşturulurken sistemin koşulları ve bunların sonucunda ortaya çıkan aksiyonlar tanımlanır. Bunlar tablonun satırlarını oluşturur. Her sütun, koşulların benzersiz bir kombinasyonunu ve ilişkili aksiyonları tanımlayan bir karar kuralına karşılık gelir. Sınırlı giriş karar tablolarında koşul ve aksiyonların tüm değerleri (ilgisiz veya uygulanabilir olmayan hariç; aşağıya bakın) Boolean (doğru veya yanlış) olarak gösterilir. Genişletilmiş giriş karar tablolarında ise koşul ve aksiyonların bazıları veya tamamı birden fazla değer alabilir (ör. sayı aralıkları, denklik payları, ayrık değerler). Koşul gösterimi şu şekildedir: \"T\" (doğru) koşulun yerine getirildiği anlamına gelir. \"F\" (yanlış) koşulun yerine getirilmediği anlamına gelir. \"–\", koşulun değerinin aksiyon çıktısı açısından ilgisiz olduğu anlamına gelir. \"N/A – Not Applicable\" koşulun verilen kural için uygulanabilir olmadığı anlamına gelir. Aksiyonlar için: \"X\", aksiyonun gerçekleşmesi gerektiği anlamına gelir. Boşluk, aksiyonun gerçekleşmemesi gerektiği anlamına gelir. Başka gösterim şekilleri de kullanılabilir. Tam bir karar tablosunda her koşul kombinasyonunu kapsayacak kadar sütun vardır. Tablo, elverişsiz koşul kombinasyonları içeren sütunların silinmesiyle sadeleştirilebilir. Tablo, bazı koşulların çıktıyı etkilemeyeceği sütunların tek bir sütunda birleştirilmesiyle de küçültülebilir. Karar tablosu küçültme algoritmaları (indirgenmiş karar tabloları) bu ders programı kapsamında değildir."
+   },
+   {
+    "t": "p",
+    "text": "Karar tablosu testinde, kapsam öğeleri, koşulların uygulanabilir kombinasyonlarını içeren sütunlardır. Bu teknikle %100 kapsama ulaşmak için test senaryoları tüm bu sütunları denemelidir. Kapsam, denenen sütunların sayısının tüm uygulanabilir sütunların sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. Karar tablosu testlerinin güçlü yanı, hiçbir koşulu göz ardı etmeden tüm koşul kombinasyonlarını ele almaya yönelik sistematik bir yaklaşım sağlamasıdır. Ayrıca gereksinimlerdeki boşlukları veya çelişkileri bulmaya da yardımcı olur. Koşulların sayısı fazla olduğunda, karar kurallarının tümünü uygulamak zaman alabilir, çünkü kuralların sayısı koşulların sayısıyla üssel olarak artar. Bu durumda, uygulanması gereken kural sayısını azaltmak için indirgenmiş bir karar tablosu veya risk temelli bir yaklaşım kullanılabilir."
+   }
+  ]
+ },
+ "4.2.4": {
+  "title": "Durum Geçişi Testleri",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Durum diyagramları, bir sistemin davranışını sistemin olası durumlarını ve geçerli durum geçişlerini göstererek modeller. Bir geçiş, bir koruma koşulu ile ilişkilendirilebilecek bir olayla başlatılır. Geçişlerin anlık olduğu varsayılır ve bazen bu geçişler yazılımla ilgili bir aksiyonla sonuçlanır. Yaygın kullanım şu şekildedir: \"olay [koruma koşulu] / aksiyon\". Koruma koşulları ve aksiyonlar mevcut değilse veya test uzmanı açısından alakasız ise göz ardı edilebilir. Durum tablosu, durum geçişi diyagramı ile eş değer bir modeldir. Tablonun satırları durumları, sütunları ise olayları temsil eder (varsa koruma koşullarıyla birlikte). Tablo girişleri (hücreler) geçişleri temsil eder ve hedef durum ve tanımlanmışsa sonuç olarak ortaya çıkan aksiyonları içerir. Durum geçişi diyagramının aksine, durum tablosu geçersiz geçişleri açıkça gösterir, bunlar boş hücrelerle temsil edilir."
+   },
+   {
+    "t": "p",
+    "text": "Durum geçişi diyagramına veya durum tablosuna dayalı bir test senaryosu genelde, bir dizi durum değişikliğiyle (ve gerekirse aksiyonla) sonuçlanan bir dizi olayla temsil edilir. Bir test senaryosu, durumlar arası çeşitli geçişleri içerebilir. Durum geçişi testi için birçok kapsama kriteri vardır. Bu ders programında bunlardan üçü ele alınmıştır. Tüm durumlar kapsamında, kapsam öğesi durumlardır. Tüm durumlar kapsamının %100'üne ulaşmak için test senaryoları tüm durumların çalıştırılmasını sağlamalıdır. Kapsam, incelenen durum sayısının toplam durum sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. Geçerli geçişler kapsamında (0-anahtar kapsamı da denir) kapsam öğeleri tekil geçerli geçişlerdir. Geçerli geçişler kapsamının %100'üne ulaşmak için test senaryoları tüm geçerli geçişleri denemelidir. Kapsam, denenen geçerli geçişlerin sayısının toplam geçerli geçiş sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. Tüm geçişler kapsamında kapsam öğeleri durum tablosunda gösterilen tüm geçişlerdir. Tüm geçişler kapsamının %100'üne ulaşmak için test senaryoları tüm geçerli geçişleri denemeli ve geçersiz geçişleri denemeye çalışmalıdır. Tek bir test senaryosunda yalnızca bir geçersiz geçişin test edilmesi, kusur maskelenmesini, yani bir hatanın diğerinin tespitini engellediği durumları önlemeye yardımcı olur. Kapsam, yürütülen test senaryoları tarafından denenen veya kapsanmaya çalışılan geçerli ve geçersiz geçiş sayısının toplam geçerli ve geçersiz geçiş sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. Tüm durumlar kapsamı, geçerli geçişler kapsamından daha zayıftır çünkü genelde bu kapsama tüm geçişler denenmeden ulaşılabilir. Geçerli geçişler kapsamı en yaygın kullanılan kapsama kriteridir. Geçerli geçişler kapsamının tamamına ulaşmak, tüm durumlar kapsamının tamamına ulaşılmasını garanti eder. Tüm geçişler kapsamına ulaşmak, hem tüm durumlar kapsamının hem de geçerli geçişler kapsamının tamamına ulaşılmasını garanti eder; aynı zamanda kritik ve emniyet hassasiyetli yazılımlar için minimum gereksinim niteliğinde olmalıdır."
+   }
+  ]
+ },
+ "4.3": {
+  "title": "Beyaz Kutu Test Teknikleri",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Hem yaygın olarak kullanılmaları hem de basit olmaları nedeniyle bu bölüm koda bağlı iki adet beyaz kutu test tekniğine odaklanır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Komut testi",
+     "Dal testi"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Daha eksiksiz bir kod kapsamı elde etmek için bazı emniyet hassasiyetli, kritik veya çok fazla entegrasyonun olduğu ortamlarda kullanılan daha kesin teknikler de vardır. Daha yüksek test seviyelerinde kullanılan (ör. API testi) veya koda bağlı olmayan kapsamın kullanıldığı (ör. nöral ağ testindeki nöron kapsamı) beyaz kutu test teknikleri de bulunur. Bu tekniklere bu ders programında yer verilmemiştir."
+   }
+  ]
+ },
+ "4.3.1": {
+  "title": "Komut Testleri ve Komut Kapsama Yüzdesi",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Komut testinde kapsam öğeleri çalıştırılabilir komutlardır. Amaç, kabul edilebilir bir kapsama seviyesi elde edilene kadar kod içindeki komutları deneyecek test senaryoları tasarlamaktır. Kapsam, test senaryoları tarafından denenen komut sayısının kod içindeki toplam çalıştırılabilir komut sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. %100 komut kapsama yüzdesine ulaşıldığında kod içindeki tüm çalıştırılabilir komutların en az bir kez denenmesi sağlanır. Bu özellikle, hata içeren her bir komutun yürütüleceği anlamına gelir ve bu durum, hatanın varlığını gösteren bir arıza durumuna neden olabilir. Ancak, bir komutun denenmesi demek, bu komutla ilgili tüm hataların tespit edileceği anlamına gelmez. Örneğin, veriye bağımlı hatalar tespit edilemeyebilir (ör. yalnızca payda sıfır olarak ayarlandığında başarısız olan bir sıfıra bölme işlemi). Bunun yanı sıra, %100 komut kapsama yüzdesi tüm karar mantığının test edilmesini sağlamaz çünkü kod içindeki tüm dallar (bkz. konu 4.3.2) denenmeyebilir."
+   }
+  ]
+ },
+ "4.3.2": {
+  "title": "Dal Testi ve Dal Kapsamı",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Dal, test nesnesinde komutların çalıştırıldığı olası sıraları gösteren kontrol akış grafiğindeki iki düğüm arasında gerçekleşen bir kontrol transferidir. Her bir kontrol transferi koşulsuz (ör. doğrudan açık kod) veya koşullu (ör. karar çıktısı) olabilir. Dal testlerinde kapsam öğeleri dallardır ve burada amaç, kabul edilebilir bir kapsama seviyesi elde edilene kadar kod içindeki dalları deneyecek test senaryoları tasarlamaktır. Kapsam, test senaryoları tarafından denenen dal sayısının toplam dal sayısına bölünmesiyle ölçülür ve yüzde olarak ifade edilir. %100 dal kapsamına ulaşıldığında, kod içindeki koşulsuz ve koşullu tüm dallar test senaryoları tarafından denenir. Koşullu dallar tipik olarak bir \"if...then\" kararının true veya false çıktısına, bir switch/case komutunun çıktısına veya bir döngüden çıkma veya döngüye devam etme kararına karşılık gelir. Ancak, bir dalın bir test senaryosuyla denenmesi, o daldaki tüm hataların tespit edileceği anlamına gelmez. Örneğin, bir kodda spesifik bir yolun yürütülmesini gerektiren hataları tespit edemeyebilir. Dal kapsamı, komut kapsama yüzdesini içerir. Bu, dal kapsamının %100'üne ulaşan her test senaryosu grubunun aynı zamanda %100'lük bir komut kapsama yüzdesine ulaşacağı anlamına gelir (ancak bunun tersi söz konusu değildir)."
+   }
+  ]
+ },
+ "4.3.3": {
+  "title": "Beyaz Kutu Testinin Önemi",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Tüm beyaz kutu test tekniklerinin başlıca kuvvetli yanı, test sırasında kodun tamamının dikkate alınmasıdır; bu da analiz belirsiz, eski veya eksik olsa bile hata tespitini kolaylaştırır. Beyaz kutu testinin sadece kodu baz alarak testleri koşturmasının ortaya çıkardığı zafiyet ise kodlanmayan gereksinimler varsa bunları yakalayamayacak olmasıdır. (Watson 1996). Beyaz kutu test teknikleri statik testte kullanılabilir (ör. kodun deneme koşumları sırasında). Kullanılabileceği alanlar, henüz koşum için hazır olmayan kod, (Hetzel 1988) kaba kod ve bir kontrol akış grafiği ile modellenebilen yazılımlar vb. Sadece kara kutu testi gerçekleştirmek, gerçek kod kapsamının ölçülmesini sağlamaz. Beyaz kutu kapsam ölçüleri objektif bir kapsam ölçümü sağlar ve bu kapsamı büyütmek için üretilecek ek testlere olanak sağlayan gerekli bilgileri sunar ve dolayısıyla koda yönelik güveni artırır."
+   }
+  ]
+ },
+ "4.4": {
+  "title": "Tecrübeye Dayalı Test Teknikleri",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Yaygın olarak kullanılan tecrübeye dayalı test teknikleri aşağıdaki bölümlerde ele alınmaktadır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Hata tahminleme",
+     "Keşif testi",
+     "Kontrol listesine dayalı test"
+    ]
+   }
+  ]
+ },
+ "4.4.1": {
+  "title": "Hata Tahminleme",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Hata tahminleme, test uzmanının bilgilerine dayalı olarak insan hatalarının, yazılım hatalarının ve arızaların ortaya çıkmasını sağlamak için kullanılan bir tekniktir; bu bilgiler aşağıdaki gibidir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Uygulamanın geçmişte nasıl çalıştığı",
+     "Geliştiricilerin yapma eğiliminde olduğu kusurlar ve bu kusurların sonucu olarak meydana gelen hata çeşitleri",
+     "Diğer benzer uygulamalarda oluşan arıza çeşitleri"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Genel olarak insan hataları, yazılım hataları ve arızalar şunlarla ilgili olabilir: girdi (ör. doğru girdinin kabul edilmemesi, yanlış veya eksik parametreler), çıktı (ör. yanlış format, yanlış sonuç), mantık (ör. eksik senaryolar, yanlış operatör), hesaplama (ör. yanlış işlenen, yanlış hesaplama), arayüz (ör. parametre uyuşmazlığı, uyumsuz türler) veya veriler (ör. yanlış öndeğer atama, yanlış tür). Kusur ortaya çıkarmaya yönelik saldırılar hata tahminlemenin uygulanmasına yönelik metodik bir yaklaşımdır. Bu teknikte test uzmanının olası insan hatalarının, yazılım hatalarının ve arızaların bir listesini oluşturması veya elde etmesi ve insan hatalarıyla ilişkili hataları tanımlayacak, hataları ortaya çıkaracak veya arızalara neden olacak testler tasarlaması gerekir. Bu listeler tecrübeye, hata ve arıza verilerine dayanarak veya yazılımların neden başarısız olduğu hakkındaki genel bilgilerden yola çıkarak oluşturulabilir. Hata tahminleme ve kusur ortaya çıkarmaya yönelik saldırılar hakkında daha fazla bilgi için bkz. (Whittaker 2002, Whittaker 2003, Andrews 2006)."
+   }
+  ]
+ },
+ "4.4.2": {
+  "title": "Keşif Testi",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Keşif testinde, test uzmanı test nesnesi hakkında bilgi edinirken testler eş zamanlı olarak tasarlanır, koşulur ve değerlendirilir. Test, test nesnesi hakkında daha fazla bilgi sahibi olmak, odak testlerle test nesnesini daha derinlemesine keşfetmek ve test edilmemiş alanlara yönelik testler oluşturmak için kullanılır. Keşif testi sürecini daha sistematik yapmak için oturum bazlı testlerden faydalanılır. Oturum bazlı yaklaşımda, keşif testi belirli bir zaman dilimi içinde yapılır. Test uzmanı, test sürecine rehberlik etmesi için test hedeflerini içeren bir test başlatma belgesi kullanır. Test oturumunun ardından genellikle test uzmanı ile test oturumunun sonuçlarıyla ilgilenen paydaşların görüşmesini içeren bir bilgilendirme toplantısı yapılır. Bu yaklaşımda test hedefleri üst seviye test koşulları olarak görülebilir. Kapsam öğeleri test oturumunda tanımlanır ve denenir. Test uzmanı, izlenen adımları ve yapılan keşifleri dokümante etmek için notlar alabilir. Keşif testleri, gereksinimler az veya yetersiz olduğunda veya testler üzerinde önemli bir zaman baskısı olduğunda işe yarar. Keşif testleri, diğer daha resmi test tekniklerini tamamlamak için de kullanılır. Test uzmanı deneyimli, alan bilgisine sahip ve analitik beceriler, merak ve yaratıcılık gibi üst seviye temel becerilere sahipse keşif testleri daha etkili olacaktır (bkz. bölüm 1.5.1). Keşif testleri diğer test tekniklerinin kullanımını içerebilir (ör. denklik paylarına ayırma). Keşif testleri hakkında daha fazla bilgi için bkz. (Kaner 1999, Whittaker 2009, Hendrickson 2013)."
+   }
+  ]
+ },
+ "4.4.3": {
+  "title": "Kontrol Listesine Dayalı Testler",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Kontrol listesine dayalı testlerde, test uzmanları bir kontrol listesinde bulunan test koşullarını kapsayacak şekilde testler tasarlar, uygular ve koşar. Kontrol listeleri tecrübeye, kullanıcı için neyin önemli olduğu veya yazılımın niçin ve nasıl başarısız olabileceği bilgisine dayanarak oluşturulabilir. Kontrol listeleri otomatik olarak kontrol edilebilecek öğeleri, daha çok giriş/çıkış kriteri olmaya uygun olan öğeleri veya çok genel olan öğeleri içermez (Brykczynski 1999). Kontrol listesi öğeleri genellikle soru şeklindedir. Her öğe ayrı ayrı ve doğrudan kontrol edilebilir olmalıdır. Bu öğeler gereksinimlere, arayüz özelliklerine, kalite karakteristiğine veya diğer test koşulu biçimlerine ilişkin olabilir. Fonksiyonel ve fonksiyonel olmayan testler de dahil olmak üzere farklı test çeşitlerini desteklemek için kontrol listeleri oluşturulabilir [ör. kullanılabilirlik testi için 10 kriter (Nielsen 1994)]."
+   },
+   {
+    "t": "p",
+    "text": "Bazı kontrol listeleri zaman içinde kademeli olarak daha az etkin hale gelebilir çünkü geliştiriciler aynı hataları yapmaktan kaçınmayı öğrenecektir. Yeni bulunan yüksek önem derecesine sahip hataların da yansıtılması için yeni kriterlerin eklenmesi gerekebilir. Dolayısıyla kontrol listeleri hata analizine dayalı şekilde düzenli olarak güncellenmelidir. Bununla birlikte, kontrol listesinin çok uzun olmamasına dikkat edilmelidir (Gawande 2009). Ayrıntılı test senaryolarının olmadığı durumlarda, kontrol listesine dayalı testler, test süreci için yol gösterici olabilir. Bu kontrol listeleri üst seviye listeler olduğu için, gerçek testlerde bazı değişikliklerin ortaya çıkması muhtemeldir; bu da potansiyel olarak daha büyük kapsama ama daha düşük tekrarlanabilirliğe yol açar."
+   }
+  ]
+ },
+ "4.5": {
+  "title": "İş Birliğine Dayalı Test Yaklaşımları",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Yukarıdaki tekniklerden her biri (bkz. bölüm 4.2, 4.3, 4.4) hata tespitiyle ilgili özel bir hedefe hizmet eder. İş birliğine dayalı yaklaşımlar ise hataların iş birliği ve iletişim yoluyla önlenmesine odaklanır."
+   }
+  ]
+ },
+ "4.5.1": {
+  "title": "İş Birliğine Dayalı Kullanıcı Hikayesi Yazımı",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Kullanıcı hikayeleri, bir sistem ya da yazılımın kullanıcısı veya alıcısı için değerli olacak bir özelliği temsil eder. Kullanıcı hikayelerinin üç kritik unsuru bulunur (Jeffries 2000); bunlara birlikte \"3 C'ler\" denir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Card (Kart): Bir kullanıcı hikayesini açıklayan ortam (ör. dizin kartı, elektronik panodaki bir giriş)",
+     "Conversation (Konuşmalar): Yazılımın nasıl kullanılacağını açıklar (belgeyle veya sözlü olabilir)",
+     "Confirmation (Onay): Kabul kriterleri (bkz. bölüm 4.5.2)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bir kullanıcı hikayesi için en yaygın format \"[Rol] olarak [gerçekleştirilecek hedef] istiyorum çünkü [rol için ortaya çıkan iş değeri].\" şeklindedir ve bu formatı kabul kriterleri izler. İş birlikçi kullanıcı hikayesi yazımı sırasında beyin fırtınası ve zihin haritası gibi teknikler kullanılabilir. İş birliği, ekibin analiz, yazılım geliştirme ve test etme gibi üç perspektifi dikkate alarak, neyin teslim edilmesi gerektiğine yönelik ortak bir vizyon edinmesini sağlar. İyi kullanıcı hikayeleri: Bağımsız, Müzakere edilebilir, Değerli, Tahmin edilebilir, Küçük ve Test edilebilir (INVEST) olmalıdır. Paydaş bir kullanıcı hikayesinin nasıl test edileceğini bilmiyorsa bu durum kullanıcı hikayesinin yeterince net olmadığını veya kendisi için değerli bir şeyi yansıtmadığını veya paydaşın sadece test konusunda yardıma ihtiyacı olduğunu işaret eder (Wake 2003)."
+   }
+  ]
+ },
+ "4.5.2": {
+  "title": "Kabul Kriterleri",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Bir kullanıcı hikayesi için kabul kriterleri, bu kullanıcı hikayesinin, paydaşlar tarafından kabul edilmesi için karşılaması gereken koşulları içerir. Bu bakış açısından bakıldığında kabul kriterleri, test uzmanları tarafından denenmesi gereken test koşulları olarak görülebilir. Kabul kriterleri genelde bir konuşma sonunda ortaya çıkar (bkz. bölüm 4.5.1). Kabul kriterleri şu amaçlarla kullanılır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Kullanıcı hikayesinin kapsamını tanımlamak",
+     "Paydaşlar arasında fikir birliğini sağlamak",
+     "Hem pozitif hem negatif senaryoları açıklamak",
+     "Kullanıcı hikayesi kabul testi için esas teşkil etmek (bkz. bölüm 4.5.3)",
+     "Doğru planlama ve tahminleme yapılmasını sağlamak"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bir kullanıcı hikayesi için kabul kriterleri yazmanın birçok yolu vardır. En yaygın iki format:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Senaryo odaklı (ör. BDD'de kullanılan Given/When/Then formatı, bkz. bölüm 2.1.3)",
+     "Kural odaklı (ör. madde işaretli kontrol listesi veya girdi-çıktı eşlemesinin tablo haline getirilmiş şekli)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Çoğu kabul kriteri bu iki formattan birinde dokümante edilebilir. Ancak, kabul kriterleri iyi tanımlanmış ve açık olduğu sürece ekip başka bir özel format da kullanabilir."
+   }
+  ]
+ },
+ "4.5.3": {
+  "title": "Kabul Testi Güdümlü Yazılım Geliştirme (ATDD)",
+  "chapter": "4",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "ATDD bir önce-test-et yaklaşımıdır (bkz. bölüm 2.1.3). Kullanıcı hikayesini uygulamadan önce test senaryoları oluşturulur. Test senaryoları farklı perspektiflere sahip ekip üyeleri tarafından oluşturulur (ör. müşteriler, geliştiriciler ve test uzmanları) (Adzic 2009). Test senaryoları manuel veya otomatik olarak yürütülebilir. İlk adım, kullanıcı hikayesinin ve (henüz tanımlanmamışsa) kabul kriterlerinin ekip üyeleri tarafından analiz edildiği, görüşüldüğü ve yazıldığı bir analiz çalıştayıdır. Kullanıcı hikayesindeki tüm eksiklikler, belirsizlikler veya hatalar bu süreçte düzeltilir. Bir sonraki adım, test senaryoları oluşturmaktır. Bu, ekip tarafından bir bütün olarak veya test uzmanı tarafından bireysel olarak yapılabilir. Test senaryoları kabul kriterlerine bağlıdır ve yazılımın nasıl çalıştığına ilişkin örnekler olarak görülebilir. Bu, ekibin kullanıcı hikayesini doğru hayata geçirmesine yardımcı olur. Örnekler ve testler aynı olduğundan, bu terimler sıkça birbirinin yerine kullanılır. Test tasarımı sırasında bölüm 4.2, 4.3 ve 4.4'te açıklanan test teknikleri uygulanabilir. Tipik olarak, ilk test senaryoları, istisnalar veya hata koşulları olmaksızın doğru davranışı onaylayan ve her şey beklendiği gibi gittiğinde yürütülen aktivite dizisini oluşturan pozitif testlerdir. Pozitif test senaryolarından sonra ekip negatif testler yapmalıdır. Son olarak ekip fonksiyonel olmayan kalite karakteristiklerini de ele almalıdır (ör. performans verimliliği, kullanılabilirlik). Test senaryoları paydaşlar için anlaşılır olacak şekilde ifade edilmelidir. Genelde test senaryoları gerekli önkoşulları (varsa), girdileri ve artkoşulları içeren doğal bir dilde cümleler içerir. Test senaryoları kullanıcı hikayesinin tüm karakteristiklerini ele almalı ve hikayenin ötesine geçmemelidir. Ancak kabul kriterleri, kullanıcı hikayesinde belirtilen sorunlardan bazılarını detaylandırabilir. Ayrıca, iki test senaryosu kullanıcı hikayesinin aynı karakteristiklerini belirtmemelidir. Test senaryoları bir test otomasyon çerçevesiyle desteklenen bir formatta olduğunda, geliştiriciler bir kullanıcı hikayesinde tanımlanan özelliği uygularken destekleyici kodu yazarak test senaryolarını otomatik hale getirebilir. Böylece kabul testleri, koşturulabilir gereksinimler haline gelir."
+   }
+  ]
+ },
+ "5.1": {
+  "title": "Test Planlama",
+  "chapter": "5",
+  "blocks": []
+ },
+ "5.1.1": {
+  "title": "Test Planının Amacı ve İçeriği",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test planı, bir test projesi için test hedeflerini, kaynakları ve süreçleri belirtir. Test planı:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test hedeflerine ulaşmaya yarayan araçları ve programın dokümante edilmiş halidir",
+     "Gerçekleştirilen test aktivitelerinin belirlenmiş kriterlerini karşılamasına yardımcı olur",
+     "Ekip üyeleri ve diğer paydaşlarla iletişim için bir araç olarak hizmet eder",
+     "Test sürecinin mevcut test politikasına ve test stratejisine uyacağını gösterir (veya testin bunlara neden uymayacağını açıklar)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test planlama, test uzmanına düşünme konusunda rehberlik eder ve test uzmanını riskler, zaman çizelgeleri, insanlar, araçlar, masraflar, efor vb. ile ilgili konularda gelecekte ortaya çıkabilecek zorluklara karşı hazırlar. Test planı hazırlama süreci, test hedeflerine ulaşmak için gereken eforu değerlendirmeye yardımcı olan faydalı bir yoldur. Tipik test planı içeriğinde şunlar yer alır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test bağlamı (ör. kapsam, test hedefleri, test esası)",
+     "Test projesinin varsayımları ve kısıtları",
+     "Paydaşlar (ör. roller, sorumluluklar, teste uygunluk, işe alım ve eğitim ihtiyaçları)",
+     "İletişim (ör. iletişimin şekli ve sıklığı, dokümantasyon şablonları)",
+     "Risk kaydı (ör. ürün riskleri, proje riskleri)",
+     "Test yaklaşımı (ör. test seviyeleri, test çeşitleri, test teknikleri, test çıktıları, giriş kriterleri ve çıkış kriterleri, testin bağımsızlığı, toplanacak metrikler, test verisi gereksinimleri, test ortamı gereksinimleri, test politikası ve test stratejisinden sapmalar)",
+     "Bütçe ve zaman çizelgesi"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test planı ve içeriği hakkında daha fazla bilgiye ISO/IEC/IEEE 29119-3 standardından ulaşılabilir."
+   }
+  ]
+ },
+ "5.1.2": {
+  "title": "Test Uzmanının Döngü ve Sürüm Planlamasına Katkısı",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Döngüsel YGYD'lerinde tipik olarak iki tür planlama gerçekleşir: sürüm planlaması ve döngü planlaması. Sürüm planlaması bir ürünün piyasaya sürülmesini planlar, ürün iş listesini tanımlar ve yeniden tanımlar ve daha kapsamlı kullanıcı hikayelerinin daha küçük kullanıcı hikayesi gruplarına dönüştürülmesini içerebilir. Ayrıca, tüm döngülerde test yaklaşımı ve test planının esası olarak da hizmet eder. Sürüm planlamasında yer alan test uzmanları, test edilebilir kullanıcı hikayelerinin ve kabul kriterlerinin yazım sürecine katılır (bkz. bölüm 4.5), proje ve kalite riski analizlerinde görev alır (bkz. bölüm 5.2), kullanıcı hikayeleriyle ilişkili test eforunu tahmin eder (bkz. bölüm 5.1.4), test yaklaşımını belirler ve sürüm için testi planlar. Döngü planlaması, tek bir döngünün sonunu öngörmekte olup döngüye ait iş listesiyle ilgilidir. Döngü planlamasında yer alan test uzmanları, kullanıcı hikayelerine ilişkin detaylı bir risk analizine katılır, kullanıcı hikayelerinin test edilebilirliğini belirler, kullanıcı hikayelerini görevlere (özellikle test görevleri) ayırır, tüm test görevleri için test eforuna dair tahminde bulunur ve fonksiyonel ve fonksiyonel olmayan test nesnesi unsurlarını belirler ve iyileştirir."
+   }
+  ]
+ },
+ "5.1.3": {
+  "title": "Giriş Kriterleri ve Çıkış Kriterleri",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Giriş kriterleri belirli bir aktivite için önkoşulları tanımlar. Giriş kriterleri karşılanmazsa faaliyetin daha zor olması, daha uzun sürmesi, daha maliyetli ve daha riskli olması muhtemeldir. Çıkış kriterleri bir aktivitenin tamamlandığını anlamak için nelere ulaşılması gerektiğini tanımlar. Test hedeflerine göre farklılık gösterebilecek olan giriş kriterleri ve çıkış kriterleri her test seviyesi için tanımlanmalıdır. Tipik giriş kriterleri arasında şunlar yer alır: kaynak elverişliliği (ör. insanlar, araçlar, ortamlar, test verisi, bütçe, zaman), test çalışma ürünleri elverişliliği (ör. test esası, test edilebilir gereksinimler, kullanıcı hikayeleri, test senaryoları) ve test nesnesinin başlangıç kalite seviyesi (ör. tüm duman testleri geçmiştir). Tipik çıkış kriterleri arasında şunlar yer alır: bütünlük ölçüleri (ör. ulaşılan kapsam seviyesi, çözülmemiş hata sayısı, hata yoğunluğu, başarısız test senaryosu sayısı) ve ikili “evet/hayır” kriterleri (ör. planlanan testler koşturuldu, statik test yapıldı, bulunan tüm hatalar raporlandı, tüm regresyon testleri otomatik hale getirildi). Zamanın veya paranın bitmesi de geçerli bir çıkış kriteri olarak görülebilir. Diğer çıkış kriterleri yerine getirilmese bile paydaşlar daha fazla test yapmadan ürünü piyasaya sürmenin riskini gözden geçirip kabul ettiyse, bu şartlar altında testlere son verilmesi kabul edilebilir bir durumdur. Çevik yazılım geliştirmede, çıkış kriterleri genellikle Tamamlandı Tanımı olarak adlandırılır ve ekibin piyasaya sürülebilir bir öğe için hedef metriklerini tanımlar. Bir kullanıcı hikayesinin geliştirme ve/veya test aktivitelerinin başlaması için yerine getirmesi gereken giriş kriterleri Hazır Tanımı olarak adlandırılır."
+   }
+  ]
+ },
+ "5.1.4": {
+  "title": "Tahminleme Teknikleri",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test eforu tahmini, bir test projesinin test hedeflerine ulaşmak için gereken testle ilgili iş miktarını tahmin etmeyi içerir. Tahminin bir dizi varsayıma dayandığını ve her zaman tahmin hatasına tabi olduğunu paydaşlara açıkça belirtmek önemlidir. Küçük görevlere ilişkin yapılan tahminler genellikle büyük görev tahminlerinden daha doğrudur. Bu nedenle, büyük bir görev için tahminleme yapılırken görev daha küçük görevlere bölünerek bunlara yönelik tahminleme gerçekleştirilir. Bu ders programında aşağıdaki dört tahminleme tekniği açıklanmaktadır. Oranlara dayalı tahminleme. Bu metrik bazlı teknikte, kuruluş içinde önceden yapılmış projelerden edinilen rakamlar toplanır ve bu da benzer projeler için \"standart\" oranların elde edilmesini mümkün kılar. Bir kuruluşun kendi projelerinin oranları (ör. geçmiş verilerden elde edilen) genellikle tahminleme sürecinde kullanılacak en iyi kaynaktır. Bu standart oranlar yeni proje için test eforunun tahmin edilmesinde kullanılabilir. Örneğin, bir önceki projede \"geliştirme-test\" eforu oranı 3:2 ise ve mevcut projede geliştirme eforunun 600 kişi-gün olması bekleniyorsa test eforunun 400 kişi-gün olacağı tahmin edilebilir. Dışdeğerleme. Bu metrik bazlı teknikte, verileri toplamak için mevcut projede mümkün olduğunca erken ölçümler yapılır. Yeterli gözlem yapıldıktan sonra geri kalan iş için gereken efor bu veriye dışdeğerleme uygulanarak (genelde matematiksel bir model ile) yaklaşık olarak belirlenebilir. Bu yöntem döngüsel YGYD'lerine çok uygundur. Örneğin, ekip, gelecek döngüdeki test eforunu son üç döngüden kaynaklı ortalama efor olarak tahmin edebilir. Wideband Delphi. Bu döngüsel, uzmana dayalı teknikte uzmanlar tecrübeye dayalı tahminler yapar. Her uzman tek başına eforu tahmin eder. Sonuçlar toplanır ve üzerinde hemfikir olunan sınırların dışında olan sapmalar söz konusu ise uzmanlar mevcut tahminlerini tartışır. Her bir uzmanın yine tek başına olacak şekilde geri bildirime bağlı yeni bir tahminde bulunması istenir. Bu süreç bir fikir birliği sağlanana kadar tekrar edilir. Poker planlama tekniği, Çevik yazılım geliştirmede yaygın olarak kullanılan"
+   },
+   {
+    "t": "p",
+    "text": "Wideband Delphi varyantıdır. Poker planlama tekniğinde tahminler genelde efor boyutunu temsil eden sayılara sahip kartlar kullanılarak yapılır. Üç noktalı tahminleme. Uzmana dayalı bu teknikte uzmanlar tarafından üç tahmin yapılır: En iyimser tahmin (a), en olası tahmin (m) ve en kötümser tahmin (b). Son tahmin (E) bunların ağırlıklı aritmetik ortalamasıdır. Bu tekniğin en sık kullanılan versiyonunda tahmin şu şekilde hesaplanır: E = (a + 4*m + b) / 6. Bu tekniğin avantajı uzmanların ölçüm hatasını hesaplayabilmesine izin vermesidir. SD = (b – a) / 6. Örneğin tahminler (kişi-saat cinsinden) a=6, m=9 ve b=18 olduğunda son tahmin 10±2 kişi-saattir (ör. 8 ve 12 kişi-saat arası) çünkü E = (6 + 4*9 + 18) / 6 = 10 ve SD = (18 – 6) / 6 = 2 şeklindedir. Bunlar ve diğer birçok test tahminlemesi teknikleri için bkz. (Kan 2003, Koomen 2006, Westfall 2009)."
+   }
+  ]
+ },
+ "5.1.5": {
+  "title": "Test Senaryosu Önceliklendirme",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test senaryoları ve test prosedürleri belirlenip test gruplarına ayrıldıktan sonra bu test grupları, koşum sırasını belirleyen bir test koşum çizelgesinde düzenlenebilir. Test senaryoları önceliklendirilirken farklı faktörler dikkate alınabilir. En yaygın kullanılan test senaryosu önceliklendirme stratejileri aşağıdaki gibidir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test koşum sırasının risk analizi sonuçlarına dayalı olduğu riske dayalı önceliklendirme (bkz. bölüm 5.2.3). En önemli riskleri içeren test senaryosu ilk olarak yürütülür.",
+     "Test koşum sırasının kapsama dayalı olduğu (ör. komut kapsama yüzdesi) önceliklendirme. En yüksek kapsama ulaşan test senaryoları ilk olarak yürütülür. Ek kapsam önceliklendirmesi denilen başka bir varyantta, en yüksek kapsama ulaşan test senaryosu ilk uygulanır; sonraki her bir test senaryosu en yüksek ek kapsama ulaşan test senaryosudur.",
+     "Test koşum sırasının, baz alınan gereksinimlerin önceliklerine dayandığı gereksinime dayalı önceliklendirme. Gereksinim öncelikleri paydaşlar tarafından belirlenir. En önemli gereksinimlerle ilgili test senaryoları ilk olarak yürütülür."
+    ]
+   },
+   {
+    "t": "p",
+    "text": "İdeal olarak test senaryoları, yukarıdaki önceliklendirme stratejilerinden biri kullanılarak öncelik seviyelerine göre çalıştırılacak şekilde sıralanır. Ancak, test senaryolarının veya test edilen özelliklerin bağımlılıkları varsa bu yöntem çalışmayabilir. Yüksek öncelikli bir test senaryosu düşük öncelikli bir test senaryosuna bağımlıysa önce düşük öncelikli test senaryosu koşturulmalıdır. Test koşum sıralamasında kaynakların elverişliliği de dikkate alınmalıdır. Örneğin, sadece spesifik bir zaman aralığında mevcut olabilecek gerekli test araçları, test ortamları veya kişiler."
+   }
+  ]
+ },
+ "5.1.6": {
+  "title": "Test Piramidi",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test piramidi, farklı testlerin farklı ayrıntıları olabileceğini gösteren bir modeldir. Test piramidi modeli, farklı test hedeflerinin farklı test otomasyonu seviyeleriyle desteklendiğini göstererek test otomasyonunda ve test eforu tahsisinde ekibi destekler. Piramit katmanları test gruplarını temsil eder. Katman ne kadar yüksekse test ayrıntısı, test izolasyonu o kadar düşük, test koşumu süresi ise o kadar yüksek olur. Alt katmandaki testler küçük, izole ve hızlıdır ve küçük bir fonksiyonalite parçasını kontrol eder; dolayısıyla makul bir kapsama ulaşmak için genellikle çok sayıda test gerekir. Üst katman karmaşık, üst seviye ve uçtan uca testleri temsil eder. Bu üst seviye testler genelde alt katmanlardaki testlerden daha yavaştır ve genelde büyük bir fonksiyonalite parçasını kontrol eder; dolayısıyla makul bir kapsam seviyesine ulaşmak için genellikle sadece birkaç test gerekir. Katmanların sayısı ve adlandırması değişebilir. Örneğin, orijinal test piramidi modeli (Cohn 2009) üç katmanı şu şekilde tanımlar: \"birim testleri\", \"servis testleri\" ve \"UI testleri\". Bir diğer popüler model ise"
+   },
+   {
+    "t": "p",
+    "text": "birim (bileşen) testlerini, entegrasyon (bileşen entegrasyonu) testleri ve uçtan uca testleri tanımlar. Diğer test seviyeleri (bkz. bölüm 2.2.1) de kullanılabilir."
+   }
+  ]
+ },
+ "5.1.7": {
+  "title": "Test Çeyrekleri",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Brian Marick (Marick 2003, Crispin 2008) tarafından tanımlanan test çeyrekleri, test seviyelerini Çevik yazılım geliştirmede uygun test çeşitleri, aktiviteleri, test teknikleri ve iş ürünleri ile gruplandırır. Model, tüm uygun test çeşitlerinin ve test seviyelerinin YGYD'ne dahil edilmesini sağlamak için bunları görselleştirmede ve bazı test çeşitlerinin belirli test seviyeleriyle diğerlerinden daha alakalı olduğunu anlamada test yönetimini destekler. Bu model ayrıca geliştiriciler, test uzmanları ve iş birimleri dahil tüm paydaşlara test çeşitlerinin ayrımını yapmanın ve açıklamanın bir yolunu sunar. Bu modelde testler iş odaklı veya teknoloji odaklı olabilir. Testler ayrıca ekibi destekleyebilir (geliştirmeye rehberlik edebilir) veya ürünü eleştirebilir (beklentilere karşı davranışını ölçebilir). Bu iki perspektifin kombinasyonu dört çeyreği belirler:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Çeyrek Q1 (teknoloji odaklı ve ekibi desteklemek için). Bu çeyrekte bileşen ve bileşen entegrasyon testleri yer alır. Bu testler otomatikleştirilip CI sürecine dahil edilmelidir.",
+     "Çeyrek Q2 (iş odaklı ve ekibi desteklemek için). Bu çeyrekte fonksiyonel testler, örnekler, kullanıcı hikayesi testleri, kullanıcı deneyimi prototipleri, API testi ve simülasyonlar yer alır. Bu testler kabul kriterlerini kontrol eder ve manuel ya da otomatik olabilir.",
+     "Çeyrek Q3 (iş odaklı, ürünün kritiğini yapmak için). Bu çeyrekte keşif testi, kullanılabilirlik testi, kullanıcı kabul testi yer alır. Bu testler kullanıcı odaklıdır ve genellikle manueldir.",
+     "Çeyrek Q4 (teknoloji odaklı, ürünün kritiğini yapmak için). Bu çeyrekte duman testleri ve fonksiyonel olmayan testler (kullanılabilirlik testi hariç) yer alır. Bu testler genellikle otomatiktir."
+    ]
+   }
+  ]
+ },
+ "5.2": {
+  "title": "Risk Yönetimi",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Organizasyonlar hedeflerine ulaşıp ulaşamayacaklarını ve bunun ne zaman gerçekleşeceğini belirsiz hale getiren birçok iç ve dış faktörle karşı karşıyadır (ISO 31000). Risk yönetimi organizasyonların hedeflere ulaşma olasılığını artırmasına, ürünlerinin kalitesini geliştirmesine ve paydaşların güvenini artırmasına olanak sağlar. Temel risk yönetimi aktiviteleri:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Risk analizi (risk belirleme ve risk değerlendirmesinden oluşur; bkz. bölüm 5.2.3)",
+     "Risk kontrolü (risk azaltma ve risk gözetiminden oluşur; bkz. bölüm 5.2.4)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test aktivitelerinin risk analizi ve risk kontrolüne göre seçildiği, önceliklendirildiği ve yönetildiği test yaklaşımına risk bazlı test denir."
+   }
+  ]
+ },
+ "5.2.1": {
+  "title": "Risk Tanımı ve Risk Özellikleri",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Risk, sonucu olumsuz bir etkiye neden olacak potansiyel bir olay, tehlike, tehdit veya durumdur. Bir risk iki faktörle karakterize edilebilir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Risk olasılığı – riskin meydana gelme olasılığı (sıfırdan büyük ve birden küçük)",
+     "Risk etkisi (zarar) – riskin meydana gelmesinin sonuçları"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bu iki faktör bir risk ölçüsü olan risk seviyesini belirtir. Risk seviyesi ne kadar yüksekse çözülmesi de o kadar önemlidir."
+   }
+  ]
+ },
+ "5.2.2": {
+  "title": "Proje Riskleri ve Ürün Riskleri",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Yazılım testlerinde genelde iki tür riskle ilgilenilir: proje riskleri ve ürün riskleri. Proje riskleri projenin yönetimi ve kontrolüyle ilgilidir. Proje risklerine örnek olarak:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Organizasyonel sorunlar (ör; iş ürünlerinin teslimatındaki gecikme, hatalı tahmin, maliyet düşürme)",
+     "İnsan kaynaklı sorunlar (ör; yetersiz beceri, çatışma, iletişim problemleri, personel eksiği)",
+     "Teknik sorunlar (ör; proje kapsamının kontrolsüz artışı, eksik araç desteği)",
+     "Tedarikçi sorunları (ör; tedarikçi teslimat başarısızlığı, tedarikçi iflası)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Proje riskleri ortaya çıktığında, projenin zaman çizelgesini, bütçesini veya kapsamını etkileyebilir; bu da projenin hedeflerine ulaşma kapasitesine etki eder. Ürün riskleri ürünün kalite karakteristikleriyle ilgilidir (ör. ISO 25010 kalite modelinde açıklanmıştır). Ürün riski örnekleri arasında şunlar yer alır: eksik ya da yanlış fonksiyonalite, hatalı hesaplamalar, çalışma zamanı hataları, zayıf mimari, etkin olmayan algoritmalar, yetersiz yanıt süresi, kötü kullanıcı deneyimi, güvenlik açıkları. Ürün riskleri, meydana geldiklerinde, aşağıdakiler de dahil olmak üzere çeşitli olumsuz sonuçlara yol açabilir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Kullanıcı memnuniyetsizliği",
+     "Gelir, güven ve itibar kaybı",
+     "Diğer paydaşlara zararlar",
+     "Yüksek bakım maliyetleri, yardım masasının aşırı yoğunluğu",
+     "Para cezaları",
+     "Ekstrem durumlarda fiziksel zarar, yaralanma ve hatta ölüm"
+    ]
+   }
+  ]
+ },
+ "5.2.3": {
+  "title": "Ürün Riski Analizi",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test perspektifinden bakıldığında, ürün riski analizinin amacı, ürün riski konusunda farkındalık sağlayarak test eforunu, kalan ürün riskini en aza indirecek şekilde yönlendirmektir. İdeal olarak ürün riski analizi YGYD'nin erken aşamalarında başlar. Ürün riski analizi risk belirleme ve risk değerlendirmesinden oluşur. Risk belirleme kapsamlı bir risk listesi oluşturulmasıyla ilgilidir. Paydaşlar riskleri çeşitli teknikler ve araçlar kullanarak belirleyebilir; ör. beyin fırtınası, çalıştaylar, görüşmeler veya neden-sonuç diyagramları. Risk değerlendirmesi şunları içerir: belirlenen risklerin kategorilere ayrılması, risk olasılığının, risk etkisinin ve risk seviyesinin belirlenmesi, önceliklendirme ve söz konusu riskleri ele almaya ilişkin yöntemler tasarlanması. Kategorilere ayırma işlemi risk azaltma aksiyonlarının atanmasına yardımcı olur çünkü genelde aynı kategoriye giren riskler benzer bir yaklaşımla hafifletilebilir. Risk değerlendirmesinde nicel veya nitel bir yaklaşım ya da her ikisinin bir karması kullanılabilir. Nicel yaklaşımda risk seviyesi, risk olasılığı ile risk etkisinin çarpılmasıyla hesaplanır. Nitel yaklaşımda risk seviyesi risk matrisi kullanılarak belirlenebilir."
+   },
+   {
+    "t": "p",
+    "text": "Ürün riski analizi, testlerin bütünlüğünü ve kapsamını etkileyebilir. Sonuçları aşağıdaki amaçlarla kullanılır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Gerçekleştirilecek testlerin kapsamını belirlemek",
+     "Belirli test seviyelerini tespit etmek ve gerçekleştirilecek test çeşitlerini önermek",
+     "Kullanılacak test tekniklerini ve ulaşılacak kapsamı belirlemek",
+     "Her bir görev için gerekli olan test eforunu tahmin etmek",
+     "Kritik hataların mümkün olduğunca erken bulunması için testleri önceliklendirmek",
+     "Riski azaltmak için testlere ek olarak uygulanabilecek aktiviteleri belirlemek"
+    ]
+   }
+  ]
+ },
+ "5.2.4": {
+  "title": "Ürün Risk Kontrolü",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Ürün risk kontrolü, belirlenen ve değerlendirilen ürün risklerine karşı alınan tüm önlemlerden oluşur. Ürün risk kontrolü risk azaltma ve risk gözetimini içerir. Risk azaltma, risk değerlendirmesinde önerilen aksiyonların uygulanarak risk seviyesinin azaltmasını içerir. Risk gözetiminin amacı risk azaltma aksiyonlarının etkili olmasını sağlamak, risk değerlendirmesini iyileştirmek için daha fazla bilgi elde etmek ve ortaya çıkan riskleri tanımlamaktır. Ürün risk kontrolüne ilişkin olarak bir risk analiz edildiğinde riske yönelik birkaç yanıt seçeneği mümkündür; örneğin, test yoluyla riskin azaltılması, risk kabulü, risk transferi veya acil durum planı (Veenendaal 2012). Test yoluyla ürün riskini azaltmak için alınabilecek aksiyonlar aşağıdaki gibidir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Uygun deneyim ve beceri seviyesine sahip uygun test uzmanlarını seçmek",
+     "Uygun bir test bağımsızlığı seviyesi uygulamak",
+     "Gözden geçirmeler ve statik analizler gerçekleştirmek",
+     "Uygun test teknikleri ve kapsam seviyeleri uygulamak",
+     "Etkilenen kalite karakteristiklerini hedefleyen uygun test çeşitlerini uygulamak.",
+     "Regresyon testi de dahil olmak üzere dinamik test uygulamak"
+    ]
+   }
+  ]
+ },
+ "5.3": {
+  "title": "Test Gözetimi, Test Kontrol ve Test Tamamlama",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test gözetimi test hakkında bilgi toplamayla ilgilidir. Bu bilgi, test ilerlemesini değerlendirmek ve test çıkış kriterlerinin veya çıkış kriterleriyle ilişkili test görevlerinin (ürün riskleri, gereksinimler veya kabul kriterlerinin kapsamına yönelik hedeflerin karşılanması gibi) karşılanıp karşılanmadığını ölçmek için kullanılır."
+   },
+   {
+    "t": "p",
+    "text": "Test kontrolü, en etkili ve verimli testin gerçekleştirilmesi için kontrol yönergeleri şeklinde, rehberlik ve gerekli düzeltici aksiyonları sağlamak üzere test gözetiminden elde edilen bilgileri kullanır. Kontrol yönergelerine örnek olarak şunlar verilebilir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Belirlenen bir risk sorun haline geldiğinde testleri yeniden önceliklendirmek",
+     "Bir test öğesinin giriş kriteri veya çıkış kriterlerine uyup uymadığını yeniden değerlendirmek",
+     "Test ortamının teslimatındaki gecikmeleri ele almak için test zaman çizelgesini ayarlamak",
+     "Gerektiği zaman ve yerde yeni kaynaklar eklemek"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test tamamlama, test projesinde elde edilen deneyimi, proje boyunca üretilen test çalışma ürünlerini ve elde edilen diğer ilgili bilgileri toplar ve bir araya getirir. Test tamamlama aktiviteleri, bir test seviyesinin tamamlanması, bir çevik döngünün tamamlanması, bir test projesinin tamamlanması (veya iptali), bir yazılım sisteminin canlıya alınması veya bir bakım sürümünün tamamlanması gibi proje kilometre taşlarında gerçekleştirilir."
+   }
+  ]
+ },
+ "5.3.1": {
+  "title": "Yazılım Testlerinde Kullanılan Metrikler",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test metrikleri, planlanan programa ve bütçeye göre ilerlemeyi, test nesnesinin mevcut kalitesini ve test aktivitelerinin test hedeflerine veya döngüye göre etkinliğini göstermek için toplanır. Test gözetimi, test kontrol ve test tamamlama süreçlerinin desteklenmesi için çeşitli metrikler toplar. Yaygın test metrikleri arasında şunlar yer alır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Proje ilerleme metrikleri (ör. görev tamamlama, kaynak kullanımı, test eforu)",
+     "Test ilerleme metrikleri (ör. test senaryosu uyarlama ilerlemesi, test ortamı hazırlığı ilerlemesi, çalıştırılan/çalıştırılmayan, geçen/geçmeyen test senaryosu sayısı, test koşumu süresi)",
+     "Ürün kalite metrikleri (ör. elverişlilik, yanıt süresi, arızlar arası ortalama süre)",
+     "Hata metrikleri (ör. bulunan/düzeltilen hataların sayısı ve öncelikleri, hata yoğunluğu, hata tespit yüzdesi)",
+     "Risk metrikleri (ör. kalan risk seviyesi)",
+     "Kapsam metrikleri (ör. gereksinim kapsamı, kod kapsamı)",
+     "Maliyet metrikleri (ör. test maliyeti, kalite maliyeti)"
+    ]
+   }
+  ]
+ },
+ "5.3.2": {
+  "title": "Test Raporlarının Amacı, İçeriği ve Hedef Kitlesi",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test raporunda test öncesi ve sonrasındaki test bilgileri özetlenir ve iletilir. Test ilerleme raporları testin devam eden kontrolünü destekler ve plandan sapan durumlar veya değişen durumlar nedeniyle değişikliğe ihtiyaç duyulduğunda test zaman çizelgesinde, kaynaklarda veya test planında değişiklik yapmaya olanak sağlayacak yeterli bilgiyi sağlamalıdır. Test tamamlama raporlarında belirli bir test faaliyeti özetlenir (ör. test seviyesi, test döngüsü, yazılım döngüsü) ve sonraki testler için bilgi verilebilir. Test gözetimi ve test kontrolü sırasında, test ekibi paydaşları bilgilendirmek için test ilerleme raporları hazırlar. Test ilerleme raporu genelde düzenli olarak hazırlanır (ör. günlük, haftalık vb.) ve şunları içerir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test periyodu",
+     "Her tür önemli sapma da dahil olmak üzere test ilerleme durumu (ör. planın önünde veya gerisinde)",
+     "Testi engelleyen durumlar ve bunların çözümü",
+     "Test metrikleri (örnekler için bkz. bölüm 5.3.1)",
+     "Test periyodunda ortaya çıkan yeni ve değişen riskler",
+     "Sıradaki periyod için planlanan testler"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test tamamlama raporu testin tamamlanması sırasında, bir proje, test seviyesi veya test çeşidi tamamlandığında ve ideal olarak çıkış kriterleri karşılandığında hazırlanır. Bu rapor, test ilerleme raporu ve diğer verileri kullanır. Tipik test tamamlama raporlarında şunlar yer alır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test özeti",
+     "Orijinal test planına dayalı test ve ürün kalitesi değerlendirmesi (ör. test hedefleri ve çıkış kriterleri)",
+     "Test planından sapmalar (ör. planlanan zaman çizelgesine, süreye ve efora göre yaşanan farklılıklar).",
+     "Test engelleri ve çözümler",
+     "Test ilerleme raporuna dayalı test metrikleri",
+     "Etkisi azaltılmamış riskler, düzeltilmemiş hatalar",
+     "Testle ilgili olarak alınan dersler"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Farklı hedef kitleleri için raporlarda farklı bilgiler gereklidir ve farklı hedef kitleleri raporların resmiyet derecesini ve sıklığını etkiler. Aynı ekipteki diğer kişilere yapılan test ilerleme raporlaması genellikle sık ve gayri resmi iken, test tamamlanma raporlaması belirli bir şablonu izler ve yalnızca bir kez gerçekleşir. ISO/IEC/IEEE 29119-3 standardı test ilerleme raporu (test durum raporu da denir) ve test tamamlama raporu için şablon ve örnekler içerir."
+   }
+  ]
+ },
+ "5.3.3": {
+  "title": "Testin Durumunun Bildirilmesi",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test durumunu bildirmenin en iyi yolu, test yönetimi endişelerine, organizasyonel test stratejilerine, düzenleyici standartlara veya kendi kendini yöneten ekipler söz konusu olduğunda (bkz. bölüm 1.5.2) ekibin kendisine bağlı olarak değişir. Seçenekler arasında şunlar yer alır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Ekip üyeleri ve diğer paydaşlarla sözlü iletişim",
+     "Gösterge panelleri (ör. CI/CD gösterge panelleri, görev panoları ve burn-down tabloları)",
+     "Elektronik iletişim kanalları (ör. e-posta, sohbet)",
+     "Çevrim içi dokümantasyon",
+     "Resmi test raporları (bkz. bölüm 5.3.2)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bu seçeneklerden bir veya daha fazlası kullanılabilir. Coğrafi mesafe veya zaman farklılıkları nedeniyle doğrudan yüz yüze iletişimin her zaman mümkün olmadığı dağınık ekipler için daha resmi bir iletişim daha uygun olabilir. Genelde farklı paydaşlar farklı bilgi çeşitleriyle ilgilenir, dolayısıyla iletişim buna göre ayarlanmalıdır."
+   }
+  ]
+ },
+ "5.4": {
+  "title": "Yapılandırma Yönetimi",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test sürecinde yapılandırma yönetimi (YY - Configuration Management) test planı, test stratejisi, test koşulları, test senaryosu, test betiği, test sonucu, test kaydı ve test raporu gibi iş ürünlerini yapılandırma öğeleri olarak tanımlamak, kontrol etmek ve takip etmek için bir disiplin sağlar."
+   },
+   {
+    "t": "p",
+    "text": "Karmaşık bir yapılandırma öğesi için (ör. test ortamı) YY içerdiği öğeleri, aralarındaki ilişkileri ve versiyonlarını kaydeder. Yapılandırma öğesi test için onaylandığında temel çizgi (baseline) haline gelir ve sadece resmi bir değişiklik kontrol süreci aracılığıyla değiştirilebilir. Yeni bir temel çizgi oluşturulduğunda, yapılandırma yönetimi değiştirilen yapılandırma öğelerinin bir kaydını tutar. Önceki test sonuçlarını yeniden üretmek için önceki temel çizgiye geri dönülebilir. Test sürecinin uygun şekilde desteklenmesi için YY aşağıdakilerin gerçekleştirilmesini sağlar:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Test öğeleri de dahil olmak üzere tüm yapılandırma öğelerinin benzersiz olarak tanımlanması, versiyon kontrolü yapılmış, değişiklikleri izlenmiş ve diğer yapılandırma öğeleriyle ilgili olması ve böylece test süreci boyunca izlenebilirliğinin sürdürülmesi",
+     "Tanımlanan tüm dokümantasyon ve yazılım öğelerinin test çalışma ürünlerinde açık bir şekilde belirtilmesi"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Sürekli entegrasyon, sürekli teslimat, sürekli dağıtım ve ilgili testler genellikle otomatikleştirilmiş DevOps hattının (bkz. bölüm 2.1.4) bir parçası olarak uygulanır ve otomatikleştirilmiş YY de normalde buna dahildir."
+   }
+  ]
+ },
+ "5.5": {
+  "title": "Hata Yönetimi",
+  "chapter": "5",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Önemli test hedeflerinden biri hataları bulmak olduğundan yerleşik bir hata yönetimi süreci olması çok önemlidir. Burada \"hatalar\"dan bahsediyor olsak da, raporlanan anomalilerin gerçek hatalar veya başka bir şey (ör. yanlış pozitif sonuç, değişiklik talebi) olduğu ortaya çıkabilir. Bu, hata raporlarıyla ilgilenme sürecinde çözülür. Anomaliler YGYD'nin herhangi bir aşamasında raporlanabilir ve raporlama şekli YGYD'ye bağlıdır. Hata yönetimi süreci asgari olarak, hataların veya anomalilerin keşfedilmesinden kapatılmasına kadar tek tek ele alınmasına yönelik bir iş akışını ve sınıflandırılmalarına ilişkin kuralları içerir. İş akışı tipik olarak raporlanan anomalileri kaydetme, analiz etme ve sınıflandırma, düzeltme veya olduğu şekliyle tutma gibi uygun bir yanıta karar verme ve son olarak hata raporunu kapatma faaliyetlerini içerir. Süreç, işe dahil olan tüm paydaşlar tarafından izlenmelidir. Statik testlerde (özellikle statik analiz) bulunan hataların da benzer şekilde ele alınması tavsiye edilir. Hata raporlarının hedefleri genellikle aşağıdaki gibidir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Raporlanan hataları ele almaktan ve çözmekten sorumlu olanlara sorunu çözmek için yeterli bilgiyi sağlamak",
+     "Çalışma ürününün kalitesini izlemek için bir araç sağlamak",
+     "Geliştirme ve test sürecinin iyileştirilmesi için fikirler sunmak"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Dinamik test sırasında kaydedilen hata raporu tipik olarak şunları içerir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Benzersiz tanımlayıcı",
+     "Raporlanan anomalinin başlığı ve kısa bir özeti",
+     "Anomalinin gözlemlendiği tarih, bildiren organizasyon ve yazar (rolü de dahil olmak üzere)",
+     "Test nesnesinin ve test ortamının tanımı",
+     "Hatanın bağlamı (ör. çalıştırılan test senaryosu, yapılan test faaliyeti, YGYD aşaması ve test tekniği, kontrol listesi ve kullanılan test verisi gibi diğer ilgili bilgiler)",
+     "Anomaliyi tespit eden test adımları da dahil olmak üzere anomalinin yeniden oluşturulmasını ve çözümünü sağlamak üzere arızanın açıklaması, ilgili test kayıtları, veritabanı dökümleri, ekran görüntüleri veya kayıtlar",
+     "Beklenen sonuçlar ve gerçekleşen sonuçlar",
+     "Hatanın paydaşların çıkarları veya gereksinimler üzerindeki önem derecesi (etki derecesi)",
+     "Düzeltilme önceliği",
+     "Hatanın durumu (ör. açık, ertelenmiş, tekrarlanmış, düzeltilmeyi bekliyor, onaylama testi bekleniyor, yeniden açıldı, kapatıldı, reddedildi)",
+     "Referanslar (ör. test senaryosuna ilişkin)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Bu verilerin bir kısmı hata yönetim araçları kullanıldığında otomatik olarak dahil edilebilir (ör. tanımlayıcı, tarih, yazar ve başlangıç durumu). Hata raporu için doküman şablonları ve örnek hata raporları, hata raporlarını olay raporları olarak açıklayan ISO/IEC/IEEE 29119-3 standardında bulunabilir."
+   }
+  ]
+ },
+ "6.1": {
+  "title": "Yazılım Testleri için Araç Desteği",
+  "chapter": "6",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Test araçları birçok test aktivitesini destekler ve kolaylaştırır. Örnekler aşağıdakileri içerir ancak bunlarla sınırlı değildir:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Yönetim araçları: YGYD yönetimini, gereksinimleri, testleri, hataları ve yapılandırmayı kolaylaştırarak test sürecinin verimliliğini artırır",
+     "Statik test araçları: Gözden geçirmeler ve statik analiz konusunda test uzmanına destek sağlar",
+     "Test tasarımı ve test uygulama araçları: Test senaryoları, test verisi ve test prosedürlerini oluşturmayı kolaylaştırır",
+     "Test koşumu ve kapsam araçları: Otomatik test koşumu ve kapsam ölçümünü kolaylaştırır",
+     "Fonksiyonel olmayan test araçları: Test uzmanının manuel olarak yapılması zor veya imkansız olan fonksiyonel olmayan testleri yapmasına olanak sağlar",
+     "DevOps araçları: DevOps teslimat hattını, iş akışı takibini, otomatik derleme süreçlerini, CI/CD'yi destekler",
+     "İş birliği araçları: İletişimi kolaylaştırır",
+     "Ölçeklenebilirliği ve dağıtım standardizasyonunu destekleyen araçlar (ör. sanal makineler, konteynerleştirme araçları)",
+     "Teste yardımcı her türlü araç (ör. elektronik tablolar, test etme bağlamında kullanılan bir test aracıdır)"
+    ]
+   }
+  ]
+ },
+ "6.2": {
+  "title": "Test Otomasyonunun Faydaları ve Riskleri",
+  "chapter": "6",
+  "blocks": [
+   {
+    "t": "p",
+    "text": "Sadece test aracına odaklanıp bunu hayata geçirmeye çalışmak iyi bir test pratiğinin garantisi değildir. Her yeni araç, gerçek ve kalıcı faydalar sağlamak için efor gerektirmektedir (ör. aracın kullanıma alınması, bakım ve eğitim). Analiz edilmesi ve hafifletilmesi gereken bazı riskler de vardır. Test otomasyonu kullanmanın potansiyel faydaları şunlardır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Tekrarlayan manuel işleri azaltarak zaman tasarrufu sağlaması (ör. regresyon testleri yürütme, aynı test verilerini yeniden girme, beklenen sonuçlarla gerçekleşen sonuçları karşılaştırma ve kodlama standartlarına göre kontrol etme)",
+     "Daha fazla tutarlılık ve tekrarlanabilirlik sayesinde basit insan hatalarını önlemesi (ör. gereksinimlerden tutarlı bir şekilde testler türetilmesi, test verilerinin sistematik bir şekilde oluşturulması ve testlerin bir araç tarafından aynı sırada ve aynı sıklıkta yürütülmesi)",
+     "Daha objektif değerlendirme (ör. kapsam) ve insanların belirlemesi için fazla karmaşık olan ölçütlerin sağlanması.",
+     "Test yönetimi ve test raporunu desteklemek için test hakkında gereken bilgilere daha kolay erişim (ör. istatistikler, grafikler ve test ilerleme durumu, başarısızlık oranları ve test koşumu süresi hakkında toplanmış veriler)",
+     "Test koşum süresinin kısalmasıyla daha erken hata tespiti, daha hızlı geri bildirim ve daha hızlı pazara sürüm süresi",
+     "Yeni, daha derin ve daha etkin testler tasarlamaları için test uzmanlarına daha fazla süre sağlaması"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Test otomasyonu kullanmanın olası riskleri şunlardır:"
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Bir aracın faydaları konusunda gerçekçi olmayan beklentiler (fonksiyonalite ve kullanım kolaylığı gibi).",
+     "Bir aracı kullanıma almak, test betiklerini sürdürmek ve mevcut manuel test sürecini değiştirmek için gereken zaman, maliyet ve efora ilişkin yanlış tahminler.",
+     "Manuel testlerin daha uygun olduğu durumlarda bir test aracı kullanmak.",
+     "Kullanılan otomasyon aracıyla ilgili beklentinin yüksek olması (Ör. İnsanlar tarafından yapılması gereken eleştirel düşünmeyi yok saymak)"
+    ]
+   },
+   {
+    "t": "p",
+    "text": "Faaliyetlerine son verme, aracı kullanımdan kaldırma, aracı farklı bir satıcıya satma veya yetersiz destek sağlama ihtimali olan bir araç satıcısına bağımlı kalmak (ör. sorulara yanıt vermeme,araç için güncelleme gelmemesi veya geç gelmesi, araçta karşılaşılan hata düzeltmelerinin yapılmaması veya geç yapılması gibi)."
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Artık kullanılmayan, diğer bir deyişle artık güncelleme yapılmayan veya dahili bileşenleri için geliştirme amaçlı çok sık güncelleme gerekebilecek açık kaynaklı yazılımlar kullanmak.",
+     "Otomasyon aracının geliştirme platformuyla uyumlu olmaması.",
+     "Düzenleyici gereksinimlere ve/veya emniyet standartlarına uygun olmayan bir araç seçmek."
+    ]
+   }
+  ]
+ }
+}

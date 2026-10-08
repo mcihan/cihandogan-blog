@@ -1,0 +1,971 @@
+[
+ {
+  "no": "1",
+  "title": "Yazılım Testinin Temelleri",
+  "minutes": 180,
+  "keywords": [
+   "kapsam",
+   "hata ayıklama",
+   "hata",
+   "insan hatası",
+   "arıza",
+   "kalite",
+   "kalite güvence",
+   "kök neden",
+   "test analizi",
+   "test esası",
+   "test senaryosu",
+   "test tamamlama",
+   "test koşulu",
+   "test kontrolü",
+   "test verisi",
+   "test tasarımı",
+   "test koşumu",
+   "test uyarlama",
+   "test gözetimi",
+   "test nesnesi",
+   "test hedefi",
+   "test planlama",
+   "test prosedürü",
+   "test süreci",
+   "test sonucu",
+   "test etme",
+   "test çalışma ürünleri",
+   "izlenebilirlik",
+   "sağlama",
+   "doğrulama"
+  ],
+  "los": [
+   {
+    "id": "FL-1.1.1",
+    "k": "K1",
+    "text": "Genel test hedeflerini tanımlamak",
+    "section": "1.1.1",
+    "questions": 5
+   },
+   {
+    "id": "FL-1.1.2",
+    "k": "K2",
+    "text": "Test ile hata ayıklamanın farklarını belirtmek",
+    "section": "1.1.2",
+    "questions": 4
+   },
+   {
+    "id": "FL-1.2.1",
+    "k": "K2",
+    "text": "Örnekler vererek yazılım testinin neden gerekli olduğunu açıklamak",
+    "section": "1.2.1",
+    "questions": 5
+   },
+   {
+    "id": "FL-1.2.2",
+    "k": "K1",
+    "text": "Yazılım testi ve kalite güvence arasındaki ilişkiyi anımsamak",
+    "section": "1.2.2",
+    "questions": 3
+   },
+   {
+    "id": "FL-1.2.3",
+    "k": "K2",
+    "text": "Kök neden, insan hatası, hata ve arıza arasındaki farkı ayırt etmek",
+    "section": "1.2.3",
+    "questions": 3
+   },
+   {
+    "id": "FL-1.3.1",
+    "k": "K2",
+    "text": "Yedi test prensibini açıklamak",
+    "section": "1.3",
+    "questions": 6
+   },
+   {
+    "id": "FL-1.4.1",
+    "k": "K2",
+    "text": "Farklı test aktivitelerini ve ilgili görevleri açıklamak",
+    "section": "1.4.1",
+    "questions": 6
+   },
+   {
+    "id": "FL-1.4.2",
+    "k": "K2",
+    "text": "Proje bağlamının test süreci üzerindeki etkisini açıklamak",
+    "section": "1.4.2",
+    "questions": 4
+   },
+   {
+    "id": "FL-1.4.3",
+    "k": "K2",
+    "text": "Test aktivitelerini destekleyen test çalışma ürünlerini ayırt etmek",
+    "section": "1.4.3",
+    "questions": 4
+   },
+   {
+    "id": "FL-1.4.4",
+    "k": "K2",
+    "text": "İzlenebilirliğin sağlanmasının önemini açıklamak",
+    "section": "1.4.4",
+    "questions": 4
+   },
+   {
+    "id": "FL-1.4.5",
+    "k": "K2",
+    "text": "Test etme sürecindeki farklı rolleri karşılaştırmak",
+    "section": "1.4.5",
+    "questions": 5
+   },
+   {
+    "id": "FL-1.5.1",
+    "k": "K2",
+    "text": "Test etme sürecinde gerekli genel becerilere örnekler vermek",
+    "section": "1.5.1",
+    "questions": 4
+   },
+   {
+    "id": "FL-1.5.2",
+    "k": "K1",
+    "text": "Tüm ekip yaklaşımının avantajlarını hatırlamak",
+    "section": "1.5.2",
+    "questions": 6
+   },
+   {
+    "id": "FL-1.5.3",
+    "k": "K2",
+    "text": "Testin bağımsızlığının yararlarını ve sakıncalarını açıklamak",
+    "section": "1.5.3",
+    "questions": 5
+   }
+  ],
+  "sections": [
+   {
+    "no": "1.1",
+    "title": "Yazılım Testi Nedir?",
+    "subsections": [
+     {
+      "no": "1.1.1",
+      "title": "Test Hedefleri"
+     },
+     {
+      "no": "1.1.2",
+      "title": "Yazılım Testi ve Hata Ayıklama"
+     }
+    ]
+   },
+   {
+    "no": "1.2",
+    "title": "Yazılım Testi Neden Gereklidir?",
+    "subsections": [
+     {
+      "no": "1.2.1",
+      "title": "Yazılım Testinin Başarıya Katkısı"
+     },
+     {
+      "no": "1.2.2",
+      "title": "Test Etme ve Kalite Güvence (KG)"
+     },
+     {
+      "no": "1.2.3",
+      "title": "İnsan Hataları, Hatalar, Arızalar ve Kök Nedenler"
+     }
+    ]
+   },
+   {
+    "no": "1.3",
+    "title": "Test Prensipleri",
+    "subsections": []
+   },
+   {
+    "no": "1.4",
+    "title": "Test Aktiviteleri, Test Çalışma Ürünleri ve Test Rolleri",
+    "subsections": [
+     {
+      "no": "1.4.1",
+      "title": "Test Aktiviteleri ve Görevleri"
+     },
+     {
+      "no": "1.4.2",
+      "title": "Proje Bağlamında Test Süreci"
+     },
+     {
+      "no": "1.4.3",
+      "title": "Test Çalışma Ürünleri"
+     },
+     {
+      "no": "1.4.4",
+      "title": "Test Esası ve Test Çalışma Ürünleri Arasında İzlenebilirlik"
+     },
+     {
+      "no": "1.4.5",
+      "title": "Test Etme Sürecindeki Roller"
+     }
+    ]
+   },
+   {
+    "no": "1.5",
+    "title": "Test Etme Sürecinde Gerekli Beceriler ve İyi Uygulamalar",
+    "subsections": [
+     {
+      "no": "1.5.1",
+      "title": "Test Etme Sürecinde Gerekli Genel Beceriler"
+     },
+     {
+      "no": "1.5.2",
+      "title": "Tüm Ekip Yaklaşımı"
+     },
+     {
+      "no": "1.5.3",
+      "title": "Testin Bağımsızlığı"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "no": "2",
+  "title": "Yazılım Geliştirme Yaşam Döngüsü Boyunca Test",
+  "minutes": 130,
+  "keywords": [
+   "kabul testi",
+   "kara kutu testi",
+   "bileşen entegrasyon testi",
+   "bileşen testi",
+   "onaylama testi",
+   "fonksiyonel test",
+   "entegrasyon testi",
+   "bakım testi",
+   "fonksiyonel olmayan test",
+   "regresyon testi",
+   "shift-left",
+   "sistem entegrasyon testi",
+   "sistem testi",
+   "test seviyesi",
+   "test nesnesi",
+   "test çeşidi",
+   "beyaz kutu testi"
+  ],
+  "los": [
+   {
+    "id": "FL-2.1.1",
+    "k": "K2",
+    "text": "Seçilen yazılım geliştirme yaşam döngüsünün test üzerindeki etkisini açıklamak",
+    "section": "2.1.1",
+    "questions": 4
+   },
+   {
+    "id": "FL-2.1.2",
+    "k": "K1",
+    "text": "Tüm yazılım geliştirme yaşam döngüsü için geçerli olan iyi test uygulamalarını hatırlamak",
+    "section": "2.1.2",
+    "questions": 6
+   },
+   {
+    "id": "FL-2.1.3",
+    "k": "K1",
+    "text": "Geliştirmeye yönelik önce-test-et yaklaşımlarının örneklerini hatırlamak",
+    "section": "2.1.3",
+    "questions": 6
+   },
+   {
+    "id": "FL-2.1.4",
+    "k": "K2",
+    "text": "DevOps'un test üzerinde nasıl bir etkisi olabileceğini özetlemek",
+    "section": "2.1.4",
+    "questions": 5
+   },
+   {
+    "id": "FL-2.1.5",
+    "k": "K2",
+    "text": "Shift-left’i açıklamak",
+    "section": "2.1.5",
+    "questions": 4
+   },
+   {
+    "id": "FL-2.1.6",
+    "k": "K2",
+    "text": "Geçmişe dönük verilerin süreç iyileştirmesi için nasıl bir mekanizma olarak kullanılabileceğini açıklamak",
+    "section": "2.1.6",
+    "questions": 6
+   },
+   {
+    "id": "FL-2.2.1",
+    "k": "K2",
+    "text": "Farklı test seviyelerini ayırt etmek",
+    "section": "2.2.1",
+    "questions": 4
+   },
+   {
+    "id": "FL-2.2.2",
+    "k": "K2",
+    "text": "Farklı test çeşitlerini ayırt etmek",
+    "section": "2.2.2",
+    "questions": 4
+   },
+   {
+    "id": "FL-2.2.3",
+    "k": "K2",
+    "text": "Onaylama testleri ve regresyon testlerini birbirinden ayırmak",
+    "section": "2.2.3",
+    "questions": 5
+   },
+   {
+    "id": "FL-2.3.1",
+    "k": "K2",
+    "text": "Bakım testleri ve tetikleyicilerini özetlemek",
+    "section": "2.3",
+    "questions": 4
+   }
+  ],
+  "sections": [
+   {
+    "no": "2.1",
+    "title": "Yazılım Geliştirme Yaşam Döngüsü Bağlamında Test",
+    "subsections": [
+     {
+      "no": "2.1.1",
+      "title": "Yazılım Geliştirme Yaşam Döngüsünün Test Üzerindeki Etkisi"
+     },
+     {
+      "no": "2.1.2",
+      "title": "Yazılım Geliştirme Yaşam Döngüsü ve İyi Test Etme Uygulamaları"
+     },
+     {
+      "no": "2.1.3",
+      "title": "Yazılım Geliştirme Faktörü Olarak Test"
+     },
+     {
+      "no": "2.1.4",
+      "title": "DevOps ve Test Etme"
+     },
+     {
+      "no": "2.1.5",
+      "title": "Shift-Left Yaklaşımı"
+     },
+     {
+      "no": "2.1.6",
+      "title": "Geçmişe Dönük Öğeler ve Süreç İyileştirmesi"
+     }
+    ]
+   },
+   {
+    "no": "2.2",
+    "title": "Test Seviyeleri ve Test Çeşitleri",
+    "subsections": [
+     {
+      "no": "2.2.1",
+      "title": "Test Seviyeleri"
+     },
+     {
+      "no": "2.2.2",
+      "title": "Test Çeşitleri"
+     },
+     {
+      "no": "2.2.3",
+      "title": "Onaylama Testleri ve Regresyon Testleri"
+     }
+    ]
+   },
+   {
+    "no": "2.3",
+    "title": "Bakım Testleri",
+    "subsections": []
+   }
+  ]
+ },
+ {
+  "no": "3",
+  "title": "Statik Testler",
+  "minutes": 80,
+  "keywords": [
+   "anomali",
+   "dinamik test",
+   "resmi gözden geçirme",
+   "gayri resmi gözden geçirme",
+   "teftiş",
+   "gözden geçirme",
+   "statik analiz",
+   "statik test",
+   "teknik gözden geçirme",
+   "üzerinden geçme"
+  ],
+  "los": [
+   {
+    "id": "FL-3.1.1",
+    "k": "K1",
+    "text": "Statik test ile incelenebilecek iş ürünü çeşitlerini ayırt etmek",
+    "section": "3.1.1",
+    "questions": 3
+   },
+   {
+    "id": "FL-3.1.2",
+    "k": "K2",
+    "text": "Statik testin önemini açıklamak",
+    "section": "3.1.2",
+    "questions": 4
+   },
+   {
+    "id": "FL-3.1.3",
+    "k": "K2",
+    "text": "Statik testler ve dinamik testler arasındaki farklılıkları karşılaştırıp kıyaslayabilmek",
+    "section": "3.1.3",
+    "questions": 5
+   },
+   {
+    "id": "FL-3.2.1",
+    "k": "K1",
+    "text": "Erken ve sık paydaş geri bildiriminin faydalarını tanımlamak",
+    "section": "3.2.1",
+    "questions": 5
+   },
+   {
+    "id": "FL-3.2.2",
+    "k": "K2",
+    "text": "Gözden geçirme süreci faaliyetlerini özetlemek",
+    "section": "3.2.2",
+    "questions": 4
+   },
+   {
+    "id": "FL-3.2.3",
+    "k": "K1",
+    "text": "Gözden geçirme yapılırken ana rollere atanan sorumlulukları hatırlamak",
+    "section": "3.2.3",
+    "questions": 4
+   },
+   {
+    "id": "FL-3.2.4",
+    "k": "K2",
+    "text": "Farklı gözden geçirme çeşitlerini karşılaştırmak ve ayırt etmek",
+    "section": "3.2.4",
+    "questions": 3
+   },
+   {
+    "id": "FL-3.2.5",
+    "k": "K1",
+    "text": "Başarılı bir gözden geçirmeye katkıda bulunan faktörleri hatırlamak",
+    "section": "3.2.5",
+    "questions": 4
+   }
+  ],
+  "sections": [
+   {
+    "no": "3.1",
+    "title": "Statik Testin Temelleri",
+    "subsections": [
+     {
+      "no": "3.1.1",
+      "title": "Statik Testlerle İncelenebilen İş Ürünleri"
+     },
+     {
+      "no": "3.1.2",
+      "title": "Statik Testin Önemi"
+     },
+     {
+      "no": "3.1.3",
+      "title": "Statik Test ve Dinamik Test Arasındaki Farklar"
+     }
+    ]
+   },
+   {
+    "no": "3.2",
+    "title": "Geri Bildirim ve Gözden Geçirme Süreci",
+    "subsections": [
+     {
+      "no": "3.2.1",
+      "title": "Erken ve Sık Paydaş Geri Bildiriminin Faydaları"
+     },
+     {
+      "no": "3.2.2",
+      "title": "Gözden Geçirme Süreci Faaliyetleri"
+     },
+     {
+      "no": "3.2.3",
+      "title": "Gözden Geçirmede Roller ve Sorumluluklar"
+     },
+     {
+      "no": "3.2.4",
+      "title": "Gözden Geçirme Çeşitleri"
+     },
+     {
+      "no": "3.2.5",
+      "title": "Gözden Geçirmelerin Başarı Faktörleri"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "no": "4",
+  "title": "Test Analizi ve Tasarımı",
+  "minutes": 390,
+  "keywords": [
+   "kabul kriterleri",
+   "kabul testi güdümlü yazılım geliştirme",
+   "kara kutu test tekniği",
+   "sınır değer analizi",
+   "dal kapsamı",
+   "kontrol listesine dayalı test etme",
+   "iş birliğine dayalı test yaklaşımı",
+   "kapsam",
+   "kapsam öğesi",
+   "karar tablosu testi",
+   "denklik paylarına ayırma",
+   "hata tahminleme",
+   "tecrübeye dayalı test tekniği",
+   "keşif testi",
+   "durum geçişi testi",
+   "komut kapsama yüzdesi",
+   "test tekniği",
+   "beyaz kutu test tekniği"
+  ],
+  "los": [
+   {
+    "id": "FL-4.1.1",
+    "k": "K2",
+    "text": "Kara kutu test teknikleri, beyaz kutu test teknikleri ve tecrübeye dayalı test teknikleri arasındaki farkı ayırt etmek",
+    "section": "4.1",
+    "questions": 6
+   },
+   {
+    "id": "FL-4.2.1",
+    "k": "K3",
+    "text": "Test senaryoları elde etmek için denklik paylarına ayırma test tekniğini kullanmak",
+    "section": "4.2.1",
+    "questions": 8
+   },
+   {
+    "id": "FL-4.2.2",
+    "k": "K3",
+    "text": "Test senaryoları elde etmek için sınır değer analizi test tekniğini kullanmak",
+    "section": "4.2.2",
+    "questions": 8
+   },
+   {
+    "id": "FL-4.2.3",
+    "k": "K3",
+    "text": "Test senaryoları elde etmek için karar tablosu test tekniğini kullanmak",
+    "section": "4.2.3",
+    "questions": 8
+   },
+   {
+    "id": "FL-4.2.4",
+    "k": "K3",
+    "text": "Test senaryoları elde etmek için durum geçişi test tekniğini kullanmak",
+    "section": "4.2.4",
+    "questions": 8
+   },
+   {
+    "id": "FL-4.3.1",
+    "k": "K2",
+    "text": "Komut test tekniğini açıklamak",
+    "section": "4.3.1",
+    "questions": 5
+   },
+   {
+    "id": "FL-4.3.2",
+    "k": "K2",
+    "text": "Dal test tekniğini açıklamak",
+    "section": "4.3.2",
+    "questions": 5
+   },
+   {
+    "id": "FL-4.3.3",
+    "k": "K2",
+    "text": "Beyaz kutu testinin önemini açıklamak",
+    "section": "4.3.3",
+    "questions": 6
+   },
+   {
+    "id": "FL-4.4.1",
+    "k": "K2",
+    "text": "Hata tahminlemeyi açıklamak",
+    "section": "4.4.1",
+    "questions": 5
+   },
+   {
+    "id": "FL-4.4.2",
+    "k": "K2",
+    "text": "Keşif testini açıklamak",
+    "section": "4.4.2",
+    "questions": 6
+   },
+   {
+    "id": "FL-4.4.3",
+    "k": "K2",
+    "text": "Kontrol listesine dayalı test tekniğini açıklamak",
+    "section": "4.4.3",
+    "questions": 5
+   },
+   {
+    "id": "FL-4.5.1",
+    "k": "K2",
+    "text": "Geliştiriciler ve iş birimleri ile iş birliği içinde nasıl kullanıcı hikayeleri yazılacağını açıklamak",
+    "section": "4.5.1",
+    "questions": 4
+   },
+   {
+    "id": "FL-4.5.2",
+    "k": "K2",
+    "text": "Kabul kriteri yazımı için farklı seçenekleri sınıflandırmak",
+    "section": "4.5.2",
+    "questions": 6
+   },
+   {
+    "id": "FL-4.5.3",
+    "k": "K3",
+    "text": "Test senaryoları elde etmek için kabul testi güdümlü geliştirmeyi (ATDD) kullanmak",
+    "section": "4.5.3",
+    "questions": 8
+   }
+  ],
+  "sections": [
+   {
+    "no": "4.1",
+    "title": "Test Tekniklerine Genel Bakış",
+    "subsections": []
+   },
+   {
+    "no": "4.2",
+    "title": "Kara Kutu Test Teknikleri",
+    "subsections": [
+     {
+      "no": "4.2.1",
+      "title": "Denklik Paylarına Ayırma"
+     },
+     {
+      "no": "4.2.2",
+      "title": "Sınır Değer Analizi"
+     },
+     {
+      "no": "4.2.3",
+      "title": "Karar Tablosu Testleri"
+     },
+     {
+      "no": "4.2.4",
+      "title": "Durum Geçişi Testleri"
+     }
+    ]
+   },
+   {
+    "no": "4.3",
+    "title": "Beyaz Kutu Test Teknikleri",
+    "subsections": [
+     {
+      "no": "4.3.1",
+      "title": "Komut Testleri ve Komut Kapsama Yüzdesi"
+     },
+     {
+      "no": "4.3.2",
+      "title": "Dal Testi ve Dal Kapsamı"
+     },
+     {
+      "no": "4.3.3",
+      "title": "Beyaz Kutu Testinin Önemi"
+     }
+    ]
+   },
+   {
+    "no": "4.4",
+    "title": "Tecrübeye Dayalı Test Teknikleri",
+    "subsections": [
+     {
+      "no": "4.4.1",
+      "title": "Hata Tahminleme"
+     },
+     {
+      "no": "4.4.2",
+      "title": "Keşif Testi"
+     },
+     {
+      "no": "4.4.3",
+      "title": "Kontrol Listesine Dayalı Testler"
+     }
+    ]
+   },
+   {
+    "no": "4.5",
+    "title": "İş Birliğine Dayalı Test Yaklaşımları",
+    "subsections": [
+     {
+      "no": "4.5.1",
+      "title": "İş Birliğine Dayalı Kullanıcı Hikayesi Yazımı"
+     },
+     {
+      "no": "4.5.2",
+      "title": "Kabul Kriterleri"
+     },
+     {
+      "no": "4.5.3",
+      "title": "Kabul Testi Güdümlü Yazılım Geliştirme (ATDD)"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "no": "5",
+  "title": "Test Aktivitelerini Yönetme",
+  "minutes": 335,
+  "keywords": [
+   "hata yönetimi",
+   "hata raporu",
+   "giriş kriterleri",
+   "çıkış kriterleri",
+   "ürün riski",
+   "proje riski",
+   "risk",
+   "risk analizi",
+   "risk değerlendirmesi",
+   "risk kontrolü",
+   "risk belirleme",
+   "risk seviyesi",
+   "risk yönetimi",
+   "risk azaltma",
+   "risk gözetimi",
+   "risk bazlı test",
+   "test yaklaşımı",
+   "test tamamlama raporu",
+   "test kontrol",
+   "test gözetimi",
+   "test planı",
+   "test planlama",
+   "test ilerleme raporu",
+   "test piramidi",
+   "test stratejisi",
+   "test çeyrekleri"
+  ],
+  "los": [
+   {
+    "id": "FL-5.1.1",
+    "k": "K2",
+    "text": "Bir test planının amacına ve içeriğine ilişkin örnekler vermek",
+    "section": "5.1.1",
+    "questions": 3
+   },
+   {
+    "id": "FL-5.1.2",
+    "k": "K1",
+    "text": "Bir test uzmanının döngü ve sürüm planlamasına nasıl değer kattığını anlamak",
+    "section": "5.1.2",
+    "questions": 3
+   },
+   {
+    "id": "FL-5.1.3",
+    "k": "K2",
+    "text": "Giriş kriterleri ve çıkış kriterlerini karşılaştırıp kıyaslamak",
+    "section": "5.1.3",
+    "questions": 4
+   },
+   {
+    "id": "FL-5.1.4",
+    "k": "K3",
+    "text": "Gerekli test eforunu hesaplamak için tahminleme teknikleri kullanmak",
+    "section": "5.1.4",
+    "questions": 8
+   },
+   {
+    "id": "FL-5.1.5",
+    "k": "K3",
+    "text": "Test senaryosularını önceliklendirmek",
+    "section": "5.1.5",
+    "questions": 8
+   },
+   {
+    "id": "FL-5.1.6",
+    "k": "K1",
+    "text": "Test piramidinin konseptlerini hatırlamak",
+    "section": "5.1.6",
+    "questions": 4
+   },
+   {
+    "id": "FL-5.1.7",
+    "k": "K2",
+    "text": "Test çeyreklerini ve bunların test seviyeleri ve test çeşitleri ile olan ilişkilerini özetlemek",
+    "section": "5.1.7",
+    "questions": 5
+   },
+   {
+    "id": "FL-5.2.1",
+    "k": "K1",
+    "text": "Risk olasılığı ve risk etkisini kullanarak risk seviyesini belirlemek",
+    "section": "5.2.1",
+    "questions": 4
+   },
+   {
+    "id": "FL-5.2.2",
+    "k": "K2",
+    "text": "Proje risklerinin ve ürün risklerinin farklarını belirtmek",
+    "section": "5.2.2",
+    "questions": 3
+   },
+   {
+    "id": "FL-5.2.3",
+    "k": "K2",
+    "text": "Ürün riski analizinin testlerin bütünlüğünü ve test kapsamını nasıl etkileyebileceğini açıklamak",
+    "section": "5.2.3",
+    "questions": 5
+   },
+   {
+    "id": "FL-5.2.4",
+    "k": "K2",
+    "text": "Analiz edilen ürün risklerine karşı alınacak önlemleri açıklamak",
+    "section": "5.2.4",
+    "questions": 3
+   },
+   {
+    "id": "FL-5.3.1",
+    "k": "K1",
+    "text": "Testlerde kullanılan metrikleri anımsamak",
+    "section": "5.3.1",
+    "questions": 3
+   },
+   {
+    "id": "FL-5.3.2",
+    "k": "K2",
+    "text": "Test raporlarının amaçlarını, içeriklerini ve hedef kitlelerini özetlemek",
+    "section": "5.3.2",
+    "questions": 3
+   },
+   {
+    "id": "FL-5.3.3",
+    "k": "K2",
+    "text": "Testin durumunun nasıl iletileceğine örnekler vermek",
+    "section": "5.3.3",
+    "questions": 3
+   },
+   {
+    "id": "FL-5.4.1",
+    "k": "K2",
+    "text": "Yapılandırma yönetiminin testleri nasıl desteklediğini özetlemek",
+    "section": "5.4",
+    "questions": 5
+   },
+   {
+    "id": "FL-5.5.1",
+    "k": "K3",
+    "text": "Bir hata raporu hazırlamak",
+    "section": "5.5",
+    "questions": 8
+   }
+  ],
+  "sections": [
+   {
+    "no": "5.1",
+    "title": "Test Planlama",
+    "subsections": [
+     {
+      "no": "5.1.1",
+      "title": "Test Planının Amacı ve İçeriği"
+     },
+     {
+      "no": "5.1.2",
+      "title": "Test Uzmanının Döngü ve Sürüm Planlamasına Katkısı"
+     },
+     {
+      "no": "5.1.3",
+      "title": "Giriş Kriterleri ve Çıkış Kriterleri"
+     },
+     {
+      "no": "5.1.4",
+      "title": "Tahminleme Teknikleri"
+     },
+     {
+      "no": "5.1.5",
+      "title": "Test Senaryosu Önceliklendirme"
+     },
+     {
+      "no": "5.1.6",
+      "title": "Test Piramidi"
+     },
+     {
+      "no": "5.1.7",
+      "title": "Test Çeyrekleri"
+     }
+    ]
+   },
+   {
+    "no": "5.2",
+    "title": "Risk Yönetimi",
+    "subsections": [
+     {
+      "no": "5.2.1",
+      "title": "Risk Tanımı ve Risk Özellikleri"
+     },
+     {
+      "no": "5.2.2",
+      "title": "Proje Riskleri ve Ürün Riskleri"
+     },
+     {
+      "no": "5.2.3",
+      "title": "Ürün Riski Analizi"
+     },
+     {
+      "no": "5.2.4",
+      "title": "Ürün Risk Kontrolü"
+     }
+    ]
+   },
+   {
+    "no": "5.3",
+    "title": "Test Gözetimi, Test Kontrol ve Test Tamamlama",
+    "subsections": [
+     {
+      "no": "5.3.1",
+      "title": "Yazılım Testlerinde Kullanılan Metrikler"
+     },
+     {
+      "no": "5.3.2",
+      "title": "Test Raporlarının Amacı, İçeriği ve Hedef Kitlesi"
+     },
+     {
+      "no": "5.3.3",
+      "title": "Testin Durumunun Bildirilmesi"
+     }
+    ]
+   },
+   {
+    "no": "5.4",
+    "title": "Yapılandırma Yönetimi",
+    "subsections": []
+   },
+   {
+    "no": "5.5",
+    "title": "Hata Yönetimi",
+    "subsections": []
+   }
+  ]
+ },
+ {
+  "no": "6",
+  "title": "Test Araçları",
+  "minutes": 20,
+  "keywords": [
+   "test otomasyonu"
+  ],
+  "los": [
+   {
+    "id": "FL-6.1.1",
+    "k": "K2",
+    "text": "Farklı test araçlarının test sürecini nasıl desteklediğini açıklamak",
+    "section": "6.1",
+    "questions": 8
+   },
+   {
+    "id": "FL-6.2.1",
+    "k": "K1",
+    "text": "Test otomasyonunun faydalarını ve risklerini hatırlamak",
+    "section": "6.2",
+    "questions": 8
+   }
+  ],
+  "sections": [
+   {
+    "no": "6.1",
+    "title": "Yazılım Testleri için Araç Desteği",
+    "subsections": []
+   },
+   {
+    "no": "6.2",
+    "title": "Test Otomasyonunun Faydaları ve Riskleri",
+    "subsections": []
+   }
+  ]
+ }
+]
