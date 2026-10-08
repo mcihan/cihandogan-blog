@@ -196,6 +196,27 @@ svg.stsvg{width:100%;height:auto;display:block;margin:.9rem 0}
 <style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
 </head>
 <body>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><span aria-current="page">Konu Pratikleri</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
 <!-- deniz-pw-gate -->
 <div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
   <div class="pw-box">

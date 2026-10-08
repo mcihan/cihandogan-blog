@@ -11,11 +11,9 @@
 html,body{margin:0}
 body{font-family:var(--sans);color:#1c1c2c;line-height:1.6;min-height:100vh;
   background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
-  display:flex;align-items:center;justify-content:center;padding:2.5rem 1.4rem}
+  display:flex;flex-direction:column}
+.center{flex:1;display:flex;align-items:center;justify-content:center;padding:2.5rem 1.4rem}
 .wrap{max-width:1020px;width:100%}
-.back{display:inline-flex;gap:.4rem;align-items:center;text-decoration:none;color:#c7d2fe;
-  font-size:.84rem;font-weight:700;margin-bottom:1.1rem}
-.back:hover{color:#fff}
 .kicker{font-size:.75rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .9rem}
 h1{color:#fff;font-size:clamp(2.1rem,5.6vw,3.2rem);line-height:1.06;margin:0 0 .8rem;font-weight:900;
   letter-spacing:-.02em;text-wrap:balance}
@@ -145,8 +143,28 @@ a:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:22px}
 })();
 </script>
 
-<div class="wrap">
-  <a class="back" href="../">&#8592; Study Hub</a>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><span aria-current="page">Konular</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
+<div class="center"><div class="wrap">
   <p class="kicker">CTFL v4.0 &middot; Konu anlatımları</p>
   <h1>Konular.</h1>
   <p class="lede">Her konu i&ccedil;in: neden b&ouml;yle &ccedil;&ouml;z&uuml;l&uuml;yor, hangi adımlarla &ccedil;&ouml;z&uuml;l&uuml;yor
@@ -170,6 +188,6 @@ a:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:22px}
     </div>
   </div>
   <footer>ISTQB&reg; CTFL v4.0 syllabus'una g&ouml;re &middot; &ouml;rnek sorular resm&icirc; &ouml;rnek sınavlardan (&copy; ISTQB).</footer>
-</div>
+</div></div>
 </body>
 </html>
