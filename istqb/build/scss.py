@@ -189,11 +189,54 @@ details.ans > summary:hover{color:var(--ink)}
 .lang.glob{margin:0;flex:none}
 .lang.glob button{font-size:.72rem;padding:.2rem .5rem;background:var(--bg)}
 .lang.glob button.on{background:var(--c);color:#fff}
-/* --- sayfa dili (konu metni) --- */
-.body > .s-tr,.body > .s-en{display:contents}
-.body > .s-tr > *:first-child,.body > .s-en > *:first-child{margin-top:0}
-.body > .s-tr > *:last-child,.body > .s-en > *:last-child{margin-bottom:0}
+/* --- sayfa dili: bolum disi kisimlar (hero, nav, kenar cubugu, konu basligi) --- */
 body[data-lang="en"] .s-tr,body[data-lang="tr"] .s-en{display:none}
+/* --- bolum dili: her bolum kendi TR/EN dugmesiyle --- */
+section[data-lang="en"] .x-tr,section[data-lang="tr"] .x-en{display:none}
+.og > .x-tr > *:first-child,.og > .x-en > *:first-child{margin-top:0}
+.og > .x-tr > *:last-child,.og > .x-en > *:last-child{margin-bottom:0}
+/* --- orijinal / kolay --- */
+section[data-ver="o"] .ez,section[data-ver="e"] .og{display:none}
+
+/* --- bolum arac cubugu --- */
+.vtools{display:flex;gap:.4rem;justify-content:flex-end;margin:-.25rem 0 .7rem}
+.sw{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none;background:var(--bg)}
+.sw button{border:0;background:transparent;color:var(--muted);font-family:var(--sans);
+  font-size:.74rem;font-weight:700;padding:.22rem .62rem;cursor:pointer;white-space:nowrap}
+.sw button+button{border-left:1px solid var(--line)}
+.sw button:hover{color:var(--ink)}
+.sw button.on{background:var(--c);color:#fff}
+.sw.vr button.on{background:var(--good);color:#fff}
+.sw.glob{margin:0}
+.sw.glob button{font-size:.72rem;padding:.2rem .5rem}
+
+/* --- kolay anlatim --- */
+.ez{font-size:.95rem}
+.ez .ez-h{margin:1.25rem 0 .5rem;line-height:1.3;letter-spacing:-.01em}
+.ez > .x-tr > .ez-h:first-child,.ez > .x-en > .ez-h:first-child{margin-top:0}
+.ez h3.ez-h{font-size:1.02rem;font-weight:800;color:var(--cd)}
+.ez h4.ez-h{font-size:.94rem;font-weight:800}
+.ez h5.ez-h,.ez h6.ez-h{font-size:.88rem;font-weight:800;color:var(--muted)}
+.ez p{margin:.55rem 0}
+.ez .ez-ul,.ez .ez-ol{margin:.5rem 0;padding-left:1.25rem}
+.ez .ez-ul li,.ez .ez-ol li{margin:.26rem 0}
+.ez .ez-hr{border:0;border-top:1px solid var(--line);margin:1.1rem 0}
+.ez .ez-q{margin:.7rem 0;padding:.55rem .85rem;border-left:3px solid var(--c);
+  background:var(--cs);border-radius:0 10px 10px 0;font-size:.92rem;color:var(--ink)}
+.ez .ez-pre{margin:.7rem 0;padding:.7rem .9rem;background:var(--surface2);border:1px solid var(--line);
+  border-radius:10px;overflow-x:auto}
+.ez .ez-pre code{font-family:var(--mono);font-size:.8rem;line-height:1.55;white-space:pre;color:var(--ink)}
+.ez code{font-family:var(--mono);font-size:.87em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  border-radius:5px;padding:.05em .34em}
+.ez .ez-tw{margin:.7rem 0;overflow-x:auto;border:1px solid var(--line);border-radius:11px}
+.ez table.ez-t{border-collapse:collapse;width:100%;min-width:420px;font-size:.84rem}
+.ez table.ez-t th{text-align:left;background:var(--cs);color:var(--cd);font-weight:800;
+  padding:.45rem .7rem;border-bottom:1px solid var(--line);white-space:nowrap}
+.ez table.ez-t td{padding:.42rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+.ez table.ez-t tr:last-child td{border-bottom:0}
+.ez table.ez-t tbody tr:nth-child(even){background:color-mix(in srgb,var(--ink) 2.5%,transparent)}
+@media (max-width:620px){.ez table.ez-t{min-width:360px;font-size:.8rem}
+  .ez table.ez-t th,.ez table.ez-t td{padding:.38rem .5rem}}
 .qitem[data-lang="tr"] .l-en,.qitem[data-lang="en"] .l-tr{display:none}
 details.ans .l-en,details.ans .l-tr{display:inline}
 .qitem[data-lang="tr"] details.ans .l-en,.qitem[data-lang="en"] details.ans .l-tr{display:none}
@@ -208,6 +251,11 @@ table.qtbl th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.76
 body.filtering .nores.show{display:block}
 footer.ft{border-top:1px solid var(--line);margin-top:2rem;padding:1.3rem 0 0;color:var(--muted);font-size:.82rem}
 
+@media (max-width:860px){
+  /* ust bardaki genel Orijinal/Kolay anahtari dar ekranda yer kaplamasin;
+     her konunun kendi anahtari zaten var */
+  #gver{display:none}
+}
 @media (max-width:1000px){
   .shell{grid-template-columns:minmax(0,1fr);gap:0;padding-top:1rem}
   .menubtn{display:block}

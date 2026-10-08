@@ -3,6 +3,7 @@ import json, io, re, html, os
 from scss import CSS
 from qfmt import qhtml, esc
 from glossary import find as gfind
+from mdlite import render as md
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.environ.get("ISTQB_DATA", os.path.join(HERE, "..", "data"))
@@ -20,6 +21,8 @@ for _c in TREE_EN:
         SEC_EN[_s["no"]] = _s["title"]
         for _sb in _s["subsections"]: SEC_EN[_sb["no"]] = _sb["title"]
 LO_EN = {l["id"]: l for c in TREE_EN for l in c["los"]}
+EASY    = jd("easy_tr.json")
+EASY_EN = jd("easy_en.json")
 QD   = jd("questions_by_lo.json")
 BY   = QD["byLo"]
 
@@ -86,7 +89,7 @@ def mark(t):                     # anahtar kelimeleri kalinlastir
 def bodybi(tr, en):
     if not tr: return en or ""
     if not en: return tr
-    return '<div class="s-tr">%s</div><div class="s-en">%s</div>' % (tr, en)
+    return '<div class="x-tr">%s</div><div class="x-en">%s</div>' % (tr, en)
 
 def body_html_en(no):
     b = BODY_EN.get(no)
@@ -136,12 +139,37 @@ def bi(tr, en):
     """iki dilli metin parcasi"""
     return '<span class="s-tr">%s</span><span class="s-en">%s</span>' % (tr, en)
 
+def bx(tr, en):
+    """bolum içi iki dilli metin parçasi (section[data-lang] ile değişir)"""
+    return '<span class="x-tr">%s</span><span class="x-en">%s</span>' % (tr, en)
+
 def pbadge(key):
     v = PCT.get(key)
     if v is None: return ""
     return ('<span class="pct" title="Bu b&ouml;l&uuml;m&uuml; bitirdiğinde sayfanın '
             '%%%d\'ini okumuş olursun  /  when you finish this section you have read '
-            '%d%% of the page">%s</span>' % (v, v, bi("%%%d" % v, "%d%%" % v)))
+            '%d%% of the page">%s</span>' % (v, v, bx("%%%d" % v, "%d%%" % v)))
+
+# ---------- kolay anlatim ----------
+def easy(no):
+    t, e = EASY.get(no), EASY_EN.get(no)
+    if not t and not e: return ""
+    inner = ""
+    if t: inner += '<div class="x-tr">%s</div>' % md(t)
+    if e: inner += '<div class="x-en">%s</div>' % md(e)
+    return '<div class="ez">%s</div>' % inner
+
+def vtools(no, has_easy):
+    ver = ""
+    if has_easy:
+        ver = ('<span class="sw vr"><button type="button" class="on" data-v="o">'
+               + bx("Orijinal", "Original")
+               + '</button><button type="button" data-v="e">'
+               + bx("Kolay", "Easy")
+               + '</button></span>')
+    return ('<div class="vtools">%s<span class="sw lg">'
+            '<button type="button" class="on" data-l="tr">TR</button>'
+            '<button type="button" data-l="en">EN</button></span></div>' % ver)
 
 # ---------- teknik terim sozlugu ----------
 def node_text(no):
@@ -162,11 +190,11 @@ def gloss(no):
     cells = "".join('<div class="g"><b>%s</b><i>%s</i></div>' % (esc(t), esc(e))
                     for t, e in terms)
     tpl = ('<details class="gl"><summary>'
-           + bi("Teknik terimler (T\u00fcrk\u00e7e \u2192 \u0130ngilizce)",
+           + bx("Teknik terimler (T\u00fcrk\u00e7e \u2192 \u0130ngilizce)",
                 "Technical terms (Turkish \u2192 English)")
            + '<span class="cnt">%d</span></summary><div class="glwrap">%s</div>'
              '<p class="glfoot">'
-           + bi("T\u00fcrk\u00e7e kar\u015f\u0131l\u0131k kafan\u0131 kar\u0131\u015ft\u0131r\u0131rsa "
+           + bx("T\u00fcrk\u00e7e kar\u015f\u0131l\u0131k kafan\u0131 kar\u0131\u015ft\u0131r\u0131rsa "
                 "terimin \u0130ngilizce as\u0131l halini buradan kontrol et.",
                 "Terms used in this section and in its exam questions.")
            + '</p></details>')
@@ -208,13 +236,13 @@ def acc(node_no):
           % (q["kind"], esc(q["ref"]), esc(q["set"]), q["k"], mk, sw, bodies, abox))
     lolist = ", ".join(l["id"] for l in los)
     tpl = ('<details class="qa"><summary>'
-           + bi('Sınavlarda çıkmış sorular', 'Questions asked in the exams')
+           + bx('Sınavlarda çıkmış sorular', 'Questions asked in the exams')
            + '<span class="cnt">%d</span></summary><div class="qwrap">%s'
              '<p class="qfoot">%s &middot; '
-           + bi('Ayrıntılı çözümler için ', 'For detailed solutions see the ')
+           + bx('Ayrıntılı çözümler için ', 'For detailed solutions see the ')
            + '<a href="https://cihandogan.co.uk/deniz/istqub/questions_tr.html"'
              ' target="_blank" rel="noopener">'
-           + bi('sınav simülatörü', 'exam simulator')
+           + bx('sınav simülatörü', 'exam simulator')
            + '</a>.</p></div></details>')
     return tpl % (len(qs), "".join(items), esc(lolist))
 
@@ -262,24 +290,32 @@ def render():
                       meta, kws, bi("Öğrenme hedefleri", "Learning objectives"), los))
         for s in c["secs"]:
             bod = bodybi(body_html(s["blocks"]), body_html_en(s["no"]))
-            a   = acc(s["no"])
-            out.append('<section class="sec" id="%s" data-no="%s"><div class="sh">'
+            ez  = easy(s["no"]); a = acc(s["no"]); gl = gloss(s["no"])
+            inner = ""
+            if bod or ez:
+                inner = vtools(s["no"], bool(ez)) + ('<div class="og">%s</div>' % bod if bod else "") + ez
+            out.append('<section class="sec" id="%s" data-no="%s" data-lang="tr" data-ver="o">'
+                       '<div class="sh">'
                        '<span class="num">%s</span><h3>%s</h3>%s%s</div>%s'
                        % (sid(s["no"]), s["no"], s["no"],
-                          bi(esc(s["title"]), esc(SEC_EN.get(s["no"], s["title"]))),
+                          bx(esc(s["title"]), esc(SEC_EN.get(s["no"], s["title"]))),
                           lobadges(s["no"]), pbadge(s["no"]),
-                          ('<div class="body">%s%s%s</div>' % (bod, gloss(s["no"]), a))
-                          if (bod or a) else ""))
+                          ('<div class="body">%s%s%s</div>' % (inner, gl, a))
+                          if (inner or a) else ""))
+            out.append("</section>")      # alt bolumler ic ice degil, kardes
             for sb in s["subs"]:
-                out.append('<section class="sub" id="%s" data-no="%s"><div class="sh">'
+                bod2 = bodybi(body_html(sb["blocks"]), body_html_en(sb["no"]))
+                ez2  = easy(sb["no"])
+                inner2 = vtools(sb["no"], bool(ez2)) + \
+                         ('<div class="og">%s</div>' % bod2 if bod2 else "") + ez2
+                out.append('<section class="sub" id="%s" data-no="%s" data-lang="tr" data-ver="o">'
+                           '<div class="sh">'
                            '<span class="num">%s</span><h4>%s</h4>%s%s</div>'
-                           '<div class="body">%s%s</div></section>'
+                           '<div class="body">%s%s%s</div></section>'
                            % (sid(sb["no"]), sb["no"], sb["no"],
-                              bi(esc(sb["title"]), esc(SEC_EN.get(sb["no"], sb["title"]))),
+                              bx(esc(sb["title"]), esc(SEC_EN.get(sb["no"], sb["title"]))),
                               lobadges(sb["no"]), pbadge(sb["no"]),
-                              bodybi(body_html(sb["blocks"]), body_html_en(sb["no"]))
-                              + gloss(sb["no"]), acc(sb["no"])))
-            out.append("</section>")
+                              inner2, gloss(sb["no"]), acc(sb["no"])))
         out.append("</div>")
     return "".join(out)
 
@@ -376,32 +412,68 @@ JS = """
       nores.classList.toggle('show',hit===0);
     },140);
   });
-  /* soru dili: her soruda TR/EN, ust barda hepsi icin */
-  function setLang(box, l){
+  /* dil ve surum anahtarlari */
+  function mark(scope, attr, v){
+    scope.querySelectorAll(':scope > .qref .lang button, :scope > .body > .vtools .sw button,'
+      + '#glob button, #gver button').forEach(function(b){
+        if(b.dataset[attr]!==undefined) b.classList.toggle('on', b.dataset[attr]===v);
+      });
+  }
+  function qLang(box, l){
     box.dataset.lang = l;
     box.querySelectorAll(':scope > .qref .lang button').forEach(function(b){
       b.classList.toggle('on', b.dataset.l === l);
     });
   }
+  function secLang(sec, l){
+    sec.dataset.lang = l;
+    sec.querySelectorAll(':scope > .body .vtools .sw.lg button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.l === l);
+    });
+    sec.querySelectorAll(':scope > .body .qitem[data-lang]').forEach(function(q){ qLang(q, l) });
+  }
+  function secVer(sec, v){
+    sec.dataset.ver = v;
+    sec.querySelectorAll(':scope > .body .vtools .sw.vr button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.v === v);
+    });
+  }
+  var SECS = [].slice.call(document.querySelectorAll('main section[data-no]'));
+  function allLang(l){
+    document.querySelectorAll('#glob button').forEach(function(x){x.classList.toggle('on',x.dataset.l===l)});
+    body.dataset.lang = l;
+    document.documentElement.lang = l;
+    SECS.forEach(function(s){ secLang(s, l) });
+    document.querySelectorAll('.qitem[data-lang]').forEach(function(q){ qLang(q, l) });
+    inp.placeholder = (l==='en' ? 'Search topics…' : 'Konu ara…');
+    try{ localStorage.setItem('ctfl-lang', l) }catch(e){}
+    requestAnimationFrame(function(){ sync(); prog(); });
+  }
+  function allVer(v){
+    document.querySelectorAll('#gver button').forEach(function(x){x.classList.toggle('on',x.dataset.v===v)});
+    body.dataset.ver = v;
+    SECS.forEach(function(s){ secVer(s, v) });
+    try{ localStorage.setItem('ctfl-ver', v) }catch(e){}
+    requestAnimationFrame(function(){ sync(); prog(); });
+  }
   document.addEventListener('click', function(ev){
-    var b = ev.target.closest('.lang button'); if(!b) return;
-    var l = b.dataset.l;
-    if(b.closest('#glob')){
-      document.querySelectorAll('#glob button').forEach(function(x){x.classList.toggle('on',x.dataset.l===l)});
-      document.querySelectorAll('.qitem[data-lang]').forEach(function(q){ setLang(q, l) });
-      body.dataset.lang = l;
-      document.documentElement.lang = l;
-      inp.placeholder = (l==='en' ? 'Search topics…' : 'Konu ara…');
-      try{ localStorage.setItem('ctfl-lang', l) }catch(e){}
-      requestAnimationFrame(function(){ sync(); prog(); });
-    } else {
-      setLang(b.closest('.qitem'), l);
+    var b = ev.target.closest('button[data-l], button[data-v]'); if(!b) return;
+    if(b.dataset.v !== undefined){
+      if(b.closest('#gver')) allVer(b.dataset.v);
+      else { secVer(b.closest('section[data-no]'), b.dataset.v);
+             requestAnimationFrame(function(){ sync(); prog(); }); }
+      return;
     }
+    var l = b.dataset.l;
+    if(b.closest('#glob'))        allLang(l);
+    else if(b.closest('.vtools')) { secLang(b.closest('section[data-no]'), l);
+                                    requestAnimationFrame(function(){ sync(); prog(); }); }
+    else                          qLang(b.closest('.qitem'), l);
   });
 
-  /* kayitli dil */
-  try{ var _l=localStorage.getItem('ctfl-lang');
-       if(_l==='en'){ var gb=document.querySelector('#glob button[data-l="en"]'); if(gb) gb.click(); }
+  /* kayitli tercihler */
+  try{ if(localStorage.getItem('ctfl-lang')==='en') allLang('en');
+       if(localStorage.getItem('ctfl-ver')==='e')  allVer('e');
   }catch(e){}
 })();
 """
@@ -438,7 +510,7 @@ HTML = u"""<!doctype html>
 <nav class="top"><div class="nin">
   <button class="menubtn" id="menu" aria-label="İçindekiler">&#9776;</button>
   <div class="chips">%(chips)s</div>
-  <span class="lang glob" id="glob" title="Sayfanın dili / page language"><button type="button" class="on" data-l="tr">TR</button><button type="button" data-l="en">EN</button></span>
+  <span class="sw glob vr" id="gver" title="Tüm konular / all topics"><button type="button" class="on" data-v="o"><span class="s-tr">Orijinal</span><span class="s-en">Original</span></button><button type="button" data-v="e"><span class="s-tr">Kolay</span><span class="s-en">Easy</span></button></span><span class="lang glob" id="glob" title="Sayfanın dili / page language"><button type="button" class="on" data-l="tr">TR</button><button type="button" data-l="en">EN</button></span>
   <div class="srch"><input id="q" type="search" placeholder="Konu ara…" aria-label="Konu ara"></div>
   <div class="bar" id="bar" role="progressbar" aria-label="Okuma ilerlemesi"></div>
 </div></nav>
