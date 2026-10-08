@@ -114,6 +114,11 @@ svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
 .nl .ar.good{fill:color-mix(in srgb,var(--good) 38%,transparent)}
 .nl .bl{text-anchor:middle;font-size:13px;font-weight:800;font-family:var(--sans)}
 .nl .bl.bad{fill:var(--bad)} .nl .bl.good{fill:var(--good)}
+.nl .bd.neu{fill:var(--cs);stroke:var(--cl)}
+.nl .bd.neu2{fill:color-mix(in srgb,var(--c) 11%,transparent);stroke:var(--cl)}
+.nl .bl.neu,.nl .bl.neu2{fill:var(--cd)}
+.nl .dot.miss{fill:none;stroke:var(--bad);stroke-width:2;stroke-dasharray:3.5 3}
+.nl .dv.miss{fill:var(--bad)}
 .nl .cut{stroke:var(--c);stroke-width:2;stroke-dasharray:5 4;opacity:.85}
 .nl .cl{text-anchor:middle;font-size:11px;font-weight:800;fill:var(--c);font-family:var(--mono)}
 .nl .ax{stroke:var(--dim);stroke-width:1.5}
@@ -125,6 +130,7 @@ svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
 .nlleg{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;font-size:.8rem;color:var(--muted);margin:.1rem 0 .3rem}
 .nlleg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
 .nlleg i.a{background:var(--c)} .nlleg i.b{background:var(--warn)}
+.nlleg i.m{background:transparent;border:2px dashed var(--bad)}
 
 .opts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
 .opts li{display:grid;grid-template-columns:28px minmax(0,1fr);min-width:0;gap:.6rem;align-items:center;
@@ -286,10 +292,11 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
 <a href="#s4"><span class="n">4</span><b>2-değerli / 3-değerli</b></a>
 <a href="#s5"><span class="n">5</span><b>Kapsam %</b></a>
 <a href="#s6"><span class="n">6</span><b>Sınav re&ccedil;etesi</b></a>
-<a href="#s7"><span class="n">7</span><b>Soru 1 &middot; A&amp;B 21</b></a>
-<a href="#s8"><span class="n">8</span><b>Soru 2 &middot; C 21</b></a>
-<a href="#s9"><span class="n">9</span><b>Soru 3 &middot; D 21</b></a>
-<a href="#s10"><span class="n">10</span><b>Tuzaklar &amp; &ouml;zet</b></a></div>
+<a href="#s7"><span class="n">7</span><b>Soru 1 &middot; A 21</b></a>
+<a href="#s8"><span class="n">8</span><b>Soru 2 &middot; B 21</b></a>
+<a href="#s9"><span class="n">9</span><b>Soru 3 &middot; C 21</b></a>
+<a href="#s10"><span class="n">10</span><b>Soru 4 &middot; D 21</b></a>
+<a href="#s11"><span class="n">11</span><b>Tuzaklar &amp; &ouml;zet</b></a></div>
 </div></header>
 
 <nav class="sticky"><div class="in"><a href="#s1">1. Kara kutu kuralı</a>
@@ -298,10 +305,11 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
 <a href="#s4">4. 2-değerli / 3-değerli</a>
 <a href="#s5">5. Kapsam %</a>
 <a href="#s6">6. Sınav re&ccedil;etesi</a>
-<a href="#s7">7. Soru 1 &middot; A&amp;B 21</a>
-<a href="#s8">8. Soru 2 &middot; C 21</a>
-<a href="#s9">9. Soru 3 &middot; D 21</a>
-<a href="#s10">10. Tuzaklar &amp; &ouml;zet</a></div></nav>
+<a href="#s7">7. Soru 1 &middot; A 21</a>
+<a href="#s8">8. Soru 2 &middot; B 21</a>
+<a href="#s9">9. Soru 3 &middot; C 21</a>
+<a href="#s10">10. Soru 4 &middot; D 21</a>
+<a href="#s11">11. Tuzaklar &amp; &ouml;zet</a></div></nav>
 
 <main>
 
@@ -704,10 +712,245 @@ fark      = <b>1, 4, 7, 11, 14</b>  (her payın &ldquo;bir i&ccedil;erisi&rdquo;
 
 <section id="s7">
   <div class="shead"><div class="num">7</div>
-    <div><h2>Soru 1 &mdash; parola uzunluğu</h2>
-    <div class="lo">Resm&icirc; &ouml;rnek sınav A &middot; Soru 21 &nbsp;|&nbsp; Sınav B &middot; Soru 21 (aynı soru) &middot; FL-4.2.2 &middot; K3</div></div></div>
+    <div><h2>Soru 1 &mdash; final notu, kapsam y&uuml;zdesi</h2>
+    <div class="lo">Resm&icirc; &ouml;rnek sınav A &middot; Soru 21 &middot; FL-4.2.2 &middot; K3</div></div></div>
 
-  <div class="recog"><b>Not:</b> Bu soru resm&icirc; setin hem v1.5 (Sınav A) hem v1.6 (Sınav B) s&uuml;r&uuml;m&uuml;nde <b>birebir aynı</b> &ccedil;ıkıyor &mdash; B/21'i ayrıca &ccedil;&ouml;zmeye gerek yok.</div>
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir &ouml;ğrencinin final ders notunu hesaplayan bir sistemi test ettiğinizi varsayın.
+    Final notu, elde edilen sonuca g&ouml;re aşağıdaki kurallarla verilmektedir:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Puan</th><th>Final notu</th></tr>
+      <tr><td>0 &#8211; 50</td><td>başarısız</td></tr>
+      <tr><td>51 &#8211; 60</td><td>ge&ccedil;er</td></tr>
+      <tr><td>61 &#8211; 70</td><td>orta</td></tr>
+      <tr><td>71 &#8211; 80</td><td>iyi</td></tr>
+      <tr><td>81 &#8211; 90</td><td>&ccedil;ok iyi</td></tr>
+      <tr><td>91 &#8211; 100</td><td>m&uuml;kemmel</td></tr>
+    </table></div>
+    <p>Aşağıdaki test senaryosu setini hazırladınız:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">Sonu&ccedil;</th><th>Final notu</th></tr>
+      <tr><td>TC1</td><td class="ctr">91</td><td>m&uuml;kemmel</td></tr>
+      <tr><td>TC2</td><td class="ctr">50</td><td>başarısız</td></tr>
+      <tr><td>TC3</td><td class="ctr">81</td><td>&ccedil;ok iyi</td></tr>
+      <tr><td>TC4</td><td class="ctr">60</td><td>ge&ccedil;er</td></tr>
+      <tr><td>TC5</td><td class="ctr">70</td><td>orta</td></tr>
+      <tr><td>TC6</td><td class="ctr">80</td><td>iyi</td></tr>
+    </table></div>
+    <p>Mevcut test senaryolarıyla elde edilen <b>2 değerli</b> sınır değer analizi (BVA) kapsamı nedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%50</span></li>
+      <li><b>B</b><span>%60</span></li>
+      <li><b>C</b><span>%33.3</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; u&ccedil;larda somut sayı var mı?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne s&ouml;yl&uuml;yor</th></tr>
+        <tr><td>Altı ayrı puan aralığı</td><td><b>6 pay</b></td></tr>
+        <tr><td>İlk aralık &ldquo;<b>0</b> &#8211; 50&rdquo; diye başlıyor</td><td>Alt u&ccedil; <b>kapalı</b> &mdash; 0 yazıyor</td></tr>
+        <tr><td>Son aralık &ldquo;91 &#8211; <b>100</b>&rdquo; diye bitiyor</td><td>&Uuml;st u&ccedil; <b>kapalı</b> &mdash; 100 yazıyor</td></tr>
+        <tr><td>&ldquo;2 değerli &hellip; kapsamı <b>nedir</b>&rdquo;</td><td>Y&uuml;zde soruluyor &rarr; &ouml;nce paydayı bul</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Her payın min ve max'ını yaz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th class="ctr">min</th><th class="ctr">max</th></tr>
+        <tr><td>0 &#8211; 50 &middot; başarısız</td><td class="ctr"><b>0</b></td><td class="ctr"><b>50</b></td></tr>
+        <tr><td>51 &#8211; 60 &middot; ge&ccedil;er</td><td class="ctr"><b>51</b></td><td class="ctr"><b>60</b></td></tr>
+        <tr><td>61 &#8211; 70 &middot; orta</td><td class="ctr"><b>61</b></td><td class="ctr"><b>70</b></td></tr>
+        <tr><td>71 &#8211; 80 &middot; iyi</td><td class="ctr"><b>71</b></td><td class="ctr"><b>80</b></td></tr>
+        <tr><td>81 &#8211; 90 &middot; &ccedil;ok iyi</td><td class="ctr"><b>81</b></td><td class="ctr"><b>90</b></td></tr>
+        <tr><td>91 &#8211; 100 &middot; m&uuml;kemmel</td><td class="ctr"><b>91</b></td><td class="ctr"><b>100</b></td></tr>
+      </table></div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="98" y="43">başarısız</text>
+<rect class="bd neu2" x="173" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="248" y="43">ge&ccedil;er</text>
+<rect class="bd neu" x="323" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="398" y="43">orta</text>
+<rect class="bd neu2" x="473" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="548" y="43">iyi</text>
+<rect class="bd neu" x="623" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="698" y="43">&ccedil;ok iyi</text>
+<rect class="bd neu2" x="773" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="848" y="43">m&uuml;kemmel</text>
+<line class="cut" x1="173" y1="16" x2="173" y2="128"/>
+<text class="cl" x="173" y="11"></text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11"></text>
+<line class="cut" x1="473" y1="16" x2="473" y2="128"/>
+<text class="cl" x="473" y="11"></text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11"></text>
+<line class="cut" x1="773" y1="16" x2="773" y2="128"/>
+<text class="cl" x="773" y="11"></text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot" cx="48" cy="106" r="16"/><text class="dv" x="48" y="111">0</text>
+<text class="dp" x="98" y="111">&#8230;</text>
+<circle class="dot" cx="148" cy="106" r="16"/><text class="dv" x="148" y="111">50</text>
+<circle class="dot" cx="198" cy="106" r="16"/><text class="dv" x="198" y="111">51</text>
+<text class="dp" x="248" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">60</text>
+<circle class="dot" cx="348" cy="106" r="16"/><text class="dv" x="348" y="111">61</text>
+<text class="dp" x="398" y="111">&#8230;</text>
+<circle class="dot" cx="448" cy="106" r="16"/><text class="dv" x="448" y="111">70</text>
+<circle class="dot" cx="498" cy="106" r="16"/><text class="dv" x="498" y="111">71</text>
+<text class="dp" x="548" y="111">&#8230;</text>
+<circle class="dot" cx="598" cy="106" r="16"/><text class="dv" x="598" y="111">80</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">81</text>
+<text class="dp" x="698" y="111">&#8230;</text>
+<circle class="dot" cx="748" cy="106" r="16"/><text class="dv" x="748" y="111">90</text>
+<circle class="dot" cx="798" cy="106" r="16"/><text class="dv" x="798" y="111">91</text>
+<text class="dp" x="848" y="111">&#8230;</text>
+<circle class="dot" cx="898" cy="106" r="16"/><text class="dv" x="898" y="111">100</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">payda = pay sayısı &times; 2 &minus; a&ccedil;ık u&ccedil; sayısı = 6 &times; 2 &minus; 0 = <b>12</b>
+sınırlar = 0, 50, 51, 60, 61, 70, 71, 80, 81, 90, 91, 100</pre>
+      </div></li>
+
+    <li><b>Testleri sınır listesiyle eşleştir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th class="ctr">Değer</th><th>Sınır mı?</th></tr>
+        <tr><td>TC1</td><td class="ctr">91</td><td class="ok">Evet &mdash; m&uuml;kemmel payının min'i</td></tr>
+        <tr><td>TC2</td><td class="ctr">50</td><td class="ok">Evet &mdash; başarısız payının max'ı</td></tr>
+        <tr><td>TC3</td><td class="ctr">81</td><td class="ok">Evet &mdash; &ccedil;ok iyi payının min'i</td></tr>
+        <tr><td>TC4</td><td class="ctr">60</td><td class="ok">Evet &mdash; ge&ccedil;er payının max'ı</td></tr>
+        <tr><td>TC5</td><td class="ctr">70</td><td class="ok">Evet &mdash; orta payının max'ı</td></tr>
+        <tr><td>TC6</td><td class="ctr">80</td><td class="ok">Evet &mdash; iyi payının max'ı</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Altısı da sınır ve altısı da farklı
+      &rarr; <b>6 kapsam &ouml;ğesi</b> &ccedil;alıştırılmış.</p>
+      </div></li>
+
+    <li><b>B&ouml;l</b>
+      <div><div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="98" y="43">başarısız</text>
+<rect class="bd neu2" x="173" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="248" y="43">ge&ccedil;er</text>
+<rect class="bd neu" x="323" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="398" y="43">orta</text>
+<rect class="bd neu2" x="473" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="548" y="43">iyi</text>
+<rect class="bd neu" x="623" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="698" y="43">&ccedil;ok iyi</text>
+<rect class="bd neu2" x="773" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="848" y="43">m&uuml;kemmel</text>
+<line class="cut" x1="173" y1="16" x2="173" y2="128"/>
+<text class="cl" x="173" y="11"></text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11"></text>
+<line class="cut" x1="473" y1="16" x2="473" y2="128"/>
+<text class="cl" x="473" y="11"></text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11"></text>
+<line class="cut" x1="773" y1="16" x2="773" y2="128"/>
+<text class="cl" x="773" y="11"></text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot miss" cx="48" cy="106" r="15"/><text class="dv miss" x="48" y="111">0</text>
+<text class="dp" x="98" y="111">&#8230;</text>
+<circle class="dot" cx="148" cy="106" r="16"/><text class="dv" x="148" y="111">50</text>
+<circle class="dot miss" cx="198" cy="106" r="15"/><text class="dv miss" x="198" y="111">51</text>
+<text class="dp" x="248" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">60</text>
+<circle class="dot miss" cx="348" cy="106" r="15"/><text class="dv miss" x="348" y="111">61</text>
+<text class="dp" x="398" y="111">&#8230;</text>
+<circle class="dot" cx="448" cy="106" r="16"/><text class="dv" x="448" y="111">70</text>
+<circle class="dot miss" cx="498" cy="106" r="15"/><text class="dv miss" x="498" y="111">71</text>
+<text class="dp" x="548" y="111">&#8230;</text>
+<circle class="dot" cx="598" cy="106" r="16"/><text class="dv" x="598" y="111">80</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">81</text>
+<text class="dp" x="698" y="111">&#8230;</text>
+<circle class="dot miss" cx="748" cy="106" r="15"/><text class="dv miss" x="748" y="111">90</text>
+<circle class="dot" cx="798" cy="106" r="16"/><text class="dv" x="798" y="111">91</text>
+<text class="dp" x="848" y="111">&#8230;</text>
+<circle class="dot miss" cx="898" cy="106" r="15"/><text class="dv miss" x="898" y="111">100</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>kapsanan sınır (6)</span><span><i class="m"></i>kapsanmayan sınır (6)</span></p>
+      <pre class="fx">kapsam = 6 / 12 = <b>%50</b>
+kapsanmayanlar: 0, 51, 61, 71, 90, 100</pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="right"><b>A</b><span>%50 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>B</b><span>%60 &nbsp;&mdash;&nbsp; paydayı 10 sanmak</span></li>
+      <li class="wrong"><b>C</b><span>%33.3 &nbsp;&mdash;&nbsp; 4/12 olurdu</span></li>
+      <li class="wrong"><b>D</b><span>%100 &nbsp;&mdash;&nbsp; 6 sınır hi&ccedil; test edilmemiş</span></li>
+    </ul>
+  </div>
+
+  <div class="card warnc">
+    <h3>Neden 0 ve 100 da paydada?</h3>
+    <p>Bu sorunun en &ccedil;ok tartışılan yeri burası &mdash; ve <b>%60</b> şıkkı tam olarak bu hatayı bekliyor.</p>
+    <p>Her payın <b>iki</b> sınır değeri vardır: en k&uuml;&ccedil;&uuml;k ve en b&uuml;y&uuml;k ge&ccedil;erli değeri.
+    &ldquo;0 &#8211; 50&rdquo; payının alt sınırı <b>0</b>, &ldquo;91 &#8211; 100&rdquo; payının &uuml;st sınırı <b>100</b>.
+    İkisi de diğerleri gibi &ldquo;bir adım &ouml;tesi artık bu paya ait değil&rdquo; noktalarıdır.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Spesifikasyon b&ouml;yle yazsaydı</th><th>U&ccedil;lar</th><th class="ctr">Payda</th><th class="ctr">Sonu&ccedil;</th></tr>
+      <tr><td>&ldquo;<b>0</b> &#8211; 50&rdquo; &hellip; &ldquo;91 &#8211; <b>100</b>&rdquo; <i>(ger&ccedil;ek soru)</i></td>
+          <td>iki u&ccedil; da kapalı</td><td class="ctr">6&times;2 &minus; 0 = <b>12</b></td><td class="ctr ok">6/12 = %50</td></tr>
+      <tr><td>&ldquo;<b>50 ve altı</b>&rdquo; &hellip; &ldquo;<b>91 ve &uuml;zeri</b>&rdquo;</td>
+          <td>iki u&ccedil; da a&ccedil;ık</td><td class="ctr">6&times;2 &minus; 2 = <b>10</b></td><td class="ctr no">6/10 = %60</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Kural:</b> u&ccedil;ta <b>somut bir sayı</b> varsa (0, 100, 18, 65&hellip;) kapalı u&ccedil;tur,
+    sınır sayılır. &ldquo;&hellip;ve &uuml;zeri&rdquo;, &ldquo;&hellip;ve altı&rdquo;, &ldquo;sınırsız&rdquo; gibi bir ifade varsa a&ccedil;ık u&ccedil;tur, sayılmaz.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>İkinci tuzak: 50 ile 51 <i>iki ayrı</i> sınırdır</h3>
+    <p>Aralıklar bitişik ama kesikli: 50 bir payın max'ı, 51 <b>başka</b> bir payın min'i.
+    TC2'nin 50'yi test etmesi 51'i kapsamaz.</p>
+<pre>&hellip; 49  <b>50</b> &#9474; <b>51</b>  52 &hellip;
+     max   min
+   (başarısız)(ge&ccedil;er)</pre>
+    <p style="margin-bottom:0">Aynısı 60&#9474;61, 70&#9474;71, 80&#9474;81, 90&#9474;91 i&ccedil;in de ge&ccedil;erli.
+    Testler hep &ccedil;iftin <b>sol</b> yanına denk gelmiş (50, 60, 70, 80) &mdash; sağ yanlar
+    (51, 61, 71, 91 dışındakiler) boşta kalmış. Zaten kapsamı yarıya d&uuml;ş&uuml;ren şey bu.</p>
+  </div>
+</section>
+
+
+<section id="s8">
+  <div class="shead"><div class="num">8</div>
+    <div><h2>Soru 2 &mdash; parola uzunluğu</h2>
+    <div class="lo">Resm&icirc; &ouml;rnek sınav B &middot; Soru 21 &middot; FL-4.2.2 &middot; K3</div></div></div>
 
   <div class="card q">
     <h3>Soru</h3>
@@ -955,9 +1198,9 @@ EKLENECEK  :     1, 4,    7, 11,       14</pre>
 </section>
 
 
-<section id="s8">
-  <div class="shead"><div class="num">8</div>
-    <div><h2>Soru 2 &mdash; iş kuralı, &ldquo;en geniş kapsam&rdquo;</h2>
+<section id="s9">
+  <div class="shead"><div class="num">9</div>
+    <div><h2>Soru 3 &mdash; iş kuralı, &ldquo;en geniş kapsam&rdquo;</h2>
     <div class="lo">Resm&icirc; &ouml;rnek sınav C &middot; Soru 21 &middot; FL-4.2.2 &middot; K3</div></div></div>
 
   <div class="card q">
@@ -1132,9 +1375,9 @@ kapsam &ouml;ğeleri = <b>100, 101, 199, 200</b>      &rarr; payda = 4</pre>
 </section>
 
 
-<section id="s9">
-  <div class="shead"><div class="num">9</div>
-    <div><h2>Soru 3 &mdash; soğuk hava deposu, &ldquo;en y&uuml;ksek kapsam&rdquo;</h2>
+<section id="s10">
+  <div class="shead"><div class="num">10</div>
+    <div><h2>Soru 4 &mdash; soğuk hava deposu, &ldquo;en y&uuml;ksek kapsam&rdquo;</h2>
     <div class="lo">Resm&icirc; &ouml;rnek sınav D &middot; Soru 21 &middot; FL-4.2.2 &middot; K3</div></div></div>
 
   <div class="card q">
@@ -1281,10 +1524,10 @@ kapsam &ouml;ğeleri = <b>&minus;1, 0, 2, 3</b></pre>
   </div>
 
   <div class="card warnc">
-    <h3>Soru 1 ile Soru 3'&uuml; yan yana koy: 0 her zaman aynı şey değil</h3>
+    <h3>Soru 2 ile Soru 4'&uuml; yan yana koy: 0 her zaman aynı şey değil</h3>
     <p>İkisi de 0'ı i&ccedil;eren bir ge&ccedil;erli payla başlıyor, ama <b>tam tersi</b> davranıyorlar.</p>
     <div class="scroll"><table class="dt">
-      <tr><th></th><th>Soru 1 &mdash; parola uzunluğu (6&ndash;12)</th><th>Soru 3 &mdash; sıcaklık (0&ndash;2)</th></tr>
+      <tr><th></th><th>Soru 2 &mdash; parola uzunluğu (6&ndash;12)</th><th>Soru 4 &mdash; sıcaklık (0&ndash;2)</th></tr>
       <tr><td><b>0'ın altı var mı?</b></td><td class="no">Yok &mdash; uzunluk negatif olamaz</td>
           <td class="ok">Var &mdash; &minus;1 &deg;C ger&ccedil;ek bir sıcaklık</td></tr>
       <tr><td><b>0 nedir?</b></td><td>Ge&ccedil;ersiz payın min'i <b>ve</b> domain'in fiziksel ucu</td>
@@ -1300,8 +1543,8 @@ kapsam &ouml;ğeleri = <b>&minus;1, 0, 2, 3</b></pre>
 </section>
 
 
-<section id="s10">
-  <div class="shead"><div class="num">10</div>
+<section id="s11">
+  <div class="shead"><div class="num">11</div>
     <div><h2>Tuzaklar ve tek sayfalık &ouml;zet</h2>
     <div class="lo">Sınavdan &ouml;nce son okuma</div></div></div>
 
@@ -1375,7 +1618,7 @@ kapsam &ouml;ğeleri = <b>&minus;1, 0, 2, 3</b></pre>
 </div>
 
 <footer class="ft">Konular &middot; Sınır Değer Analizi &middot; ISTQB&reg; CTFL v4.0 &sect;4.2.2.
-&Ouml;rnek soru resm&icirc; CTFL v4.0 &ouml;rnek sınavı A'dan (&copy; ISTQB).</footer>
+&Ccedil;&ouml;z&uuml;ml&uuml; sorular resm&icirc; CTFL v4.0 &ouml;rnek sınavları A, B, C ve D'nin 21. sorularıdır (&copy; ISTQB).</footer>
 </main>
 </body>
 </html>
