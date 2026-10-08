@@ -35,7 +35,7 @@ header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 44%,#0e7490 100
 .hnote{color:#b9c4f5;font-size:.82rem;margin:.9rem 0 0;max-width:72ch}
 
 /* ---- nav ---- */
-nav.top{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);
+nav.top{position:sticky;top:0;z-index:40;overflow:visible;background:color-mix(in srgb,var(--bg) 92%,transparent);
   backdrop-filter:blur(12px);border-bottom:1px solid var(--line);height:var(--navh)}
 nav.top .nin{max-width:1320px;margin:0 auto;display:flex;gap:.5rem;align-items:center;padding:.5rem 1.1rem;height:100%}
 .menubtn{display:none;flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);
@@ -102,6 +102,11 @@ section.sub{margin-left:0;margin-bottom:1.6rem}
 .sh h3{margin:0;font-size:1.22rem;letter-spacing:-.015em;line-height:1.25}
 .sh h4{margin:0;font-size:1.04rem;letter-spacing:-.01em;line-height:1.3}
 .sh .los{display:flex;gap:.25rem;flex-wrap:wrap}
+.sh .pct{margin-left:auto;flex:none;font-family:var(--mono);font-size:.73rem;font-weight:800;
+  color:var(--muted);background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:99px;padding:.1rem .5rem;cursor:help}
+nav.top .bar{position:absolute;left:0;bottom:-1px;height:3px;width:0;
+  background:linear-gradient(90deg,var(--c),var(--cd));transition:width .1s linear;border-radius:0 2px 2px 0}
 .sh .los span{font-family:var(--mono);font-size:.68rem;font-weight:700;color:var(--cd);background:var(--cs);
   border-radius:5px;padding:.06rem .34rem}
 .body{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:1rem 1.2rem;

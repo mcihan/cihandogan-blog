@@ -83,6 +83,39 @@ def body_html(blocks, terms_on=True):
             out.append("<ol%s>" % cls + "".join("<li>" + xref(esc(x)) + "</li>" for x in b["items"]) + "</ol>")
     return "".join(out)
 
+# ---------- ilerleme yuzdesi (kelime agirligina gore, belge sirasinda) ----------
+def _w(blocks):
+    n = 0
+    for b in blocks:
+        n += len(b.get("text", "").split())
+        for x in b.get("items", []): n += len(x.split())
+    return n
+
+_order = []                      # [(anahtar, agirlik, konu_no)] belge sirasinda
+for _c in T:
+    _order.append(("c" + _c["no"],
+                   sum(len(l["text"].split()) for l in _c["los"])
+                   + len([k for k in _c["kw"].split(",") if k.strip()]), _c["no"]))
+    for _s in _c["secs"]:
+        _order.append((_s["no"], _w(_s["blocks"]), _c["no"]))
+        for _sb in _s["subs"]:
+            _order.append((_sb["no"], _w(_sb["blocks"]), _c["no"]))
+
+_total = sum(w for _, w, _c2 in _order) or 1
+PCT, CH_RANGE, _cum = {}, {}, 0
+for _k, _w2, _ch in _order:
+    if _ch not in CH_RANGE:
+        CH_RANGE[_ch] = [int(round(_cum * 100.0 / _total)), 0]
+    _cum += _w2
+    PCT[_k] = max(1, min(100, int(round(_cum * 100.0 / _total))))
+    CH_RANGE[_ch][1] = PCT[_k]
+
+def pbadge(key):
+    v = PCT.get(key)
+    if v is None: return ""
+    return ('<span class="pct" title="Bu b&ouml;l&uuml;m&uuml; bitirdiğinde sayfanın '
+            '%%%d\'ini okumuş olursun">%%%d</span>' % (v, v))
+
 # ---------- soru akordiyonu ----------
 def acc(node_no):
     los = LO_OF.get(node_no, [])
@@ -133,24 +166,25 @@ def render():
         out.append('<div class="chap" id="c%s"><div class="chead"><div class="n">%s</div><div>'
                    '<h2>%s</h2><div class="meta"><abbr title="ISTQB taraf&#305;ndan akredite e&#287;itim '
                    'kurslar&#305; i&ccedil;in &ouml;nerilen asgari ders s&uuml;resi &mdash; '
-                   's&#305;nav s&uuml;resi de&#287;ildir">'
-                   'e&#287;itim s&uuml;resi %s dk</abbr> &middot; %d &ouml;&#287;renme hedefi &middot; %d soru'
+                   's&#305;nav s&uuml;resi de&#287;ildir">e&#287;itim s&uuml;resi %s dk</abbr> &middot; %d &ouml;&#287;renme hedefi &middot; %d soru'
+                   ' &middot; sayfanın %%%d&ndash;%%%d aralığı'
                    '</div></div></div>'
                    '<div class="kws">%s</div>'
                    '<div class="lobox"><h3>Öğrenme hedefleri</h3><ol>%s</ol></div>'
                    % (c["no"], c["no"], esc(c["title"]), SURE[c["no"]], len(c["los"]),
-                      sum(len(BY.get(l["id"], [])) for l in c["los"]), kws, los))
+                      sum(len(BY.get(l["id"], [])) for l in c["los"]),
+                      CH_RANGE[c["no"]][0], CH_RANGE[c["no"]][1], kws, los))
         for s in c["secs"]:
             inner = body_html(s["blocks"])
             out.append('<section class="sec" id="%s" data-no="%s"><div class="sh">'
-                       '<span class="num">%s</span><h3>%s</h3>%s</div>%s'
-                       % (sid(s["no"]), s["no"], s["no"], esc(s["title"]), lobadges(s["no"]),
+                       '<span class="num">%s</span><h3>%s</h3>%s%s</div>%s'
+                       % (sid(s["no"]), s["no"], s["no"], esc(s["title"]), lobadges(s["no"]), pbadge(s["no"]),
                           ('<div class="body">%s%s</div>' % (inner, acc(s["no"]))) if (inner or acc(s["no"])) else ""))
             for sb in s["subs"]:
                 out.append('<section class="sub" id="%s" data-no="%s"><div class="sh">'
-                           '<span class="num">%s</span><h4>%s</h4>%s</div>'
+                           '<span class="num">%s</span><h4>%s</h4>%s%s</div>'
                            '<div class="body">%s%s</div></section>'
-                           % (sid(sb["no"]), sb["no"], sb["no"], esc(sb["title"]), lobadges(sb["no"]),
+                           % (sid(sb["no"]), sb["no"], sb["no"], esc(sb["title"]), lobadges(sb["no"]), pbadge(sb["no"]),
                               body_html(sb["blocks"]), acc(sb["no"])))
             out.append("</section>")
         out.append("</div>")
@@ -202,7 +236,15 @@ JS = """
     if(r.top<p.top+24)         aside.scrollTop += r.top-p.top-24;
     else if(r.bottom>p.bottom-24) aside.scrollTop += r.bottom-p.bottom+24;
   }
-  addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(sync);} },{passive:true});
+  /* okuma ilerleme cubugu */
+  var bar=document.getElementById('bar');
+  function prog(){
+    var d=document.documentElement, h=d.scrollHeight-d.clientHeight;
+    bar.style.width = (h>0 ? Math.min(100, Math.max(0, d.scrollTop/h*100)) : 0) + '%';
+  }
+  addEventListener('scroll',function(){ if(!tick){tick=true;requestAnimationFrame(function(){sync();prog();});} },{passive:true});
+  addEventListener('resize',prog,{passive:true});
+  prog();
   addEventListener('hashchange',function(){ requestAnimationFrame(sync); });
   sync();
 
@@ -265,6 +307,7 @@ HTML = u"""<!doctype html>
   <button class="menubtn" id="menu" aria-label="İçindekiler">&#9776;</button>
   <div class="chips">%(chips)s</div>
   <div class="srch"><input id="q" type="search" placeholder="Konu ara…" aria-label="Konu ara"></div>
+  <div class="bar" id="bar" role="progressbar" aria-label="Okuma ilerlemesi"></div>
 </div></nav>
 
 <div class="shell">
