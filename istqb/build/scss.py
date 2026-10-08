@@ -161,6 +161,18 @@ details.ans > summary:hover{color:var(--ink)}
 .av{display:inline-flex;align-items:center;margin-top:.45rem;background:var(--good-s);color:var(--good);
   border:1px solid color-mix(in srgb,var(--good) 35%,transparent);border-radius:9px;
   padding:.24rem .65rem;font-size:.86rem;font-weight:800;letter-spacing:.02em}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-left:auto;flex:none}
+.lang button{border:0;background:var(--surface);color:var(--muted);font-family:var(--mono);
+  font-size:.66rem;font-weight:800;padding:.1rem .4rem;cursor:pointer;line-height:1.5;letter-spacing:.03em}
+.lang button+button{border-left:1px solid var(--line)}
+.lang button:hover{color:var(--ink)}
+.lang button.on{background:var(--c);color:#fff}
+.lang.glob{margin:0;flex:none}
+.lang.glob button{font-size:.72rem;padding:.2rem .5rem;background:var(--bg)}
+.lang.glob button.on{background:var(--c);color:#fff}
+.qitem[data-lang="tr"] .l-en,.qitem[data-lang="en"] .l-tr{display:none}
+details.ans .l-en,details.ans .l-tr{display:inline}
+.qitem[data-lang="tr"] details.ans .l-en,.qitem[data-lang="en"] details.ans .l-tr{display:none}
 .qscroll{overflow-x:auto;margin:.5rem 0}
 table.qtbl{border-collapse:collapse;font-size:.82rem;min-width:320px}
 table.qtbl th,table.qtbl td{border:1px solid var(--line);padding:.3rem .55rem;text-align:left;white-space:nowrap}

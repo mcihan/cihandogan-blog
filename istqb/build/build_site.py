@@ -129,13 +129,27 @@ def acc(node_no):
                        for k, v in sorted(q["opts"].items()))
         mk = '<span class="mk">çoktan seçmeli</span>' if q["multi"] else ""
         ans = ", ".join(a.upper() for a in q.get("ans", []))
-        abox = ('<details class="ans"><summary>Cevabı göster</summary>'
-                '<div class="av">Cevap: %s</div></details>' % esc(ans)) if ans else ""
+        abox = ('<details class="ans"><summary>'
+                '<span class="l-tr">Cevabı göster</span><span class="l-en">Show answer</span>'
+                '</summary><div class="av">'
+                '<span class="l-tr">Cevap:</span><span class="l-en">Answer:</span>&nbsp;%s'
+                '</div></details>' % esc(ans)) if ans else ""
+        en = q.get("en")
+        if en:
+            eopts = "".join('<li><b>%s)</b><span>%s</span></li>' % (k, esc(v))
+                            for k, v in sorted(en["opts"].items()))
+            bodies = ('<div class="l-tr">%s<ul class="qopts">%s</ul></div>'
+                      '<div class="l-en">%s<ul class="qopts">%s</ul></div>'
+                      % (qhtml(q["q"]), opts, qhtml(en["q"]), eopts))
+            sw = ('<span class="lang"><button type="button" class="on" data-l="tr">TR</button>'
+                  '<button type="button" data-l="en">EN</button></span>')
+        else:
+            bodies = '<div class="l-tr">%s<ul class="qopts">%s</ul></div>' % (qhtml(q["q"]), opts)
+            sw = ""
         items.append(
-          '<div class="qitem"><div class="qref">'
-          '<span class="ex %s">%s</span><span class="kk">%s · %s</span>%s</div>%s'
-          '<ul class="qopts">%s</ul>%s</div>'
-          % (q["kind"], esc(q["ref"]), esc(q["set"]), q["k"], mk, qhtml(q["q"]), opts, abox))
+          '<div class="qitem" data-lang="tr"><div class="qref">'
+          '<span class="ex %s">%s</span><span class="kk">%s · %s</span>%s%s</div>%s%s</div>'
+          % (q["kind"], esc(q["ref"]), esc(q["set"]), q["k"], mk, sw, bodies, abox))
     lolist = ", ".join(l["id"] for l in los)
     return ('<details class="qa"><summary>Sınavlarda çıkmış sorular'
             '<span class="cnt">%d</span></summary><div class="qwrap">%s'
@@ -248,6 +262,24 @@ JS = """
   addEventListener('hashchange',function(){ requestAnimationFrame(sync); });
   sync();
 
+  /* soru dili: her soruda TR/EN, ust barda hepsi icin */
+  function setLang(box, l){
+    box.dataset.lang = l;
+    box.querySelectorAll(':scope > .qref .lang button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.l === l);
+    });
+  }
+  document.addEventListener('click', function(ev){
+    var b = ev.target.closest('.lang button'); if(!b) return;
+    var l = b.dataset.l;
+    if(b.closest('#glob')){
+      document.querySelectorAll('#glob button').forEach(function(x){x.classList.toggle('on',x.dataset.l===l)});
+      document.querySelectorAll('.qitem[data-lang]').forEach(function(q){ setLang(q, l) });
+    } else {
+      setLang(b.closest('.qitem'), l);
+    }
+  });
+
   /* arama */
   var inp=document.getElementById('q'), nores=document.querySelector('.nores');
   var nodes=[].slice.call(document.querySelectorAll('main section[data-no]'));
@@ -306,6 +338,7 @@ HTML = u"""<!doctype html>
 <nav class="top"><div class="nin">
   <button class="menubtn" id="menu" aria-label="İçindekiler">&#9776;</button>
   <div class="chips">%(chips)s</div>
+  <span class="lang glob" id="glob" title="Tüm soruların dili"><button type="button" class="on" data-l="tr">TR</button><button type="button" data-l="en">EN</button></span>
   <div class="srch"><input id="q" type="search" placeholder="Konu ara…" aria-label="Konu ara"></div>
   <div class="bar" id="bar" role="progressbar" aria-label="Okuma ilerlemesi"></div>
 </div></nav>

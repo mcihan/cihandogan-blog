@@ -29,7 +29,9 @@ def qhtml(q):
             flush_p(); tbl.append(s.strip()); continue
         flush_t()
         if not s.strip(): flush_p(); continue
-        if re.match(r"^\s*[-•]\s+", s) or re.match(r"^\s*(TC|AC|R|S|T)\d+\s*[:.)]", s):
+        if ("-->" in s or "→" in s
+                or re.match(r"^\s*[-•]\s+", s)
+                or re.match(r"^\s*(TC|AC|TS|KK|R|S|T|C|P|Q)\d+\s*[:.)]", s)):
             flush_p(); out.append("<p class=\"qline\">" + esc(s.strip()) + "</p>"); continue
         para.append(s.strip())
     flush_p(); flush_t()

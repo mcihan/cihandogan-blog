@@ -8,6 +8,8 @@ import re, json, io, os, collections
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 SIM  = os.path.join(ROOT, "static/deniz/istqub/questions_tr.html")
+SIMEN= os.path.join(ROOT, "static/deniz/istqub/questions.html")       # resmi A-D, ingilizce
+TRANS= os.path.join(HERE, "..", "data", "translations_en.json")       # E-H, cevrilmis
 DATA = os.path.join(HERE, "..", "data")
 
 META = {"A":("Resmî Set v1.5","resmi"), "B":("Resmî Set v1.6","resmi"),
@@ -15,10 +17,19 @@ META = {"A":("Resmî Set v1.5","resmi"), "B":("Resmî Set v1.6","resmi"),
         "E":("Pratik Set v1.0","pratik"), "F":("Pratik Set v1.0","pratik"),
         "G":("Pratik Set v1.0","pratik"), "H":("Pratik Set v1.0","pratik")}
 
-src = io.open(SIM, encoding="utf-8").read()
-m = re.search(r"const DATA\s*=\s*(\{.*?\});\s*\n", src, re.S)
-if not m: raise SystemExit("simulator verisi bulunamadi: " + SIM)
-D = json.loads(m.group(1))
+def _data(path):
+    src = io.open(path, encoding="utf-8").read()
+    m = re.search(r"const DATA\s*=\s*(\{.*?\});\s*\n", src, re.S)
+    if not m: raise SystemExit("simulator verisi bulunamadi: " + path)
+    return json.loads(m.group(1))
+
+D  = _data(SIM)
+# ingilizce metin: A-D resmi simulatorden, E-H cevrilmis dosyadan
+ENQ = {}
+for _ex, _d in _data(SIMEN).items():
+    for _q in _d["questions"]:
+        ENQ["%s%d" % (_ex, _q["n"])] = {"q": _q["q"], "opts": _q["opts"]}
+ENQ.update(json.load(io.open(TRANS, encoding="utf-8")))
 
 out = collections.defaultdict(list)
 for ex in sorted(D):
@@ -26,6 +37,7 @@ for ex in sorted(D):
         out[q["lo"]].append(dict(
             exam=ex, n=q["n"], k=q.get("k",""), multi=bool(q.get("multi")),
             q=q["q"], opts=q["opts"], ans=sorted(q["correct"]),
+            en=ENQ.get("%s%d" % (ex, q["n"])),
             set=META[ex][0], kind=META[ex][1],
             ref=u"Örnek Sınav %s · Soru %d" % (ex, q["n"])))
 for lo in out: out[lo].sort(key=lambda x: (x["exam"], x["n"]))
@@ -37,4 +49,5 @@ payload = {"meta": {"exams": {e: {"label": u"Örnek Sınav "+e, "set": META[e][0
 os.makedirs(DATA, exist_ok=True)
 io.open(os.path.join(DATA,"questions_by_lo.json"),"w",encoding="utf-8").write(
     json.dumps(payload, ensure_ascii=False, separators=(",",":")))
-print("questions_by_lo.json:", payload["meta"]["total"], "soru,", payload["meta"]["los"], "LO")
+ne = sum(1 for v in out.values() for q in v if q.get("en"))
+print("questions_by_lo.json:", payload["meta"]["total"], "soru,", payload["meta"]["los"], "LO,", ne, "ingilizce")
