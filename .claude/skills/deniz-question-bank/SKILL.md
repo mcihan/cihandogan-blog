@@ -151,6 +151,31 @@ A21 not hesaplama (kapsam yüzdesi), B21 parola uzunluğu (2→3 değerli fark).
 | `FL-6.1.1` | 6.1 Yazılım Testleri için Araç Desteği | K2 | A39, B39, C39, D39, E39, F39, G39, H39 |
 | `FL-6.2.1` | 6.2 Test Otomasyonunun Faydaları ve Riskleri | K1 | A40, B40, C40, D40, E40, F40, G40, H40 |
 
+## Not defteri — `istqb/note.html`
+
+Cihan sohbette bir kavramı açıklattığında sık sık **"bunu nota ekle"** der. Hedef dosya
+`istqb/note.html`. Yayınlanmaz (Hugo yalnızca `content/` ve `static/` altını yayımlar).
+
+Ekleme şekli: dosyadaki `YENİ NOT BURAYA EKLENİR` yorumunun **hemen üstüne** bir
+`<article>` koy. İçindekiler listesi makalelerden JavaScript ile üretilir, elle
+güncellemek gerekmez.
+
+```html
+<article class="note" id="n-kisa-slug" data-title="Kısa başlık">
+  <header><h2>Başlık</h2>
+  <span class="src">Syllabus §x.y · FL-x.y.z · ingilizce terim</span></header>
+  ... içerik ...
+</article>
+```
+
+Hazır bileşenler: `div.box.key` (ana fikir), `div.box.trap` (tuzak/sınav notu),
+`div.box.warn` (dikkat), `table.t` (`div.scroll` içinde), `div.chain` (zincir rozetleri),
+`b.k` (vurgulu terim), `pre > code`.
+
+Notun biçimi, sohbette anlattığım biçimin aynısı olmalı: tek cümlelik tanım, somut
+örnek(ler), karıştırılan kavramla farkı, pratik ayırt etme kuralı, sınavda nereden
+çıktığı. Uzatma — not tek kavramı anlatır.
+
 ## Yeni soru üretirken uyulan kurallar
 
 Cihan bu kuralları net koydu (kardeşi Deniz için hazırlıyor):

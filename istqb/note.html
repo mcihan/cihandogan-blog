@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Notlar &middot; ISTQB</title>
+<style>
+:root{
+  --bg:#f7f7fb; --surface:#fff; --surface2:#fbfbfe; --ink:#1b1b2b; --muted:#60607a; --line:#e6e5f0;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -16px rgba(28,28,60,.2);
+  --c:#0d9488; --cd:#0f766e; --cs:#e6f7f4; --cl:#99e2d8;
+  --good:#059669; --good-s:#e7f6ef; --bad:#dc2626; --bad-s:#fdecec;
+  --warn:#b45309; --warn-s:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sbw:260px; --navh:52px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#101019; --surface:#1a1a28; --surface2:#15151f; --ink:#ececf4; --muted:#9d9db8; --line:#2b2b3f;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -16px rgba(0,0,0,.7);
+  --c:#2dd4bf; --cd:#5eead4; --cs:#0e2f2c; --cl:#17524b;
+  --good:#34d399; --good-s:#0e2b20; --bad:#f87171; --bad-s:#331416;
+  --warn:#fbbf24; --warn-s:#2e2210;
+}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--navh) + 14px)}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.68;font-size:16px}
+a{color:var(--c)}
+
+header.hero{background:linear-gradient(135deg,#134e4a 0%,#0f766e 45%,#115e59 100%);padding:2.6rem 1.3rem 2.2rem;color:#fff}
+.hin{max-width:1180px;margin:0 auto}
+.kick{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#99f6e4;margin:0 0 .6rem}
+.hero h1{font-size:clamp(1.8rem,4.4vw,2.5rem);line-height:1.1;margin:0 0 .55rem;font-weight:900;letter-spacing:-.02em}
+.hero p{color:#ccfbf1;max-width:68ch;margin:0;font-size:1rem}
+
+nav.top{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);height:var(--navh)}
+nav.top .nin{max-width:1180px;margin:0 auto;display:flex;gap:.6rem;align-items:center;padding:.5rem 1.1rem;height:100%}
+.menubtn{display:none;flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:9px;padding:.35rem .6rem;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit}
+.count{font-size:.82rem;font-weight:700;color:var(--muted);flex:1;min-width:0}
+.srch input{width:230px;max-width:46vw;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:9px;padding:.34rem .7rem;font-size:.85rem;font-family:inherit;outline:none}
+.srch input:focus{border-color:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent)}
+
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:var(--sbw) minmax(0,1fr);
+  gap:2rem;padding:1.6rem 1.1rem 4rem;align-items:start}
+aside{position:sticky;top:calc(var(--navh) + 12px);max-height:calc(100vh - var(--navh) - 28px);
+  overflow-y:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface);
+  padding:.8rem .7rem;box-shadow:var(--shadow)}
+aside h2{margin:.1rem .5rem .5rem;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+aside ol{list-style:none;margin:0;padding:0;counter-reset:nn}
+aside li{counter-increment:nn}
+aside li a{display:grid;grid-template-columns:20px minmax(0,1fr);gap:.45rem;text-decoration:none;color:var(--muted);
+  font-size:.84rem;padding:.3rem .5rem;border-radius:8px;line-height:1.35}
+aside li a::before{content:counter(nn);font-family:var(--mono);font-size:.72rem;font-weight:700;opacity:.6}
+aside li a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+aside li a.on{color:var(--cd);background:var(--cs);font-weight:700}
+aside li a.on::before{opacity:1}
+
+main{min-width:0}
+article.note{background:var(--surface);border:1px solid var(--line);border-radius:18px;
+  padding:1.3rem 1.5rem 1.4rem;box-shadow:var(--shadow);margin-bottom:1.5rem}
+article.note > header{border-bottom:2px solid var(--cs);padding-bottom:.7rem;margin-bottom:1rem}
+article.note h2{margin:0 0 .2rem;font-size:1.42rem;letter-spacing:-.02em;line-height:1.2}
+article.note .src{font-family:var(--mono);font-size:.74rem;color:var(--muted);font-weight:600}
+article.note > *:last-child{margin-bottom:0}
+.note p{margin:.75rem 0}
+.note ul,.note ol{margin:.75rem 0;padding-left:1.3rem}
+.note li{margin:.3rem 0}
+.note h3{margin:1.5rem 0 .5rem;font-size:1.02rem;letter-spacing:-.01em}
+.note h3:first-of-type{margin-top:1rem}
+.note code{font-family:var(--mono);font-size:.87em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .34em;border-radius:5px}
+.note pre{font-family:var(--mono);font-size:.84rem;background:color-mix(in srgb,var(--ink) 7%,transparent);
+  border-radius:11px;padding:.75rem .95rem;margin:.75rem 0;overflow-x:auto;line-height:1.55}
+.note pre code{background:none;padding:0}
+.note b.k{color:var(--cd);font-weight:800}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.8rem 0}
+table.t{border-collapse:collapse;width:100%;font-size:.88rem}
+.scroll table.t{min-width:460px}
+table.t th,table.t td{border:1px solid var(--line);padding:.46rem .65rem;text-align:left;vertical-align:top;
+  word-break:break-word}
+table.t th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.79rem}
+table.t td.ok{background:var(--good-s);color:var(--good);font-weight:700}
+table.t td.no{background:var(--bad-s);color:var(--bad);font-weight:700}
+.box{border-radius:13px;padding:.8rem 1rem;margin:.9rem 0;font-size:.94rem}
+.box > *:first-child{margin-top:0} .box > *:last-child{margin-bottom:0}
+.box h4{margin:0 0 .4rem;font-size:.73rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.box.key{background:var(--cs);border:1px solid var(--cl)} .box.key h4{color:var(--cd)}
+.box.trap{background:var(--bad-s);border:1px solid color-mix(in srgb,var(--bad) 30%,transparent)} .box.trap h4{color:var(--bad)}
+.box.warn{background:var(--warn-s);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent)} .box.warn h4{color:var(--warn)}
+.chain{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.9rem 0;font-size:.9rem;font-weight:700}
+.chain span{background:var(--cs);color:var(--cd);border:1px solid var(--cl);border-radius:10px;padding:.3rem .7rem}
+.chain i{color:var(--muted);font-style:normal}
+.nores{display:none;padding:2.5rem;text-align:center;color:var(--muted)}
+.nores.show{display:block}
+footer.ft{border-top:1px solid var(--line);margin-top:1.5rem;padding-top:1.1rem;color:var(--muted);font-size:.8rem}
+
+@media (max-width:950px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .menubtn{display:block}
+  aside{position:fixed;inset:var(--navh) auto 0 0;width:min(80vw,300px);max-height:none;
+    height:calc(100vh - var(--navh));border-radius:0;z-index:35;transform:translateX(-102%);
+    transition:transform .2s ease;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  body.nav-open aside{transform:none}
+  body.nav-open::after{content:"";position:fixed;inset:var(--navh) 0 0 0;background:rgba(0,0,0,.45);z-index:34}
+  article.note{padding:1.05rem 1.1rem 1.2rem;border-radius:14px}
+  article.note h2{font-size:1.2rem}
+}
+@media print{nav.top,aside,.srch,.menubtn{display:none}.shell{display:block}article.note{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="hin">
+  <p class="kick">Kişisel &ccedil;alışma notları</p>
+  <h1>Notlar</h1>
+  <p>Konuştuk&ccedil;a biriken notlar. Her not tek bir kavramı, &ouml;rnekle ve sınavda nereden
+  &ccedil;ıktığıyla birlikte a&ccedil;ıklar.</p>
+</div></header>
+
+<nav class="top"><div class="nin">
+  <button class="menubtn" id="menu" aria-label="Notlar">&#9776;</button>
+  <span class="count" id="cnt"></span>
+  <div class="srch"><input id="q" type="search" placeholder="Notlarda ara…" aria-label="Notlarda ara"></div>
+</div></nav>
+
+<div class="shell">
+  <aside><h2>Notlar</h2><ol></ol></aside>
+  <main>
+
+<article class="note" id="n-test-nesnesi" data-title="Test nesnesi">
+  <header>
+    <h2>Test nesnesi nedir?</h2>
+    <span class="src">Syllabus &sect;1.1 &middot; FL-1.1.1 &middot; test object</span>
+  </header>
+
+  <div class="box key"><h4>Tek cümle</h4>
+  <p><b class="k">Test nesnesi = test ettiğin şey.</b> Syllabus'un ifadesiyle: yazılım geliştirme
+  sırasında &uuml;retilen iş &uuml;r&uuml;nlerine, <i>test edilirken</i> test nesnesi adı verilir.</p></div>
+
+  <h3>&Uuml;&ccedil; &ouml;rnek</h3>
+
+  <p><b>1 &mdash; Giriş ekranı.</b> Şifre giriş ekranını a&ccedil;tın, farklı şifreler deniyorsun.<br>
+  Test nesnesi: <b class="k">giriş ekranı</b></p>
+
+  <p><b>2 &mdash; Aynı ekran, ama hen&uuml;z kod yok.</b> Giriş ekranının gereksinim dok&uuml;manını
+  okuyorsun, &ldquo;burada şifre uzunluğu yazmamış&rdquo; diyorsun.<br>
+  Test nesnesi: <b class="k">gereksinim dok&uuml;manı</b></p>
+
+  <p>Kod &ccedil;alıştırmadın ama yine test ettin (statik test). Yani test nesnesi illa &ccedil;alışan
+  yazılım değil &mdash; dok&uuml;man da olabilir.</p>
+
+  <p><b>3 &mdash; Tek bir fonksiyon.</b> <code>hesaplaKdv()</code> metoduna birim testi yazdın.<br>
+  Test nesnesi: <b class="k">o metot</b></p>
+
+  <h3>Karışan yer: test esası</h3>
+
+  <p>İkisi aynı anda var ve farklı şeyler:</p>
+
+  <div class="box warn">
+  <p><i>&ldquo;Gereksinim dok&uuml;manına bakarak giriş ekranını test ediyorum.&rdquo;</i></p>
+  <ul style="margin-bottom:0">
+    <li>test <b>nesnesi</b> &rarr; giriş ekranı <i>(test ettiğim)</i></li>
+    <li>test <b>esası</b> &rarr; gereksinim dok&uuml;manı <i>(baktığım kaynak)</i></li>
+  </ul>
+  </div>
+
+  <p>Ama 2. &ouml;rnekte dok&uuml;manın <i>kendisini</i> inceliyordum &mdash; orada dok&uuml;man test
+  nesnesi olmuştu. Aynı şey, rol&uuml;ne g&ouml;re ikisinden biri olabilir.</p>
+
+  <div class="box key"><h4>Ayırt etme sorusu</h4>
+  <p style="margin-bottom:0"><b>&ldquo;Hata bulursam kimde hata var?&rdquo;</b><br>
+  Giriş ekranında &rarr; nesne giriş ekranı. Dok&uuml;manda &rarr; nesne dok&uuml;man.</p></div>
+
+  <h3>Hangi seviyede ne?</h3>
+  <div class="scroll"><table class="t">
+    <tr><th>Test seviyesi / &ccedil;eşidi</th><th>Test nesnesi</th></tr>
+    <tr><td>Bileşen testi</td><td>tek bir sınıf / mod&uuml;l</td></tr>
+    <tr><td>Bileşen entegrasyon testi</td><td>bileşenler ve aralarındaki aray&uuml;zler</td></tr>
+    <tr><td>Sistem testi</td><td>komple sistem</td></tr>
+    <tr><td>Sistem entegrasyon testi</td><td>sistem + dış servisler</td></tr>
+    <tr><td>Kabul testi</td><td>kullanıcıya sunulacak sistem</td></tr>
+    <tr><td><b>Statik test</b></td><td>gereksinim, kullanıcı hik&acirc;yesi, test planı, s&ouml;zleşme, model, kaynak kodu</td></tr>
+  </table></div>
+
+  <div class="box trap"><h4>Sınavda nerede karşına &ccedil;ıkar</h4>
+  <p style="margin-bottom:0">Doğrudan &ldquo;test nesnesi nedir&rdquo; diye sorulmaz; şıklarda ayırt edici
+  olarak kullanılır. &sect;2.2.1'de test seviyelerini birbirinden ayıran beş &ouml;l&ccedil;&uuml;tten biridir
+  (test nesnesi, test hedefleri, test esası, hatalar/arızalar, yaklaşım ve sorumluluklar).
+  &sect;4.1'de kara kutu, test nesnesinin <i>i&ccedil; yapısına bakmadan</i> davranışını analiz eder.
+  &sect;5.5'te hata raporunda bulunması gereken alanlardan biridir.</p></div>
+</article>
+
+
+<article class="note" id="n-hata-ariza" data-title="İnsan hatası, hata, arıza, kök neden">
+  <header>
+    <h2>İnsan hatası, hata, arıza, k&ouml;k neden</h2>
+    <span class="src">Syllabus &sect;1.2.3 &middot; FL-1.2.3 &middot; error / defect / failure / root cause</span>
+  </header>
+
+  <div class="chain">
+    <span>k&ouml;k neden</span><i>&rarr;</i><span>insan hatası</span><i>&rarr;</i>
+    <span>hata</span><i>&rarr;</i><span>arıza</span>
+  </div>
+
+  <h3>Tek &ouml;rnek &uuml;zerinden</h3>
+
+  <p>Bir e-ticaret sitesinde &ldquo;500 TL &uuml;zeri siparişlerde %10 indirim&rdquo; kuralı var.
+  Geliştirici yorgun, gece 11'de kod yazıyor ve şunu yazıyor:</p>
+
+<pre><code>if (tutar &gt; 500) indirimUygula();   // olması gereken: &gt;= 500</code></pre>
+
+  <div class="scroll"><table class="t">
+    <tr><th>Terim</th><th>Bu &ouml;rnekte</th><th>Nerede yaşar</th></tr>
+    <tr><td><b>İnsan hatası</b><br><i>error</i></td>
+        <td>Geliştiricinin <code>&gt;=</code> yerine <code>&gt;</code> yazması</td>
+        <td>İnsanın kafasında / elinde</td></tr>
+    <tr><td><b>Hata</b><br><i>defect, bug</i></td>
+        <td>Koddaki o <code>&gt;</code> işareti</td>
+        <td><b>&Uuml;r&uuml;nde durur</b> &mdash; kimse &ccedil;alıştırmasa da oradadır</td></tr>
+    <tr><td><b>Arıza</b><br><i>failure</i></td>
+        <td>M&uuml;şteri tam <b>500 TL</b>'lik sipariş veriyor, indirim uygulanmıyor</td>
+        <td>&Ccedil;alışma anında <b>g&ouml;zlemlenen</b> yanlış davranış</td></tr>
+    <tr><td><b>K&ouml;k neden</b><br><i>root cause</i></td>
+        <td>Gece mesaisi / acele / kod g&ouml;zden ge&ccedil;irme yapılmaması</td>
+        <td>Problemin asıl sebebi</td></tr>
+  </table></div>
+
+  <h3>&Uuml;&ccedil; kritik nokta</h3>
+
+  <p><b>1. Her hata arızaya d&ouml;n&uuml;şmez.</b> Yukarıdaki hata, 500 TL'lik sipariş gelmezse hi&ccedil;
+  g&ouml;r&uuml;nmez. 499 veya 501 TL'lik siparişlerde her şey doğru &ccedil;alışır. Hata hep orada, ama arıza yok.</p>
+
+  <p><b>2. Her arızanın arkasında hata olmayabilir.</b> Sunucuya yıldırım d&uuml;ş&uuml;yor, bellek
+  bozuluyor, sistem yanlış sonu&ccedil; veriyor. Arıza var, kodda hata yok. Syllabus bunu a&ccedil;ık&ccedil;a
+  s&ouml;yl&uuml;yor: arızalar radyasyon, elektromanyetik alan gibi <b>&ccedil;evresel koşullardan</b> da olabilir.</p>
+
+  <p><b>3. Hata sadece kodda olmaz.</b> Analist gereksinim dok&uuml;manına &ldquo;500 TL &uuml;zeri&rdquo;
+  yazdıysa ama iş birimi &ldquo;500 dahil&rdquo; demek istediyse &rarr; <b>hata dok&uuml;manda</b>.
+  Geliştirici kodu dok&uuml;mana g&ouml;re doğru yazmış olsa bile &uuml;r&uuml;n yanlış.</p>
+
+  <h3>Sınavda nasıl sorulur</h3>
+
+  <p>Sana bir senaryo verilir, hangisinin ne olduğunu işaretlersin:</p>
+  <div class="scroll"><table class="t">
+    <tr><th>İfade</th><th>Cevap</th></tr>
+    <tr><td>&ldquo;Test uzmanı, 500 TL'lik siparişte indirimin uygulanmadığını <b>g&ouml;zlemledi</b>.&rdquo;</td>
+        <td class="no">arıza</td></tr>
+    <tr><td>&ldquo;İnceleme sonucu koşulun <code>&gt;</code> yerine <code>&gt;=</code> olması gerektiği <b>g&ouml;r&uuml;ld&uuml;</b>.&rdquo;</td>
+        <td class="no">hata</td></tr>
+    <tr><td>&ldquo;Geliştirici, kuralı <b>yanlış anlamıştı</b>.&rdquo;</td>
+        <td class="no">insan hatası</td></tr>
+  </table></div>
+
+  <div class="box key"><h4>Pratik ayırt etme</h4>
+  <ul style="margin-bottom:0">
+    <li><b>G&ouml;rd&uuml;ğ&uuml;n</b> şey &rarr; <b class="k">arıza</b> <i>(dışarıdan belli)</i></li>
+    <li><b>Bulduğun</b> şey &rarr; <b class="k">hata</b> <i>(i&ccedil;eri bakınca belli)</i></li>
+    <li><b>Yapan</b> şey &rarr; <b class="k">insan hatası</b></li>
+  </ul></div>
+
+  <div class="box trap"><h4>Ayrıca</h4>
+  <p style="margin-bottom:0"><b>Hata ayıklama (debugging) test değildir.</b> Test arızayı tetikler;
+  sonra geliştirici hata ayıklama yaparak o arızanın arkasındaki <b>hata</b>yı bulur ve d&uuml;zeltir.
+  Hata ayıklama adımları: arızayı yeniden oluşturma &rarr; teşhis &rarr; d&uuml;zeltme. Ardından
+  <b>onaylama testi</b> d&uuml;zeltmenin işe yarayıp yaramadığını kontrol eder (&sect;1.1.2).</p></div>
+</article>
+
+<!-- ============================================================
+     YENİ NOT BURAYA EKLENİR.
+     Kalıp:
+       <article class="note" id="n-kisa-slug" data-title="Kısa başlık">
+         <header><h2>Başlık</h2><span class="src">Syllabus §x.y · FL-x.y.z</span></header>
+         ... içerik ...
+       </article>
+     İçindekiler listesi bu makalelerden otomatik üretilir; elle güncelleme gerekmez.
+     Hazır bileşenler: div.box.key / div.box.trap / div.box.warn, table.t (div.scroll içinde),
+     div.chain, b.k, pre > code.
+     ============================================================ -->
+    <div class="nores">Aramanla eşleşen not yok.</div>
+    <footer class="ft">Kişisel &ccedil;alışma notları &middot; ISTQB&reg; CTFL v4.0.1 ders programına
+    g&ouml;re. Yayınlanmaz &mdash; repoda <code>istqb/note.html</code> olarak durur.</footer>
+  </main>
+</div>
+<script>
+(function(){
+  var body=document.body, aside=document.querySelector('aside ol'),
+      notes=[].slice.call(document.querySelectorAll('article.note'));
+
+  /* icindekiler: makalelerden uretilir, yeni not eklerken elle guncellemeye gerek yok */
+  notes.forEach(function(n){
+    var li=document.createElement('li'), a=document.createElement('a');
+    a.href='#'+n.id; a.textContent=n.dataset.title||n.querySelector('h2').textContent;
+    li.appendChild(a); aside.appendChild(li);
+  });
+  document.getElementById('cnt').textContent=notes.length+' not';
+
+  document.getElementById('menu').onclick=function(){body.classList.toggle('nav-open')};
+  aside.addEventListener('click',function(){body.classList.remove('nav-open')});
+
+  /* aktif not — yalnizca kenar cubugunu kaydirir, sayfaya dokunmaz */
+  var links=[].slice.call(aside.querySelectorAll('a')).map(function(a,i){return {a:a, el:notes[i]}}),
+      box=document.querySelector('aside'), cur=null, tick=false;
+  function sync(){
+    tick=false;
+    var line=document.querySelector('nav.top').getBoundingClientRect().bottom+24, best=null;
+    for(var i=0;i<links.length;i++){
+      if(links[i].el.style.display!=='none' && links[i].el.getBoundingClientRect().top<=line) best=links[i];
+    }
+    if(!best||best.a===cur) return;
+    if(cur) cur.classList.remove('on');
+    best.a.classList.add('on'); cur=best.a;
+    if(getComputedStyle(box).position==='fixed' && !body.classList.contains('nav-open')) return;
+    var r=best.a.getBoundingClientRect(), p=box.getBoundingClientRect();
+    if(r.top<p.top+24) box.scrollTop += r.top-p.top-24;
+    else if(r.bottom>p.bottom-24) box.scrollTop += r.bottom-p.bottom+24;
+  }
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(sync)}},{passive:true});
+  sync();
+
+  /* arama */
+  function norm(s){return s.toLocaleLowerCase('tr').replace(/[ıİ]/g,'i').replace(/[şŞ]/g,'s')
+    .replace(/[ğĞ]/g,'g').replace(/[üÜ]/g,'u').replace(/[öÖ]/g,'o').replace(/[çÇ]/g,'c')}
+  notes.forEach(function(n){n._t=norm(n.textContent)});
+  var inp=document.getElementById('q'), nores=document.querySelector('.nores'), t;
+  inp.addEventListener('input',function(){
+    clearTimeout(t); t=setTimeout(function(){
+      var v=norm(inp.value.trim()), hit=0;
+      notes.forEach(function(n,i){
+        var ok=!v||n._t.indexOf(v)>=0;
+        n.style.display=ok?'':'none';
+        links[i].a.parentNode.style.display=ok?'':'none';
+        if(ok) hit++;
+      });
+      nores.classList.toggle('show',hit===0);
+      document.getElementById('cnt').textContent=(v? hit+' / ':'')+notes.length+' not';
+    },130);
+  });
+})();
+</script>
+</body>
+</html>
