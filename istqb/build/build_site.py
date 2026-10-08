@@ -2,6 +2,7 @@
 import json, io, re, html, os
 from scss import CSS
 from qfmt import qhtml, esc
+from glossary import find as gfind
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.environ.get("ISTQB_DATA", os.path.join(HERE, "..", "data"))
@@ -142,6 +143,35 @@ def pbadge(key):
             '%%%d\'ini okumuş olursun  /  when you finish this section you have read '
             '%d%% of the page">%s</span>' % (v, v, bi("%%%d" % v, "%d%%" % v)))
 
+# ---------- teknik terim sozlugu ----------
+def node_text(no):
+    """bolumun turkce govdesi + o bolumun sinav sorulari"""
+    out = []
+    b = BODY.get(no)
+    if b:
+        for bl in b["blocks"]:
+            out.append(bl.get("text", "")); out += bl.get("items", [])
+    for lo in LO_OF.get(no, []):
+        for q in BY.get(lo["id"], []):
+            out.append(q["q"]); out += list(q["opts"].values())
+    return " \n ".join(out)
+
+def gloss(no):
+    terms = gfind(node_text(no), no.split(".")[0])
+    if len(terms) < 3: return ""
+    cells = "".join('<div class="g"><b>%s</b><i>%s</i></div>' % (esc(t), esc(e))
+                    for t, e in terms)
+    tpl = ('<details class="gl"><summary>'
+           + bi("Teknik terimler (T\u00fcrk\u00e7e \u2192 \u0130ngilizce)",
+                "Technical terms (Turkish \u2192 English)")
+           + '<span class="cnt">%d</span></summary><div class="glwrap">%s</div>'
+             '<p class="glfoot">'
+           + bi("T\u00fcrk\u00e7e kar\u015f\u0131l\u0131k kafan\u0131 kar\u0131\u015ft\u0131r\u0131rsa "
+                "terimin \u0130ngilizce as\u0131l halini buradan kontrol et.",
+                "Terms used in this section and in its exam questions.")
+           + '</p></details>')
+    return tpl % (len(terms), cells)
+
 # ---------- soru akordiyonu ----------
 def acc(node_no):
     los = LO_OF.get(node_no, [])
@@ -238,7 +268,8 @@ def render():
                        % (sid(s["no"]), s["no"], s["no"],
                           bi(esc(s["title"]), esc(SEC_EN.get(s["no"], s["title"]))),
                           lobadges(s["no"]), pbadge(s["no"]),
-                          ('<div class="body">%s%s</div>' % (bod, a)) if (bod or a) else ""))
+                          ('<div class="body">%s%s%s</div>' % (bod, gloss(s["no"]), a))
+                          if (bod or a) else ""))
             for sb in s["subs"]:
                 out.append('<section class="sub" id="%s" data-no="%s"><div class="sh">'
                            '<span class="num">%s</span><h4>%s</h4>%s%s</div>'
@@ -246,7 +277,8 @@ def render():
                            % (sid(sb["no"]), sb["no"], sb["no"],
                               bi(esc(sb["title"]), esc(SEC_EN.get(sb["no"], sb["title"]))),
                               lobadges(sb["no"]), pbadge(sb["no"]),
-                              bodybi(body_html(sb["blocks"]), body_html_en(sb["no"])), acc(sb["no"])))
+                              bodybi(body_html(sb["blocks"]), body_html_en(sb["no"]))
+                              + gloss(sb["no"]), acc(sb["no"])))
             out.append("</section>")
         out.append("</div>")
     return "".join(out)

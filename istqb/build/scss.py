@@ -129,6 +129,23 @@ section.sub .body{background:var(--surface2)}
 .body b.term{color:var(--cd);font-weight:800}
 
 /* ---- sorular ---- */
+/* --- teknik terim sozlugu --- */
+details.gl{margin-top:.8rem;border:1px solid var(--line);border-radius:13px;background:var(--surface2);overflow:hidden}
+details.gl > summary{cursor:pointer;list-style:none;padding:.55rem .9rem;font-size:.82rem;font-weight:700;
+  color:var(--muted);display:flex;align-items:center;gap:.5rem}
+details.gl > summary::-webkit-details-marker{display:none}
+details.gl > summary::before{content:"\u25b8";font-size:.9rem;transition:transform .15s}
+details.gl[open] > summary::before{transform:rotate(90deg)}
+details.gl[open] > summary{color:var(--ink);border-bottom:1px solid var(--line)}
+details.gl > summary .cnt{margin-left:auto;background:var(--line);color:var(--ink);border-radius:99px;
+  font-family:var(--mono);font-size:.7rem;font-weight:800;padding:.08rem .5rem;flex:none}
+.glwrap{padding:.7rem .9rem;display:grid;gap:.1rem .9rem;
+  grid-template-columns:repeat(auto-fill,minmax(186px,1fr))}
+.glwrap .g{display:block;padding:.26rem 0;border-bottom:1px dotted var(--line);min-width:0}
+.glwrap .g b{display:block;font-size:.8rem;font-weight:700;color:var(--ink);overflow-wrap:anywhere}
+.glwrap .g i{display:block;font-style:normal;font-size:.76rem;font-family:var(--mono);color:var(--cd);
+  overflow-wrap:anywhere}
+.glfoot{margin:0;padding:.1rem .9rem .75rem;font-size:.74rem;color:var(--muted)}
 details.qa{margin-top:.8rem;border:1px solid var(--cl);border-radius:13px;background:var(--cs);overflow:hidden}
 details.qa > summary{cursor:pointer;list-style:none;padding:.6rem .9rem;font-size:.86rem;font-weight:800;
   color:var(--cd);display:flex;gap:.5rem;align-items:center;user-select:none}
