@@ -246,7 +246,7 @@ JS = r"""
   inst.addEventListener('change', function(){
     try{ localStorage.setItem('ctfl-inst', inst.checked?'1':'0') }catch(e){}
   });
-  try{ if(localStorage.getItem('ctfl-inst')==='0') inst.checked=false;
+  try{ if(localStorage.getItem('ctfl-inst')==='1') inst.checked=true;
        if(localStorage.getItem('ctfl-lang')==='en'){
          var gb=document.querySelector('#glob button[data-l="en"]'); if(gb) gb.click(); }
        var ss=+(localStorage.getItem(KEY+'-set')||0);
@@ -307,7 +307,7 @@ def chapter_page(ch):
              items, i, i, i))
     nav = ('<nav class="bar"><div class="in"><div class="sets">%s</div>'
            '<span class="score" id="score"></span>'
-           '<label class="chk"><input type="checkbox" id="inst" checked>'
+           '<label class="chk"><input type="checkbox" id="inst">'
            '<span class="s-tr">anında cevap</span><span class="s-en">instant answer</span></label>'
            '<span class="sw" id="glob"><button type="button" class="on" data-l="tr">TR</button>'
            '<button type="button" data-l="en">EN</button></span></div></nav>' % tabs)
