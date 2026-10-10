@@ -85,12 +85,12 @@ const fs = require('fs');
 
   // ---- baski stili ----
   await p.addStyleTag({ content: `
-    @page { size: A4; margin: 14mm 12mm 16mm 12mm; }
+    @page { size: A4; margin: 0.1mm; }
     html { scroll-behavior:auto; }
     body { background:#fff !important; font-size:10.5pt; }
-    .shell { display:block !important; max-width:none !important; padding:0 !important; }
+    .shell { display:block !important; max-width:none !important; padding:2mm 3mm !important; }
     main { min-width:0; }
-    header.hero { break-after:page; padding:3.5rem 1.4rem !important; }
+    header.hero { break-after:page; padding:2.5rem 1.6rem !important; }
     header.hero .hin { max-width:none; }
     .chap { break-before:page; }
     .chap:first-of-type { break-before:auto; }
@@ -128,7 +128,7 @@ const fs = require('fs');
     .tocs.sub { padding-left:3.1rem; color:#60607a; font-size:9pt; }
     .tocs i { font-family:var(--mono); font-style:normal; color:#60607a; min-width:2.6em; }
     /* kapak */
-    header.hero { min-height:235mm; display:flex; align-items:center; }
+    header.hero { min-height:296.5mm; display:flex; align-items:center; margin:-2mm -3mm 0; }
     /* cevap anahtari */
     .keypage table.keyt { width:100%; border-collapse:collapse; font-size:9.5pt; }
     .keypage table.keyt td { border-bottom:1px solid #e6e5f0; padding:.22rem .4rem; }
@@ -143,12 +143,7 @@ const fs = require('fs');
   await p.pdf({
     path: 'syllabus.pdf',
     format: 'A4', printBackground: true, preferCSSPageSize: true, outline: true, tagged: true,
-    displayHeaderFooter: true,
-    headerTemplate: '<div></div>',
-    footerTemplate: '<div style="width:100%;font-size:8pt;color:#8a8aa3;padding:0 12mm;'
-      + 'font-family:system-ui,sans-serif;display:flex;justify-content:space-between">'
-      + '<span>ISTQB CTFL v4.0.1 &middot; Ders Programı</span>'
-      + '<span class="pageNumber"></span></div>',
+    displayHeaderFooter: false, margin: { top:'0.1mm', right:'0.1mm', bottom:'0.1mm', left:'0.1mm' },
   });
   console.log('bolum:', info.secs, '| soru:', info.qn, '| cevap:', info.key.length, '| hata:', errs.length);
   await b.close();
