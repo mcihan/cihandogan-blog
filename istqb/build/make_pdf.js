@@ -16,7 +16,14 @@ const fs = require('fs');
     // ekrana ozgu parcalar
     ['aside', 'nav.top', '.nores', '.vtools', '.qref .lang', '#glob', '#gver', '.srch', '.menubtn']
       .forEach(sel => document.querySelectorAll(sel).forEach(e => e.remove()));
-    document.querySelectorAll('.ez').forEach(e => e.remove());          // yalnizca orijinal metin
+    // resmi metin + kolay anlatim, ikisi de dursun; her birine etiket
+    document.querySelectorAll('.body').forEach(bd => {
+      const og = bd.querySelector(':scope > .og'), ez = bd.querySelector(':scope > .ez');
+      if (og && ez) og.insertAdjacentHTML('beforebegin',
+        '<div class="vlabel og-l">Resm\u00ee metin</div>');
+      if (ez) ez.insertAdjacentHTML('beforebegin',
+        '<div class="vlabel ez-l">Kolay k\u0131s\u0131m</div>');
+    });
     document.querySelectorAll('.s-en, .x-en, .l-en').forEach(e => e.remove());  // yalnizca turkce
 
     // akordiyonlari ac
@@ -100,6 +107,17 @@ const fs = require('fs');
     a { text-decoration:none; }
     a.xref { border-bottom:0 !important; }
     .qfoot a { color:inherit; }
+    /* resmi metin + kolay kisim birlikte */
+    section[data-ver="o"] .ez, section[data-ver="e"] .og { display:block !important; }
+    .vlabel { display:flex; align-items:center; gap:.5rem; font-size:8.5pt; font-weight:800;
+      letter-spacing:.11em; text-transform:uppercase; margin:1rem 0 .55rem; break-after:avoid; }
+    .vlabel::after { content:""; flex:1; height:1px; }
+    .vlabel.og-l { color:#60607a; margin-top:.1rem; }
+    .vlabel.og-l::after { background:#e6e5f0; }
+    .vlabel.ez-l { color:#047857; }
+    .vlabel.ez-l::before { content:"\u270E"; font-size:11pt; letter-spacing:0; }
+    .vlabel.ez-l::after { background:#a7e3c9; }
+    .ez { border-left:2px solid #a7e3c9; padding-left:.85rem; }
     /* icindekiler */
     .tocpage { break-after:page; padding-top:.4rem; }
     .toch { font-size:1.5rem; margin:0 0 1.1rem; letter-spacing:-.02em; }
