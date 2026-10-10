@@ -27,7 +27,16 @@ const fs = require('fs');
     document.querySelectorAll('.s-en, .x-en, .l-en').forEach(e => e.remove());  // yalnizca turkce
 
     // akordiyonlari ac
-    document.querySelectorAll('details.qa, details.gl').forEach(d => d.open = true);
+    document.querySelectorAll('details.qa').forEach(d => d.open = true);
+
+    // teknik terimler: hepsi bir arada, en basta; bolum ici kopyalari gitsin
+    const terms = new Map();
+    document.querySelectorAll('details.gl .glwrap .g').forEach(g => {
+      const tr = g.querySelector('b')?.textContent.trim();
+      const en = g.querySelector('i')?.textContent.trim();
+      if (tr && !terms.has(tr)) terms.set(tr, en);
+    });
+    document.querySelectorAll('details.gl').forEach(d => d.remove());
 
     // cevaplari topla, sayfadan cikar
     const key = [];
@@ -53,7 +62,7 @@ const fs = require('fs');
         sub: sh.parentElement.classList.contains('sub')
       }))
     }));
-    return { key, secs, qn, chaps };
+    return { key, secs, qn, chaps, terms: [...terms.entries()] };
   });
 
   // ---- icindekiler ----
@@ -64,9 +73,25 @@ const fs = require('fs');
       <div class="tocg"><div class="tocc"><b>${c.no}</b>${c.title}</div>
         ${c.secs.map(s2 => `<div class="tocs${s2.sub ? ' sub' : ''}"><i>${s2.no}</i>${s2.t}</div>`).join('')}
       </div>`).join('')}
+    <div class="tocg"><div class="tocc"><b>§</b>Teknik Terimler (Türkçe → İngilizce)</div></div>
     <div class="tocg"><div class="tocc"><b>✓</b>Cevap Anahtarı</div></div>
   </div>`;
   await p.evaluate(h => { document.querySelector('main').insertAdjacentHTML('afterbegin', h); }, toc);
+
+  // ---- teknik terimler sozlugu (tek yerde) ----
+  const coll = new Intl.Collator('tr');
+  const terms = info.terms.slice().sort((a, b) => coll.compare(a[0], b[0]));
+  const glHtml = `
+  <div class="glpage">
+    <h2 class="toch">Teknik Terimler · Türkçe &rarr; İngilizce</h2>
+    <p class="glnote">Ders programının tamamında ve sınav sorularında geçen ${terms.length} terim,
+      alfabetik sırayla. Türkçe karşılık kafanı karıştırırsa terimin İngilizce aslını buradan kontrol et.</p>
+    <div class="glall">${terms.map(([tr, en]) =>
+      `<div class="g"><b>${tr}</b><i>${en}</i></div>`).join('')}</div>
+  </div>`;
+  await p.evaluate(h => {
+    document.querySelector('.tocpage').insertAdjacentHTML('afterend', h);
+  }, glHtml);
 
   // ---- cevap anahtari ----
   const byCh = {};
@@ -130,6 +155,14 @@ const fs = require('fs');
     .tocs i { font-family:var(--mono); font-style:normal; color:#60607a; min-width:2.6em; }
     /* kapak */
     header.hero { min-height:296.5mm; display:flex; align-items:center; margin:-2mm -3mm 0; }
+    /* toplu teknik terimler */
+    .glpage { break-before:page; break-after:page; }
+    .glnote { font-size:9.5pt; color:#60607a; margin:0 0 1rem; max-width:62ch; }
+    .glall { column-count:3; column-gap:1.1rem; }
+    .glall .g { break-inside:avoid; padding:.24rem 0; border-bottom:1px dotted #e6e5f0;
+      -webkit-column-break-inside:avoid; }
+    .glall .g b { display:block; font-size:9.5pt; font-weight:700; color:#1b1b2b; }
+    .glall .g i { display:block; font-style:normal; font-size:9pt; font-family:var(--mono); color:#92400e; }
     /* cevap anahtari */
     .keypage table.keyt { width:100%; border-collapse:collapse; font-size:9.5pt; }
     .keypage table.keyt td { border-bottom:1px solid #e6e5f0; padding:.22rem .4rem; }
