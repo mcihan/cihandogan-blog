@@ -86,8 +86,9 @@ const fs = require('fs');
   // ---- baski stili ----
   await p.addStyleTag({ content: `
     @page { size: A4; margin: 0.1mm; }
-    html { scroll-behavior:auto; }
-    body { background:#fff !important; font-size:10.5pt; }
+    /* +2px: rem tabanli her sey html'den, duz metin body'den olcekleniyor */
+    html { scroll-behavior:auto; font-size:18px; }
+    body { background:#fff !important; font-size:16px; }
     .shell { display:block !important; max-width:none !important; padding:2mm 3mm !important; }
     main { min-width:0; }
     header.hero { break-after:page; padding:2.5rem 1.6rem !important; }
