@@ -415,8 +415,20 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
   <p class="lead">Sınır değer, <b>if'teki sabit değil</b>, <b>payın ucudur</b>.
   ISTQB tanımı: <i>&ldquo;Sınır değer, bir eşdeğerlik payının minimum veya maksimum değeridir.&rdquo;</i></p>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir üyelik formundaki <b>parola</b> alanını test ediyorsunuz. Spesifikasyon şunu diyor:
+    parola uzunluğu <b>6 ila 12 karakter arasında</b> ise parola geçerlidir; <b>6 karakterden kısa</b>
+    ise form &ldquo;çok kısa&rdquo;, <b>13 ve üzeri</b> ise &ldquo;çok uzun&rdquo; hatası verir.
+    Form ilk açıldığında alan boştur, yani <b>parola uzunluğu = 0</b>'dır. Spesifikasyonda bir
+    en büyük uzunluk yazmaz.</p>
+    <p style="margin-bottom:0"><b>Soru:</b> &ldquo;Parola uzunluğu&rdquo; değişkenine sınır değer analizi
+    uygulandığında toplam <b>kaç sınır değer</b> vardır ve bunlar hangileridir?</p>
+  </div>
+
   <div class="card">
     <h3>&Ouml;nce payları &ccedil;iz, sonra u&ccedil;ları oku</h3>
+    <p>&Ccedil;özelim: önce üç payı sayı doğrusuna koyalım, sonra her kesim &ccedil;izgisinin iki yakasını okuyalım.</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
 <rect class="bd bad" x="23" y="22" width="300" height="32" rx="9"/>
 <text class="bl bad" x="173" y="43">0&#8211;5 &middot; &ccedil;ok kısa</text>
@@ -511,6 +523,16 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
   <b>2-değerli</b> &mdash; her sınır i&ccedil;in: <i>sınırın kendisi + komşu payda kalan en yakın değer</i><br>
   <b>3-değerli</b> &mdash; her sınır i&ccedil;in: <i>sınırın kendisi + iki komşusu</i></div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Aynı üyelik formundaki parola alanıyla devam ediyoruz: <b>6&ndash;12 karakter</b> geçerli,
+    <b>0&ndash;5</b> &ldquo;çok kısa&rdquo;, <b>13 ve üzeri</b> &ldquo;çok uzun&rdquo;; form ilk açıldığında
+    uzunluk <b>0</b>'dır ve üst uç açıktır. Sınır değerleri 3. bölümde çıkarmıştık:
+    <b>0, 5, 6, 12, 13</b>.</p>
+    <p style="margin-bottom:0"><b>Soru:</b> Bu alanda <b>%100 2-değerli</b> sınır değer kapsamı için
+    en az kaç test senaryosu gerekir ve <b>%100 3-değerli</b> kapsama çıkmak bu kümeye hangi değerleri ekler?</p>
+  </div>
+
   <div class="card key">
     <h3>En kolay yol: blok y&ouml;ntemi</h3>
     <div class="scroll"><table class="dt">
@@ -524,6 +546,7 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
 
   <div class="card">
     <h3>2-değerli &mdash; hi&ccedil;bir şey ekleme</h3>
+    <p>&Ccedil;özelim: blok yöntemini iki kesim &ccedil;izgisine de uygulayalım &mdash; önce 2-değerli küme.</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
 <rect class="bd bad" x="23" y="22" width="300" height="32" rx="9"/>
 <text class="bl bad" x="173" y="43">0&#8211;5 &middot; &ccedil;ok kısa</text>

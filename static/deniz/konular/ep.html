@@ -359,11 +359,19 @@ BOŞLUK  &#9474; 0 ve altı &#9474; 1&#8211;9  &#9474; 11&#8211;49 &#9474; 50 ve
     Senin işin payları <b>saymak</b> ve her test değerini <b>tam bir paya</b> etiketlemektir.</p>
   </div>
 
-  <div class="card">
-    <h3>Örnek &mdash; bu sayfa boyunca kullanacağımız vaka</h3>
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
     <p>Bir toptan satış sistemi, <b>sipariş adedine</b> (tam sayı) göre fiyat listesi seçiyor:
     <b>1&ndash;9 adet</b> perakende, <b>10&ndash;49 adet</b> toptan, <b>50 ve üzeri</b> kurumsal.
-    <b>0 ve altı</b> değerler reddediliyor.</p>
+    <b>0 ve altı</b> değerler reddediliyor. Sipariş adedi, formdaki tek giriş alanıdır.</p>
+    <p><b>Soru:</b> Sipariş adedi alanına denklik paylarına ayırma uygulandığında, %100 denklik payı
+    kapsamı için EN AZ kaç test senaryosu gerekir?</p>
+  </div>
+
+  <div class="card">
+    <h3>Örnek &mdash; bu sayfa boyunca kullanacağımız vaka</h3>
+    <p><b>Çözelim:</b> önce payları sayı doğrusuna dizip boşluk ve çakışma olmadığını görelim,
+    sonra her paydan birer temsilci seçelim.</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
 <rect class="bd bad" x="23" y="22" width="200" height="32" rx="9"/>
 <text class="bl bad" x="123" y="43">P1 &middot; 0 ve altı &middot; GEÇERSİZ</text>
@@ -468,11 +476,23 @@ temsilciler = &minus;1, 5, 25, 80   &rarr;  4 test ile %100 pay kapsamı</pre>
     Geçerli taraf <i>açık</i> bitiyorsa (&ldquo;51 ve üzeri&rdquo;) o yönde geçersiz pay <b>yoktur</b>.</p>
   </div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir sağlık takip uygulamasının kayıt formunda iki zorunlu alan var:
+    <b>kilo</b> (kg, yalnızca <b>1&ndash;300</b> kabul edilir) ve <b>yaş</b> (yıl, yalnızca
+    <b>1&ndash;120</b> kabul edilir). Aralık dışındaki her değer hata mesajıyla reddedilir.
+    Test edilecek iki geçersiz değer belirlendi: <code>kilo = 0</code> ve <code>yaş = &minus;5</code>.</p>
+    <p><b>Soru:</b> Bu iki geçersiz payı da kapsamak için EN AZ kaç test senaryosu yazılmalıdır ve
+    her senaryoda diğer alana hangi tür değer verilmelidir?</p>
+  </div>
+
   <div class="card key">
     <h3>Altın kural &mdash; geçersiz değerler birleştirilmez</h3>
     <p style="margin-bottom:.5rem">Bir test senaryosu <b>birden çok geçerli payı</b> aynı anda kapsayabilir
     (her parametreden birer pay). Ama <b>geçersiz bir değer kural olarak kendi testini alır</b>:
     testin geri kalan girdileri geçerli seçilir.</p>
+    <p style="margin-bottom:.5rem"><b>Çözelim:</b> iki geçersiz değer, <b>iki ayrı</b> test senaryosuna
+    dağıtılır; her senaryoda diğer alan geçerli bir değer alır.</p>
 <pre>İYİ   TC1: kilo = <b>0</b>   (geçersiz)   &middot; yaş = 30 (geçerli)
       TC2: kilo = 70  (geçerli)    &middot; yaş = <b>-5</b> (geçersiz)
 
@@ -498,6 +518,17 @@ KÖTÜ  TC1: kilo = <b>0</b>   (geçersiz)   &middot; yaş = <b>-5</b> (geçersi
     <div class="lo">Metin &rarr; değişken &rarr; pay &rarr; temsilci</div></div></div>
 
   <p class="lead">EP'nin tamamı dört harekete iner. Sipariş adedi örneğinde baştan sona yapalım.</p>
+
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Aynı toptan satış sisteminin spesifikasyonu şunu söylüyor: sipariş adedi (tam sayı)
+    <b>1&ndash;9 adet</b> ise perakende, <b>10&ndash;49 adet</b> ise toptan, <b>50 ve üzeri</b> ise
+    kurumsal fiyat listesi uygulanır; <b>0 ve altı</b> değerler reddedilir.</p>
+    <p><b>Soru:</b> Bu spesifikasyondan sipariş adedi için kaç denklik payı çıkar ve her paydan
+    seçilecek temsilci değerler ile beklenen sonuçları nelerdir?</p>
+  </div>
+
+  <p><b>Çözelim</b> &mdash; dört hareket:</p>
 
   <ol class="steps">
     <li><b>Değişkenleri listele</b>
@@ -616,9 +647,18 @@ toplam pay = <b>4</b>      &rarr; bu sayı kapsam hesabının <b>paydası</b>dı
     &ldquo;test sayısı / pay sayısı&rdquo; hesabı neredeyse her zaman <b>yanlış şıktır</b>.</p>
   </div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Aynı toptan satış sisteminde sipariş adedi dört paya ayrılmıştı: <b>0 ve altı</b> (geçersiz),
+    <b>1&ndash;9</b> perakende, <b>10&ndash;49</b> toptan, <b>50 ve üzeri</b> kurumsal.
+    Test ekibi üç test çalıştırdı ve sipariş adedi olarak sırasıyla
+    <code>5</code>, <code>7</code> ve <code>25</code> değerlerini kullandı.</p>
+    <p><b>Soru:</b> Bu üç testle elde edilen denklik payı kapsamı yüzde kaçtır?</p>
+  </div>
+
   <div class="card">
     <h3>Aynı paydaki iki test sıfır kapsam ekler</h3>
-    <p>Aynı sipariş adedi örneğinde testler: <code>5, 7, 25</code>.</p>
+    <p><b>Çözelim:</b> üç test değerini sayı doğrusuna koyup her birini tam bir paya etiketleyelim.</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
 <rect class="bd bad" x="23" y="22" width="200" height="32" rx="9"/>
 <text class="bl bad" x="123" y="43">P1 &middot; 0 ve altı &middot; GEÇERSİZ</text>
@@ -714,9 +754,25 @@ yanlış hesap = 3 test / 4 pay = %75   &#10007;  (test sayısını paya yazmak)
    &rarr; buna <b>Each Choice</b> (her seçim) kapsamı denir:
      her parametrenin her payı en az bir testte görünsün; kombinasyon aranmaz.</pre>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir çevrimiçi market sipariş formunda, sipariş tamamlanırken üç alan seçiliyor ve
+    spesifikasyon her alan için şu seçenekleri tanımlıyor:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Parametre</th><th>Spesifikasyondaki seçenekler</th><th class="ctr">Pay sayısı</th></tr>
+      <tr><td><b>Ödeme tipi</b></td><td>kredi kartı &middot; havale &middot; kapıda ödeme</td><td class="ctr"><b>3</b></td></tr>
+      <tr><td><b>Teslimat</b></td><td>standart &middot; hızlı</td><td class="ctr"><b>2</b></td></tr>
+      <tr><td><b>Üyelik</b></td><td>üye değil &middot; gümüş &middot; altın &middot; platin</td><td class="ctr"><b>4</b></td></tr>
+    </table></div>
+    <p>Her testte üç alanın üçü de doldurulur ve hiçbir seçenek bir diğerini yasaklamaz &mdash;
+    her kombinasyon serbesttir.</p>
+    <p><b>Soru:</b> Her parametrenin her payı en az bir testte görünecek şekilde %100 denklik payı
+    kapsamına ulaşmak için EN AZ kaç test senaryosu gerekir?</p>
+  </div>
+
   <div class="card">
     <h3>Neden toplam değil de maksimum?</h3>
-    <p>Az kalabalık parametrenin payları, kalabalık parametrenin testleri içine &ldquo;bedavaya&rdquo; yerleşir.
+    <p><b>Çözelim:</b> az kalabalık parametrenin payları, kalabalık parametrenin testleri içine &ldquo;bedavaya&rdquo; yerleşir.
     Payları <b>sütunlar halinde</b> yaz, her sütunu kendi içinde dolaşarak aşağı doğru doldur:</p>
     <div class="scroll"><table class="dt">
       <tr><th></th><th>Ödeme tipi <span style="font-weight:400">(3 pay)</span></th>
@@ -767,10 +823,22 @@ karşılaştırma: tüm kombinasyonlar = 3 &times; 2 &times; 4 = <b>24</b> test 
   <p class="lead">EP tek bir varsayıma dayanır: <b>payın içindeki bütün değerler aynı işlenir.</b>
   Bu varsayım payın ortasında doğrudur; <b>tam kenarında çöker</b>. EP'nin bıraktığı boşluk tam olarak orasıdır.</p>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir üyelik kayıt formu, parolayı <b>uzunluğuna</b> göre değerlendiriyor:
+    <b>0&ndash;5</b> karakter çok kısa (reddedilir), <b>6&ndash;12</b> karakter geçerli,
+    <b>13 ve üzeri</b> karakter çok uzun (reddedilir).
+    Test ekibi EP temsilcisi olarak <code>3</code>, <code>9</code> ve <code>15</code> karakterlik
+    parolalar deniyor ve üç test de geçiyor.</p>
+    <p><b>Soru:</b> Bu küme %100 denklik payı kapsamı sağladığına göre, geliştirici üst sınırı
+    <code>&lt;= 12</code> yerine <code>&lt; 12</code> yazmışsa bu hata bu testlerle yakalanır mı?</p>
+  </div>
+
   <div class="card">
     <h3>EP %100 iken hangi hata hayatta kalır</h3>
-    <p>Parola uzunluğu: <b>0&ndash;5</b> çok kısa, <b>6&ndash;12</b> geçerli, <b>13 ve üzeri</b> çok uzun.
-    EP temsilcileri <code>3, 9, 15</code>: üç paydan üçü de kapsandı, kapsam <b>3/3 = %100</b>.</p>
+    <p><b>Çözelim:</b> parola uzunluğu <b>0&ndash;5</b> çok kısa, <b>6&ndash;12</b> geçerli,
+    <b>13 ve üzeri</b> çok uzun. EP temsilcileri <code>3, 9, 15</code>: üç paydan üçü de kapsandı,
+    kapsam <b>3/3 = %100</b>.</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
 <rect class="bd bad" x="23" y="22" width="300" height="32" rx="9"/>
 <text class="bl bad" x="173" y="43">0&#8211;5 &middot; çok kısa</text>

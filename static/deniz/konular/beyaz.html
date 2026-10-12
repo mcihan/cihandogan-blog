@@ -423,10 +423,20 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
   <b>Dal</b> (branch), bir karardan çıkan <b>tek bir ok</b>, yani kontrolün bir noktadan
   diğerine aktarılmasıdır. İkisi farklı şeyleri sayar; bu yüzden sayıları da farklı çıkar.</p>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir çevrimiçi mağazanın sepet ekranında indirim modülü çalışıyor. Modül önce indirimi
+    sıfırlar; sepet tutarı <b>100 TL'den büyükse</b> tutarın <b>%10'u kadar</b> indirim uygular,
+    büyük değilse indirim uygulamaz &mdash; <code>else</code> bloğu yazılmamıştır. Her iki durumda da
+    yeni tutarı hesaplayıp ekrana yazdırır.</p>
+    <p><b>Soru:</b> Bu fonksiyonda %100 komut kapsamı için kaç kapsam öğesi, %100 dal kapsamı için
+    kaç kapsam öğesi test edilmelidir?</p>
+  </div>
+
   <div class="card">
     <h3>Tek örnek üzerinde ikisini de say</h3>
-    <p>Bir indirim fonksiyonu. Satırlar numaralı, böylece hangi testin neyi çalıştırdığını
-    satır numarasıyla konuşabiliriz:</p>
+    <p><b>Çözelim.</b> Sorudaki indirim fonksiyonu budur; satırlar numaralı, böylece hangi testin
+    neyi çalıştırdığını satır numarasıyla konuşabiliriz:</p>
 <pre>1   indirim = 0
 2   if (tutar &gt; 100)
 3       indirim = tutar * 0.10
@@ -493,8 +503,29 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
   verilebilir. Tek kural yeter: <b>düğüm sayısı komut kapsamının öğe sayısını,
   kenar sayısı dal kapsamının öğe sayısını verir.</b></p>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir kargo şubesinde bant üzerindeki paketleri etiketleyen program çalışıyor. Program önce
+    paket sayacını sıfırlar; sonra banttaki paketin ağırlığına bakar: <b>30 kg'dan ağırsa</b>
+    &ldquo;ağır yük&rdquo;, değilse &ldquo;standart&rdquo; etiketi basar. Ardından bantta başka paket
+    olup olmadığını kontrol eder &mdash; varsa başa dönüp sıradaki paketi işler, yoksa gün sonu
+    raporunu yazdırıp çıkar. Programın kontrol akış grafiğindeki düğümler şunlardır:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Düğüm</th><th>Programda karşılığı</th></tr>
+      <tr><td class="ctr"><b>N1</b></td><td>paket sayacını sıfırla</td></tr>
+      <tr><td class="ctr"><b>N2</b></td><td><b>karar:</b> paket ağırlığı 30 kg'dan büyük mü?</td></tr>
+      <tr><td class="ctr"><b>N3</b></td><td>&ldquo;ağır yük&rdquo; etiketi bas</td></tr>
+      <tr><td class="ctr"><b>N4</b></td><td>&ldquo;standart&rdquo; etiketi bas</td></tr>
+      <tr><td class="ctr"><b>N5</b></td><td><b>karar:</b> bantta başka paket var mı?</td></tr>
+      <tr><td class="ctr"><b>N6</b></td><td>gün sonu raporunu yazdır &mdash; çıkış</td></tr>
+    </table></div>
+    <p><b>Soru:</b> Bu kontrol akış grafiğinde %100 komut kapsamı için kaç kapsam öğesi, %100 dal
+    kapsamı için kaç kapsam öğesi test edilmelidir?</p>
+  </div>
+
   <div class="card">
     <h3>Örnek: döngü + karar</h3>
+    <p><b>Çözelim.</b> Önce grafiği çizip okları tek tek listeleyelim:</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 300" role="img" aria-label="kontrol akis grafigi">
 <path class="ax" d="M 606 139 V 20 H 216 V 130" fill="none"/>
 <path d="M 216 143 l -8 -13 h 16 z" fill="var(--dim)"/>
@@ -577,8 +608,19 @@ dal kapsamı   = çalıştırılan dal sayısı   / koddaki toplam dal sayısı 
     gördüğünde şıkkı tek bakışta eleyebilirsin.</p>
   </div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir şirket intranetinin açılış ekranı şöyle çalışıyor: oturumda kayıtlı bir kullanıcı varsa
+    <code>giriş_yap()</code> çağrılır; kullanıcı ayrıca <b>yönetici</b> ise <code>panel_aç()</code> ile
+    yönetim paneli açılır. Bu iki kontrolün hiçbirinde <code>else</code> bloğu yazılmamıştır ve her
+    durumda son olarak <code>anasayfa()</code> çizilir.</p>
+    <p><b>Soru:</b> Bu kodda %100 komut kapsamı için EN AZ kaç test senaryosu, %100 dal kapsamı için
+    EN AZ kaç test senaryosu gerekir?</p>
+  </div>
+
   <div class="card">
     <h3>Mini örnek &mdash; iki karar, dört dal</h3>
+    <p><b>Çözelim.</b> Kodu numaralayıp iki testin dokunduğu öğeleri çıkaralım:</p>
 <pre>1   if (kullanıcıVar)
 2       giriş_yap()
 3   if (yöneticiMi)
@@ -618,12 +660,21 @@ T1 + T2   &rarr; komut 5/5 = <b>%100</b>    dal 4/4 = <b>%100</b></pre>
   Bütün dallar yürütülürse o dalların üzerindeki bütün komutlar da yürütülmüş olur &mdash; bu zorunludur.
   Ters yönde böyle bir zorunluluk yoktur: bütün komutlara uğramak için bütün okları geçmek gerekmez.</div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir elektrik dağıtım şirketinin fatura modülü, abonenin aylık tüketimi
+    <b>500 kWh'ı aşıyorsa</b> ek tarife uygular, aşmıyorsa hiçbir şey yapmaz
+    (<code>else</code> bloğu yazılmamıştır); ardından her durumda faturayı yazdırır.
+    Ekip modülü <b>tek bir testle</b> koşuyor: tüketim = 700 kWh.</p>
+    <p><b>Soru:</b> Bu tek testten sonra modülün komut kapsamı ve dal kapsamı yüzde kaç olur?</p>
+  </div>
+
   <div class="card">
     <h3>Tersi neden geçersiz &mdash; kanıt: else'i olmayan tek bir if</h3>
 <pre>1   if (tüketim &gt; 500)
 2       ek_tarife_uygula()
 3   fatura_yazdır()</pre>
-    <p>Tek test: <code>tüketim = 700</code>. Koşul doğru, blok çalışıyor, fonksiyondaki bütün
+    <p><b>Çözelim.</b> Tek test: <code>tüketim = 700</code>. Koşul doğru, blok çalışıyor, fonksiyondaki bütün
     çalıştırılabilir komutlar yürütülüyor. Grafikte kesik kırmızı ok <b>hiç geçilmemiş dalı</b> gösteriyor:</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 230" role="img" aria-label="kontrol akis grafigi">
 <circle class="dot" cx="130" cy="105" r="20"/><text class="dv" x="130" y="110">1</text>
@@ -687,8 +738,18 @@ T1 + T2   &rarr; komut 5/5 = <b>%100</b>    dal 4/4 = <b>%100</b></pre>
   T1 %40, T2 %65 kapsam sağlıyorsa ikisinin birlikte kapsamı %105 <i>değildir</i>;
   ortak çalıştırılan komutlar iki kez sayılmaz.</p>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir internet bankacılığı uygulamasının para transferi modülü <b>P</b> için iki ayrı test
+    takımı koşuluyor. Kapsam aracı raporunda <b>T1 için %40</b>, <b>T2 için %65</b> komut kapsamı
+    yazıyor; ikisi de aynı modülün aynı sürümü üzerinde çalıştırılmış.</p>
+    <p><b>Soru:</b> Bu iki test takımının birlikte sağladığı kapsam hakkında <b>kesinlikle</b> doğru
+    olan nedir &mdash; en az yüzde kaçlık bir örtüşme zorunludur?</p>
+  </div>
+
   <div class="card">
     <h3>Kümelerle düşün</h3>
+    <p><b>Çözelim.</b> P'nin komutlarını bir bütün olarak çizip iki takımı üzerine koyalım:</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 212" role="img" aria-label="kapsam ortusmesi">
 <rect class="bd neu" x="23" y="24" width="900" height="34" rx="9"/>
 <text class="bl neu" x="473" y="46">P'nin çalıştırılabilir komutlarının tamamı &middot; %100</text>
@@ -712,10 +773,19 @@ T1 + T2   &rarr; komut 5/5 = <b>%100</b>    dal 4/4 = <b>%100</b></pre>
     <i>kesinlikle</i> çıkan tek sonuçtur.</p>
   </div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir otopark bariyerinin plaka tanıma modülünde <b>10 çalıştırılabilir komut</b> var. Ekip üç
+    test senaryosu koşuyor &mdash; tanınan abone plakası, tanınmayan plaka ve aboneliği bitmiş plaka
+    &mdash; ve kapsam aracı <b>her biri için ayrı ayrı %50</b> komut kapsamı raporluyor.</p>
+    <p><b>Soru:</b> Bu üç test birlikte koşulduğunda modülün komut kapsamı yüzde kaç olur ve
+    testlerden biri çıkarılırsa kapsamın korunacağı garanti edilebilir mi?</p>
+  </div>
+
   <div class="card key">
     <h3>Ama birlikte %100'e ulaşabilirler</h3>
     <p>Yüzdeler toplanmaz; bu, testlerin birleşerek tam kapsama ulaşamayacağı anlamına gelmez.
-    10 komutluk bir programda her biri %50 kapsam sağlayan üç test:</p>
+    <b>Çözelim</b> &mdash; 10 komutluk modülde her biri %50 kapsam sağlayan üç test:</p>
     <div class="scroll"><table class="dt">
       <tr><th>Test</th><th>Çalıştırdığı komutlar</th><th class="ctr">Kapsam</th></tr>
       <tr><td>T1</td><td>1, 2, 3, 4, 5</td><td class="ctr">5/10 = %50</td></tr>

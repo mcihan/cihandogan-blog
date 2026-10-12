@@ -478,11 +478,22 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
   &ldquo;bu sütun imkânsız&rdquo; ya da &ldquo;bu tablo sadeleştirilmiş&rdquo; diyemezsin.
   Küçük bir iş kuralını baştan tabloya çevirelim.</p>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Kitap satan bir e-ticaret sitesinin sepet ekranında kampanya motoru iki girdiye bakar:
+    müşterinin üye olup olmadığı ve sepet tutarının 300 TL'yi aşıp aşmadığı.
+    Motorun uyguladığı iş kuralı şu şekilde yazılmıştır.</p>
+    <p><b>Soru:</b> Bu iş kuralından kurulan <b>tam</b> karar tablosu kaç kuraldan (sütundan)
+    oluşur ve her sütunda hangi aksiyonlar tetiklenir?</p>
+  </div>
+
   <div class="card">
     <h3>İş kuralı</h3>
     <p style="margin-bottom:0"><i>&ldquo;Kitap satan sitede üyelere %10 indirim yapılır.
     Sepet tutarı 300 TL'yi aşarsa kargo bedavadır. İki avantaj birlikte uygulanabilir.&rdquo;</i></p>
   </div>
+
+  <p>Çözelim &mdash; beş adımda tabloyu kuralım:</p>
 
   <ol class="steps">
     <li><b>Koşul satırlarını çıkar.</b>
@@ -565,11 +576,20 @@ sütun no = 1 + 4&middot;K1 + 2&middot;K2 + 1&middot;K3
     </table></div>
   </div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir kargo firmasının gönderi ücreti hesaplama modülü üç evet/hayır girdisine bakar:
+    sipariş iptal edildi mi, acil gönderi seçildi mi, sigorta eklendi mi.
+    Ücretlendirme kuralı şu şekildedir.</p>
+    <p><b>Soru:</b> Bu kuraldan kurulan tam karar tablosu kaç sütundan oluşur ve gereksiz
+    sütunlar birleştirildiğinde sadeleştirilmiş tablo kaç sütuna iner?</p>
+  </div>
+
   <div class="card">
     <h3>Somut örnek: 8 sütun nasıl 5'e iner</h3>
     <p><i>&ldquo;Sipariş iptal edilmişse hiçbir ücret alınmaz. İptal edilmemişse: acil gönderi ise
     +50 TL, sigortalı ise +20 TL eklenir.&rdquo;</i></p>
-    <p>Üç evet/hayır koşulu var, demek ki <b>tam tablo 8 sütun</b>:</p>
+    <p>Çözelim: üç evet/hayır koşulu var, demek ki <b>tam tablo 8 sütun</b>:</p>
     <div class="scroll"><table class="dt">
       <tr><th>Koşullar</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
       <tr><td>İptal edildi mi?</td><td class="ctr no">E</td><td class="ctr no">E</td><td class="ctr no">E</td><td class="ctr no">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
@@ -588,6 +608,15 @@ sütun no = 1 + 4&middot;K1 + 2&middot;K2 + 1&middot;K3
       <tr><th>Aksiyon</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
       <tr><td>Ek ücret</td><td class="ctr ok">0</td><td class="ctr">70</td><td class="ctr">50</td><td class="ctr">20</td><td class="ctr">0</td></tr>
     </table></div>
+  </div>
+
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Aynı kargo ücreti modülünü test eden ekip tek bir test senaryosu yürüttü:
+    <i>iptal edilmiş bir sipariş</i>. Ekibin elinde yukarıdaki iki tablo da var &mdash;
+    8 sütunlu tam tablo ve 5 sütunlu sadeleştirilmiş tablo.</p>
+    <p><b>Soru:</b> Bu tek test senaryosuyla elde edilen karar tablosu kapsamı, tam tabloda ve
+    sadeleştirilmiş tabloda sırasıyla yüzde kaçtır?</p>
   </div>
 
   <div class="card key">
@@ -632,9 +661,17 @@ karar tablosu kapsamı = <b>en az bir testin düştüğü sütun sayısı</b>
     Soru 6'da doğru cevap <b>3/8 = %37,5</b>, tuzak şık ise <b>3/4 = %75</b>.</p>
   </div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>&sect;3'te kurduğumuz kitap satan e-ticaret sitesinin kampanya tablosu kullanılıyor:
+    iki koşul (&ldquo;Üye mi?&rdquo; ve &ldquo;Sepet &gt; 300 TL mi?&rdquo;), <b>4 sütun</b>.
+    Test ekibi bu tablo üzerinde aşağıdaki üç test senaryosunu yürüttü.</p>
+    <p><b>Soru:</b> Bu üç test senaryosuyla elde edilen karar tablosu kapsamı yüzde kaçtır?</p>
+  </div>
+
   <div class="card">
     <h3>Aynı sütuna düşen iki test, bir kez sayılır</h3>
-    <p>&sect;3'teki 4 sütunlu kargo tablosunda üç test yürütelim:</p>
+    <p>Çözelim &mdash; &sect;3'teki 4 sütunlu kargo tablosunda üç testi sütunlara eşleyelim:</p>
     <div class="scroll"><table class="dt">
       <tr><th>Test</th><th>Üye mi?</th><th>Sepet &gt; 300?</th><th class="ctr">Düştüğü sütun</th></tr>
       <tr><td>T1 &middot; üye, 450 TL</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr ok">R1</td></tr>

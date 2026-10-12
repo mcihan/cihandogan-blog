@@ -448,8 +448,21 @@ DOLU DEĞİL &#9472;&#9472; Ekle [N = 2] / N:=N+1 &#9472;&#9594; DOLU</pre>
   ya da satırları durum, sütunları olay olan bir <b>tablo</b>. İkisi arasında dönüşüm yapmayı bilmek,
   sorunun yarısını çözer &mdash; çünkü <b>sayma işi tabloda, izleme işi diyagramda</b> kolaydır.</p>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Bir mobil podcast uygulamasının oynatıcı ekranı test edilecek. Ekranda dört düğme var:
+    <code>oynat</code>, <code>duraklat</code>, <code>devam et</code>, <code>durdur</code>. Uygulama açıldığında
+    oynatıcı <b>DURDU</b> durumundadır. Kurallar şöyle: DURDU'dayken <code>oynat</code> bölümü baştan çalar;
+    çalarken <code>duraklat</code> sesi, konumu koruyarak durdurur; duraklatılmışken <code>devam et</code> kalınan
+    yerden sürdürür; hem çalarken hem duraklatılmışken <code>durdur</code> konumu sıfırlayıp oynatıcıyı başa alır.
+    Bunların dışındaki düğme&ndash;durum birleşimleri için uygulamada tanımlı bir davranış yoktur.</p>
+    <p style="margin-bottom:0"><b>Soru:</b> Bu oynatıcının modelinde kaç <b>geçerli geçiş</b> vardır ve aynı model
+    durum&ndash;olay tablosuna çevrildiğinde kaç hücre <b>geçersiz geçiş</b> olarak kalır?</p>
+  </div>
+
   <div class="card">
     <h3>Örnek: basit bir medya oynatıcı</h3>
+    <p>Çözelim: önce kuralları diyagrama dökelim.</p>
     <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 214" role="img" aria-label="medya oynatici durum gecis diyagrami">
 <rect class="bd neu" x="40" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="125" y="101">DURDU</text>
 <rect class="bd neu" x="388" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="473" y="101">ÇALIYOR</text>
@@ -473,6 +486,7 @@ DOLU DEĞİL &#9472;&#9472; Ekle [N = 2] / N:=N+1 &#9472;&#9594; DOLU</pre>
 
   <div class="card">
     <h3>Aynı model, tablo hali</h3>
+    <p>Şimdi aynı modeli durum&ndash;olay tablosuna çevirip hücreleri sayalım.</p>
     <div class="scroll"><table class="dt">
       <tr><th>Durum &#8595; &nbsp;/&nbsp; Olay &#8594;</th><th class="ctr">oynat</th><th class="ctr">duraklat</th>
           <th class="ctr">devam et</th><th class="ctr">durdur</th></tr>
@@ -572,6 +586,16 @@ tüm geçiş kapsamı      = yürütülen farklı geçiş         /  (durum say�
   <p class="lead">Sınavın en sevdiği tuzak bu: test <b>bütün durumları</b> gezer, aday
   <i>&ldquo;demek ki %100&rdquo;</i> der ve geçiş kapsamını sorduğunu kaçırır.
   Aynı modeli, tek bir test senaryosuyla üç ölçüte göre ölçelim.</p>
+
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Aynı podcast oynatıcısı (3 durum, 4 düğme, 5 tanımlı geçiş) için test uzmanı <b>tek bir test
+    senaryosu</b> yazıyor: uygulama DURDU durumundayken açılıyor, dört düğmeye sırayla basılıyor ve senaryo
+    yeniden DURDU durumunda bitiyor.</p>
+    <p style="margin-bottom:0"><b>Soru:</b> Aşağıdaki tek test senaryosu yürütüldüğünde
+    <b>tüm durum kapsamı</b>, <b>geçerli geçiş (0-switch) kapsamı</b> ve <b>tüm geçiş kapsamı</b>
+    ölçütlerinin her biri için ayrı ayrı yüzde kaç kapsam elde edilir?</p>
+  </div>
 
   <div class="card q">
     <h3>Test senaryosu</h3>
@@ -691,9 +715,18 @@ tüm geçiş kapsamı = 4 / 12 = 0,333&hellip; = <b>%33,3</b></pre>
     </ul>
   </div>
 
+  <div class="card q">
+    <h3>Mini örnek &mdash; soru</h3>
+    <p>Aynı podcast oynatıcısında (3 durum, 4 düğme, 5 geçerli geçiş) bu kez regresyon paketindeki kısa bir
+    duman testi koşuluyor: uygulama DURDU durumunda açılıyor ve kullanıcı arka arkaya <b>beş düğmeye</b> basıyor.</p>
+    <p style="margin-bottom:0"><b>Soru:</b> Aşağıdaki beş olaylık dizi yürütüldüğünde
+    <b>geçerli geçiş (0-switch) kapsamı</b> yüzde kaç olur ve hangi geçiş kapsanmadan kalır?</p>
+  </div>
+
   <div class="card">
     <h3>Mini alıştırma &mdash; aynı oynatıcı</h3>
     <p>Dizi: <code>oynat, durdur, oynat, duraklat, durdur</code></p>
+    <p>Çözelim: diziyi adım adım izleyip farklı geçişleri işaretleyelim.</p>
     <div class="scroll"><table class="dt">
       <tr><th class="ctr">Adım</th><th>Durum</th><th>Olay</th><th>Hücre</th><th>Geçiş</th><th>Yeni durum</th></tr>
       <tr><td class="ctr">1</td><td>DURDU</td><td>oynat</td><td class="ok">dolu</td><td>T1 <i>yeni</i></td><td>ÇALIYOR</td></tr>
