@@ -1,0 +1,2132 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Denklik Paylarına Ayırma (EP) &middot; Konular</title>
+<style>
+:root{
+  --bg:#f6f6fb; --surface:#fff; --ink:#1c1c2c; --muted:#61617a; --line:#e5e4ef;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -14px rgba(28,28,60,.18);
+  --good:#059669; --good-soft:#e7f6ef; --bad:#dc2626; --bad-soft:#fdecec;
+  --warn:#d97706; --warn-soft:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
+  --dim:#b9b7c9;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+  --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+  --warn:#fbbf24; --warn-soft:#2e2210;
+  --c:#818cf8; --cd:#a5b4fc; --cs:#222247; --cl:#3b3b78; --dim:#5a5a78; } }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;font-size:16px}
+
+header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 42%,#0e7490 100%);padding:2.9rem 1.3rem 2.4rem}
+.in{max-width:1000px;margin:0 auto}
+.back{display:inline-flex;gap:.4rem;align-items:center;text-decoration:none;color:#c7d2fe;font-size:.82rem;
+  font-weight:700;margin-bottom:1.1rem}
+.back:hover{color:#fff}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .7rem}
+.hero h1{color:#fff;font-size:clamp(1.85rem,5.2vw,2.8rem);line-height:1.07;margin:0 0 .7rem;font-weight:900;letter-spacing:-.02em}
+.hero p.lede{color:#dbe3ff;max-width:64ch;margin:0 0 1.7rem;font-size:1.03rem}
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,168px),1fr));gap:.55rem}
+.jump a{display:flex;gap:.6rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);border-radius:13px;padding:.6rem .75rem;color:#fff;
+  transition:background .15s,transform .15s;min-width:0}
+.jump a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.jump .n{width:25px;height:25px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:rgba(255,255,255,.22)}
+.jump b{display:block;font-size:.85rem;font-weight:800;line-height:1.25}
+
+nav.sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.sticky .in{display:flex;gap:.35rem;align-items:center;padding:.5rem 1.3rem;overflow-x:auto;scrollbar-width:none}
+nav.sticky .in::-webkit-scrollbar{display:none}
+nav.sticky a{white-space:nowrap;text-decoration:none;font-size:.8rem;font-weight:700;color:var(--muted);
+  border-radius:9px;padding:.3rem .6rem}
+nav.sticky a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+main{max-width:1000px;margin:0 auto;padding:2.1rem 1.3rem 4rem}
+section{margin-bottom:2.9rem;scroll-margin-top:62px}
+.shead{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
+.shead .num{width:42px;height:42px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;background:var(--c)}
+.shead h2{margin:0;font-size:1.38rem;letter-spacing:-.015em;line-height:1.2}
+.shead .lo{font-size:.73rem;font-weight:700;color:var(--muted);font-family:var(--mono)}
+.lead{margin:0 0 1rem;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:1.1rem 1.25rem;
+  box-shadow:var(--shadow);margin-bottom:.95rem;min-width:0}
+.card > h3{margin:0 0 .65rem;font-size:.75rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.card.q{border-left:4px solid var(--c)}
+.card.sol{background:color-mix(in srgb,var(--c) 4%,var(--surface))}
+.card.trap{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.card.trap > h3{color:var(--bad)}
+.card.key{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 32%,transparent)}
+.card.key > h3{color:var(--good)}
+.card.warnc{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.card.warnc > h3{color:var(--warn)}
+.card p{margin:.5rem 0}
+.card p:first-of-type{margin-top:0}
+.card ul,.card ol{margin:.5rem 0;padding-left:1.2rem}
+.card li{margin:.26rem 0}
+.recog{background:var(--cs);border-radius:12px;padding:.68rem .9rem;margin:0 0 1rem;font-size:.92rem}
+.recog b{color:var(--cd)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.52rem}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);min-width:0;gap:.7rem;align-items:start;
+  padding:.58rem .72rem;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,transparent)}
+ol.steps li::before{content:counter(s);width:23px;height:23px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.76rem;font-weight:900;color:#fff;background:var(--c)}
+ol.steps li > b{grid-column:2;display:block;font-size:.94rem;min-width:0;overflow-wrap:anywhere}
+ol.steps li > span{grid-column:2;display:block;font-size:.88rem;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+ol.steps li > div{grid-column:2;min-width:0;max-width:100%}
+ol.steps li > div > *:first-child{margin-top:.4rem}
+
+pre{font-family:var(--mono);font-size:.83rem;background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:11px;padding:.7rem .9rem;margin:.65rem 0;overflow-x:auto;line-height:1.55;white-space:pre}
+pre.fx{background:var(--cs);color:var(--cd);font-weight:600;border:1px dashed var(--cl)}
+code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .35em;border-radius:5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.65rem 0}
+table.dt{border-collapse:collapse;width:100%;font-size:.86rem}
+.scroll table.dt{min-width:420px}
+table.dt th,table.dt td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top;
+  word-break:break-word;overflow-wrap:anywhere}
+table.dt th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.78rem}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+table.dt td.ctr,table.dt th.ctr{text-align:center}
+
+svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
+.nlw{margin:.85rem 0 .3rem}
+.nlw .scroll{margin:0}
+.shint{display:none;margin:.3rem 0 0;font-size:.74rem;color:var(--muted);text-align:center;font-weight:700}
+@media (max-width:830px){ .shint{display:block} }
+.nl .bd{stroke-width:1.5}
+.nl .bd.bad{fill:var(--bad-soft);stroke:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .bd.good{fill:var(--good-soft);stroke:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .ar.bad{fill:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .ar.good{fill:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .bl{text-anchor:middle;font-size:13px;font-weight:800;font-family:var(--sans)}
+.nl .bl.bad{fill:var(--bad)} .nl .bl.good{fill:var(--good)}
+.nl .bd.neu{fill:var(--cs);stroke:var(--cl)}
+.nl .bd.neu2{fill:color-mix(in srgb,var(--c) 11%,transparent);stroke:var(--cl)}
+.nl .bl.neu,.nl .bl.neu2{fill:var(--cd)}
+.nl .dot.miss{fill:none;stroke:var(--bad);stroke-width:2;stroke-dasharray:3.5 3}
+.nl .dv.miss{fill:var(--bad)}
+.nl .cut{stroke:var(--c);stroke-width:2;stroke-dasharray:5 4;opacity:.85}
+.nl .cl{text-anchor:middle;font-size:11px;font-weight:800;fill:var(--c);font-family:var(--mono)}
+.nl .ax{stroke:var(--dim);stroke-width:1.5}
+.nl .tk{stroke:var(--dim);stroke-width:1.5}
+.nl .dot{fill:var(--c)}
+.nl .dot.new{fill:var(--warn)}
+.nl .dv{text-anchor:middle;font-size:14px;font-weight:800;fill:#fff;font-family:var(--sans)}
+.nl .dp{text-anchor:middle;font-size:13px;font-weight:600;fill:var(--dim);font-family:var(--sans)}
+.nlleg{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;font-size:.8rem;color:var(--muted);margin:.1rem 0 .3rem}
+.nlleg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
+.nlleg i.a{background:var(--c)} .nlleg i.b{background:var(--warn)}
+.nlleg i.m{background:transparent;border:2px dashed var(--bad)}
+
+.opts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
+.opts li{display:grid;grid-template-columns:28px minmax(0,1fr);min-width:0;gap:.6rem;align-items:center;
+  border:1px solid var(--line);border-radius:11px;padding:.5rem .65rem;font-size:.95rem;background:var(--surface)}
+.opts li b{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--muted)}
+.opts li.right{border-color:color-mix(in srgb,var(--good) 45%,transparent);background:var(--good-soft)}
+.opts li.right b{background:var(--good);color:#fff}
+.opts li.wrong b{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.75rem}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;box-shadow:var(--shadow)}
+.fbox h4{margin:0 0 .4rem;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.fbox p{margin:.3rem 0;font-size:.88rem}
+.fbox code{font-size:.84em}
+
+.next{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.3rem}
+.next a{flex:1 1 220px;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:.9rem 1.1rem;box-shadow:var(--shadow);color:var(--ink);transition:transform .15s}
+.next a:hover{transform:translateY(-3px)}
+.next b{display:block;font-size:.98rem;margin-bottom:.15rem}
+.next span{font-size:.84rem;color:var(--muted)}
+footer.ft{border-top:1px solid var(--line);margin-top:2.6rem;padding-top:1.2rem;color:var(--muted);font-size:.82rem}
+</style>
+
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><a href="/deniz/konular/">Konular</a></li><li><span aria-current="page">Denklik Payları (EP)</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+
+
+
+
+<header class="hero"><div class="in">
+  <p class="kicker">Konular &middot; CTFL v4.0 &middot; FL-4.2.1</p>
+  <h1>Denklik Paylarına Ayırma (EP)</h1>
+  <p class="lede">Kodu görmeden, yalnızca spesifikasyondan payları çıkarmayı; geçerli ile geçersiz payı
+  ayırt etmeyi, kapsam yüzdesini <b>pay sayısı</b> üzerinden hesaplamayı ve çok parametreli bir formda
+  minimum test sayısını bulmayı adım adım öğren.
+  Sonunda bu tekniğin <b>bütün sınav soruları</b> (A, B, C, D &middot; E, F, G, H) aynı reçeteyle baştan sona çözülüyor.</p>
+  <div class="jump"><a href="#s1"><span class="n">1</span><b>Pay nedir</b></a>
+<a href="#s2"><span class="n">2</span><b>Geçerli / geçersiz</b></a>
+<a href="#s3"><span class="n">3</span><b>Pay çıkarma</b></a>
+<a href="#s4"><span class="n">4</span><b>Kapsam %</b></a>
+<a href="#s5"><span class="n">5</span><b>Each Choice</b></a>
+<a href="#s6"><span class="n">6</span><b>EP ve BVA</b></a>
+<a href="#s7"><span class="n">7</span><b>Sınav reçetesi</b></a>
+<a href="#s8"><span class="n">8</span><b>Soru 1 &middot; A 20</b></a>
+<a href="#s9"><span class="n">9</span><b>Soru 2 &middot; B 20</b></a>
+<a href="#s10"><span class="n">10</span><b>Soru 3 &middot; C 20</b></a>
+<a href="#s11"><span class="n">11</span><b>Soru 4 &middot; D 20</b></a>
+<a href="#s12"><span class="n">12</span><b>Soru 5 &middot; E 19</b></a>
+<a href="#s13"><span class="n">13</span><b>Soru 6 &middot; F 20</b></a>
+<a href="#s14"><span class="n">14</span><b>Soru 7 &middot; G 20</b></a>
+<a href="#s15"><span class="n">15</span><b>Soru 8 &middot; H 19</b></a>
+<a href="#s16"><span class="n">16</span><b>Tuzaklar &amp; özet</b></a></div>
+</div></header>
+
+<nav class="sticky"><div class="in"><a href="#s1">1. Pay nedir</a>
+<a href="#s2">2. Geçerli / geçersiz</a>
+<a href="#s3">3. Pay çıkarma</a>
+<a href="#s4">4. Kapsam %</a>
+<a href="#s5">5. Each Choice</a>
+<a href="#s6">6. EP ve BVA</a>
+<a href="#s7">7. Sınav reçetesi</a>
+<a href="#s8">8. Soru 1 &middot; A 20</a>
+<a href="#s9">9. Soru 2 &middot; B 20</a>
+<a href="#s10">10. Soru 3 &middot; C 20</a>
+<a href="#s11">11. Soru 4 &middot; D 20</a>
+<a href="#s12">12. Soru 5 &middot; E 19</a>
+<a href="#s13">13. Soru 6 &middot; F 20</a>
+<a href="#s14">14. Soru 7 &middot; G 20</a>
+<a href="#s15">15. Soru 8 &middot; H 19</a>
+<a href="#s16">16. Tuzaklar &amp; özet</a></div></nav>
+
+<main>
+
+<section id="s1">
+  <div class="shead"><div class="num">1</div>
+    <div><h2>Pay nedir &mdash; ve sınavda kodu hiç görmediğini varsay</h2>
+    <div class="lo">FL-4.2.1 &middot; K3 &middot; Kara kutu tekniği</div></div></div>
+
+  <p class="lead">ISTQB, denklik paylarına ayırmayı (<i>equivalence partitioning</i>, EP)
+  <b>&sect;4.2 Kara Kutu Test Teknikleri</b> altında tanımlar. Tekniğin girdisi
+  <b>yalnızca spesifikasyondur</b> &mdash; metinde yazan aralıklar, kurallar ve kategoriler.</p>
+
+  <div class="recog"><b>Tanım:</b> bir <b>denklik payı</b> (equivalence partition), bir değişkenin
+  değer alanının öyle bir alt kümesidir ki, <i>spesifikasyona göre</i> o alt kümedeki
+  <b>bütün değerlerin aynı şekilde işlenmesi beklenir</b>. Beklenti aynı olduğu için paydan
+  <b>bir</b> temsilci değer test etmek, pay adına konuşmak sayılır.</div>
+
+  <div class="card">
+    <h3>Bir pay kümesinin geçerli olması için iki şart</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şart</th><th>Ne demek</th><th>İhlal edilirse</th></tr>
+      <tr><td><b>Örtüşmezlik</b> (disjoint)</td>
+          <td>Hiçbir değer iki paya birden ait olamaz</td>
+          <td>Aynı değer iki farklı sonuç bekler &rarr; testin beklenen sonucu belirsiz</td></tr>
+      <tr><td><b>Tam kapsayıcılık</b> (exhaustive)</td>
+          <td>Payların birleşimi <b>tüm</b> değer alanını kaplar</td>
+          <td>Arada test edilmeyen bir delik kalır &rarr; kapsam yüzdesi yalan söyler</td></tr>
+    </table></div>
+<pre>DOĞRU   &#9474; 0 ve altı &#9474; 1&#8211;9 &#9474; 10&#8211;49 &#9474; 50 ve üzeri &#9474;    boşluk yok, çakışma yok
+ÖRTÜŞME &#9474; 0 ve altı &#9474; 1&#8211;10 &#9474; 10&#8211;49 &#9474; 50 ve üzeri &#9474;    10 iki payda &#10007;
+BOŞLUK  &#9474; 0 ve altı &#9474; 1&#8211;9  &#9474; 11&#8211;49 &#9474; 50 ve üzeri &#9474;    10 hiçbir payda &#10007;</pre>
+    <p style="margin-bottom:0">Sınavda sana verilen pay listesi neredeyse her zaman bu iki şartı sağlar.
+    Senin işin payları <b>saymak</b> ve her test değerini <b>tam bir paya</b> etiketlemektir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Örnek &mdash; bu sayfa boyunca kullanacağımız vaka</h3>
+    <p>Bir toptan satış sistemi, <b>sipariş adedine</b> (tam sayı) göre fiyat listesi seçiyor:
+    <b>1&ndash;9 adet</b> perakende, <b>10&ndash;49 adet</b> toptan, <b>50 ve üzeri</b> kurumsal.
+    <b>0 ve altı</b> değerler reddediliyor.</p>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="200" height="32" rx="9"/>
+<text class="bl bad" x="123" y="43">P1 &middot; 0 ve altı &middot; GEÇERSİZ</text>
+<rect class="bd neu" x="223" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="323" y="43">P2 &middot; 1&#8211;9 &middot; perakende</text>
+<rect class="bd neu2" x="423" y="22" width="250" height="32" rx="9"/>
+<text class="bl neu2" x="548" y="43">P3 &middot; 10&#8211;49 &middot; toptan</text>
+<rect class="bd neu" x="673" y="22" width="257" height="32" rx="9"/>
+<text class="bl neu" x="801" y="43">P4 &middot; 50 ve üzeri &middot; kurumsal</text>
+<line class="cut" x1="223" y1="16" x2="223" y2="128"/>
+<text class="cl" x="223" y="11">kesim 1</text>
+<line class="cut" x1="423" y1="16" x2="423" y2="128"/>
+<text class="cl" x="423" y="11">kesim 2</text>
+<line class="cut" x1="673" y1="16" x2="673" y2="128"/>
+<text class="cl" x="673" y="11">kesim 3</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<text class="dp" x="98" y="111">&minus;2</text>
+<circle class="dot" cx="148" cy="106" r="16"/><text class="dv" x="148" y="111">&minus;1</text>
+<text class="dp" x="198" y="111">0</text>
+<text class="dp" x="248" y="111">1</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">5</text>
+<text class="dp" x="348" y="111">&#8230;</text>
+<text class="dp" x="398" y="111">9</text>
+<text class="dp" x="448" y="111">10</text>
+<text class="dp" x="498" y="111">&#8230;</text>
+<circle class="dot" cx="548" cy="106" r="16"/><text class="dv" x="548" y="111">25</text>
+<text class="dp" x="598" y="111">&#8230;</text>
+<text class="dp" x="648" y="111">49</text>
+<text class="dp" x="698" y="111">50</text>
+<text class="dp" x="748" y="111">&#8230;</text>
+<circle class="dot" cx="798" cy="106" r="16"/><text class="dv" x="798" y="111">80</text>
+<text class="dp" x="848" y="111">&#8230;</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <p class="nlleg"><span><i class="a"></i>paydan seçilen temsilci değer</span></p>
+    <pre class="fx">pay sayısı = 1 geçersiz + 3 geçerli = <b>4</b>
+temsilciler = &minus;1, 5, 25, 80   &rarr;  4 test ile %100 pay kapsamı</pre>
+    <p style="margin-bottom:0">Temsilcinin <b>hangi</b> değer olduğu önemli değildir: 5 yerine 3 ya da 8
+    de olurdu. Önemli olan, her paydan <b>en az bir</b> değerin test edilmesidir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Soru tipini ilk bakışta ayır</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soruda ne var</th><th>Hangi bölüm</th><th>Ne yaparsın</th></tr>
+      <tr><td>Kategoriler / aralıklar + &ldquo;kapsam yüzde kaç&rdquo; ya da &ldquo;en az kaç test&rdquo;</td>
+          <td><b>&sect;4.2.1</b> EP &mdash; kara kutu</td><td>Payları say, değerleri etiketle</td></tr>
+      <tr><td>Aynı aralıklar ama &ldquo;2-değerli / 3-değerli&rdquo;, &ldquo;sınır&rdquo; kelimesi</td>
+          <td><b>&sect;4.2.2</b> BVA</td><td>Payların <b>uçlarını</b> listele</td></tr>
+      <tr><td>Koşul&ndash;eylem kombinasyonları</td>
+          <td><b>&sect;4.2.3</b> Karar tablosu</td><td>2&#8319; kural çıkar</td></tr>
+      <tr><td>Kod parçası / akış şeması</td>
+          <td><b>&sect;4.3</b> Komut &amp; Dal kapsamı &mdash; beyaz kutu</td><td>Satırları / dalları say</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Kod görüyorsan zaten EP sorusu değildir.</b> EP metinden çalışır.</p>
+  </div>
+</section>
+
+
+<section id="s2">
+  <div class="shead"><div class="num">2</div>
+    <div><h2>Geçerli ve geçersiz paylar</h2>
+    <div class="lo">Ve neden her geçersiz değer kendi testini hak eder</div></div></div>
+
+  <p class="lead">Paylar iki aileye ayrılır. Bu ayrım sınavda <b>paydayı</b> belirlediği için
+  en pahalı detaydır: bir geçersiz payı saymayı unutmak doğru cevabı kaybettirir.</p>
+
+  <div class="card">
+    <h3>İkisinin farkı</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th>Geçerli pay (valid)</th><th>Geçersiz pay (invalid)</th></tr>
+      <tr><td><b>İçeriği</b></td><td>Bileşenin <b>normal işlemesi</b> gereken değerler</td>
+          <td>Bileşenin <b>reddetmesi</b> gereken değerler</td></tr>
+      <tr><td><b>Beklenen sonuç</b></td><td>İş kuralının çıktısı (kademe, indirim, mod&hellip;)</td>
+          <td>Hata mesajı / red / istisna</td></tr>
+      <tr><td><b>Nereden çıkar</b></td><td>Spesifikasyondaki kategoriler ve aralıklar</td>
+          <td>Girdi kısıtından: aralığın <b>altı</b> ve <b>üstü</b>, yanlış tip, yanlış uzunluk</td></tr>
+      <tr><td><b>Kapsam hesabında</b></td><td class="ok">Sayılır</td>
+          <td class="ok">Aksi söylenmedikçe <b>o da</b> sayılır</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Pratik kural:</b> <i>kapalı</i> bir geçerli aralık verildiyse
+    (&ldquo;&minus;20 ile 400 arasında&rdquo;) genelde <b>iki</b> geçersiz pay doğar &mdash; biri altta, biri üstte.
+    Geçerli taraf <i>açık</i> bitiyorsa (&ldquo;51 ve üzeri&rdquo;) o yönde geçersiz pay <b>yoktur</b>.</p>
+  </div>
+
+  <div class="card key">
+    <h3>Altın kural &mdash; geçersiz değerler birleştirilmez</h3>
+    <p style="margin-bottom:.5rem">Bir test senaryosu <b>birden çok geçerli payı</b> aynı anda kapsayabilir
+    (her parametreden birer pay). Ama <b>geçersiz bir değer kural olarak kendi testini alır</b>:
+    testin geri kalan girdileri geçerli seçilir.</p>
+<pre>İYİ   TC1: kilo = <b>0</b>   (geçersiz)   &middot; yaş = 30 (geçerli)
+      TC2: kilo = 70  (geçerli)    &middot; yaş = <b>-5</b> (geçersiz)
+
+KÖTÜ  TC1: kilo = <b>0</b>   (geçersiz)   &middot; yaş = <b>-5</b> (geçersiz)   &rarr;  hangisi hatayı verdi?</pre>
+    <p style="margin-bottom:0"><b>Neden:</b> iki geçersiz değeri aynı teste koyarsan <b>hata maskelenmesi</b>
+    (defect masking) olur. Sistem ilk doğrulamada durur, ikinci kuralın hiç çalışıp çalışmadığını
+    asla öğrenemezsin &mdash; test geçer ama ikinci pay gerçekte test edilmemiştir.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>İstisna &mdash; ne zaman birleştirilebilir?</h3>
+    <p style="margin-bottom:0">Müfredat bunu mutlak bir yasak olarak değil, <b>varsayılan davranış</b> olarak
+    yazar. Risk düşükse ya da sistemin tüm ihlalleri topluca raporladığı belgelenmişse birleştirme yapılabilir.
+    <b>Sınavda varsayılanı uygula:</b> geçersiz değer &rarr; ayrı test. Soru &ldquo;en az kaç test&rdquo; diyorsa
+    bu kural test sayısını <b>artıran</b> yönde çalışır.</p>
+  </div>
+</section>
+
+
+<section id="s3">
+  <div class="shead"><div class="num">3</div>
+    <div><h2>Payları çıkarma &mdash; adım adım</h2>
+    <div class="lo">Metin &rarr; değişken &rarr; pay &rarr; temsilci</div></div></div>
+
+  <p class="lead">EP'nin tamamı dört harekete iner. Sipariş adedi örneğinde baştan sona yapalım.</p>
+
+  <ol class="steps">
+    <li><b>Değişkenleri listele</b>
+      <div><p style="margin:.4rem 0 0;font-size:.9rem;color:var(--muted)">Burada tek değişken var:
+      <code>sipariş adedi</code> (tam sayı). Birden çok değişken varsa her biri için ayrı pay
+      listesi çıkarılır &mdash; bölüm 5.</p></div></li>
+
+    <li><b>Metindeki &ldquo;farklı işlenen&rdquo; durumları işaretle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;1&ndash;9 adet perakende&rdquo;</td><td>Ayrı bir çıktı &rarr; ayrı pay</td></tr>
+        <tr><td>&ldquo;10&ndash;49 adet toptan&rdquo;</td><td>Ayrı bir çıktı &rarr; ayrı pay</td></tr>
+        <tr><td>&ldquo;50 <b>ve üzeri</b> kurumsal&rdquo;</td><td>Ayrı pay &middot; üst uç <b>açık</b> &rarr; üstte geçersiz pay yok</td></tr>
+        <tr><td>&ldquo;<b>0 ve altı</b> reddedilir&rdquo;</td><td>Geçersiz pay &mdash; açıkça yazılmış</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Payları sayı doğrusuna diz &mdash; boşluk ve çakışma kontrolü</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="200" height="32" rx="9"/>
+<text class="bl bad" x="123" y="43">P1 &middot; 0 ve altı &middot; GEÇERSİZ</text>
+<rect class="bd neu" x="223" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="323" y="43">P2 &middot; 1&#8211;9 &middot; perakende</text>
+<rect class="bd neu2" x="423" y="22" width="250" height="32" rx="9"/>
+<text class="bl neu2" x="548" y="43">P3 &middot; 10&#8211;49 &middot; toptan</text>
+<rect class="bd neu" x="673" y="22" width="257" height="32" rx="9"/>
+<text class="bl neu" x="801" y="43">P4 &middot; 50 ve üzeri &middot; kurumsal</text>
+<line class="cut" x1="223" y1="16" x2="223" y2="128"/>
+<text class="cl" x="223" y="11">kesim 1</text>
+<line class="cut" x1="423" y1="16" x2="423" y2="128"/>
+<text class="cl" x="423" y="11">kesim 2</text>
+<line class="cut" x1="673" y1="16" x2="673" y2="128"/>
+<text class="cl" x="673" y="11">kesim 3</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<text class="dp" x="98" y="111">&minus;2</text>
+<circle class="dot" cx="148" cy="106" r="16"/><text class="dv" x="148" y="111">&minus;1</text>
+<text class="dp" x="198" y="111">0</text>
+<text class="dp" x="248" y="111">1</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">5</text>
+<text class="dp" x="348" y="111">&#8230;</text>
+<text class="dp" x="398" y="111">9</text>
+<text class="dp" x="448" y="111">10</text>
+<text class="dp" x="498" y="111">&#8230;</text>
+<circle class="dot" cx="548" cy="106" r="16"/><text class="dv" x="548" y="111">25</text>
+<text class="dp" x="598" y="111">&#8230;</text>
+<text class="dp" x="648" y="111">49</text>
+<text class="dp" x="698" y="111">50</text>
+<text class="dp" x="748" y="111">&#8230;</text>
+<circle class="dot" cx="798" cy="106" r="16"/><text class="dv" x="798" y="111">80</text>
+<text class="dp" x="848" y="111">&#8230;</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">P1 = &hellip;, &minus;1, 0        (geçersiz)
+P2 = 1 &hellip; 9            (perakende)
+P3 = 10 &hellip; 49          (toptan)
+P4 = 50 &hellip; &infin;         (kurumsal)
+toplam pay = <b>4</b>      &rarr; bu sayı kapsam hesabının <b>paydası</b>dır</pre>
+      </div></li>
+
+    <li><b>Her paydan bir temsilci seç</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th class="ctr">Temsilci</th><th>Beklenen sonuç</th></tr>
+        <tr><td>P1 &middot; 0 ve altı</td><td class="ctr"><b>&minus;1</b></td><td>Red / hata mesajı</td></tr>
+        <tr><td>P2 &middot; 1&ndash;9</td><td class="ctr"><b>5</b></td><td>Perakende fiyat listesi</td></tr>
+        <tr><td>P3 &middot; 10&ndash;49</td><td class="ctr"><b>25</b></td><td>Toptan fiyat listesi</td></tr>
+        <tr><td>P4 &middot; 50 ve üzeri</td><td class="ctr"><b>80</b></td><td>Kurumsal fiyat listesi</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Geçersiz olan P1, altın kural gereği
+      kendi testinde yalnız durur. Diğer üçü zaten ayrı testlerdir çünkü tek değişken var.</p>
+      </div></li>
+  </ol>
+
+  <div class="card trap">
+    <h3>En sık kaybedilen pay</h3>
+    <p style="margin-bottom:0">Geçersiz paylar. Metin &ldquo;0 ve altı reddedilir&rdquo; demese bile,
+    &ldquo;sistem yalnızca 1 ile 250 arasını kabul eder&rdquo; cümlesi <b>iki</b> geçersiz pay yaratır.
+    Paydayı dört sanıp altı olduğunu görememek, bu konudaki yanlış cevapların çoğunluğudur.</p>
+  </div>
+</section>
+
+
+<section id="s4">
+  <div class="shead"><div class="num">4</div>
+    <div><h2>Kapsam öğesi <b>paydır</b></h2>
+    <div class="lo">&ldquo;Elde edilen denklik payı kapsamı yüzde kaçtır?&rdquo;</div></div></div>
+
+  <pre class="fx">kapsam = en az bir testle çalıştırılan pay sayısı  /  toplam pay sayısı</pre>
+
+  <div class="card trap">
+    <h3>Sınavın tekrar eden tuzağı</h3>
+    <p style="margin-bottom:0">Payda <b>pay sayısıdır</b> &mdash; <b>test sayısı değil.</b>
+    Beş test değeri kullanmış olman paydayı 5 yapmaz ve payı da 5 yapmaz.
+    Şıklar çoğu zaman tam olarak bu hatanın sonucunu (örneğin 5/6) içerir;
+    &ldquo;test sayısı / pay sayısı&rdquo; hesabı neredeyse her zaman <b>yanlış şıktır</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Aynı paydaki iki test sıfır kapsam ekler</h3>
+    <p>Aynı sipariş adedi örneğinde testler: <code>5, 7, 25</code>.</p>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="200" height="32" rx="9"/>
+<text class="bl bad" x="123" y="43">P1 &middot; 0 ve altı &middot; GEÇERSİZ</text>
+<rect class="bd neu" x="223" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="323" y="43">P2 &middot; 1&#8211;9 &middot; perakende</text>
+<rect class="bd neu2" x="423" y="22" width="250" height="32" rx="9"/>
+<text class="bl neu2" x="548" y="43">P3 &middot; 10&#8211;49 &middot; toptan</text>
+<rect class="bd neu" x="673" y="22" width="257" height="32" rx="9"/>
+<text class="bl neu" x="801" y="43">P4 &middot; 50 ve üzeri &middot; kurumsal</text>
+<line class="cut" x1="223" y1="16" x2="223" y2="128"/>
+<text class="cl" x="223" y="11">kesim 1</text>
+<line class="cut" x1="423" y1="16" x2="423" y2="128"/>
+<text class="cl" x="423" y="11">kesim 2</text>
+<line class="cut" x1="673" y1="16" x2="673" y2="128"/>
+<text class="cl" x="673" y="11">kesim 3</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<text class="dp" x="98" y="111">&minus;2</text>
+<circle class="dot miss" cx="148" cy="106" r="15"/><text class="dv miss" x="148" y="111">?</text>
+<text class="dp" x="198" y="111">0</text>
+<text class="dp" x="248" y="111">1</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">5</text>
+<circle class="dot" cx="348" cy="106" r="16"/><text class="dv" x="348" y="111">7</text>
+<text class="dp" x="398" y="111">9</text>
+<text class="dp" x="448" y="111">10</text>
+<text class="dp" x="498" y="111">&#8230;</text>
+<circle class="dot" cx="548" cy="106" r="16"/><text class="dv" x="548" y="111">25</text>
+<text class="dp" x="598" y="111">&#8230;</text>
+<text class="dp" x="648" y="111">49</text>
+<text class="dp" x="698" y="111">50</text>
+<text class="dp" x="748" y="111">&#8230;</text>
+<circle class="dot miss" cx="798" cy="106" r="15"/><text class="dv miss" x="798" y="111">?</text>
+<text class="dp" x="848" y="111">&#8230;</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <p class="nlleg"><span><i class="a"></i>kapsanan pay</span><span><i class="m"></i>kapsanmayan pay (hiç değer düşmedi)</span></p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Test değeri</th><th>Düştüğü pay</th><th>Yeni kapsam getirdi mi?</th></tr>
+      <tr><td class="ctr">5</td><td>P2 &middot; perakende</td><td class="ok">Evet &mdash; P2 ilk kez</td></tr>
+      <tr><td class="ctr">7</td><td>P2 &middot; perakende</td><td class="no">Hayır &mdash; P2 zaten kapsandı</td></tr>
+      <tr><td class="ctr">25</td><td>P3 &middot; toptan</td><td class="ok">Evet &mdash; P3 ilk kez</td></tr>
+      <tr><td class="ctr">&mdash;</td><td>P1 &middot; geçersiz</td><td class="no">Hiç değer yok</td></tr>
+      <tr><td class="ctr">&mdash;</td><td>P4 &middot; kurumsal</td><td class="no">Hiç değer yok</td></tr>
+    </table></div>
+    <pre class="fx">kapsanan pay = {P2, P3} = 2
+toplam pay   = 4
+kapsam       = 2 / 4 = <b>%50</b>
+
+yanlış hesap = 3 test / 4 pay = %75   &#10007;  (test sayısını paya yazmak)</pre>
+  </div>
+
+  <div class="card key">
+    <h3>Üç cümlelik özet</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Kapsam öğesi</b> = denklik payı. Ne test, ne değer, ne kombinasyon.</li>
+      <li>Bir pay <b>bir kez</b> kapsanır; ikinci değer kapsamı artırmaz.</li>
+      <li>%100 pay kapsamı için gereken test sayısı, <b>pay sayısından az olabilir</b>
+        &mdash; çünkü bir test birden çok değişkenin paylarını aynı anda kapsar (bölüm 5).</li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s5">
+  <div class="shead"><div class="num">5</div>
+    <div><h2>Birden çok parametre &mdash; Each Choice kapsamı</h2>
+    <div class="lo">&ldquo;%100 EP için EN AZ kaç test senaryosu gerekir?&rdquo;</div></div></div>
+
+  <p class="lead">Bir testin <b>her parametre için</b> bir değer belirlemesi gerekir. Yani tek bir test,
+  her parametreden <b>birer</b> payı aynı anda kapsar. Bu yüzden minimum test sayısı payların
+  toplamı değil, <b>en kalabalık parametrenin pay sayısıdır</b>.</p>
+
+  <pre class="fx">en az test sayısı = max( parametre başına pay sayısı )
+
+   &rarr; buna <b>Each Choice</b> (her seçim) kapsamı denir:
+     her parametrenin her payı en az bir testte görünsün; kombinasyon aranmaz.</pre>
+
+  <div class="card">
+    <h3>Neden toplam değil de maksimum?</h3>
+    <p>Az kalabalık parametrenin payları, kalabalık parametrenin testleri içine &ldquo;bedavaya&rdquo; yerleşir.
+    Payları <b>sütunlar halinde</b> yaz, her sütunu kendi içinde dolaşarak aşağı doğru doldur:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th>Ödeme tipi <span style="font-weight:400">(3 pay)</span></th>
+          <th>Teslimat <span style="font-weight:400">(2 pay)</span></th>
+          <th>Üyelik <span style="font-weight:400">(4 pay)</span></th></tr>
+      <tr><td><b>TC1</b></td><td>kredi kartı</td><td>standart</td><td>üye değil</td></tr>
+      <tr><td><b>TC2</b></td><td>havale</td><td>hızlı</td><td>gümüş</td></tr>
+      <tr><td><b>TC3</b></td><td>kapıda ödeme</td><td>standart <i>(tekrar)</i></td><td>altın</td></tr>
+      <tr><td><b>TC4</b></td><td>kredi kartı <i>(tekrar)</i></td><td>hızlı <i>(tekrar)</i></td><td>platin</td></tr>
+    </table></div>
+    <pre class="fx">pay sayıları = 3, 2, 4          toplam pay = 9
+en az test   = max(3, 2, 4) = <b>4</b>
+kapsam       = 9 / 9 = %100   (dört testle, dokuz payın hepsi)
+
+karşılaştırma: tüm kombinasyonlar = 3 &times; 2 &times; 4 = <b>24</b> test  &mdash; EP bunu istemez.</pre>
+    <p style="margin-bottom:0">Tekrarlar serbesttir: &ldquo;standart&rdquo;ın ikinci kez çıkması bir sorun değil,
+    çünkü kapsam öğesi paydır ve o pay zaten işaretlendi. Önemli olan <b>hiçbir payın boşta kalmamasıdır</b>.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Kısıt varsa maksimum <b>yetmez</b></h3>
+    <p>Spesifikasyon bazı pay çiftlerini yasaklıyorsa (&ldquo;yalnızca zemin katta bahçe olur&rdquo;,
+    &ldquo;kurumsal müşteri kapıda ödeme yapamaz&rdquo;) bir pay tek bir eşleşmeye mahkûm kalır ve
+    testler sıkışır. O zaman minimum, max'ın <b>üzerine çıkar</b>.</p>
+    <p style="margin-bottom:0"><b>Yöntem:</b> önce <code>max</code> ile alt sınırı yaz, sonra
+    <b>izin verilen eşleşmeler matrisini</b> çiz ve yasaklı hücreler yüzünden hangi payın ekstra test
+    istediğini elle ekle. Bölüm 8'deki emlak sorusu tam olarak budur: <code>max(3,3) = 3</code> ama cevap <b>4</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Dikkat: &ldquo;en az test&rdquo; ile &ldquo;kapsam yüzdesi&rdquo; farklı sorulardır</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soru şöyle diyorsa</th><th>Aradığın sayı</th><th>Nasıl bulunur</th></tr>
+      <tr><td>&ldquo;Kapsam yüzde kaçtır?&rdquo;</td><td>Oran</td><td>kapsanan pay / toplam pay</td></tr>
+      <tr><td>&ldquo;EN AZ kaç test gerekir?&rdquo;</td><td>Sayı</td><td><code>max</code>(pay sayıları) + kısıt düzeltmesi</td></tr>
+      <tr><td>&ldquo;Hangi küme %100 sağlar?&rdquo;</td><td>Şık</td><td>Her şıkkın değerlerini paylara etiketle</td></tr>
+      <tr><td>&ldquo;Hangi veri <b>eklenmelidir</b>?&rdquo;</td><td>Şık(lar)</td><td>Önce <b>eksik</b> payları bul, sonra şıkları yerleştir</td></tr>
+    </table></div>
+  </div>
+</section>
+
+
+<section id="s6">
+  <div class="shead"><div class="num">6</div>
+    <div><h2>EP nerede biter, BVA nerede başlar</h2>
+    <div class="lo">Payın içi EP'nin, kenarı BVA'nın işi</div></div></div>
+
+  <p class="lead">EP tek bir varsayıma dayanır: <b>payın içindeki bütün değerler aynı işlenir.</b>
+  Bu varsayım payın ortasında doğrudur; <b>tam kenarında çöker</b>. EP'nin bıraktığı boşluk tam olarak orasıdır.</p>
+
+  <div class="card">
+    <h3>EP %100 iken hangi hata hayatta kalır</h3>
+    <p>Parola uzunluğu: <b>0&ndash;5</b> çok kısa, <b>6&ndash;12</b> geçerli, <b>13 ve üzeri</b> çok uzun.
+    EP temsilcileri <code>3, 9, 15</code>: üç paydan üçü de kapsandı, kapsam <b>3/3 = %100</b>.</p>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="300" height="32" rx="9"/>
+<text class="bl bad" x="173" y="43">0&#8211;5 &middot; çok kısa</text>
+<rect class="bd good" x="323" y="22" width="350" height="32" rx="9"/>
+<text class="bl good" x="498" y="43">6&#8211;12 &middot; GEÇERLİ</text>
+<rect class="bd bad" x="673" y="22" width="257" height="32" rx="9"/>
+<text class="bl bad" x="801" y="43">13 ve üzeri &middot; çok uzun</text>
+<path class="ar bad" d="M 944 38 l -12 -8 v 16 z"/>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11">kesim 1</text>
+<line class="cut" x1="673" y1="16" x2="673" y2="128"/>
+<text class="cl" x="673" y="11">kesim 2</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">0</text>
+<text class="dp" x="98" y="111">1</text>
+<text class="dp" x="148" y="111">2</text>
+<circle class="dot" cx="198" cy="106" r="16"/><text class="dv" x="198" y="111">3</text>
+<text class="dp" x="248" y="111">4</text>
+<circle class="dot miss" cx="298" cy="106" r="15"/><text class="dv miss" x="298" y="111">5</text>
+<circle class="dot miss" cx="348" cy="106" r="15"/><text class="dv miss" x="348" y="111">6</text>
+<text class="dp" x="398" y="111">7</text>
+<text class="dp" x="448" y="111">8</text>
+<circle class="dot" cx="498" cy="106" r="16"/><text class="dv" x="498" y="111">9</text>
+<text class="dp" x="548" y="111">10</text>
+<text class="dp" x="598" y="111">11</text>
+<circle class="dot miss" cx="648" cy="106" r="15"/><text class="dv miss" x="648" y="111">12</text>
+<circle class="dot miss" cx="698" cy="106" r="15"/><text class="dv miss" x="698" y="111">13</text>
+<text class="dp" x="748" y="111">14</text>
+<circle class="dot" cx="798" cy="106" r="16"/><text class="dv" x="798" y="111">15</text>
+<text class="dp" x="848" y="111">16</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <p class="nlleg"><span><i class="a"></i>EP temsilcisi</span><span><i class="m"></i>EP'nin dokunmadığı sınır değer</span></p>
+    <p style="margin-bottom:0">Geliştirici <code>&lt;= 12</code> yerine <code>&lt; 12</code> yazmış olsun.
+    <code>9</code> hâlâ geçerli döner, <code>3</code> ve <code>15</code> hâlâ reddedilir &mdash;
+    <b>EP testlerinin hepsi yeşil kalır</b>, hata kimseye görünmez. Yakalayan tek değer <code>12</code>'dir,
+    ve 12'yi listeye koyan teknik BVA'dır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Yan yana</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th>EP &middot; &sect;4.2.1</th><th>BVA &middot; &sect;4.2.2</th></tr>
+      <tr><td><b>Varsayım</b></td><td>Pay içindeki tüm değerler aynı davranır</td>
+          <td>Bu varsayım <b>tam kenarda</b> çöker</td></tr>
+      <tr><td><b>Kapsam öğesi</b></td><td><b>Pay</b></td><td><b>Sınır değer</b></td></tr>
+      <tr><td><b>Ne seçer</b></td><td>Paydan <b>bir</b> temsilci (nerede olduğu önemsiz)</td>
+          <td>Payların <b>min ve max</b>'ı</td></tr>
+      <tr><td><b>Neyi yakalar</b></td><td>Payın tamamen yanlış işlenmesi, eksik dal</td>
+          <td>Off-by-one: <code>&lt;</code> / <code>&lt;=</code> karışması, yanlış sabit</td></tr>
+      <tr><td><b>Sırası</b></td><td>Önce gelir</td><td>EP'siz uygulanamaz &mdash; sınır, <b>payın ucudur</b></td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Resmî örnek sınavlarda ikisi hep yan yana durur:
+    <b>EP 20. soru, BVA 21. sorudur.</b></p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Mühendis refleksi vs. sınav refleksi</h3>
+    <p>Gerçek işinde temsilci değer seçerken içgüdüsel olarak <b>kenara yakın</b> bir değer seçersin
+    &mdash; &ldquo;madem bir değer seçeceğim, riskli olanı seçeyim&rdquo;. Bu mühendislik olarak <b>doğrudur</b>.</p>
+    <p>Ama EP sorusunda sınır değer, payının <b>sıradan bir temsilcisinden fazlası değildir</b>.
+    Test kümesi <code>&minus;20, 79, 80, 249, 250, 400</code> gibi tamamen sınır değerlerden oluşsa bile
+    EP kapsamı yine <b>kapsanan pay / toplam pay</b> ile hesaplanır &mdash; ve bu küme çoğu zaman
+    geçersiz payları <b>hiç</b> kapsamaz. Bölüm 14'teki (b) şıkkı tam olarak bu tuzaktır.</p>
+    <p style="margin-bottom:0"><b>Sınav modunda:</b> önce payları say, sonra değerleri etiketle.
+    Değerin &ldquo;akıllıca seçilmiş&rdquo; olması kapsama hiçbir şey katmaz.</p>
+  </div>
+</section>
+
+
+<section id="s7">
+  <div class="shead"><div class="num">7</div>
+    <div><h2>Sınav reçetesi &mdash; 5 adım</h2>
+    <div class="lo">Her EP sorusunda aynı sırayı uygula</div></div></div>
+
+  <ol class="steps">
+    <li><b>Değişkenleri ve &ldquo;farklı işlenen&rdquo; kuralları işaretle.</b>
+      <span>Kritik kelimeler: <code>arasında</code> &middot; <code>ve üzeri</code> &middot; <code>ve altı</code> &middot;
+      <code>yalnızca</code> &middot; <code>geçersiz</code> &middot; <code>reddedilir</code> &middot;
+      <code>katı</code> &middot; <code>dışındaki</code></span></li>
+    <li><b>Her değişken için payları listele &mdash; geçersizler dahil.</b>
+      <span>Kapalı geçerli aralık &rarr; genelde <b>2</b> geçersiz pay (alt + üst).
+      Açık biten taraf &rarr; o yönde geçersiz pay <b>yok</b>.</span></li>
+    <li><b>Paydayı sabitle: toplam pay sayısı. Kağıda yaz.</b>
+      <span>Bu sayı test sayısından <b>bağımsızdır</b>. Soruyu okumaya devam etmeden önce yaz.</span></li>
+    <li><b>Her test değerini <i>tam bir</i> paya etiketle, tekrarları ele.</b>
+      <span>Bir değer iki paya düşüyorsa paylar yanlış kurulmuştur; soruyu yeniden oku.
+      Aynı paya düşen ikinci değer kapsam getirmez.</span></li>
+    <li><b>Sorunun istediğine göre böl.</b>
+      <span><b>Kapsam %</b> &rarr; kapsanan / toplam &middot; <b>En az test</b> &rarr; <code>max</code>(pay sayıları) + kısıt
+      &middot; <b>Hangi veri eklenmeli</b> &rarr; önce eksik payı bul &middot; <b>En iyi küme</b> &rarr; her şıkkı etiketle, say.</span></li>
+  </ol>
+
+  <div class="card key">
+    <h3>Üç satırlık kontrol listesi</h3>
+    <ul style="margin-bottom:0">
+      <li>Paydayı yazdım mı? Geçersiz payları saydım mı?</li>
+      <li>Her test değerini bir paya etiketledim mi? Tekrar var mı?</li>
+      <li>Soru <i>kapsam</i> mı, <i>minimum test</i> mi, <i>eksik veri</i> mi istiyor?</li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s8">
+  <div class="shead"><div class="num">8</div>
+    <div><h2>Soru 1 &mdash; emlak arama formu, en az test sayısı</h2>
+    <div class="lo">Resmî örnek sınav A &middot; Soru 20 &middot; FL-4.2.1 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Basit bir emlak arama formunu test ettiğinizi varsayın. Formda yalnızca iki arama kriteri var:</p>
+    <ul>
+      <li>kat (üç olası seçenek: zemin kat; birinci kat; ikinci kat+)</li>
+      <li>bahçe tipi (üç olası seçenek: bahçesiz; küçük bahçe; büyük bahçe)</li>
+    </ul>
+    <p>Sadece zemin kattaki dairelerin bahçesi vardır. Formda, bu kuralı ihlal eden arama kriterlerini
+    kullanmanıza izin vermeyecek bir doğrulama mekanizması bulunmaktadır. Her testin iki giriş değeri vardır:
+    kat ve bahçe tipi. Testlerinizde her katı ve her bahçe tipini kapsayacak şekilde denklik paylarına
+    ayırma tekniğini (EP) uygulamak istiyorsunuz. %100 EP kapsamına ulaşmak için gereken minimum test
+    senaryosu sayısı nedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>3</span></li>
+      <li><b>B</b><span>4</span></li>
+      <li><b>C</b><span>5</span></li>
+      <li><b>D</b><span>6</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; kaç parametre, kaç pay?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Parametre</th><th>Paylar</th><th class="ctr">Pay sayısı</th></tr>
+        <tr><td><b>kat</b></td><td>zemin kat &middot; birinci kat &middot; ikinci kat+</td><td class="ctr"><b>3</b></td></tr>
+        <tr><td><b>bahçe tipi</b></td><td>bahçesiz &middot; küçük bahçe &middot; büyük bahçe</td><td class="ctr"><b>3</b></td></tr>
+        <tr><td colspan="2"><b>Toplam kapsam öğesi</b></td><td class="ctr"><b>6</b></td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Hepsi geçerli pay &mdash;
+      soru geçersiz girdiden hiç söz etmiyor, doğrulama mekanizması yasaklı
+      <i>kombinasyonları</i> engelliyor, değerleri değil.</p>
+      </div></li>
+
+    <li><b>Kısıtsız alt sınırı yaz: Each Choice</b>
+      <div>
+      <pre class="fx">her test bir kat payı <b>ve</b> bir bahçe payı kapsar
+alt sınır = max(3, 3) = <b>3</b>     &rarr;  6 pay / test başına 2 pay = 3 gibi görünüyor</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">(a) şıkkı tam olarak bu sayıdır.
+      Şimdi kısıdın bunu bozup bozmadığına bakacağız.</p>
+      </div></li>
+
+    <li><b>Kısıdı matrise çevir</b>
+      <div>
+      <p style="margin:.4rem 0 0;font-size:.9rem">&ldquo;Sadece zemin kattaki dairelerin bahçesi vardır&rdquo;
+      &rarr; bahçesi olan her arama zorunlu olarak zemin kattır.</p>
+      <div class="scroll"><table class="dt">
+        <tr><th>kat \ bahçe</th><th class="ctr">bahçesiz</th><th class="ctr">küçük bahçe</th><th class="ctr">büyük bahçe</th></tr>
+        <tr><td><b>zemin kat</b></td><td class="ok ctr">izinli</td><td class="ok ctr">izinli</td><td class="ok ctr">izinli</td></tr>
+        <tr><td><b>birinci kat</b></td><td class="ok ctr">izinli</td><td class="no ctr">yasak</td><td class="no ctr">yasak</td></tr>
+        <tr><td><b>ikinci kat+</b></td><td class="ok ctr">izinli</td><td class="no ctr">yasak</td><td class="no ctr">yasak</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0"><b>Küçük bahçe</b> ve
+      <b>büyük bahçe</b> sütunlarının yalnızca tek bir izinli hücresi var: her ikisi de
+      <b>zemin kat</b>a mahkûm.</p>
+      </div></li>
+
+    <li><b>Sıkışan payları ayrı testlere aç</b>
+      <div>
+      <p style="margin:.4rem 0 0;font-size:.9rem">Bir testin <b>tek bir</b> bahçe değeri olur;
+      küçük ve büyük bahçe aynı teste sığmaz. İkisi de zemin kat ister:</p>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th>kat</th><th>bahçe tipi</th><th>Kapsadığı yeni paylar</th></tr>
+        <tr><td><b>TC1</b></td><td>zemin kat</td><td>küçük bahçe</td><td class="ok">zemin kat + küçük bahçe</td></tr>
+        <tr><td><b>TC2</b></td><td>zemin kat <i>(tekrar)</i></td><td>büyük bahçe</td><td class="ok">büyük bahçe</td></tr>
+        <tr><td><b>TC3</b></td><td>birinci kat</td><td>bahçesiz</td><td class="ok">birinci kat + bahçesiz</td></tr>
+        <tr><td><b>TC4</b></td><td>ikinci kat+</td><td>bahçesiz <i>(tekrar)</i></td><td class="ok">ikinci kat+</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">6 payın 6'sı da kapsandı:
+      zemin kat, birinci kat, ikinci kat+, bahçesiz, küçük bahçe, büyük bahçe.</p>
+      </div></li>
+
+    <li><b>Daha azı mümkün mü? &mdash; alt sınırı kanıtla</b>
+      <div>
+      <pre class="fx">kat payları 3 tane, her test tek kat kullanır        &rarr;  en az <b>3</b> test
+küçük bahçe &rarr; zemin kat zorunlu  (1 test)
+büyük bahçe &rarr; zemin kat zorunlu  (1 test, ayrı)
+  &rArr; zemin kat <b>iki</b> testte kullanılmak zorunda
+  &rArr; 3 testin ikisi zemin kata gider, geriye 1 test kalır
+  &rArr; ama birinci kat + ikinci kat+ için <b>2</b> test lazım  &#10007;
+
+en az test = 2 (zemin kat) + 2 (üst katlar) = <b>4</b></pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>3 &nbsp;&mdash;&nbsp; kısıtsız <code>max(3,3)</code> refleksi; iki bahçe payı tek teste sığmaz</span></li>
+      <li class="right"><b>B</b><span>4 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>C</b><span>5 &nbsp;&mdash;&nbsp; kapsamı sağlar ama bir test fazladır, &ldquo;minimum&rdquo; değildir</span></li>
+      <li class="wrong"><b>D</b><span>6 &nbsp;&mdash;&nbsp; her payı ayrı teste koymak; 3&times;2 kombinasyon refleksi</span></li>
+    </ul>
+    <p style="margin-bottom:0"><b>Tek cümle:</b> kısıt, iki bahçe payını zemin kata mahkûm ettiği için
+    zemin kat iki test harcar; kalan iki kat payı iki test daha ister &rarr; <b>4</b>.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak &mdash; kısıdı görmeden bölmek</h3>
+    <p>&ldquo;6 pay var, her test 2 pay kapsıyor, 6/2 = 3&rdquo; aritmetiği <b>kısıt yoksa</b> doğrudur.
+    Buradaki doğrulama mekanizması o bölmeyi geçersiz kılar.</p>
+    <p style="margin-bottom:0"><b>Refleks:</b> &ldquo;en az kaç test&rdquo; sorusunda önce
+    <code>max</code>(pay sayıları) ile alt sınırı yaz, sonra metinde <i>yalnızca</i>, <i>sadece</i>,
+    <i>&hellip;ise &hellip;olamaz</i> gibi bir kısıt arayıp matrisi çiz. Yasaklı hücreler varsa cevap
+    neredeyse her zaman maksimumun <b>bir ya da iki üstündedir</b>.</p>
+  </div>
+</section>
+
+
+<section id="s9">
+  <div class="shead"><div class="num">9</div>
+    <div><h2>Soru 2 &mdash; oto yıkama indirimi, en yüksek kapsam</h2>
+    <div class="lo">Resmî örnek sınav B &middot; Soru 20 &middot; FL-4.2.1 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>TestWash oto yıkama zincirinin müşterileri, o ana kadar satın aldıkları yıkama sayısının kaydedildiği
+    kartlara sahiptir. Başlangıç değeri 0'dır. Oto yıkamaya girdikten sonra sistem karttaki sayıyı bir
+    artırır. Bu değer mevcut yıkama sayısını temsil eder. Bu sayıya göre sistem müşterinin ne kadar indirim
+    hakkı olduğuna karar verir. Her onuncu yıkamada sistem %10 indirim yapar ve her yirminci yıkamada sistem
+    %40 daha indirim yapar (yani toplamda %50 indirim). Aşağıdaki veri giriş setlerinden hangisi (mevcut
+    yıkama sayıları) en yüksek denklik payı kapsamına ulaşır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>19, 20, 30</span></li>
+      <li><b>B</b><span>11, 12, 20</span></li>
+      <li><b>C</b><span>1, 10, 50</span></li>
+      <li><b>D</b><span>10, 29, 30, 31</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Kuralı paylara çevir &mdash; çıktı kaç farklı olabilir?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th>Koşul (N = mevcut yıkama sayısı)</th><th>Çıktı</th></tr>
+        <tr><td><b>P1</b></td><td>N, 10'un katı <b>değil</b></td><td>indirim yok</td></tr>
+        <tr><td><b>P2</b></td><td>N, 10'un katı ama 20'nin katı <b>değil</b></td><td>%10 indirim</td></tr>
+        <tr><td><b>P3</b></td><td>N, 20'nin katı</td><td>%50 indirim</td></tr>
+      </table></div>
+      <pre class="fx">toplam pay = <b>3</b>    &rarr; %100 kapsam için üç paya da birer değer düşmeli</pre>
+      </div></li>
+
+    <li><b>Örtüşme kontrolü &mdash; 20 hangi paya ait?</b>
+      <div>
+      <p style="margin:.4rem 0 0;font-size:.9rem">20 hem 10'un hem 20'nin katıdır. Paylar
+      <b>örtüşemeyeceği</b> için (bölüm 1) 20 tek bir paya ait olmalıdır: sistemin gerçekte
+      uyguladığı sonuç <b>%50</b>'dir, dolayısıyla 20 &rarr; <b>P3</b>. P2'nin tanımına
+      &ldquo;20'nin katı değil&rdquo; şartını bu yüzden ekledik.</p>
+<pre>N = 10, 30, 50, 70 &hellip;   &rarr; P2   (%10)
+N = 20, 40, 60, 80 &hellip;   &rarr; P3   (%50)   &mdash; P2'ye <b>girmez</b>
+N = 1, 11, 19, 29  &hellip;   &rarr; P1   (yok)</pre>
+      </div></li>
+
+    <li><b>Her şıkkın her değerini bir paya etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Değerler &rarr; pay</th><th>Kapsanan paylar</th><th class="ctr">Kapsam</th></tr>
+        <tr><td><b>a</b></td><td>19&rarr;P1 &middot; 20&rarr;P3 &middot; 30&rarr;P2</td>
+            <td class="ok">P1, P2, P3</td><td class="ctr ok"><b>3/3 = %100</b></td></tr>
+        <tr><td><b>b</b></td><td>11&rarr;P1 &middot; 12&rarr;P1 &middot; 20&rarr;P3</td>
+            <td class="no">P1, P3 &mdash; P2 yok</td><td class="ctr no">2/3 &asymp; %67</td></tr>
+        <tr><td><b>c</b></td><td>1&rarr;P1 &middot; 10&rarr;P2 &middot; 50&rarr;P2</td>
+            <td class="no">P1, P2 &mdash; P3 yok</td><td class="ctr no">2/3 &asymp; %67</td></tr>
+        <tr><td><b>d</b></td><td>10&rarr;P2 &middot; 29&rarr;P1 &middot; 30&rarr;P2 &middot; 31&rarr;P1</td>
+            <td class="no">P1, P2 &mdash; P3 yok</td><td class="ctr no">2/3 &asymp; %67</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Tekrarları işaretle &mdash; kapsamı düşüren şey bu</b>
+      <div>
+      <pre class="fx">b)  11 ve 12  &rarr; <b>aynı pay</b> (P1)   &rArr; 3 değer, yalnızca 2 pay
+c)  10 ve 50  &rarr; <b>aynı pay</b> (P2)   &rArr; 3 değer, yalnızca 2 pay
+d)  10 ve 30  &rarr; aynı pay (P2)
+    29 ve 31  &rarr; aynı pay (P1)   &rArr; <b>4 değer</b>, yalnızca 2 pay</pre>
+      </div></li>
+
+    <li><b>Böl ve şıkkı seç</b>
+      <div><p style="margin:.4rem 0 0;font-size:.9rem">En yüksek kapsam <b>3/3</b> ile (a) şıkkındadır;
+      diğer üçü 2/3'te kalır.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="right"><b>A</b><span>19, 20, 30 &nbsp;&#10004; &nbsp; üç paya üç değer &rarr; %100</span></li>
+      <li class="wrong"><b>B</b><span>11, 12, 20 &nbsp;&mdash;&nbsp; 11 ile 12 aynı payda; %10 payı boşta</span></li>
+      <li class="wrong"><b>C</b><span>1, 10, 50 &nbsp;&mdash;&nbsp; 10 ile 50 aynı payda; %50 payı boşta</span></li>
+      <li class="wrong"><b>D</b><span>10, 29, 30, 31 &nbsp;&mdash;&nbsp; <b>4 değer</b> ama yalnızca 2 pay</span></li>
+    </ul>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak &mdash; &ldquo;daha çok değer = daha çok kapsam&rdquo;</h3>
+    <p>(d) şıkkı tek başına dört değer içerdiği için cazip görünür. Ama kapsamı belirleyen
+    <b>kaç değer girdiğin değil, kaç farklı paya dokunduğundur</b>. Dört değer iki paya düşerse
+    kapsam yine 2/3'tür.</p>
+    <p style="margin-bottom:0"><b>İkinci tuzak:</b> 20'yi &ldquo;hem %10 hem %50 payında&rdquo; saymak.
+    Bu, payların <b>örtüşmezlik</b> şartını ihlal eder; 20 yalnızca en yüksek indirim payına aittir.</p>
+  </div>
+</section>
+
+
+<section id="s10">
+  <div class="shead"><div class="num">10</div>
+    <div><h2>Soru 3 &mdash; PIN doğrulayıcı, en iyi test verisi</h2>
+    <div class="lo">Resmî örnek sınav C &middot; Soru 20 &middot; FL-4.2.1 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Geçerli PIN'leri kabul eden ve geçersiz PIN'leri reddeden bir PIN doğrulayıcıyı test ettiğinizi
+    varsayın. PIN, bir rakam dizisidir ve aynı rakamdan oluşmayan dört rakamdan oluşuyorsa geçerlidir.
+    Aşağıdaki geçerli denklik paylarını belirlediniz: <b>Değişken: PIN kodu uzunluğu</b></p>
+    <ul>
+      <li>&ldquo;Uzunluk doğru&rdquo; payı - dört haneli PIN kodları</li>
+      <li>&ldquo;Uzunluk yanlış&rdquo; payı - 4 karakterden farklı uzunlukta PIN'ler</li>
+    </ul>
+    <p><b>Değişken: Farklı rakam sayısı</b></p>
+    <ul>
+      <li>&ldquo;Doğru farklı rakam sayısı&rdquo; payı - En az iki farklı rakamdan oluşan PIN'ler</li>
+      <li>&ldquo;Yanlış olan farklı rakamların sayısı&rdquo; payı - Tüm rakamları aynı olan PIN'ler</li>
+    </ul>
+    <p>Aşağıdakilerden hangisi, belirlenen denklik paylarını kapsayan EN İYİ test verisi girdi grubudur?</p>
+    <ul class="opts">
+      <li><b>A</b><span>12, 1111, 1234, 12345</span></li>
+      <li><b>B</b><span>1, 123, 1111, 1234</span></li>
+      <li><b>C</b><span>11, 12, 1111, 12345</span></li>
+      <li><b>D</b><span>123, 1222, 12345</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Payları soru metninden kopyala &mdash; uydurma</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Değişken</th><th>Pay</th><th>Tanım</th></tr>
+        <tr><td rowspan="2"><b>Uzunluk</b></td><td>U&#10003;</td><td>tam 4 karakter</td></tr>
+        <tr><td>U&#10007;</td><td>4'ten farklı uzunluk (<b>kısa</b> ya da <b>uzun</b>)</td></tr>
+        <tr><td rowspan="2"><b>Farklı rakam</b></td><td>R&#10003;</td><td>en az iki farklı rakam</td></tr>
+        <tr><td>R&#10007;</td><td>tüm rakamlar aynı</td></tr>
+      </table></div>
+      <pre class="fx">toplam pay = 2 + 2 = <b>4</b>
+bir değer <b>iki payı aynı anda</b> kapsar: biri uzunluktan, biri rakam çeşidinden
+  &rarr; teorik olarak 2 test yeter; soru &ldquo;EN İYİ&rdquo; kümeyi soruyor, minimumu değil</pre>
+      </div></li>
+
+    <li><b>Her şıkkın her değerini <i>ikili</i> etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Değer</th><th class="ctr">uzunluk</th><th class="ctr">farklı rakam</th><th>Not</th></tr>
+        <tr><td><code>12</code></td><td class="ctr">U&#10007; kısa</td><td class="ctr">R&#10003;</td><td>1 ve 2 farklı</td></tr>
+        <tr><td><code>1111</code></td><td class="ctr">U&#10003;</td><td class="ctr">R&#10007;</td><td>dört hane, hepsi aynı</td></tr>
+        <tr><td><code>1234</code></td><td class="ctr">U&#10003;</td><td class="ctr">R&#10003;</td><td><b>tam geçerli PIN</b></td></tr>
+        <tr><td><code>12345</code></td><td class="ctr">U&#10007; uzun</td><td class="ctr">R&#10003;</td><td>&mdash;</td></tr>
+        <tr><td><code>1</code></td><td class="ctr">U&#10007; kısa</td><td class="ctr">R&#10007;</td><td>tek rakam &rarr; &ldquo;hepsi aynı&rdquo;</td></tr>
+        <tr><td><code>123</code></td><td class="ctr">U&#10007; kısa</td><td class="ctr">R&#10003;</td><td>&mdash;</td></tr>
+        <tr><td><code>11</code></td><td class="ctr">U&#10007; kısa</td><td class="ctr">R&#10007;</td><td>&mdash;</td></tr>
+        <tr><td><code>1222</code></td><td class="ctr">U&#10003;</td><td class="ctr">R&#10003;</td><td>1 ile 2 farklı &rarr; geçerli PIN</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Şık şık kapsam tablosu çıkar</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th class="ctr">U&#10003;</th><th class="ctr">U&#10007;</th><th class="ctr">R&#10003;</th><th class="ctr">R&#10007;</th>
+            <th class="ctr">U&#10007; kısa</th><th class="ctr">U&#10007; uzun</th><th class="ctr">tam geçerli PIN</th></tr>
+        <tr><td><b>a</b></td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ok ctr">12</td><td class="ok ctr">12345</td><td class="ok ctr">1234</td></tr>
+        <tr><td><b>b</b></td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ok ctr">1, 123</td><td class="no ctr">&#10007;</td><td class="ok ctr">1234</td></tr>
+        <tr><td><b>c</b></td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ok ctr">11, 12</td><td class="ok ctr">12345</td><td class="no ctr">&#10007;</td></tr>
+        <tr><td><b>d</b></td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="no ctr">&#10007;</td>
+            <td class="ok ctr">123</td><td class="ok ctr">12345</td><td class="ok ctr">1222</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Ele &mdash; önce payı kapsamayanı at, sonra &ldquo;en iyi&rdquo;yi seç</b>
+      <div>
+      <pre class="fx">(d) &rarr; <b>R&#10007; payı hiç kapsanmıyor</b>: 123, 1222, 12345 içinde
+       tüm rakamları aynı olan değer yok                       &#10007; elendi
+
+kalan a, b, c &rarr; dört payı da kapsıyor; ayırt edici iki ölçüt:
+  (1) &ldquo;uzunluk yanlış&rdquo; payı <b>iki yönden</b> de temsil edildi mi?  (kısa + uzun)
+  (2) &ldquo;farklı rakam doğru&rdquo; payı <b>geçerli</b> bir PIN ile mi yoklandı?
+
+(b) &rarr; yalnızca kısa taraf (1, 123); 4'ten uzun PIN yok              &#10007;
+(c) &rarr; iki yön var, ama kümede <b>tek bir geçerli PIN yok</b>;
+       R&#10003; payı yalnızca uzunluğu hatalı değerlerle (12, 12345)
+       yoklandığı için etkin biçimde kapsanmış sayılmaz           &#10007;
+(a) &rarr; dört pay + kısa/uzun iki yön + gerçek geçerli PIN (1234)   &#10004;</pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="right"><b>A</b><span>12, 1111, 1234, 12345 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>B</b><span>1, 123, 1111, 1234 &nbsp;&mdash;&nbsp; &ldquo;uzunluk yanlış&rdquo;ın yalnızca kısa tarafı</span></li>
+      <li class="wrong"><b>C</b><span>11, 12, 1111, 12345 &nbsp;&mdash;&nbsp; kümede tek bir geçerli PIN yok</span></li>
+      <li class="wrong"><b>D</b><span>123, 1222, 12345 &nbsp;&mdash;&nbsp; &ldquo;tüm rakamları aynı&rdquo; payı hiç kapsanmıyor</span></li>
+    </ul>
+    <p style="margin-bottom:0"><b>Tek cümle:</b> (a), dört payı da kapsayan <b>ve</b> hem geçersiz uzunluğun
+    iki yönünü hem de gerçek bir geçerli PIN'i içeren tek kümedir.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Bir değer iki payı birden kapsayabilir</h3>
+    <p style="margin-bottom:0"><code>1111</code> aynı anda <b>U&#10003;</b> ve <b>R&#10007;</b> paylarını kapsar &mdash;
+    çünkü bunlar <b>farklı değişkenlere</b> ait paylardır. Örtüşme yasağı yalnızca <b>aynı değişkenin</b>
+    payları için geçerlidir: bir değer bir değişkenin tek bir payına düşer, ama her değişken için
+    ayrı bir pay etiketi alır. Bu, bölüm 5'teki Each Choice mantığının ta kendisidir.</p>
+  </div>
+</section>
+
+
+<section id="s11">
+  <div class="shead"><div class="num">11</div>
+    <div><h2>Soru 4 &mdash; sinema indirimi, eksik payı kapat</h2>
+    <div class="lo">Resmî örnek sınav D &middot; Soru 20 &middot; FL-4.2.1 &middot; K3 &middot; çoktan seçmeli</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir sinema bileti satış sistemi, indirim türünü müşterinin Doğum Yılı (DY) ve İçinde Bulunulan
+    Mevcut Yıl (MY) bilgilerini kullanarak şu şekilde hesaplar: F, bu iki yıl arasındaki fark olsun
+    <b>F = MY - DY</b>:</p>
+    <ul>
+      <li>Eğer F &lt; 0 ise: &ldquo;Doğum yılı mevcut yıldan büyük olamaz&rdquo; hata mesajını yazdır.</li>
+      <li>Eğer 0 &#8804; F &lt; 18 ise: Öğrenci indirimini uygula.</li>
+      <li>Eğer 18 &#8804; F &lt; 65 ise: İndirim uygulama.</li>
+      <li>Eğer F &#8805; 65 ise: Emekli indirimini uygula.</li>
+    </ul>
+    <p>Test grubunuzda halihazırda iki test senaryosu bulunmaktadır:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Test</th><th class="ctr">DY</th><th class="ctr">MY</th><th>Beklenen Sonuç</th></tr>
+      <tr><td>mevcut 1</td><td class="ctr">1990</td><td class="ctr">2020</td><td>İndirim yok</td></tr>
+      <tr><td>mevcut 2</td><td class="ctr">2030</td><td class="ctr">2029</td><td>Hata mesajının yazdırılması</td></tr>
+    </table></div>
+    <p>Sistemdeki tam geçerli denklik paylarına ayırma (full valid equivalence partitioning coverage)
+    kapsamını sağlamak için aşağıdaki veri setlerinden hangileri eklenmelidir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>DY = 2001 MY = 2065</span></li>
+      <li><b>B</b><span>DY = 1900 MY = 1965</span></li>
+      <li><b>C</b><span>DY = 1965 MY = 1900</span></li>
+      <li><b>D</b><span>DY = 2011 MY = 2029</span></li>
+      <li><b>E</b><span>DY = 2000 MY = 2000</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Payları F ekseninde kur</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th>Koşul</th><th>Sonuç</th><th class="ctr">Tipi</th></tr>
+        <tr><td><b>P1</b></td><td>F &lt; 0</td><td>Hata mesajı</td><td class="ctr">geçersiz girdi tepkisi</td></tr>
+        <tr><td><b>P2</b></td><td>0 &#8804; F &lt; 18</td><td>Öğrenci indirimi</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P3</b></td><td>18 &#8804; F &lt; 65</td><td>İndirim yok</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P4</b></td><td>F &#8805; 65</td><td>Emekli indirimi</td><td class="ctr">geçerli</td></tr>
+      </table></div>
+      <pre class="fx">toplam pay = <b>4</b>   &middot;   her test tek bir F üretir  &rarr;  tek bir paya düşer</pre>
+      </div></li>
+
+    <li><b>Mevcut iki testi yerleştir &mdash; ne eksik kaldı?</b>
+      <div>
+      <pre class="fx">mevcut 1:  F = MY &minus; DY = 2020 &minus; 1990 = <b>30</b>   &rarr; 18 &#8804; 30 &lt; 65   &rarr; <b>P3</b> kapsandı
+mevcut 2:  F = MY &minus; DY = 2029 &minus; 2030 = <b>&minus;1</b>   &rarr; &minus;1 &lt; 0        &rarr; <b>P1</b> kapsandı
+
+kapsanan = {P1, P3}      eksik = {<b>P2 öğrenci</b>, <b>P4 emekli</b>}
+mevcut kapsam = 2 / 4 = %50</pre>
+      </div></li>
+
+    <li><b>Her şık için F'yi hesapla</b>
+      <div>
+      <pre class="fx">a)  F = 2065 &minus; 2001 = <b>64</b>    &rarr; 18 &#8804; 64 &lt; 65   &rarr; P3   (zaten kapsandı)
+b)  F = 1965 &minus; 1900 = <b>65</b>    &rarr; 65 &#8805; 65        &rarr; <b>P4</b>  &larr; EKSİK PAYI KAPATIR
+c)  F = 1900 &minus; 1965 = <b>&minus;65</b>   &rarr; &minus;65 &lt; 0       &rarr; P1   (zaten kapsandı)
+d)  F = 2029 &minus; 2011 = <b>18</b>    &rarr; 18 &#8804; 18 &lt; 65   &rarr; P3   (zaten kapsandı)
+e)  F = 2000 &minus; 2000 = <b>0</b>     &rarr; 0 &#8804; 0 &lt; 18     &rarr; <b>P2</b>  &larr; EKSİK PAYI KAPATIR</pre>
+      </div></li>
+
+    <li><b>Sayı doğrusunda gör</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="200" height="32" rx="9"/>
+<text class="bl bad" x="123" y="43">F &lt; 0 &middot; hata mesajı</text>
+<rect class="bd neu" x="223" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="323" y="43">0 &#8804; F &lt; 18 &middot; öğrenci</text>
+<rect class="bd neu2" x="423" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu2" x="523" y="43">18 &#8804; F &lt; 65 &middot; indirim yok</text>
+<rect class="bd neu" x="623" y="22" width="307" height="32" rx="9"/>
+<text class="bl neu" x="776" y="43">F &#8805; 65 &middot; emekli</text>
+<line class="cut" x1="223" y1="16" x2="223" y2="128"/>
+<text class="cl" x="223" y="11">F=0</text>
+<line class="cut" x1="423" y1="16" x2="423" y2="128"/>
+<text class="cl" x="423" y="11">F=18</text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11">F=65</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<circle class="dot new" cx="98" cy="106" r="16"/><text class="dv new" x="98" y="111">&minus;65</text>
+<text class="dp" x="148" y="111">&minus;2</text>
+<circle class="dot" cx="198" cy="106" r="16"/><text class="dv" x="198" y="111">&minus;1</text>
+<circle class="dot new" cx="248" cy="106" r="16"/><text class="dv new" x="248" y="111">0</text>
+<text class="dp" x="298" y="111">5</text>
+<text class="dp" x="348" y="111">&#8230;</text>
+<text class="dp" x="398" y="111">17</text>
+<circle class="dot new" cx="448" cy="106" r="16"/><text class="dv new" x="448" y="111">18</text>
+<circle class="dot" cx="498" cy="106" r="16"/><text class="dv" x="498" y="111">30</text>
+<text class="dp" x="548" y="111">&#8230;</text>
+<circle class="dot new" cx="598" cy="106" r="16"/><text class="dv new" x="598" y="111">64</text>
+<circle class="dot new" cx="648" cy="106" r="16"/><text class="dv new" x="648" y="111">65</text>
+<text class="dp" x="698" y="111">&#8230;</text>
+<text class="dp" x="748" y="111">80</text>
+<text class="dp" x="798" y="111">&#8230;</text>
+<text class="dp" x="848" y="111">&#8230;</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>mevcut testlerin düştüğü yer</span><span><i class="b"></i>şıkların değerleri</span></p>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Dikkat: 18 ve 65, ait oldukları payın
+      <b>içindedir</b> &mdash; karşılaştırmalar &ldquo;büyük eşit&rdquo; biçimindedir.
+      64 ise hâlâ P3'ün son değeridir.</p>
+      </div></li>
+
+    <li><b>Böl &mdash; eksik iki payı kapatan iki şık</b>
+      <div><pre class="fx">eklenecek = {b, e}   &rArr;  kapsam 2/4 = %50  &rarr;  4/4 = <b>%100</b></pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>F = 64 &nbsp;&mdash;&nbsp; P3, zaten kapsanmış</span></li>
+      <li class="right"><b>B</b><span>F = 65 &rarr; emekli indirimi &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>C</b><span>F = &minus;65 &nbsp;&mdash;&nbsp; P1, zaten kapsanmış</span></li>
+      <li class="wrong"><b>D</b><span>F = 18 &nbsp;&mdash;&nbsp; P3, zaten kapsanmış</span></li>
+      <li class="right"><b>E</b><span>F = 0 &rarr; öğrenci indirimi &nbsp;&#10004;</span></li>
+    </ul>
+    <p style="margin-bottom:0"><b>Doğru cevap: B ve E.</b> Eksik olan iki geçerli payı
+    (emekli ve öğrenci) kapatan tek ikili budur.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak &mdash; 18 ve 65 nereye düşer?</h3>
+    <p>(d) şıkkındaki <b>F = 18</b> ile (b) şıkkındaki <b>F = 65</b> kasıtlı olarak kesim noktalarına
+    konmuştur. Koşullar <code>18 &#8804; F</code> ve <code>65 &#8804; F</code> biçiminde yazıldığı için:</p>
+<pre>F = 17  &rarr; öğrenci        F = <b>18</b>  &rarr; indirim yok   (<b>P3'ün ilk değeri</b>)
+F = 64  &rarr; indirim yok    F = <b>65</b>  &rarr; emekli        (<b>P4'ün ilk değeri</b>)</pre>
+    <p style="margin-bottom:0"><b>İkinci tuzak:</b> (c) şıkkında DY ile MY'nin yerleri değişiktir
+    (DY = 1965, MY = 1900). &ldquo;65&rdquo; sayısını görüp emekli sanmak kolaydır;
+    <b>F = MY &minus; DY = &minus;65</b>'tir ve hata payına düşer. Her şıkta çıkarmayı <b>yazarak</b> yap.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>&ldquo;Tam <i>geçerli</i> pay kapsamı&rdquo; ifadesi</h3>
+    <p style="margin-bottom:0">Soru açıkça <b>full valid</b> diyor. Burada hata mesajı payı (P1) zaten
+    mevcut testle kapsanmış olduğu için sonuç değişmiyor &mdash; ama ifadeyi fark etmek önemlidir:
+    bazı sorularda paydaya yalnızca geçerli paylar girer. Aksi belirtilmedikçe <b>varsayılan,
+    geçersiz payların da sayılmasıdır</b> (bölüm 13'teki su sayacı sorusu bunun tam tersidir).</p>
+  </div>
+</section>
+
+
+<section id="s12">
+  <div class="shead"><div class="num">12</div>
+    <div><h2>Soru 5 &mdash; akıllı termostat, kapsam yüzdesi</h2>
+    <div class="lo">Örnek sınav E &middot; Soru 19 &middot; FL-4.2.1 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Akıllı termostat yazılımı, kullanıcının girdiği hedef sıcaklığa (tam sayı, &deg;C) göre çalışma modunu
+    belirler:</p>
+<pre>hedef &lt; 5: giriş reddedilir
+5 &lt;= hedef &lt;= 15: Donma koruması
+16 &lt;= hedef &lt;= 23: Konfor
+24 &lt;= hedef &lt;= 30: Hızlı ısıtma
+hedef &gt; 30: giriş reddedilir</pre>
+    <p>Test uzmanı hedef sıcaklık girdisi için şu değerlerle test koşmuştur: <b>3, 12, 20, 27, 29</b>.
+    Denklik paylarına ayırma tekniğine göre elde edilen kapsam yüzde KAÇTIR?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%60</span></li>
+      <li><b>B</b><span>%75</span></li>
+      <li><b>C</b><span>%80</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; kaç farklı işleme var?</b>
+      <div>
+      <p style="margin:.4rem 0 0;font-size:.9rem">Şartname <b>beş</b> farklı davranış tarif ediyor.
+      İki tanesi &ldquo;giriş reddedilir&rdquo; diyor ama bunlar <b>ayrı iki pay</b>dır: biri alttan, biri üstten
+      taşar; aynı payda değillerdir.</p>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th>Aralık</th><th>Davranış</th><th class="ctr">Tipi</th></tr>
+        <tr><td><b>P1</b></td><td>hedef &lt; 5</td><td>giriş reddedilir</td><td class="ctr">geçersiz</td></tr>
+        <tr><td><b>P2</b></td><td>5 &#8211; 15</td><td>Donma koruması</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P3</b></td><td>16 &#8211; 23</td><td>Konfor</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P4</b></td><td>24 &#8211; 30</td><td>Hızlı ısıtma</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P5</b></td><td>hedef &gt; 30</td><td>giriş reddedilir</td><td class="ctr">geçersiz</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Paydayı sabitle &mdash; soruyu okumaya devam etmeden önce</b>
+      <div><pre class="fx">toplam pay = 3 geçerli + 2 geçersiz = <b>5</b>      &rarr; payda = 5</pre></div></li>
+
+    <li><b>Her test değerini bir paya etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Değer</th><th class="ctr">3</th><th class="ctr">12</th><th class="ctr">20</th><th class="ctr">27</th><th class="ctr">29</th></tr>
+        <tr><th class="ctr">Pay</th><td class="ctr">P1</td><td class="ctr">P2</td><td class="ctr">P3</td>
+            <td class="ctr">P4</td><td class="ctr"><b>P4</b></td></tr>
+        <tr><th class="ctr">Yeni kapsam?</th><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="no ctr">&#10007; tekrar</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0"><b>27 ve 29 aynı paydadır</b> (24&ndash;30).
+      İkinci değer yeni bir kapsam öğesi karşılamaz.</p>
+      </div></li>
+
+    <li><b>Sayı doğrusunda gör &mdash; hangi pay boşta?</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="150" height="32" rx="9"/>
+<text class="bl bad" x="98" y="43">P1 &middot; &lt;5 &middot; red</text>
+<rect class="bd neu" x="173" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="273" y="43">P2 &middot; 5&#8211;15 &middot; Donma koruması</text>
+<rect class="bd neu2" x="373" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">P3 &middot; 16&#8211;23 &middot; Konfor</text>
+<rect class="bd neu" x="573" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="673" y="43">P4 &middot; 24&#8211;30 &middot; Hızlı ısıtma</text>
+<rect class="bd bad" x="773" y="22" width="157" height="32" rx="9"/>
+<text class="bl bad" x="851" y="43">P5 &middot; &gt;30 &middot; red</text>
+<path class="ar bad" d="M 944 38 l -12 -8 v 16 z"/>
+<line class="cut" x1="173" y1="16" x2="173" y2="128"/>
+<text class="cl" x="173" y="11"></text>
+<line class="cut" x1="373" y1="16" x2="373" y2="128"/>
+<text class="cl" x="373" y="11"></text>
+<line class="cut" x1="573" y1="16" x2="573" y2="128"/>
+<text class="cl" x="573" y="11"></text>
+<line class="cut" x1="773" y1="16" x2="773" y2="128"/>
+<text class="cl" x="773" y="11"></text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<circle class="dot" cx="98" cy="106" r="16"/><text class="dv" x="98" y="111">3</text>
+<text class="dp" x="148" y="111">4</text>
+<text class="dp" x="198" y="111">5</text>
+<text class="dp" x="248" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">12</text>
+<text class="dp" x="348" y="111">15</text>
+<text class="dp" x="398" y="111">16</text>
+<text class="dp" x="448" y="111">&#8230;</text>
+<circle class="dot" cx="498" cy="106" r="16"/><text class="dv" x="498" y="111">20</text>
+<text class="dp" x="548" y="111">23</text>
+<text class="dp" x="598" y="111">24</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">27</text>
+<circle class="dot" cx="698" cy="106" r="16"/><text class="dv" x="698" y="111">29</text>
+<text class="dp" x="748" y="111">30</text>
+<text class="dp" x="798" y="111">31</text>
+<circle class="dot miss" cx="848" cy="106" r="15"/><text class="dv miss" x="848" y="111">?</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>kapsanan pay</span><span><i class="m"></i>kapsanmayan pay (hiç değer düşmedi)</span></p>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">30'un üzerine hiçbir test değeri
+      girilmemiş &rarr; <b>P5 boşta</b>. En büyük test değeri 29'dur.</p>
+      </div></li>
+
+    <li><b>Böl</b>
+      <div><pre class="fx">kapsanan pay = {P1, P2, P3, P4} = <b>4</b>
+toplam pay   = <b>5</b>
+kapsam       = 4 / 5 = 0,80 = <b>%80</b>
+
+yanlış hesap = 5 test / 5 pay = %100   &#10007;</pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>%60 &nbsp;&mdash;&nbsp; 3/5; 3 değerinin P1'i kapsadığını atlamak</span></li>
+      <li class="wrong"><b>B</b><span>%75 &nbsp;&mdash;&nbsp; 3/4; iki geçersiz payı <b>tek</b> pay saymak</span></li>
+      <li class="right"><b>C</b><span>%80 &nbsp;&#10004; &nbsp; 4 / 5</span></li>
+      <li class="wrong"><b>D</b><span>%100 &nbsp;&mdash;&nbsp; yalnızca geçerli payları saymak (3/3)</span></li>
+    </ul>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak &mdash; &ldquo;giriş reddedilir&rdquo; iki kez yazıyor</h3>
+    <p>Aynı mesajı veren iki kural <b>aynı pay değildir</b>. Alt taşma ve üst taşma farklı kod yollarıdır
+    ve ayrı ayrı yanlış yazılabilir. (b) şıkkı tam olarak bu ikisini birleştiren adayı bekliyor:
+    payda 4 olunca sonuç 3/4 = %75 çıkar.</p>
+    <p style="margin-bottom:0"><b>İkinci tuzak:</b> beş test değeri girildiği için &ldquo;beş pay kapsandı&rdquo;
+    sanmak. 27 ile 29 aynı paya düşer; <b>payı test sayısı değil, farklı pay sayısı belirler</b>.</p>
+  </div>
+</section>
+
+
+<section id="s13">
+  <div class="shead"><div class="num">13</div>
+    <div><h2>Soru 6 &mdash; su sayacı tarifesi, kapsam yüzdesi</h2>
+    <div class="lo">Örnek sınav F &middot; Soru 20 &middot; FL-4.2.1 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir akıllı su sayacı okuma sisteminde, bir abonenin aylık su tüketimi (m3 cinsinden tam sayı)
+    girildiğinde tarife kademesi belirlenmektedir. Kurallar şunlardır:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Tüketim (m3)</th><th>Tarife kademesi</th></tr>
+      <tr><td>0 - 10</td><td>Kademe 1</td></tr>
+      <tr><td>11 - 25</td><td>Kademe 2</td></tr>
+      <tr><td>26 - 50</td><td>Kademe 3</td></tr>
+      <tr><td>51 ve üzeri</td><td>Kademe 4</td></tr>
+    </table></div>
+    <p>Sisteme yalnızca tam sayı girilebilir; 0'dan küçük değerler geçersizdir. Aşağıdaki dört test
+    senaryosu koşulmuştur: <b>5, 20, 40 ve -3</b>. Geçerli ve geçersiz paylar birlikte dikkate alındığında
+    elde edilen denklik payı kapsamı YÜZDE KAÇTIR?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%60</span></li>
+      <li><b>B</b><span>%75</span></li>
+      <li><b>C</b><span>%80</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Geçerli payları tablodan al</b>
+      <div><pre class="fx">P1 = 0 &#8211; 10     Kademe 1
+P2 = 11 &#8211; 25    Kademe 2
+P3 = 26 &#8211; 50    Kademe 3
+P4 = 51 &hellip; &infin;    Kademe 4      &rarr; 4 geçerli pay</pre></div></li>
+
+    <li><b>Geçersiz payları kısıttan çıkar &mdash; kaç tane?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Kısıt cümlesi</th><th>Doğurduğu geçersiz pay</th></tr>
+        <tr><td>&ldquo;0'dan küçük değerler geçersizdir&rdquo;</td><td class="ok"><b>P5</b> = 0'dan küçük &mdash; alt taraf</td></tr>
+        <tr><td>&ldquo;51 <b>ve üzeri</b>&rdquo; geçerli bir kademedir</td>
+            <td class="no">Üstte geçersiz pay <b>yok</b> &mdash; aralık açık biter</td></tr>
+      </table></div>
+      <pre class="fx">toplam pay = 4 geçerli + <b>1</b> geçersiz = <b>5</b>      &rarr; payda = 5</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Bu soruyu bölüm 14'teki fırın
+      sorusundan ayıran tek şey budur: orada geçerli aralık <b>kapalı</b> olduğu için
+      <b>iki</b> geçersiz pay doğar.</p>
+      </div></li>
+
+    <li><b>Test değerlerini etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Değer</th><th class="ctr">5</th><th class="ctr">20</th><th class="ctr">40</th><th class="ctr">&minus;3</th></tr>
+        <tr><th class="ctr">Pay</th><td class="ctr">P1</td><td class="ctr">P2</td><td class="ctr">P3</td><td class="ctr">P5</td></tr>
+        <tr><th class="ctr">Yeni kapsam?</th><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Tekrar yok &mdash; dört değer dört ayrı paya düşüyor.
+      <b>P4 (51 ve üzeri)</b> hiçbir testle çalıştırılmamış.</p>
+      </div></li>
+
+    <li><b>Sayı doğrusunda gör</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="150" height="32" rx="9"/>
+<text class="bl bad" x="98" y="43">P5 &middot; &lt;0 &middot; GEÇERSİZ</text>
+<rect class="bd neu" x="173" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="273" y="43">P1 &middot; 0&#8211;10 &middot; Kademe 1</text>
+<rect class="bd neu2" x="373" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">P2 &middot; 11&#8211;25 &middot; Kademe 2</text>
+<rect class="bd neu" x="573" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="673" y="43">P3 &middot; 26&#8211;50 &middot; Kademe 3</text>
+<rect class="bd neu2" x="773" y="22" width="157" height="32" rx="9"/>
+<text class="bl neu2" x="851" y="43">P4 &middot; 51+ &middot; Kademe 4</text>
+<line class="cut" x1="173" y1="16" x2="173" y2="128"/>
+<text class="cl" x="173" y="11"></text>
+<line class="cut" x1="373" y1="16" x2="373" y2="128"/>
+<text class="cl" x="373" y="11"></text>
+<line class="cut" x1="573" y1="16" x2="573" y2="128"/>
+<text class="cl" x="573" y="11"></text>
+<line class="cut" x1="773" y1="16" x2="773" y2="128"/>
+<text class="cl" x="773" y="11"></text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<circle class="dot" cx="98" cy="106" r="16"/><text class="dv" x="98" y="111">&minus;3</text>
+<text class="dp" x="148" y="111">&minus;1</text>
+<text class="dp" x="198" y="111">0</text>
+<circle class="dot" cx="248" cy="106" r="16"/><text class="dv" x="248" y="111">5</text>
+<text class="dp" x="298" y="111">&#8230;</text>
+<text class="dp" x="348" y="111">10</text>
+<text class="dp" x="398" y="111">11</text>
+<circle class="dot" cx="448" cy="106" r="16"/><text class="dv" x="448" y="111">20</text>
+<text class="dp" x="498" y="111">&#8230;</text>
+<text class="dp" x="548" y="111">25</text>
+<text class="dp" x="598" y="111">26</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">40</text>
+<text class="dp" x="698" y="111">&#8230;</text>
+<text class="dp" x="748" y="111">50</text>
+<text class="dp" x="798" y="111">51</text>
+<circle class="dot miss" cx="848" cy="106" r="15"/><text class="dv miss" x="848" y="111">?</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>kapsanan pay</span><span><i class="m"></i>kapsanmayan pay (hiç değer düşmedi)</span></p>
+      </div></li>
+
+    <li><b>Böl</b>
+      <div><pre class="fx">kapsanan pay = {P1, P2, P3, P5} = <b>4</b>
+toplam pay   = <b>5</b>
+kapsam       = 4 / 5 = 0,80 = <b>%80</b>
+
+kontrol: eksik olan tek pay P4  &rarr;  %20 eksik kapsam  &rarr;  %80 &#10004;</pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>%60 &nbsp;&mdash;&nbsp; 3/5; geçersiz payı paydaya katıp &minus;3 testini saymamak</span></li>
+      <li class="wrong"><b>B</b><span>%75 &nbsp;&mdash;&nbsp; 3/4; geçersiz payı hiç saymayıp yalnızca geçerlilere bakmak</span></li>
+      <li class="right"><b>C</b><span>%80 &nbsp;&#10004; &nbsp; 4 / 5</span></li>
+      <li class="wrong"><b>D</b><span>%100 &nbsp;&mdash;&nbsp; 51 ve üzeri payından da bir test gerekirdi</span></li>
+    </ul>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak &mdash; geçersiz payın çifte muhasebesi</h3>
+    <p>(a) ve (b) şıkları aynı hatanın iki yarısıdır ve ikisi de <b>tutarsızdır</b>:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Hata</th><th class="ctr">Pay</th><th class="ctr">Payda</th><th class="ctr">Sonuç</th></tr>
+      <tr><td>Geçersiz payı <b>paydaya</b> kattı, ama &minus;3 testini <b>saymadı</b></td>
+          <td class="ctr">3</td><td class="ctr">5</td><td class="ctr no">%60</td></tr>
+      <tr><td>Geçersiz payı <b>hiç</b> saymadı, &minus;3 testini de attı</td>
+          <td class="ctr">3</td><td class="ctr">4</td><td class="ctr no">%75</td></tr>
+      <tr><td><b>Tutarlı:</b> geçersiz pay hem paydada hem payda</td>
+          <td class="ctr">4</td><td class="ctr">5</td><td class="ctr ok">%80</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Kural:</b> geçersiz payı <b>sayıyorsan</b> onu kapsayan testi de say;
+    <b>saymıyorsan</b> o testi de at. Yarısını yapmak her iki yanlış şıkkı da üretir.</p>
+  </div>
+</section>
+
+
+<section id="s14">
+  <div class="shead"><div class="num">14</div>
+    <div><h2>Soru 7 &mdash; fırın sıcaklığı, en az testle %100</h2>
+    <div class="lo">Örnek sınav G &middot; Soru 20 &middot; FL-4.2.1 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir fabrika üretim hattı izleme paneli, fırın sıcaklığını tam sayı derece olarak kaydeder.
+    Geçerli sıcaklık aralığı <b>-20 ile 400 arasındadır (uç değerler dâhil)</b> ve panel bu aralığı
+    şu kategorilere ayırır:</p>
+<pre>-20 ile 79 arası: düşük
+80 ile 249 arası: normal
+250 ile 400 arası: yüksek</pre>
+    <p>Geçerli aralığın dışında kalan sıcaklık değerleri geçersiz sayılır ve panelde hata olarak
+    gösterilir. Test uzmanı, hem geçerli hem geçersiz payların tamamını (yüzde 100 denklik payı kapsamı)
+    EN AZ sayıda test ile kapsamak istemektedir. Aşağıdaki test verisi kümelerinden hangisi bunu sağlar?</p>
+    <ul class="opts">
+      <li><b>A</b><span>0, 100, 200, 350, 500</span></li>
+      <li><b>B</b><span>-20, 79, 80, 249, 250, 400</span></li>
+      <li><b>C</b><span>-30, 50, 150, 300</span></li>
+      <li><b>D</b><span>-30, 50, 150, 300, 500</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Payları çıkar &mdash; kapalı aralık İKİ geçersiz pay doğurur</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th>Aralık</th><th>Davranış</th><th class="ctr">Tipi</th></tr>
+        <tr><td><b>P4</b></td><td>&minus;20'den küçük</td><td>hata</td><td class="ctr">geçersiz &mdash; alt</td></tr>
+        <tr><td><b>P1</b></td><td>&minus;20 &#8230; 79</td><td>düşük</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P2</b></td><td>80 &#8230; 249</td><td>normal</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P3</b></td><td>250 &#8230; 400</td><td>yüksek</td><td class="ctr">geçerli</td></tr>
+        <tr><td><b>P5</b></td><td>400'den büyük</td><td>hata</td><td class="ctr">geçersiz &mdash; üst</td></tr>
+      </table></div>
+      <pre class="fx">toplam pay = 3 geçerli + 2 geçersiz = <b>5</b></pre>
+      </div></li>
+
+    <li><b>En az test sayısını önceden hesapla</b>
+      <div>
+      <pre class="fx">tek değişken var (sıcaklık) &rarr; her test tam <b>bir</b> paya düşer
+en az test = pay sayısı = <b>5</b>
+
+&rArr; 5'ten az test çok az (bir pay boşta kalır)
+&rArr; 5'ten çok test &ldquo;en az&rdquo; değildir (bir pay iki kez örneklenmiştir)</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Bu, bölüm 5'teki
+      <code>max</code> kuralının tek parametreli hâlidir: <code>max(5) = 5</code>.
+      Şimdi <b>beş elemanlı ve beşi de farklı paya düşen</b> kümeyi arıyoruz.</p>
+      </div></li>
+
+    <li><b>Her şıkkı etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th class="ctr">Test sayısı</th><th>Değerler &rarr; pay</th><th>Kapsanan</th><th class="ctr">Kapsam</th><th class="ctr">Karar</th></tr>
+        <tr><td><b>a</b></td><td class="ctr">5</td>
+            <td>0&rarr;P1 &middot; 100&rarr;P2 &middot; 200&rarr;<b>P2</b> &middot; 350&rarr;P3 &middot; 500&rarr;P5</td>
+            <td class="no">P1,P2,P3,P5 &mdash; <b>P4 yok</b></td><td class="ctr no">4/5</td><td class="ctr no">&#10007;</td></tr>
+        <tr><td><b>b</b></td><td class="ctr">6</td>
+            <td>&minus;20,79&rarr;P1 &middot; 80,249&rarr;P2 &middot; 250,400&rarr;P3</td>
+            <td class="no">P1,P2,P3 &mdash; <b>P4 ve P5 yok</b></td><td class="ctr no">3/5</td><td class="ctr no">&#10007;</td></tr>
+        <tr><td><b>c</b></td><td class="ctr">4</td>
+            <td>&minus;30&rarr;P4 &middot; 50&rarr;P1 &middot; 150&rarr;P2 &middot; 300&rarr;P3</td>
+            <td class="no">P4,P1,P2,P3 &mdash; <b>P5 yok</b></td><td class="ctr no">4/5</td><td class="ctr no">&#10007;</td></tr>
+        <tr><td><b>d</b></td><td class="ctr">5</td>
+            <td>&minus;30&rarr;P4 &middot; 50&rarr;P1 &middot; 150&rarr;P2 &middot; 300&rarr;P3 &middot; 500&rarr;P5</td>
+            <td class="ok">beşi de</td><td class="ctr ok"><b>5/5</b></td><td class="ctr ok">&#10004;</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Kazanan kümeyi sayı doğrusunda doğrula</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="150" height="32" rx="9"/>
+<text class="bl bad" x="98" y="43">P4 &middot; &lt;&minus;20 &middot; GEÇERSİZ</text>
+<rect class="bd neu" x="173" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="273" y="43">P1 &middot; &minus;20&#8230;79 &middot; düşük</text>
+<rect class="bd neu2" x="373" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">P2 &middot; 80&#8230;249 &middot; normal</text>
+<rect class="bd neu" x="573" y="22" width="200" height="32" rx="9"/>
+<text class="bl neu" x="673" y="43">P3 &middot; 250&#8230;400 &middot; yüksek</text>
+<rect class="bd bad" x="773" y="22" width="157" height="32" rx="9"/>
+<text class="bl bad" x="851" y="43">P5 &middot; &gt;400 &middot; GEÇERSİZ</text>
+<path class="ar bad" d="M 944 38 l -12 -8 v 16 z"/>
+<line class="cut" x1="173" y1="16" x2="173" y2="128"/>
+<text class="cl" x="173" y="11"></text>
+<line class="cut" x1="373" y1="16" x2="373" y2="128"/>
+<text class="cl" x="373" y="11"></text>
+<line class="cut" x1="573" y1="16" x2="573" y2="128"/>
+<text class="cl" x="573" y="11"></text>
+<line class="cut" x1="773" y1="16" x2="773" y2="128"/>
+<text class="cl" x="773" y="11"></text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<circle class="dot" cx="98" cy="106" r="16"/><text class="dv" x="98" y="111">&minus;30</text>
+<text class="dp" x="148" y="111">&minus;21</text>
+<text class="dp" x="198" y="111">&minus;20</text>
+<circle class="dot" cx="248" cy="106" r="16"/><text class="dv" x="248" y="111">50</text>
+<text class="dp" x="298" y="111">&#8230;</text>
+<text class="dp" x="348" y="111">79</text>
+<text class="dp" x="398" y="111">80</text>
+<circle class="dot" cx="448" cy="106" r="16"/><text class="dv" x="448" y="111">150</text>
+<text class="dp" x="498" y="111">&#8230;</text>
+<text class="dp" x="548" y="111">249</text>
+<text class="dp" x="598" y="111">250</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">300</text>
+<text class="dp" x="698" y="111">&#8230;</text>
+<text class="dp" x="748" y="111">400</text>
+<text class="dp" x="798" y="111">401</text>
+<circle class="dot" cx="848" cy="106" r="16"/><text class="dv" x="848" y="111">500</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>(d) kümesinin değerleri &mdash; her pay tam bir kez</span></p>
+      </div></li>
+
+    <li><b>Böl</b>
+      <div><pre class="fx">(d)  kapsam = 5 / 5 = <b>%100</b>   &middot;   test sayısı = 5 = en az   &#10004;</pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>0, 100, 200, 350, 500 &nbsp;&mdash;&nbsp; 100 ile 200 aynı payda; alt geçersiz pay boşta</span></li>
+      <li class="wrong"><b>B</b><span>-20, 79, 80, 249, 250, 400 &nbsp;&mdash;&nbsp; <b>BVA kümesi</b>; geçersiz paylar hiç yok, üstelik 6 test</span></li>
+      <li class="wrong"><b>C</b><span>-30, 50, 150, 300 &nbsp;&mdash;&nbsp; 400'den büyük değer yok &rarr; 4/5</span></li>
+      <li class="right"><b>D</b><span>-30, 50, 150, 300, 500 &nbsp;&#10004; &nbsp; beş pay, beş test</span></li>
+    </ul>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak &mdash; (b) şıkkı EP değil, BVA cevabıdır</h3>
+    <p>&minus;20, 79, 80, 249, 250, 400 değerlerinin hepsi payların <b>uçlarıdır</b>. Mühendis refleksi
+    &ldquo;en riskli değerler bunlar&rdquo; der ve bu doğrudur &mdash; ama soru <b>EP kapsamı</b> soruyor.
+    EP'ye göre bu altı değer yalnızca üç paya düşer: kapsam <b>3/5</b>, üstelik test sayısı en fazla olan şık.</p>
+    <p style="margin-bottom:0"><b>Hatırla (bölüm 6):</b> EP sorusunda bir sınır değer, payının
+    sıradan bir temsilcisinden fazlası değildir. &ldquo;Akıllı değer seçmek&rdquo; kapsama bir şey katmaz;
+    <b>paya dokunmak</b> katar.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>İkinci tuzak &mdash; (c) &ldquo;daha az test&rdquo; diye cazip görünür</h3>
+    <p style="margin-bottom:0">(c) yalnızca dört test kullanır ve soru &ldquo;EN AZ&rdquo; dediği için
+    kısa küme doğru sanılır. Ama &ldquo;en az&rdquo; şartı <b>%100 kapsam sağlandıktan sonra</b> devreye girer.
+    Kapsamı sağlamayan bir küme, kaç test içerdiğine bakılmaksızın elenir.
+    <b>Önce kapsam, sonra minimum.</b></p>
+  </div>
+</section>
+
+
+<section id="s15">
+  <div class="shead"><div class="num">15</div>
+    <div><h2>Soru 8 &mdash; ilaç dozaj modülü, kapsam yüzdesi</h2>
+    <div class="lo">Örnek sınav H &middot; Soru 19 &middot; FL-4.2.1 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>İlaç dozaj hesaplama modülü, hasta kilosunu tam sayı kilogram olarak alır ve aşağıdaki paylara
+    göre doz katsayısı belirler. Sistemin kabul ettiği kilo aralığı 1 ile 250 arasındadır; bu aralığın
+    dışındaki değerler geçersiz kabul edilir.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Pay</th><th>Kilo aralığı (kg)</th></tr>
+      <tr><td>P1</td><td>1 - 9</td></tr>
+      <tr><td>P2</td><td>10 - 29</td></tr>
+      <tr><td>P3</td><td>30 - 69</td></tr>
+      <tr><td>P4</td><td>70 - 250</td></tr>
+      <tr><td>P5</td><td>0 ve altı (geçersiz)</td></tr>
+      <tr><td>P6</td><td>251 ve üstü (geçersiz)</td></tr>
+    </table></div>
+    <p>Yürütülen testlerde şu kilo değerleri kullanılmıştır: <b>5, 25, 40, 55, 300</b>.
+    Denklik paylarına ayırma (equivalence partitioning) ile sağlanan kapsam yüzdesi nedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%83</span></li>
+      <li><b>B</b><span>%75</span></li>
+      <li><b>C</b><span>%67</span></li>
+      <li><b>D</b><span>%50</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Paydayı oku &mdash; bu soruda paylar hazır verilmiş</b>
+      <div><pre class="fx">geçerli : P1, P2, P3, P4        = 4
+geçersiz: P5, P6                = 2
+toplam pay = 4 + 2 = <b>6</b>      &rarr; payda = 6</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Soru payları tabloyla verdiği için
+      çıkarım yapmana gerek yok; tek iş <b>altısını da saymak</b>. Geçersiz olanları atlamak
+      en pahalı hata olur.</p>
+      </div></li>
+
+    <li><b>Beş test değerini etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Değer</th><th class="ctr">5</th><th class="ctr">25</th><th class="ctr">40</th><th class="ctr">55</th><th class="ctr">300</th></tr>
+        <tr><th class="ctr">Aralık</th><td class="ctr">1&ndash;9</td><td class="ctr">10&ndash;29</td>
+            <td class="ctr">30&ndash;69</td><td class="ctr">30&ndash;69</td><td class="ctr">251+</td></tr>
+        <tr><th class="ctr">Pay</th><td class="ctr">P1</td><td class="ctr">P2</td><td class="ctr">P3</td>
+            <td class="ctr"><b>P3</b></td><td class="ctr">P6</td></tr>
+        <tr><th class="ctr">Yeni kapsam?</th><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ok ctr">&#10004;</td><td class="no ctr">&#10007; tekrar</td><td class="ok ctr">&#10004;</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0"><b>40 ve 55 ikisi de 30&ndash;69 aralığındadır</b>
+      &mdash; aynı kapsam öğesini karşılarlar. İkinci değer kapsama hiçbir şey eklemez.</p>
+      </div></li>
+
+    <li><b>Boşta kalanları isimlendir</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd bad" x="23" y="22" width="150" height="32" rx="9"/>
+<text class="bl bad" x="98" y="43">P5 &middot; 0 ve altı</text>
+<rect class="bd neu" x="173" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="248" y="43">P1 &middot; 1&#8211;9</text>
+<rect class="bd neu2" x="323" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="398" y="43">P2 &middot; 10&#8211;29</text>
+<rect class="bd neu" x="473" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu" x="548" y="43">P3 &middot; 30&#8211;69</text>
+<rect class="bd neu2" x="623" y="22" width="150" height="32" rx="9"/>
+<text class="bl neu2" x="698" y="43">P4 &middot; 70&#8211;250</text>
+<rect class="bd bad" x="773" y="22" width="157" height="32" rx="9"/>
+<text class="bl bad" x="851" y="43">P6 &middot; 251+</text>
+<path class="ar bad" d="M 944 38 l -12 -8 v 16 z"/>
+<line class="cut" x1="173" y1="16" x2="173" y2="128"/>
+<text class="cl" x="173" y="11"></text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11"></text>
+<line class="cut" x1="473" y1="16" x2="473" y2="128"/>
+<text class="cl" x="473" y="11"></text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11"></text>
+<line class="cut" x1="773" y1="16" x2="773" y2="128"/>
+<text class="cl" x="773" y="11"></text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="98" y1="70" x2="98" y2="82"/>
+<line class="tk" x1="148" y1="70" x2="148" y2="82"/>
+<line class="tk" x1="198" y1="70" x2="198" y2="82"/>
+<line class="tk" x1="248" y1="70" x2="248" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="398" y1="70" x2="398" y2="82"/>
+<line class="tk" x1="448" y1="70" x2="448" y2="82"/>
+<line class="tk" x1="498" y1="70" x2="498" y2="82"/>
+<line class="tk" x1="548" y1="70" x2="548" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="698" y1="70" x2="698" y2="82"/>
+<line class="tk" x1="748" y1="70" x2="748" y2="82"/>
+<line class="tk" x1="798" y1="70" x2="798" y2="82"/>
+<line class="tk" x1="848" y1="70" x2="848" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<text class="dp" x="48" y="111">&#8230;</text>
+<circle class="dot miss" cx="98" cy="106" r="15"/><text class="dv miss" x="98" y="111">?</text>
+<text class="dp" x="148" y="111">0</text>
+<text class="dp" x="198" y="111">1</text>
+<circle class="dot" cx="248" cy="106" r="16"/><text class="dv" x="248" y="111">5</text>
+<text class="dp" x="298" y="111">9</text>
+<text class="dp" x="348" y="111">10</text>
+<circle class="dot" cx="398" cy="106" r="16"/><text class="dv" x="398" y="111">25</text>
+<text class="dp" x="448" y="111">29</text>
+<text class="dp" x="498" y="111">30</text>
+<circle class="dot" cx="548" cy="106" r="16"/><text class="dv" x="548" y="111">40</text>
+<circle class="dot" cx="598" cy="106" r="16"/><text class="dv" x="598" y="111">55</text>
+<text class="dp" x="648" y="111">70</text>
+<circle class="dot miss" cx="698" cy="106" r="15"/><text class="dv miss" x="698" y="111">?</text>
+<text class="dp" x="748" y="111">250</text>
+<text class="dp" x="798" y="111">251</text>
+<circle class="dot" cx="848" cy="106" r="16"/><text class="dv" x="848" y="111">300</text>
+<text class="dp" x="898" y="111">&#8230;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>kapsanan pay</span><span><i class="m"></i>kapsanmayan pay (hiç değer düşmedi)</span></p>
+      <pre class="fx">kapsanan   = {P1, P2, P3, P6}     = 4
+kapsanmayan = <b>P4</b> (70&ndash;250)  ve  <b>P5</b> (0 ve altı)</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Dikkat: P4 en geniş geçerli paydır
+      (70&ndash;250) ve en büyük test değeri 55'tir &mdash; 300 ise P4'ün <b>üzerinden</b> atlayıp
+      doğrudan P6'ya düşer.</p>
+      </div></li>
+
+    <li><b>Böl</b>
+      <div><pre class="fx">kapsam = 4 / 6 = 0,6666&hellip; = <b>&asymp; %67</b></pre></div></li>
+
+    <li><b>Yanlış şıkların nereden çıktığını kontrol et</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Şık</th><th class="ctr">Hesap</th><th>Hangi hata</th></tr>
+        <tr><td class="ctr"><b>a</b> %83</td><td class="ctr">5 / 6</td>
+            <td><b>Test sayısını</b> kapsanan pay sanmak &mdash; 40 ile 55'in aynı payda olduğunu atlamak</td></tr>
+        <tr><td class="ctr"><b>b</b> %75</td><td class="ctr">3 / 4</td>
+            <td>Geçersiz payları (P5, P6) toplam dışında bırakmak</td></tr>
+        <tr><td class="ctr ok"><b>c</b> %67</td><td class="ctr ok">4 / 6</td><td class="ok">Doğru</td></tr>
+        <tr><td class="ctr"><b>d</b> %50</td><td class="ctr">3 / 6</td>
+            <td>Kapsanan <b>geçersiz</b> payı (P6, 300 değeri) saymayı unutmak</td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>%83 &nbsp;&mdash;&nbsp; 5/6; test sayısını paya yazmak</span></li>
+      <li class="wrong"><b>B</b><span>%75 &nbsp;&mdash;&nbsp; 3/4; geçersiz payları saymamak</span></li>
+      <li class="right"><b>C</b><span>%67 &nbsp;&#10004; &nbsp; 4 / 6 = 0,667</span></li>
+      <li class="wrong"><b>D</b><span>%50 &nbsp;&mdash;&nbsp; 3/6; kapsanan geçersiz payı atlamak</span></li>
+    </ul>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak &mdash; şıkların üçü de &ldquo;payda&rdquo; hatasıdır</h3>
+    <p style="margin-bottom:0">Bu soru, konunun tek bir refleksi test eder:
+    <b>pay = kapsanan pay sayısı, payda = toplam pay sayısı</b>.
+    <code>5/6</code> test sayısını paya, <code>3/4</code> geçersizleri paydadan atar,
+    <code>3/6</code> geçersizi paydan atar. Üç yanlış şık, aynı formülün üç farklı bozulmasıdır.
+    Hesabı yapmadan önce <b>&ldquo;4 kapsanan / 6 toplam&rdquo;</b> diye yaz, sonra böl.</p>
+  </div>
+</section>
+
+
+<section id="s16">
+  <div class="shead"><div class="num">16</div>
+    <div><h2>Tuzaklar ve tek sayfalık özet</h2>
+    <div class="lo">Sınavdan önce son okuma</div></div></div>
+
+  <div class="card trap">
+    <h3>Klasik tuzaklar</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Paydaya test sayısı yazmak.</b> Payda <b>her zaman</b> toplam pay sayısıdır.
+        5 test &ne; 5 pay. Bu, konunun <i>tek</i> en sık hatasıdır.</li>
+      <li><b>Geçersiz payları saymamak.</b> Aksi açıkça söylenmedikçe paydaya girerler.
+        Kapalı geçerli aralık &rarr; <b>2</b> geçersiz pay; açık biten taraf &rarr; o yönde <b>yok</b>.</li>
+      <li><b>Yarım muhasebe.</b> Geçersiz payı paydaya katıp onu kapsayan testi saymamak (ya da tersi).
+        Ya ikisi de, ya hiçbiri.</li>
+      <li><b>Aynı paydaki iki değeri iki kapsam saymak.</b> 27 ile 29, 40 ile 55, 11 ile 12&hellip;
+        İkinci değer <b>sıfır</b> kapsam ekler.</li>
+      <li><b>&ldquo;Daha çok değer = daha çok kapsam&rdquo; sanmak.</b> Dört değer iki paya düşebilir.</li>
+      <li><b>İki &ldquo;hata&rdquo; payını tek pay saymak.</b> Alt taşma ile üst taşma ayrı paylardır.</li>
+      <li><b>Örtüşme yaratmak.</b> 20 hem &ldquo;10'un katı&rdquo; hem &ldquo;20'nin katı&rdquo; görünür;
+        ama tek bir paya aittir. Örtüşen pay tanımı <b>yanlış</b> pay tanımıdır.</li>
+      <li><b>Kısıdı görmeden bölmek.</b> &ldquo;En az test&rdquo; = <code>max</code>(pay sayıları),
+        <b>ama</b> yasaklı eşleşmeler varsa bunun üzerine çıkar.</li>
+      <li><b>Sınır değer kümesini EP cevabı sanmak.</b> Uç değerler EP için sıradan temsilcilerdir;
+        çoğu zaman geçersiz payları hiç kapsamazlar.</li>
+      <li><b>Kapsamı sağlamayan kümeyi &ldquo;daha az test&rdquo; diye seçmek.</b>
+        Önce %100 kapsam, sonra minimum.</li>
+    </ul>
+  </div>
+
+  <div class="fgrid">
+    <div class="fbox"><h4>Pay sayısı</h4>
+      <p><code>geçerli pay + geçersiz pay</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Kapalı aralık &rarr; 2 geçersiz pay</p></div>
+    <div class="fbox"><h4>Kapsam</h4>
+      <p><code>kapsanan pay / toplam pay</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Payda test sayısı <b>değil</b></p></div>
+    <div class="fbox"><h4>En az test</h4>
+      <p><code>max(parametre başına pay)</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Each Choice &middot; kısıt varsa artar</p></div>
+    <div class="fbox"><h4>Geçersiz değer</h4>
+      <p>Kendi testinde <b>yalnız</b> durur.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Birleştirirsen hata maskelenir</p></div>
+    <div class="fbox"><h4>Örtüşme yok</h4>
+      <p>Bir değer <b>tek</b> bir paya düşer.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Aynı değişken içinde; farklı değişkenler ayrı</p></div>
+    <div class="fbox"><h4>EP biter, BVA başlar</h4>
+      <p>Payın <b>içi</b> EP, <b>kenarı</b> BVA.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">&sect;4.2.1 &rarr; &sect;4.2.2</p></div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>Sekiz sorunun tek tabloda özeti</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">#</th><th>Soru</th><th>Ne soruyor</th><th class="ctr">Pay sayısı</th><th class="ctr">Cevap</th><th>Ayırt eden detay</th></tr>
+      <tr><td class="ctr">1</td><td>A &middot; 20 emlak formu</td><td>EN AZ test</td><td class="ctr">3 + 3</td>
+          <td class="ctr ok"><b>B</b> &middot; 4</td><td>Kısıt, <code>max(3,3)=3</code>'ü 4'e çıkarır</td></tr>
+      <tr><td class="ctr">2</td><td>B &middot; 20 oto yıkama</td><td>En yüksek kapsamlı küme</td><td class="ctr">3</td>
+          <td class="ctr ok"><b>A</b></td><td>20 tek paya ait; örtüşme yok</td></tr>
+      <tr><td class="ctr">3</td><td>C &middot; 20 PIN doğrulayıcı</td><td>EN İYİ veri kümesi</td><td class="ctr">2 + 2</td>
+          <td class="ctr ok"><b>A</b></td><td>Kısa + uzun iki yön &amp; gerçek geçerli PIN</td></tr>
+      <tr><td class="ctr">4</td><td>D &middot; 20 sinema indirimi</td><td>Eklenecek veri</td><td class="ctr">4</td>
+          <td class="ctr ok"><b>B, E</b></td><td>F = MY &minus; DY; 18 ve 65 &ldquo;büyük eşit&rdquo;</td></tr>
+      <tr><td class="ctr">5</td><td>E &middot; 19 termostat</td><td>Kapsam %</td><td class="ctr">5</td>
+          <td class="ctr ok"><b>C</b> &middot; %80</td><td>27 &amp; 29 aynı pay; P5 boşta</td></tr>
+      <tr><td class="ctr">6</td><td>F &middot; 20 su sayacı</td><td>Kapsam %</td><td class="ctr">5</td>
+          <td class="ctr ok"><b>C</b> &middot; %80</td><td>Açık üst uç &rarr; <b>tek</b> geçersiz pay</td></tr>
+      <tr><td class="ctr">7</td><td>G &middot; 20 fırın sıcaklığı</td><td>EN AZ testle %100</td><td class="ctr">5</td>
+          <td class="ctr ok"><b>D</b></td><td>(b) BVA kümesi &mdash; EP'de 3/5</td></tr>
+      <tr><td class="ctr">8</td><td>H &middot; 19 ilaç dozajı</td><td>Kapsam %</td><td class="ctr">6</td>
+          <td class="ctr ok"><b>C</b> &middot; %67</td><td>40 &amp; 55 aynı pay; P4 ve P5 boşta</td></tr>
+    </table></div>
+    <p style="margin-bottom:0;font-size:.9rem;color:var(--muted)">Sekiz sorunun <b>beşi</b> doğrudan
+    &ldquo;payda&rdquo; hatasını ölçüyor. Bir soruyu çözmeye paydayı yazarak başlamak,
+    tek başına en yüksek getirili alışkanlıktır.</p>
+  </div>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Gerçek hayatta</h3>
+    <p>EP, test tasarımının en eski ve en ucuz refleksidir: <i>&ldquo;bu girdinin kaç farklı davranışı var,
+    her birinden bir örnek alayım&rdquo;</i>. Bir <code>@ParameterizedTest</code> için
+    &ldquo;her kademeden bir değer&rdquo; seçtiysen EP yapmışsın demektir &mdash; sadece adını koymamışsın.</p>
+    <p>Modüler yazılımda EP'nin asıl değeri <b>kombinasyon patlamasını durdurmaktır</b>:
+    3 &times; 2 &times; 4 = 24 kombinasyon yerine Each Choice ile 4 test. Daha fazlası gerekiyorsa
+    bir üst teknik <b>pairwise</b> (çiftli) testtir &mdash; CTFL kapsamında değildir ama sınavdan sonra
+    ilk öğrenilecek şeydir.</p>
+    <p style="margin-bottom:0">Pratikte EP tek başına asla yeterli değildir: payın içini temsil eder,
+    kenarını değil. Standart reflekse &ldquo;her paydan bir temsilci <b>+ her payın uçları</b>&rdquo;
+    (EP + BVA) olarak bakmak gerekir.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Sınav modu</h3>
+    <p style="margin-bottom:0">Soruyu çözerken pratik sezgini kapat. <b>Tanım ne diyorsa o.</b>
+    &ldquo;Bu test zaten şunu da kapsar&rdquo; deme; payı say, değeri etiketle, böl.
+    Sınavdan çıkınca sezgini geri aç.</p>
+  </div>
+</section>
+
+
+<div class="next">
+  <a href="../istqub/pratik_testler_tr.html"><b>&#127919; Konu Pratikleri</b>
+    <span>EP sorularını çözerek pekiştir &mdash; adım adım çözümler</span></a>
+  <a href="../istqub/questions_tr.html"><b>&#127481;&#127479; Sınav Simülatörü</b>
+    <span>8 sınav &middot; 320 soru &mdash; EP soruları: A20, B20, C20, D20, E19, F20, G20, H19</span></a>
+  <a href="../istqub/cozum_yontemleri_tr.html"><b>&#128214; Çözüm Yöntemleri</b>
+    <span>Beş hesaplı konunun reçetesi tek sayfada</span></a>
+</div>
+
+<footer class="ft">Konular &middot; Denklik Paylarına Ayırma &middot; ISTQB&reg; CTFL v4.0 &sect;4.2.1.
+Çözümlü sorular resmî CTFL v4.0 örnek sınavları A, B, C ve D'nin 20. soruları ile
+E, F, G ve H pratik sınavlarının EP sorularıdır (&copy; ISTQB).</footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,1834 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karar Tablosu Testi &middot; Konular</title>
+<style>
+:root{
+  --bg:#f6f6fb; --surface:#fff; --ink:#1c1c2c; --muted:#61617a; --line:#e5e4ef;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -14px rgba(28,28,60,.18);
+  --good:#059669; --good-soft:#e7f6ef; --bad:#dc2626; --bad-soft:#fdecec;
+  --warn:#d97706; --warn-soft:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
+  --dim:#b9b7c9;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+  --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+  --warn:#fbbf24; --warn-soft:#2e2210;
+  --c:#818cf8; --cd:#a5b4fc; --cs:#222247; --cl:#3b3b78; --dim:#5a5a78; } }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;font-size:16px}
+
+header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 42%,#0e7490 100%);padding:2.9rem 1.3rem 2.4rem}
+.in{max-width:1000px;margin:0 auto}
+.back{display:inline-flex;gap:.4rem;align-items:center;text-decoration:none;color:#c7d2fe;font-size:.82rem;
+  font-weight:700;margin-bottom:1.1rem}
+.back:hover{color:#fff}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .7rem}
+.hero h1{color:#fff;font-size:clamp(1.85rem,5.2vw,2.8rem);line-height:1.07;margin:0 0 .7rem;font-weight:900;letter-spacing:-.02em}
+.hero p.lede{color:#dbe3ff;max-width:64ch;margin:0 0 1.7rem;font-size:1.03rem}
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,168px),1fr));gap:.55rem}
+.jump a{display:flex;gap:.6rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);border-radius:13px;padding:.6rem .75rem;color:#fff;
+  transition:background .15s,transform .15s;min-width:0}
+.jump a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.jump .n{width:25px;height:25px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:rgba(255,255,255,.22)}
+.jump b{display:block;font-size:.85rem;font-weight:800;line-height:1.25}
+
+nav.sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.sticky .in{display:flex;gap:.35rem;align-items:center;padding:.5rem 1.3rem;overflow-x:auto;scrollbar-width:none}
+nav.sticky .in::-webkit-scrollbar{display:none}
+nav.sticky a{white-space:nowrap;text-decoration:none;font-size:.8rem;font-weight:700;color:var(--muted);
+  border-radius:9px;padding:.3rem .6rem}
+nav.sticky a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+main{max-width:1000px;margin:0 auto;padding:2.1rem 1.3rem 4rem}
+section{margin-bottom:2.9rem;scroll-margin-top:62px}
+.shead{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
+.shead .num{width:42px;height:42px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;background:var(--c)}
+.shead h2{margin:0;font-size:1.38rem;letter-spacing:-.015em;line-height:1.2}
+.shead .lo{font-size:.73rem;font-weight:700;color:var(--muted);font-family:var(--mono)}
+.lead{margin:0 0 1rem;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:1.1rem 1.25rem;
+  box-shadow:var(--shadow);margin-bottom:.95rem;min-width:0}
+.card > h3{margin:0 0 .65rem;font-size:.75rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.card.q{border-left:4px solid var(--c)}
+.card.sol{background:color-mix(in srgb,var(--c) 4%,var(--surface))}
+.card.trap{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.card.trap > h3{color:var(--bad)}
+.card.key{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 32%,transparent)}
+.card.key > h3{color:var(--good)}
+.card.warnc{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.card.warnc > h3{color:var(--warn)}
+.card p{margin:.5rem 0}
+.card p:first-of-type{margin-top:0}
+.card ul,.card ol{margin:.5rem 0;padding-left:1.2rem}
+.card li{margin:.26rem 0}
+.recog{background:var(--cs);border-radius:12px;padding:.68rem .9rem;margin:0 0 1rem;font-size:.92rem}
+.recog b{color:var(--cd)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.52rem}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);min-width:0;gap:.7rem;align-items:start;
+  padding:.58rem .72rem;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,transparent)}
+ol.steps li::before{content:counter(s);width:23px;height:23px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.76rem;font-weight:900;color:#fff;background:var(--c)}
+ol.steps li > b{grid-column:2;display:block;font-size:.94rem;min-width:0;overflow-wrap:anywhere}
+ol.steps li > span{grid-column:2;display:block;font-size:.88rem;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+ol.steps li > div{grid-column:2;min-width:0;max-width:100%}
+ol.steps li > div > *:first-child{margin-top:.4rem}
+
+pre{font-family:var(--mono);font-size:.83rem;background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:11px;padding:.7rem .9rem;margin:.65rem 0;overflow-x:auto;line-height:1.55;white-space:pre}
+pre.fx{background:var(--cs);color:var(--cd);font-weight:600;border:1px dashed var(--cl)}
+code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .35em;border-radius:5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.65rem 0}
+table.dt{border-collapse:collapse;width:100%;font-size:.86rem}
+.scroll table.dt{min-width:420px}
+table.dt th,table.dt td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top;
+  word-break:break-word;overflow-wrap:anywhere}
+table.dt th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.78rem}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+table.dt td.ctr,table.dt th.ctr{text-align:center}
+
+svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
+.nlw{margin:.85rem 0 .3rem}
+.nlw .scroll{margin:0}
+.shint{display:none;margin:.3rem 0 0;font-size:.74rem;color:var(--muted);text-align:center;font-weight:700}
+@media (max-width:830px){ .shint{display:block} }
+.nl .bd{stroke-width:1.5}
+.nl .bd.bad{fill:var(--bad-soft);stroke:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .bd.good{fill:var(--good-soft);stroke:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .ar.bad{fill:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .ar.good{fill:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .bl{text-anchor:middle;font-size:13px;font-weight:800;font-family:var(--sans)}
+.nl .bl.bad{fill:var(--bad)} .nl .bl.good{fill:var(--good)}
+.nl .bd.neu{fill:var(--cs);stroke:var(--cl)}
+.nl .bd.neu2{fill:color-mix(in srgb,var(--c) 11%,transparent);stroke:var(--cl)}
+.nl .bl.neu,.nl .bl.neu2{fill:var(--cd)}
+.nl .dot.miss{fill:none;stroke:var(--bad);stroke-width:2;stroke-dasharray:3.5 3}
+.nl .dv.miss{fill:var(--bad)}
+.nl .cut{stroke:var(--c);stroke-width:2;stroke-dasharray:5 4;opacity:.85}
+.nl .cl{text-anchor:middle;font-size:11px;font-weight:800;fill:var(--c);font-family:var(--mono)}
+.nl .ax{stroke:var(--dim);stroke-width:1.5}
+.nl .tk{stroke:var(--dim);stroke-width:1.5}
+.nl .dot{fill:var(--c)}
+.nl .dot.new{fill:var(--warn)}
+.nl .dv{text-anchor:middle;font-size:14px;font-weight:800;fill:#fff;font-family:var(--sans)}
+.nl .dp{text-anchor:middle;font-size:13px;font-weight:600;fill:var(--dim);font-family:var(--sans)}
+.nlleg{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;font-size:.8rem;color:var(--muted);margin:.1rem 0 .3rem}
+.nlleg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
+.nlleg i.a{background:var(--c)} .nlleg i.b{background:var(--warn)}
+.nlleg i.m{background:transparent;border:2px dashed var(--bad)}
+
+.opts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
+.opts li{display:grid;grid-template-columns:28px minmax(0,1fr);min-width:0;gap:.6rem;align-items:center;
+  border:1px solid var(--line);border-radius:11px;padding:.5rem .65rem;font-size:.95rem;background:var(--surface)}
+.opts li b{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--muted)}
+.opts li.right{border-color:color-mix(in srgb,var(--good) 45%,transparent);background:var(--good-soft)}
+.opts li.right b{background:var(--good);color:#fff}
+.opts li.wrong b{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.75rem}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;box-shadow:var(--shadow)}
+.fbox h4{margin:0 0 .4rem;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.fbox p{margin:.3rem 0;font-size:.88rem}
+.fbox code{font-size:.84em}
+
+.next{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.3rem}
+.next a{flex:1 1 220px;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:.9rem 1.1rem;box-shadow:var(--shadow);color:var(--ink);transition:transform .15s}
+.next a:hover{transform:translateY(-3px)}
+.next b{display:block;font-size:.98rem;margin-bottom:.15rem}
+.next span{font-size:.84rem;color:var(--muted)}
+footer.ft{border-top:1px solid var(--line);margin-top:2.6rem;padding-top:1.2rem;color:var(--muted);font-size:.82rem}
+</style>
+
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><a href="/deniz/konular/">Konular</a></li><li><span aria-current="page">Karar Tablosu Testi</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+
+
+
+
+<header class="hero"><div class="in">
+  <p class="kicker">Konular &middot; CTFL v4.0 &middot; FL-4.2.3</p>
+  <h1>Karar Tablosu Testi</h1>
+  <p class="lede">Bir iş kuralını koşul&ndash;aksiyon tablosuna çevirmeyi, sütunları (kuralları) saymayı,
+  tam tablo ile sadeleştirilmiş tabloyu ayırt etmeyi ve kapsam yüzdesini hesaplamayı adım adım öğren.
+  Sonunda örnek sınavlardaki (A, B, C, D &middot; E, F, G, H) <b>bütün karar tablosu soruları</b>
+  aynı reçeteyle baştan sona çözülüyor.</p>
+  <div class="jump"><a href="#s1"><span class="n">1</span><b>Kara kutu kuralı</b></a>
+<a href="#s2"><span class="n">2</span><b>Tablonun anatomisi</b></a>
+<a href="#s3"><span class="n">3</span><b>Metinden tabloya</b></a>
+<a href="#s4"><span class="n">4</span><b>Tam / sade tablo</b></a>
+<a href="#s5"><span class="n">5</span><b>Kapsam %</b></a>
+<a href="#s6"><span class="n">6</span><b>Sınav reçetesi</b></a>
+<a href="#s7"><span class="n">7</span><b>Soru 1 &middot; A 22</b></a>
+<a href="#s8"><span class="n">8</span><b>Soru 2 &middot; B 22</b></a>
+<a href="#s9"><span class="n">9</span><b>Soru 3 &middot; C 22</b></a>
+<a href="#s10"><span class="n">10</span><b>Soru 4 &middot; D 22</b></a>
+<a href="#s11"><span class="n">11</span><b>Soru 5 &middot; E 21</b></a>
+<a href="#s12"><span class="n">12</span><b>Soru 6 &middot; F 22</b></a>
+<a href="#s13"><span class="n">13</span><b>Soru 7 &middot; G 22</b></a>
+<a href="#s14"><span class="n">14</span><b>Soru 8 &middot; H 21</b></a>
+<a href="#s15"><span class="n">15</span><b>Tuzaklar &amp; özet</b></a></div>
+</div></header>
+
+<nav class="sticky"><div class="in"><a href="#s1">1. Kara kutu kuralı</a>
+<a href="#s2">2. Tablonun anatomisi</a>
+<a href="#s3">3. Metinden tabloya</a>
+<a href="#s4">4. Tam / sade tablo</a>
+<a href="#s5">5. Kapsam %</a>
+<a href="#s6">6. Sınav reçetesi</a>
+<a href="#s7">7. Soru 1 &middot; A 22</a>
+<a href="#s8">8. Soru 2 &middot; B 22</a>
+<a href="#s9">9. Soru 3 &middot; C 22</a>
+<a href="#s10">10. Soru 4 &middot; D 22</a>
+<a href="#s11">11. Soru 5 &middot; E 21</a>
+<a href="#s12">12. Soru 6 &middot; F 22</a>
+<a href="#s13">13. Soru 7 &middot; G 22</a>
+<a href="#s14">14. Soru 8 &middot; H 21</a>
+<a href="#s15">15. Tuzaklar &amp; özet</a></div></nav>
+
+<main>
+
+<section id="s1">
+  <div class="shead"><div class="num">1</div>
+    <div><h2>Sınavda tablo, spesifikasyonun kendisidir</h2>
+    <div class="lo">FL-4.2.3 &middot; K3 &middot; Kara kutu tekniği</div></div></div>
+
+  <p class="lead">ISTQB, karar tablosu testini (decision table testing)
+  <b>&sect;4.2 Kara Kutu Test Teknikleri</b> altında, <b>&sect;4.2.3</b>'te tanımlar.
+  Tekniğin girdisi <b>yalnızca iş kuralıdır</b> &mdash; metinde yazan koşullar ve onlara bağlanan aksiyonlar.
+  Kodun nasıl yazıldığı, hangi <code>if</code> zincirinin kurulduğu tekniğin konusu değildir.</p>
+
+  <div class="recog"><b>Pratik sonucu:</b> soruda sana bir tablo verildiyse o tablo <i>doğrudur</i>.
+  <i>&ldquo;Gerçek bir CRM'de böyle bir sütun olmaz&rdquo;</i> ya da
+  <i>&ldquo;bu ikisi aslında aynı kod yolundan geçer&rdquo;</i> diye düşünmek yanlış cevap üretir.
+  Tek istisna, sorunun <b>açıkça</b> tablonun kendisindeki hatayı sorduğu durumdur (imkânsız kural, çelişki).</div>
+
+  <div class="card">
+    <h3>Soru tipini ilk bakışta ayır</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soruda ne var</th><th>Hangi bölüm</th><th>Ne yaparsın</th></tr>
+      <tr><td>Koşul&ndash;aksiyon kombinasyonları, E/H ya da D/Y dolu bir ızgara</td>
+          <td><b>&sect;4.2.3</b> Karar tablosu &mdash; kara kutu</td><td><b>Sütunları</b> say, testleri sütuna eşle</td></tr>
+      <tr><td>Metin + sayı aralıkları (&ldquo;6 ila 12 karakter&rdquo;)</td>
+          <td><b>&sect;4.2.1&ndash;2</b> EP / BVA</td><td>Payları çiz, uçları al</td></tr>
+      <tr><td>Durumlar ve olaylar, &ldquo;X durumundayken Y olursa&rdquo;</td>
+          <td><b>&sect;4.2.4</b> Durum geçişi</td><td>Geçişleri say</td></tr>
+      <tr><td>Kod parçası / akış şeması</td>
+          <td><b>&sect;4.3</b> Komut &amp; Dal kapsamı &mdash; beyaz kutu</td><td>Satırları / dalları say</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Karar tablosu sorusu dört biçimde gelir</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soru cümlesi</th><th>Gerçekte istenen</th><th>Bu sayfada</th></tr>
+      <tr><td>&ldquo;Elde edilen karar tablosu <b>kapsamı</b> nedir?&rdquo;</td>
+          <td>Kapsanan sütun sayısı / toplam sütun sayısı</td><td>Soru 2, 5, 6, 7, 8</td></tr>
+      <tr><td>&ldquo;Hangi test senaryosu <b>kapsamı artırır</b>?&rdquo;</td>
+          <td>Henüz kapsanmamış sütuna düşen aday</td><td>Soru 4</td></tr>
+      <tr><td>&ldquo;Hangi kural <b>imkânsız</b> bir durumu tanımlar?&rdquo;</td>
+          <td>Aksiyonu koşullarıyla çelişen sütun</td><td>Soru 1</td></tr>
+      <tr><td>&ldquo;Hangi veri <b>çelişkili</b> kuralları gösterir?&rdquo;</td>
+          <td>İki farklı sütunla eşleşen girdi</td><td>Soru 3</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Dördü de aynı mekanikle çözülür: <b>testi koşul değerlerine çevir,
+    sütunla eşle.</b> Değişen sadece eşleşmeden sonra ne yapacağındır.</p>
+  </div>
+</section>
+
+
+<section id="s2">
+  <div class="shead"><div class="num">2</div>
+    <div><h2>Tablonun anatomisi: koşul, aksiyon, kural</h2>
+    <div class="lo">Satırlar iki bloktur, sütunlar kuraldır</div></div></div>
+
+  <p class="lead">Bir karar tablosu üç parçadan oluşur. Bu üç kelimeyi karıştırmamak,
+  karar tablosu sorularının yarısını çözer.</p>
+
+  <div class="card">
+    <h3>Üç parça</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Koşullar (conditions)</b> &mdash; üst satır bloğu. Girdiler, sorular.
+        &ldquo;Üye mi?&rdquo;, &ldquo;Kolesterol kaç?&rdquo;, &ldquo;Kasko paketi seçildi mi?&rdquo;</li>
+      <li><b>Aksiyonlar (actions)</b> &mdash; alt satır bloğu. Çıktılar, sonuçlar.
+        &ldquo;%20 indirim&rdquo;, &ldquo;Risk seviyesi&rdquo;, &ldquo;Ehliyet verilsin mi?&rdquo;</li>
+      <li><b>Kurallar (rules)</b> &mdash; <b>sütunlar</b>. Bir sütun, koşulların belirli bir
+        birleşimi <i>ve</i> o birleşimin ürettiği aksiyonlardır. R1, R2&hellip; ya da
+        &ldquo;Kural 1&rdquo;, &ldquo;Kural 2&rdquo; diye etiketlenir.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>İki koşullu en küçük tablo</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Koşullar</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th></tr>
+      <tr><td>Üye mi?</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Sepet &gt; 300 TL mi?</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><th>Aksiyonlar</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>%10 indirim</td><td class="ctr">X</td><td class="ctr">X</td><td class="ctr"></td><td class="ctr"></td></tr>
+      <tr><td>Bedava kargo</td><td class="ctr">X</td><td class="ctr"></td><td class="ctr">X</td><td class="ctr"></td></tr>
+    </table></div>
+    <p style="margin-bottom:0">2 koşul, her biri 2 değer alıyor &rarr; <b>4 sütun</b>.
+    R4'ün aksiyon hücrelerinin boş olması bir eksiklik değildir; &ldquo;hiçbir şey yapma&rdquo; da
+    geçerli bir sonuçtur ve o sütun yine bir kuraldır, yine kapsanması gerekir.</p>
+  </div>
+
+  <pre class="fx">tam (full) tablonun sütun sayısı = (değer sayısı) <sup>koşul sayısı</sup>
+
+  her koşul 2 değerliyse  &rarr;  2&#8319;
+  2 koşul &rarr; 2&sup2; = 4      3 koşul &rarr; 2&sup3; = <b>8</b>      4 koşul &rarr; 2&#8308; = 16</pre>
+
+  <div class="recog"><b>Refleks:</b> tabloda üç tane evet/hayır koşulu görürsen
+  sütun sayısının <b>8</b> olmasını beklersin. 8'den az sütun varsa tablo
+  <b>sadeleştirilmiştir</b> (&sect;4) &mdash; ve kapsam paydası artık 8 değildir.</div>
+
+  <div class="card">
+    <h3>İşaret dili &mdash; hücrelerde ne yazar</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>İşaret</th><th>Açılımı</th><th>İngilizcesi</th><th>Anlamı</th></tr>
+      <tr><td class="ctr"><b>D</b> / <b>Y</b></td><td>Doğru / Yanlış</td><td>T / F (True / False)</td>
+          <td>Koşul sağlanıyor / sağlanmıyor</td></tr>
+      <tr><td class="ctr"><b>E</b> / <b>H</b></td><td>Evet / Hayır</td><td>Y / N (Yes / No)</td>
+          <td>Aynı şey, farklı etiket</td></tr>
+      <tr><td class="ctr"><b>&ndash;</b></td><td>Önemsiz</td><td>&mdash; (don't care)</td>
+          <td>Bu kural o koşula <b>hiç bakmaz</b>; değeri ne olursa olsun kural geçerlidir</td></tr>
+      <tr><td class="ctr"><b>X</b></td><td>Tetiklenir</td><td>X (execute)</td>
+          <td>Bu sütunda o aksiyon gerçekleşir</td></tr>
+      <tr><td class="ctr">değer / aralık</td><td>&ldquo;0&ndash;18&rdquo;, &ldquo;&le; 124&rdquo;, &ldquo;%25&rdquo;</td><td>&mdash;</td>
+          <td>Koşul ikiden fazla değer alıyor; 2&#8319; formülü <b>geçmez</b></td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: Türkçe tabloda <b>Y</b> harfi &ldquo;Yes&rdquo; değildir</h3>
+    <p>D/Y düzeninde <b>Y = Yanlış = hayır</b>. İngilizce alışkanlığıyla Y'yi &ldquo;Yes&rdquo; okursan
+    bütün sütunları ters eşlersin ve soru boyunca tutarlı biçimde yanlış cevaplarsın.</p>
+    <p style="margin-bottom:0">Örnek sınav A ve C'nin tabloları <b>D/Y</b> kullanır;
+    E, F, G ve H <b>E/H</b> kullanır. Soruyu okurken parantez içindeki
+    &ldquo;(D = Doğru, Y = Yanlış)&rdquo; satırını <b>mutlaka</b> işaretle.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Test senaryoları T1&hellip;Tn ise tablo E/H kullanır</h3>
+    <p>Bu tesadüf değil, yazım kuralıdır: test senaryoları <code>T1</code>, <code>T2</code>&hellip; diye
+    etiketlenmişse <b>T harfi zaten testin adıdır</b>, aynı sayfada hücre değeri olarak
+    &ldquo;T = True&rdquo; (Türkçesi D = Doğru) kullanmak okuyucuyu karıştırır.
+    Bu yüzden böyle sorularda hücreler <b>E/H</b> (Yes/No) olur.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soru</th><th>Test etiketi</th><th>Hücre dili</th></tr>
+      <tr><td>A &middot; 22</td><td>yok</td><td class="ctr">D / Y</td></tr>
+      <tr><td>B &middot; 22</td><td>TC1&hellip;TC5</td><td class="ctr">aralık değerleri</td></tr>
+      <tr><td>C &middot; 22</td><td>yok</td><td class="ctr">D / Y / &ndash;</td></tr>
+      <tr><td>D &middot; 22</td><td>TC1&hellip;TC4</td><td class="ctr">aralık + EVET/HAYIR</td></tr>
+      <tr><td>E &middot; 21</td><td>TS1&hellip;TS5</td><td class="ctr">E / H</td></tr>
+      <tr><td>F &middot; 22</td><td><b>T1&hellip;T4</b></td><td class="ctr"><b>E / H</b></td></tr>
+      <tr><td>G &middot; 22</td><td><b>T1&hellip;T4</b></td><td class="ctr"><b>E / H / &ndash;</b></td></tr>
+      <tr><td>H &middot; 21</td><td>TS1&hellip;TS4</td><td class="ctr">E / H</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Pratik faydası: soruyu çözerken kendi notunu da aynı dilde tut.
+    Tablo E/H ise testleri <code>(E, H, E)</code> diye yaz; tablo D/Y ise <code>(D, Y, D)</code> diye.
+    Dil karıştırmak, bu konudaki en sessiz hata kaynağıdır.</p>
+  </div>
+</section>
+
+
+<section id="s3">
+  <div class="shead"><div class="num">3</div>
+    <div><h2>Düz metinden tabloyu kurmak</h2>
+    <div class="lo">Beş adım &middot; küçük ve somut bir örnek üzerinde</div></div></div>
+
+  <p class="lead">Sınavda tablo çoğunlukla hazır verilir; ama <b>kurma</b> mekaniğini bilmeden
+  &ldquo;bu sütun imkânsız&rdquo; ya da &ldquo;bu tablo sadeleştirilmiş&rdquo; diyemezsin.
+  Küçük bir iş kuralını baştan tabloya çevirelim.</p>
+
+  <div class="card">
+    <h3>İş kuralı</h3>
+    <p style="margin-bottom:0"><i>&ldquo;Kitap satan sitede üyelere %10 indirim yapılır.
+    Sepet tutarı 300 TL'yi aşarsa kargo bedavadır. İki avantaj birlikte uygulanabilir.&rdquo;</i></p>
+  </div>
+
+  <ol class="steps">
+    <li><b>Koşul satırlarını çıkar.</b>
+      <span>Her &ldquo;ise / olursa / yalnızca &hellip; olanlar&rdquo; bir koşul satırıdır:
+      <code>Üye mi?</code> ve <code>Sepet &gt; 300 TL mi?</code> &rarr; <b>2 koşul</b>.</span></li>
+    <li><b>Aksiyon satırlarını çıkar.</b>
+      <span>Her &ldquo;verilir / uygulanır / hesaplanır / bedavadır&rdquo; bir aksiyon satırıdır:
+      <code>%10 indirim</code> ve <code>Bedava kargo</code> &rarr; <b>2 aksiyon</b>.</span></li>
+    <li><b>Sütun sayısını hesapla.</b>
+      <div><pre class="fx">2 koşul &times; 2 değer  &rarr;  2&sup2; = <b>4 sütun</b></pre></div></li>
+    <li><b>Koşul değerlerini düzenli doldur.</b>
+      <span>Üstten alta ikili sayma düzeni: ilk koşul bloklar hâlinde
+      (<code>E E H H</code>), son koşul teker teker (<code>E H E H</code>).
+      Böylece hiçbir birleşim atlanmaz ve iki kez yazılmaz.</span></li>
+    <li><b>Her sütunu metne sor, aksiyon hücrelerini işaretle.</b>
+      <span>&ldquo;Üye <b>ve</b> sepet 300'ü aşıyor &rarr; ne olur?&rdquo; &rarr; ikisi de X.
+      &ldquo;Üye değil <b>ve</b> sepet 300'ü aşmıyor &rarr; ne olur?&rdquo; &rarr; hiçbiri.</span></li>
+  </ol>
+
+  <div class="card">
+    <h3>Sonuç</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Koşullar</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th></tr>
+      <tr><td>Üye mi?</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Sepet &gt; 300 TL mi?</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><th>Aksiyonlar</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>%10 indirim</td><td class="ctr ok">X</td><td class="ctr ok">X</td><td class="ctr"></td><td class="ctr"></td></tr>
+      <tr><td>Bedava kargo</td><td class="ctr ok">X</td><td class="ctr"></td><td class="ctr ok">X</td><td class="ctr"></td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Dört sütunun dördü de mümkün, hiçbiri diğeriyle çelişmiyor.
+    Bu tablonun kapsam paydası <b>4</b>'tür.</p>
+  </div>
+
+  <div class="card key">
+    <h3>Kısayol: standart sıralı tabloda sütun numarasını hesapla</h3>
+    <p>Sınav tabloları neredeyse her zaman aynı ikili sayma düzenindedir.
+    Üç koşullu, 8 sütunlu bir tabloda düzen şudur:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Koşul</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+      <tr><td>K1 (üst)</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>K2 (orta)</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>K3 (alt)</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+    </table></div>
+<pre class="fx">E &rarr; 0      H &rarr; 1
+
+sütun no = 1 + 4&middot;K1 + 2&middot;K2 + 1&middot;K3
+
+(E, E, E) &rarr; 1 + 0 + 0 + 0 = <b>R1</b>
+(E, H, E) &rarr; 1 + 0 + 2 + 0 = <b>R3</b>
+(H, E, H) &rarr; 1 + 4 + 0 + 1 = <b>R6</b>
+(H, H, H) &rarr; 1 + 4 + 2 + 1 = <b>R8</b></pre>
+    <p style="margin-bottom:0">Soru 5, 6 ve 8'de tablolar tam bu düzende. Yine de hesabı
+    <b>tablodan okuyarak doğrula</b> &mdash; düzen bozulmuş bir tabloda formül seni yanıltır.</p>
+  </div>
+</section>
+
+
+<section id="s4">
+  <div class="shead"><div class="num">4</div>
+    <div><h2>Tam tablo mu, sadeleştirilmiş tablo mu?</h2>
+    <div class="lo">Sütun silmek, kapsam hesabının paydasını değiştirir</div></div></div>
+
+  <p class="lead">Tam (full) karar tablosu bütün birleşimleri içerir: 2&#8319; sütun.
+  Sadeleştirilmiş (collapsed / minimized) tablo daha azdır, çünkü sütunlar üç nedenle düşer.</p>
+
+  <div class="card">
+    <h3>Sütun neden düşer</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Neden</th><th>Ne olur</th><th>Örnek</th></tr>
+      <tr><td><b>İmkânsız (infeasible)</b> birleşim</td>
+          <td>Birleşim gerçek hayatta oluşamaz &rarr; sütun silinir</td>
+          <td>&ldquo;Üye değil&rdquo; <b>ve</b> &ldquo;üyelik yılı 3&rdquo;</td></tr>
+      <tr><td><b>Gereksiz / birleştirilebilir</b> sütunlar</td>
+          <td>Aynı aksiyonu veren sütunlar tek sütunda toplanır,
+              fark eden koşul <b>&ndash;</b> ile işaretlenir</td>
+          <td>Dört sütun &rarr; bir sütun, iki koşul &ldquo;önemsiz&rdquo;</td></tr>
+      <tr><td><b>Koşul 2'den fazla değer alıyor</b></td>
+          <td>2&#8319; formülü hiç geçmez; sütun sayısı doğrudan tablodan sayılır</td>
+          <td>&ldquo;Yaş: 0&ndash;18 / 19&ndash;65 / &gt;65&rdquo;</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Somut örnek: 8 sütun nasıl 5'e iner</h3>
+    <p><i>&ldquo;Sipariş iptal edilmişse hiçbir ücret alınmaz. İptal edilmemişse: acil gönderi ise
+    +50 TL, sigortalı ise +20 TL eklenir.&rdquo;</i></p>
+    <p>Üç evet/hayır koşulu var, demek ki <b>tam tablo 8 sütun</b>:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Koşullar</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+      <tr><td>İptal edildi mi?</td><td class="ctr no">E</td><td class="ctr no">E</td><td class="ctr no">E</td><td class="ctr no">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Acil gönderi mi?</td><td class="ctr no">E</td><td class="ctr no">E</td><td class="ctr no">H</td><td class="ctr no">H</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Sigortalı mı?</td><td class="ctr no">E</td><td class="ctr no">H</td><td class="ctr no">E</td><td class="ctr no">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><th>Aksiyon</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>Ek ücret</td><td class="ctr no">0</td><td class="ctr no">0</td><td class="ctr no">0</td><td class="ctr no">0</td><td class="ctr">70</td><td class="ctr">50</td><td class="ctr">20</td><td class="ctr">0</td></tr>
+    </table></div>
+    <p>R1&ndash;R4'ün dördü de aynı aksiyonu veriyor: iptal edildiyse diğer iki koşul <b>önemsizdir</b>.
+    Dört sütun tek sütunda toplanır:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Koşullar</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th></tr>
+      <tr><td>İptal edildi mi?</td><td class="ctr ok">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Acil gönderi mi?</td><td class="ctr ok">&ndash;</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Sigortalı mı?</td><td class="ctr ok">&ndash;</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><th>Aksiyon</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>Ek ücret</td><td class="ctr ok">0</td><td class="ctr">70</td><td class="ctr">50</td><td class="ctr">20</td><td class="ctr">0</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card key">
+    <h3>Altın kural &mdash; payda, önündeki tablonun sütun sayısıdır</h3>
+    <p>Yalnızca &ldquo;sipariş iptal edildi&rdquo; senaryosunu test ettiğini varsay.
+    Aynı test, iki tabloda <b>iki farklı kapsam</b> verir:</p>
+<pre class="fx">tam tablo   &rarr;  kapsam = 1 / 8 = <b>%12,5</b>
+sade tablo  &rarr;  kapsam = 1 / 5 = <b>%20</b></pre>
+    <p style="margin-bottom:0">Test değişmedi; <b>payda</b> değişti. Bu yüzden sınavda
+    &ldquo;3 koşul var, demek ki payda 8&rdquo; diye ezberden gitmek tehlikelidir.
+    <b>Sana verilen tablonun sütunlarını say</b> &mdash; Soru 2, 3, 4 ve 7'de payda 8 değildir.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: imkânsız sütunu silip paydayı güncellememek</h3>
+    <p style="margin-bottom:0">Bir sütunun imkânsız olduğunu fark edip tablodan atarsan,
+    kapsam hesabı artık <code>n &minus; 1</code> sütun üzerinden yapılır.
+    Soru 1 tam olarak &ldquo;hangi sütun atılmalı&rdquo; diye sorar; şıklarda kapsam yüzdesi yoktur,
+    ama aynı tablonun bir kapsam sorusu olarak sorulduğunu düşün: payda 8 değil 7 olurdu.</p>
+  </div>
+</section>
+
+
+<section id="s5">
+  <div class="shead"><div class="num">5</div>
+    <div><h2>Kapsam öğesi ve kapsam yüzdesi</h2>
+    <div class="lo">&ldquo;Bu test senaryolarıyla elde edilen karar tablosu kapsamı nedir?&rdquo;</div></div></div>
+
+  <p class="lead">Karar tablosu testinde <b>kapsam öğesi (coverage item) sütundur</b>.
+  Bir satır değil, bir hücre değil, bir koşul değil &mdash; <b>bir kural</b>.</p>
+
+  <pre class="fx">kapsam öğesi = karar tablosunun bir sütunu (kural)
+
+karar tablosu kapsamı = <b>en az bir testin düştüğü sütun sayısı</b>
+                        &divide; <b>tablodaki toplam sütun sayısı</b>  &times; %100</pre>
+
+  <div class="card trap">
+    <h3>En sık yapılan hata</h3>
+    <p style="margin-bottom:0">Payda <b>sütun sayısıdır</b> &mdash; <b>test sayısı değil.</b>
+    5 test yürütmüş olman paydayı 5 yapmaz. Bu hata o kadar yaygın ki sınav şıkları
+    bilerek hem doğru yüzdeyi hem de <code>pay / test sayısı</code> yüzdesini yan yana koyar:
+    Soru 6'da doğru cevap <b>3/8 = %37,5</b>, tuzak şık ise <b>3/4 = %75</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Aynı sütuna düşen iki test, bir kez sayılır</h3>
+    <p>&sect;3'teki 4 sütunlu kargo tablosunda üç test yürütelim:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Test</th><th>Üye mi?</th><th>Sepet &gt; 300?</th><th class="ctr">Düştüğü sütun</th></tr>
+      <tr><td>T1 &middot; üye, 450 TL</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr ok">R1</td></tr>
+      <tr><td>T2 &middot; üye değil, 120 TL</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr ok">R4</td></tr>
+      <tr><td>T3 &middot; üye, 900 TL</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr no">R1 (tekrar)</td></tr>
+    </table></div>
+<pre class="fx">kapsanan sütun k&uuml;mesi = { R1, R4 }   &rarr;  <b>2</b> farklı sütun
+kapsam = 2 / 4 = <b>%50</b>
+
+3 test yazdın ama kapsam 3/4 değil.  T3, T1 ile aynı sütunda.</pre>
+    <p style="margin-bottom:0">Mekanik her zaman aynı: testleri sütun numaralarına çevir,
+    <b>kümeye</b> at (küme tekrarı yutar), kümenin eleman sayısını sütun sayısına böl.</p>
+  </div>
+
+  <div class="card">
+    <h3>&ldquo;Hangi test kapsamı artırır?&rdquo; sorusu aynı mekaniğin tersi</h3>
+    <ol style="margin-bottom:0">
+      <li>Mevcut testleri sütunlara eşle &rarr; <b>kapsanan</b> küme.</li>
+      <li>Tüm sütunlardan bu kümeyi çıkar &rarr; <b>kapsanmayan</b> küme.</li>
+      <li>Her adayı sütuna eşle; kapsanmayan kümedeki bir sütuna düşen aday doğru cevaptır.</li>
+    </ol>
+  </div>
+
+  <div class="card warnc">
+    <h3>Önemsiz (&ndash;) işareti kapsamı engellemez</h3>
+    <p style="margin-bottom:0">Bir sütunda <b>&ndash;</b> varsa, o koşul testte hangi değeri alırsa alsın
+    kural eşleşir ve <b>kapsanmış sayılır</b>. &ldquo;Testte o koşulun değerini bilmiyorum,
+    o yüzden bu sütunu kapsayamam&rdquo; diye düşünmek Soru 7'nin (a) şıkkına götürür.</p>
+  </div>
+</section>
+
+
+<section id="s6">
+  <div class="shead"><div class="num">6</div>
+    <div><h2>Sınav reçetesi &mdash; 6 adım</h2>
+    <div class="lo">Her karar tablosu sorusunda aynı sırayı uygula</div></div></div>
+
+  <ol class="steps">
+    <li><b>Önce soru cümlesini oku, tabloyu sonra.</b>
+      <span>Kapsam yüzdesi mi, kapsamı artıran test mi, imkânsız kural mı, çelişki mi?
+      Dördü farklı çıktı ister; tabloyu bilmeden okumak zaman kaybettirir.</span></li>
+    <li><b>Sütunları say &rarr; payda belli oldu. İşaret dilini not et.</b>
+      <span>D/Y mi E/H mi? <b>&ndash;</b> var mı? Koşullardan biri ikiden fazla değer alıyor mu?
+      2&#8319; ezberine değil, <b>gördüğün sütun sayısına</b> güven.</span></li>
+    <li><b>Her test senaryosunu koşul değerlerine çevir.</b>
+      <span>Tablonun koşul sırasında, tek satır hâlinde: <code>TS1 = (H, E, H)</code>.
+      Sayıları burada eşiklerle karşılaştır: &ldquo;1450 dakika&rdquo; &rarr; &ldquo;1000'i aşıyor mu? E&rdquo;.</span></li>
+    <li><b>Çevirdiğin satırı sütunla eşle.</b>
+      <span>Önemsiz (&ndash;) hücrelere bakma; yalnızca <b>belirlenmiş</b> koşulların tutması yeterlidir.
+      Standart sıralı 8 sütunlu tabloda <code>1 + 4&middot;K1 + 2&middot;K2 + K3</code> kısayolu işe yarar.</span></li>
+    <li><b>Eşleşmeleri kümeye at, tekrarları sil.</b>
+      <span>Sınav soruları neredeyse her zaman <b>iki testi aynı sütuna</b> düşürür.
+      Bunu yakalamazsan payı bir fazla sayarsın &mdash; ve o yanlış değer mutlaka bir şıktır.</span></li>
+    <li><b>İstenen çıktıyı üret.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Soru tipi</th><th>Çıktı</th></tr>
+        <tr><td>Kapsam yüzdesi</td><td><code>|k&uuml;me| / s&uuml;tun sayısı</code> &mdash; aritmetiği yaz</td></tr>
+        <tr><td>Kapsamı artıran test</td><td>Kapsanmayan sütuna düşen aday</td></tr>
+        <tr><td>İmkânsız kural</td><td>Aksiyonu, kendi koşullarıyla çelişen sütun</td></tr>
+        <tr><td>Çelişki / eksiklik</td><td>Kaç kuralla eşleşti? 2+ ve farklı aksiyon &rarr; çelişki, 0 &rarr; eksiklik</td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+</section>
+
+
+<section id="s7">
+  <div class="shead"><div class="num">7</div>
+    <div><h2>Soru 1 &mdash; imkânsız kuralı bulmak</h2>
+    <div class="lo">Örnek sınav A &middot; Soru 22 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>En sevdiğiniz günlük bisiklet kiralama mağazası yeni bir Müşteri İlişkileri Yönetimi (CRM)
+    sistemini devreye aldı ve en sadık üyelerinden biri olan sizden bunu test etmenizi istedi.</p>
+    <p>Hayata geçirilen özellikler şunlardır:</p>
+    <ul>
+      <li>Herkes bisiklet kiralayabilir, ancak yalnızca üyeler %20 indirim alır</li>
+      <li>Fakat iade süresi kaçırılırsa indirim artık geçerli olmaz</li>
+      <li>15 kiralamadan sonra üyelere bir hediye verilir: 1 adet tişört</li>
+    </ul>
+    <p>Bu özellikleri tanımlayan karar tablosu şu şekildedir:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Koşullar</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+      <tr><td>Üye mi?</td><td class="ctr">D</td><td class="ctr">D</td><td class="ctr">D</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">Y</td><td class="ctr">Y</td><td class="ctr">Y</td></tr>
+      <tr><td>İade süresini kaçırdı mı?</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">Y</td><td class="ctr">D</td></tr>
+      <tr><td>15. kiralama mı?</td><td class="ctr">Y</td><td class="ctr">Y</td><td class="ctr">D</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">Y</td><td class="ctr">D</td><td class="ctr">D</td></tr>
+      <tr><th>Aksiyonlar</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>%20 indirim</td><td class="ctr"></td><td class="ctr">X</td><td class="ctr"></td><td class="ctr">X</td><td class="ctr"></td><td class="ctr"></td><td class="ctr"></td><td class="ctr"></td></tr>
+      <tr><td>Hediye tişört</td><td class="ctr"></td><td class="ctr"></td><td class="ctr">X</td><td class="ctr">X</td><td class="ctr"></td><td class="ctr"></td><td class="ctr"></td><td class="ctr">X</td></tr>
+    </table></div>
+    <p>(D = Doğru, Y = Yanlış)</p>
+    <p>YALNIZCA CRM sisteminin özellik tanımına dayanarak, yukarıdaki kurallardan hangisi
+    <b>imkânsız</b> bir durumu tanımlar?</p>
+    <ul class="opts">
+      <li><b>a</b><span>R4</span></li>
+      <li><b>b</b><span>R2</span></li>
+      <li><b>c</b><span>R6</span></li>
+      <li><b>d</b><span>R8</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>İşaret dilini sabitle: burada <code>Y</code> = Yanlış = hayır.</b>
+      <span>Tablonun altındaki parantez bunu söylüyor. &ldquo;Üye mi? = Y&rdquo; demek
+      <b>üye değil</b> demektir. Bu soruda hata yapmanın en hızlı yolu Y'yi &ldquo;Yes&rdquo; okumaktır.</span></li>
+
+    <li><b>Özellik tanımını kurallara çevir &mdash; her aksiyonu bir koşula bağla.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki cümle</th><th>Kurala dönüşmüş hâli</th></tr>
+        <tr><td>&ldquo;Herkes bisiklet kiralayabilir&rdquo;</td>
+            <td>Kiralama bir koşul değil &mdash; tabloya girmez</td></tr>
+        <tr><td>&ldquo;<b>yalnızca üyeler</b> %20 indirim alır&rdquo;</td>
+            <td>%20 indirim &rarr; <b>Üye = D</b> şart</td></tr>
+        <tr><td>&ldquo;iade süresi kaçırılırsa indirim artık geçerli olmaz&rdquo;</td>
+            <td>%20 indirim &rarr; <b>Kaçırdı = Y</b> şart</td></tr>
+        <tr><td>&ldquo;15 kiralamadan sonra <b>üyelere</b> hediye tişört&rdquo;</td>
+            <td>Tişört &rarr; <b>Üye = D</b> <i>ve</i> <b>15. kiralama = D</b> şart</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Soruyu tersten oku: koşulları değil <i>aksiyon satırlarını</i> tara.</b>
+      <span>İmkânsız kural, aksiyonu işaretli olduğu hâlde o aksiyonun ön şartını sağlamayan sütundur.
+      Aksiyonu olmayan sütunları (R1, R5, R6, R7) hiç incelemene gerek yok &mdash;
+      &ldquo;hiçbir şey yapma&rdquo; her koşul birleşimi için geçerli bir sonuçtur.</span></li>
+
+    <li><b>Aksiyonu işaretli dört sütunu tek tek denetle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Sütun</th><th>Üye</th><th>Kaçırdı</th><th>15.</th><th>İşaretli aksiyon</th><th>Şart sağlanıyor mu?</th></tr>
+        <tr><td class="ctr">R2</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">Y</td>
+            <td>%20 indirim</td><td class="ok">Üye D, kaçırmadı &rarr; geçerli</td></tr>
+        <tr><td class="ctr">R3</td><td class="ctr">D</td><td class="ctr">D</td><td class="ctr">D</td>
+            <td>Hediye tişört</td><td class="ok">Üye D, 15. kiralama D &rarr; geçerli</td></tr>
+        <tr><td class="ctr">R4</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">D</td>
+            <td>%20 indirim + tişört</td><td class="ok">İkisinin de şartı tam &rarr; geçerli</td></tr>
+        <tr><td class="ctr no">R8</td><td class="ctr no">Y</td><td class="ctr">D</td><td class="ctr">D</td>
+            <td class="no">Hediye tişört</td><td class="no">Üye <b>değil</b> &mdash; tişörtün ön şartı yok</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Çelişen sütunu işaretle.</b>
+      <div>
+<pre class="fx">R8 = (Üye: Yanlış, Kaçırdı: Doğru, 15. kiralama: Doğru)  &rarr;  Hediye tişört X
+
+özellik tanımı:  tişört  &rArr;  Üye = Doğru
+R8 ise          tişört  &amp;&amp;  Üye = Yanlış
+
+&rarr; bu birleşim <b>imkânsız</b>:  <b>R8</b></pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: d) R8</h3>
+    <p style="margin-bottom:0">R8, <b>üye olmayan</b> bir müşteriye hediye tişört verildiğini söyler;
+    oysa tişört özellik tanımında yalnızca üyelere, 15. kiralamada verilir &mdash;
+    sütunun aksiyonu kendi koşuluyla çelişir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Sütun</th><th>Neden mümkün</th></tr>
+      <tr><td class="ctr">a</td><td>R4 &middot; (D, Y, D) &rarr; indirim + tişört</td>
+          <td>Süreyi kaçırmamış bir üyenin 15. kiralaması: indirimin de tişörtün de şartı tamam.</td></tr>
+      <tr><td class="ctr">b</td><td>R2 &middot; (D, Y, Y) &rarr; indirim</td>
+          <td>Süreyi kaçırmamış üye, 15. kiralaması olmadığı için yalnızca indirim alır.</td></tr>
+      <tr><td class="ctr">c</td><td>R6 &middot; (Y, Y, Y) &rarr; aksiyon yok</td>
+          <td>Üye olmayan, süreyi kaçırmamış, 15. kiralamada olmayan müşteri.
+              <b>Boş aksiyon satırı geçerli bir sonuçtur</b>, imkânsızlık değildir.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;aksiyonu boş sütun bozuk sütundur&rdquo; sanmak</h3>
+    <p>Şık (c) tam bunun için konmuş. R6'da hiçbir X yok ve bu, ilk bakışta &ldquo;eksik satır&rdquo; gibi görünür.
+    Oysa karar tablosunda <b>hiçbir aksiyon tetiklenmemesi de bir sonuçtur</b> ve o sütun
+    kapsam hesabında diğerleri gibi sayılır.</p>
+    <p style="margin-bottom:0">Ayırt etme kuralı tek cümle: <b>imkânsızlık, boş aksiyonda değil,
+    şartı sağlanmadan işaretlenmiş aksiyondadır.</b></p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li><b>a</b><span>R4 &nbsp;&mdash;&nbsp; mümkün, hem indirim hem tişörtün şartı tam</span></li>
+      <li class="wrong"><b>b</b><span>R2 &nbsp;&mdash;&nbsp; mümkün, süreyi kaçırmamış üye</span></li>
+      <li class="wrong"><b>c</b><span>R6 &nbsp;&mdash;&nbsp; boş aksiyon satırını &ldquo;hata&rdquo; sanma tuzağı</span></li>
+      <li class="right"><b>d</b><span>R8 &nbsp;&#10004; &nbsp;&mdash;&nbsp; üye olmayana hediye tişört</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s8">
+  <div class="shead"><div class="num">8</div>
+    <div><h2>Soru 2 &mdash; aralıklı koşullarda kapsam</h2>
+    <div class="lo">Örnek sınav B &middot; Soru 22 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Aşağıdaki karar tablosu, ateroskleroz riskini belirlemeye yönelik kuralları içermektedir.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">Kural 1</th><th class="ctr">Kural 2</th><th class="ctr">Kural 3</th><th class="ctr">Kural 4</th><th class="ctr">Kural 5</th></tr>
+      <tr><th>Koşullar</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>Kolesterol (mg/dl)</td><td class="ctr">&le; 124</td><td class="ctr">&le; 124</td><td class="ctr">125 &ndash; 200</td><td class="ctr">125 &ndash; 200</td><td class="ctr">&ge; 201</td></tr>
+      <tr><td>Kan basıncı (mm Hg)</td><td class="ctr">&le; 140</td><td class="ctr">&gt; 140</td><td class="ctr">&le; 140</td><td class="ctr">&gt; 140</td><td class="ctr">&ndash;</td></tr>
+      <tr><th>Aksiyon</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>Risk seviyesi</td><td class="ctr">çok düşük</td><td class="ctr">düşük</td><td class="ctr">orta</td><td class="ctr">yüksek</td><td class="ctr">çok yüksek</td></tr>
+    </table></div>
+    <p>Test senaryolarını aşağıdaki girdi verileriyle tasarladınız:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th>Kolesterol</th><th>Kan basıncı</th></tr>
+      <tr><td>TC1</td><td class="ctr">125 mg/dl</td><td class="ctr">141 mm Hg</td></tr>
+      <tr><td>TC2</td><td class="ctr">200 mg/dl</td><td class="ctr">201 mm Hg</td></tr>
+      <tr><td>TC3</td><td class="ctr">124 mg/dl</td><td class="ctr">201 mm Hg</td></tr>
+      <tr><td>TC4</td><td class="ctr">109 mg/dl</td><td class="ctr">200 mm Hg</td></tr>
+      <tr><td>TC5</td><td class="ctr">201 mg/dl</td><td class="ctr">140 mm Hg</td></tr>
+    </table></div>
+    <p>Bu test senaryolarıyla elde edilen karar tablosu kapsamı nedir?</p>
+    <ul class="opts">
+      <li><b>a</b><span>40%</span></li>
+      <li><b>b</b><span>60%</span></li>
+      <li><b>c</b><span>80%</span></li>
+      <li><b>d</b><span>100%</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Paydayı sütunlardan oku &mdash; 2&#8319; burada işlemez.</b>
+      <span>Kolesterol üç değer alıyor (&le;124, 125&ndash;200, &ge;201), kan basıncı iki.
+      Formül uydurmaya çalışma: tabloda <b>5 sütun</b> var, payda <b>5</b>'tir.</span></li>
+
+    <li><b>Eşikleri kesin yaz &mdash; bu sorunun bütün zorluğu burada.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Yazım</th><th>Dahil</th><th>Hariç</th></tr>
+        <tr><td><code>&le; 124</code></td><td class="ok">124</td><td class="no">125</td></tr>
+        <tr><td><code>125 &ndash; 200</code></td><td class="ok">125 ve 200</td><td class="no">124, 201</td></tr>
+        <tr><td><code>&ge; 201</code></td><td class="ok">201</td><td class="no">200</td></tr>
+        <tr><td><code>&le; 140</code></td><td class="ok">140</td><td class="no">141</td></tr>
+        <tr><td><code>&gt; 140</code></td><td class="ok">141</td><td class="no">140</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">Test verileri bilerek 124/125 ve 140/141 çiftlerinden seçilmiş.</p>
+      </div></li>
+
+    <li><b>Her testi koşul değerlerine çevir ve sütuna eşle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th>Kolesterol &rarr; aralık</th><th>Kan basıncı &rarr; aralık</th><th class="ctr">Sütun</th></tr>
+        <tr><td>TC1 &middot; 125 / 141</td><td>125 &rarr; <b>125&ndash;200</b></td><td>141 &rarr; <b>&gt; 140</b></td><td class="ctr ok">Kural 4</td></tr>
+        <tr><td>TC2 &middot; 200 / 201</td><td>200 &rarr; <b>125&ndash;200</b></td><td>201 &rarr; <b>&gt; 140</b></td><td class="ctr no">Kural 4 (tekrar)</td></tr>
+        <tr><td>TC3 &middot; 124 / 201</td><td>124 &rarr; <b>&le; 124</b></td><td>201 &rarr; <b>&gt; 140</b></td><td class="ctr ok">Kural 2</td></tr>
+        <tr><td>TC4 &middot; 109 / 200</td><td>109 &rarr; <b>&le; 124</b></td><td>200 &rarr; <b>&gt; 140</b></td><td class="ctr no">Kural 2 (tekrar)</td></tr>
+        <tr><td>TC5 &middot; 201 / 140</td><td>201 &rarr; <b>&ge; 201</b></td><td>140 &rarr; <b>&ndash;</b> (önemsiz)</td><td class="ctr ok">Kural 5</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">TC5'te kan basıncı 140, Kural 5'te ise bu koşul <b>&ndash;</b> ile işaretli:
+      değeri ne olursa olsun kural eşleşir.</p>
+      </div></li>
+
+    <li><b>Tabloda kapsananları işaretle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sütun</th><th class="ctr">Kural 1</th><th class="ctr">Kural 2</th><th class="ctr">Kural 3</th><th class="ctr">Kural 4</th><th class="ctr">Kural 5</th></tr>
+        <tr><td>Hangi test(ler)</td><td class="ctr no">&mdash;</td><td class="ctr ok">TC3, TC4</td><td class="ctr no">&mdash;</td><td class="ctr ok">TC1, TC2</td><td class="ctr ok">TC5</td></tr>
+        <tr><td>Kapsandı mı?</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td><td class="ctr ok">&#10004;</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl.</b>
+      <div>
+<pre class="fx">kapsanan sütunlar = { Kural 2, Kural 4, Kural 5 }  &rarr;  <b>3</b>
+toplam sütun                                        &rarr;  <b>5</b>
+
+kapsam = 3 / 5 &times; 100 = <b>%60</b>
+
+kapsanmayanlar: Kural 1 (&le;124 &amp; &le;140) ve Kural 3 (125&ndash;200 &amp; &le;140)</pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: b) 60%</h3>
+    <p style="margin-bottom:0">Beş test senaryosu beş sütunun yalnızca üçünü (Kural 2, 4, 5) tetikliyor;
+    TC1&ndash;TC2 ve TC3&ndash;TC4 ikişer ikişer aynı sütuna düştüğü için kapsam 3/5 = %60'tır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Nereden çıkar</th><th>Neden yanlış</th></tr>
+      <tr><td class="ctr">a</td><td>2 / 5</td><td>Üç değil iki kural kapsansaydı doğru olurdu; Kural 5 de kapsanmış.</td></tr>
+      <tr><td class="ctr">c</td><td>4 / 5</td><td>Dördüncü bir kuralın tetiklenmesi gerekirdi; Kural 1 ve 3 boşta.</td></tr>
+      <tr><td class="ctr">d</td><td>5 / 5</td><td>Hiçbir test kan basıncı &le; 140 ile kolesterol &le; 200 birleşimine girmiyor.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;5 test var, 5 kural var, demek ki %100&rdquo;</h3>
+    <p>Test sayısı ile kapsanan sütun sayısı <b>aynı şey değildir</b>. Burada 5 test, 3 sütuna düşüyor.
+    Soru bu eşlenikliği bilerek kuruyor: beş test, beş kural, ama cevabı %100 değil.</p>
+    <p style="margin-bottom:0">İkinci katman: TC2'nin kan basıncı <b>201</b>, kolesterolü <b>200</b>.
+    201 sayısını görünce refleks olarak &ldquo;&ge; 201 &rarr; Kural 5&rdquo; demek kolay;
+    ama 201 burada <b>kan basıncı</b>, kolesterol değil. Hangi sayının hangi satıra ait olduğunu
+    çevirirken yaz.</p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li><b>a</b><span>40% &nbsp;&mdash;&nbsp; 2/5 olurdu</span></li>
+      <li class="right"><b>b</b><span>60% &nbsp;&#10004; &nbsp;&mdash;&nbsp; 3/5</span></li>
+      <li><b>c</b><span>80% &nbsp;&mdash;&nbsp; 4/5 olurdu</span></li>
+      <li class="wrong"><b>d</b><span>100% &nbsp;&mdash;&nbsp; &ldquo;5 test = 5 kural&rdquo; tuzağı</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s9">
+  <div class="shead"><div class="num">9</div>
+    <div><h2>Soru 3 &mdash; çelişki mi, eksiklik mi?</h2>
+    <div class="lo">Örnek sınav C &middot; Soru 22 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Sürücü belgesi sınav sonuçlarını analiz eden bir sistem geliştirme projesinde çalıştığınızı varsayın.
+    Aşağıdaki karar tablosuna göre test senaryoları tasarlamanız istenmiştir.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th></tr>
+      <tr><td>C1: Sınava ilk kez mi giriyorsunuz?</td><td class="ctr">&ndash;</td><td class="ctr">&ndash;</td><td class="ctr">Y</td></tr>
+      <tr><td>C2: Teorik sınavı geçtiniz mi?</td><td class="ctr">D</td><td class="ctr">Y</td><td class="ctr">&ndash;</td></tr>
+      <tr><td>C3: Pratik sınavı geçtiniz mi?</td><td class="ctr">D</td><td class="ctr">&ndash;</td><td class="ctr">Y</td></tr>
+      <tr><td>Ehliyet verilsin mi?</td><td class="ctr">X</td><td class="ctr"></td><td class="ctr"></td></tr>
+      <tr><td>Ek sürüş dersi talep edilsin mi?</td><td class="ctr"></td><td class="ctr"></td><td class="ctr">X</td></tr>
+      <tr><td>Sınava tekrar girme başvurusu yapılsın mı?</td><td class="ctr"></td><td class="ctr">X</td><td class="ctr"></td></tr>
+    </table></div>
+    <p>(D = Doğru, Y = Yanlış, &ndash; = ilgisiz)</p>
+    <p>Karar tablosunda <b>çelişkili kurallar</b> bulunduğunu hangi test verisi gösterir?</p>
+    <ul class="opts">
+      <li><b>a</b><span>C1 = D, C2 = D, C3 = Y</span></li>
+      <li><b>b</b><span>C1 = D, C2 = Y, C3 = D</span></li>
+      <li><b>c</b><span>C1 = D, C2 = D, C3 = D ve C1 = Y, C2 = D, C3 = D</span></li>
+      <li><b>d</b><span>C1 = Y, C2 = Y, C3 = Y</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Tanımları ayır: çelişki ve eksiklik aynı şey değil.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Girdi kaç kuralla eşleşiyor?</th><th>Adı</th><th>Anlamı</th></tr>
+        <tr><td class="ctr">0</td><td><b>Eksiklik</b> (omission)</td><td>Tablo bu durumu hiç tanımlamamış</td></tr>
+        <tr><td class="ctr">1</td><td>Sağlıklı</td><td>Tek ve belirli bir sonuç</td></tr>
+        <tr><td class="ctr ok">2 veya daha fazla, <b>farklı</b> aksiyon</td><td class="ok"><b>Çelişki</b> (contradiction)</td>
+            <td class="ok">Aynı girdi iki farklı şey yaptırıyor &mdash; <b>aranan budur</b></td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">Soru &ldquo;çelişki&rdquo; diyor; o yüzden hedef, <b>iki kurala birden</b>
+      düşen bir girdidir. Hiçbirine düşmeyen girdi doğru cevap değildir.</p>
+      </div></li>
+
+    <li><b>Her sütunu düz cümleye çevir &mdash; <code>&ndash;</code> olan koşulu cümleden at.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Kural</th><th>Belirlenmiş koşullar</th><th>Aksiyon</th></tr>
+        <tr><td class="ctr">R1</td><td>C2 = D <b>ve</b> C3 = D &nbsp;<i>(C1 ilgisiz)</i></td><td>Ehliyet verilir</td></tr>
+        <tr><td class="ctr">R2</td><td>C2 = Y &nbsp;<i>(C1 ve C3 ilgisiz)</i></td><td>Sınava tekrar başvuru</td></tr>
+        <tr><td class="ctr">R3</td><td>C1 = Y <b>ve</b> C3 = Y &nbsp;<i>(C2 ilgisiz)</i></td><td>Ek sürüş dersi</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0"><b>Dikkat:</b> R2 yalnızca <i>tek</i> koşula bakıyor, R3 ise C2'ye hiç bakmıyor.
+      İki kuralın &ldquo;ilgisiz&rdquo; hücreleri kesiştiği yerde çakışma ihtimali doğar.</p>
+      </div></li>
+
+    <li><b>Her şıkkı üç kurala <i>ayrı ayrı</i> sor ve eşleşme sayısını yaz.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Şık</th><th>(C1, C2, C3)</th><th class="ctr">R1?</th><th class="ctr">R2?</th><th class="ctr">R3?</th><th class="ctr">Eşleşme</th><th>Teşhis</th></tr>
+        <tr><td class="ctr">a</td><td>(D, D, Y)</td>
+            <td class="ctr no">hayır<br>C3&ne;D</td><td class="ctr no">hayır<br>C2&ne;Y</td><td class="ctr no">hayır<br>C1&ne;Y</td>
+            <td class="ctr no">0</td><td>Eksiklik &mdash; çelişki değil</td></tr>
+        <tr><td class="ctr">b</td><td>(D, Y, D)</td>
+            <td class="ctr no">hayır<br>C2&ne;D</td><td class="ctr ok">evet</td><td class="ctr no">hayır<br>C1&ne;Y</td>
+            <td class="ctr">1</td><td>Tek aksiyon &mdash; sağlıklı</td></tr>
+        <tr><td class="ctr">c</td><td>(D, D, D)<br>(Y, D, D)</td>
+            <td class="ctr ok">evet</td><td class="ctr no">hayır<br>C2&ne;Y</td><td class="ctr no">hayır<br>C3&ne;Y</td>
+            <td class="ctr">1</td><td>İkisi de yalnız R1 &mdash; C1 sonucu değiştirmiyor</td></tr>
+        <tr><td class="ctr ok">d</td><td class="ok">(Y, Y, Y)</td>
+            <td class="ctr no">hayır<br>C2&ne;D</td><td class="ctr ok"><b>evet</b></td><td class="ctr ok"><b>evet</b></td>
+            <td class="ctr ok"><b>2</b></td><td class="ok">Çelişki</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Çakışmayı açık yaz.</b>
+      <div>
+<pre class="fx">girdi: C1 = Yanlış, C2 = Yanlış, C3 = Yanlış
+
+R2 ister: C2 = Yanlış                 &rarr; tutuyor  &rArr; &ldquo;Sınava tekrar başvuru&rdquo;
+R3 ister: C1 = Yanlış ve C3 = Yanlış  &rarr; tutuyor  &rArr; &ldquo;Ek s&uuml;r&uuml;ş dersi&rdquo;
+
+aynı girdi &rarr; iki farklı aksiyon  &rArr;  <b>çelişkili kurallar</b></pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: d) C1 = Y, C2 = Y, C3 = Y</h3>
+    <p style="margin-bottom:0">Bu birleşim hem R2 hem R3 ile eşleşir ve iki kuralın aksiyonları farklıdır
+    (&ldquo;sınava tekrar başvuru&rdquo; ile &ldquo;ek sürüş dersi&rdquo;) &mdash; tablodaki çelişki tam olarak budur.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Kaç kuralla eşleşir</th><th>Neden aranan şey değil</th></tr>
+      <tr><td class="ctr">a</td><td class="ctr">0</td>
+          <td>Hiçbir kural yok: tablo bu durumu tanımlamamış. Bu bir <b>eksikliktir</b>,
+              gerçek bir kusurdur ama soru çelişki soruyor.</td></tr>
+      <tr><td class="ctr">b</td><td class="ctr">1 (R2)</td>
+          <td>C2 = Y olduğu için R2 eşleşir; R3 ise C1 = Y ister, oysa C1 = D. Tek aksiyon üretilir.</td></tr>
+      <tr><td class="ctr">c</td><td class="ctr">1 (R1)</td>
+          <td>Her iki birleşimde de C2 ve C3 Doğru &rarr; yalnızca R1. R1'de C1 zaten
+              <b>&ndash;</b> olduğundan C1'in D ya da Y olması sonucu değiştirmez.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: eksikliği çelişki sanmak</h3>
+    <p>Şık (a) tam bu ayrımı sınar. &ldquo;Bu girdi için tabloda hiçbir satır yok&rdquo; demek
+    <b>eksiklik</b>; &ldquo;bu girdi iki satıra birden uyuyor&rdquo; demek <b>çelişki</b>.
+    Sınav bazen eksikliği, bazen çelişkiyi sorar &mdash; soru cümlesindeki kelimeyi daire içine al.</p>
+    <p style="margin-bottom:0"><b>İkinci tuzak:</b> şık (c) iki birleşim birden verir ve bu
+    &ldquo;iki kural&rdquo; gibi görünür. Oysa çelişki için gereken şey <b>bir girdinin</b> iki kurala düşmesidir,
+    iki ayrı girdinin olması değil. Zaten ikisi de aynı kurala (R1) düşüyor.</p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li class="wrong"><b>a</b><span>C1 = D, C2 = D, C3 = Y &nbsp;&mdash;&nbsp; eksiklik, çelişki değil</span></li>
+      <li><b>b</b><span>C1 = D, C2 = Y, C3 = D &nbsp;&mdash;&nbsp; yalnız R2</span></li>
+      <li><b>c</b><span>&hellip; ve &hellip; &nbsp;&mdash;&nbsp; her ikisi de yalnız R1</span></li>
+      <li class="right"><b>d</b><span>C1 = Y, C2 = Y, C3 = Y &nbsp;&#10004; &nbsp;&mdash;&nbsp; R2 + R3, farklı aksiyonlar</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s10">
+  <div class="shead"><div class="num">10</div>
+    <div><h2>Soru 4 &mdash; kapsamı artıran test</h2>
+    <div class="lo">Örnek sınav D &middot; Soru 22 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Aşağıdaki karar tablosunu temel alarak test senaryoları tasarladığınızı varsayın.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th></tr>
+      <tr><td>C1: Yaş</td><td class="ctr">0-18</td><td class="ctr">19-65</td><td class="ctr">19-65</td><td class="ctr">&gt;65</td><td class="ctr">0-18</td><td class="ctr">19-65</td><td class="ctr">&gt;65</td></tr>
+      <tr><td>C2: Tecrübe</td><td class="ctr">&ndash;</td><td class="ctr">0-4</td><td class="ctr">&gt;4</td><td class="ctr">&ndash;</td><td class="ctr">&ndash;</td><td class="ctr">&ndash;</td><td class="ctr">&ndash;</td></tr>
+      <tr><td>C3: Kayıtlı mı?</td><td class="ctr">HAYIR</td><td class="ctr">HAYIR</td><td class="ctr">HAYIR</td><td class="ctr">HAYIR</td><td class="ctr">EVET</td><td class="ctr">EVET</td><td class="ctr">EVET</td></tr>
+      <tr><td>Kategori</td><td class="ctr">A</td><td class="ctr">A</td><td class="ctr">B</td><td class="ctr">B</td><td class="ctr">B</td><td class="ctr">D</td><td class="ctr">C</td></tr>
+    </table></div>
+    <p>Şu ana kadar aşağıdaki test senaryolarını tasarladınız:</p>
+    <ul>
+      <li>TC1: 19 yaşında, kayıtlı olmayan, tecrübesiz erkek; beklenen sonuç: Kategori A</li>
+      <li>TC2: 65 yaşında, kayıtlı olmayan, 5 yıl tecrübeli kadın; beklenen sonuç: Kategori B</li>
+      <li>TC3: 66 yaşında, kayıtlı, tecrübesiz erkek; beklenen sonuç: Kategori C</li>
+      <li>TC4: 65 yaşında, kayıtlı, 4 yıl tecrübeli kadın; beklenen sonuç: Kategori D</li>
+    </ul>
+    <p>Aşağıdaki test senaryolarından hangisi mevcut sete eklendiğinde karar tablosu kapsamını artırır?</p>
+    <ul class="opts">
+      <li><b>a</b><span>66 yaşında, kayıtlı olmayan ve tecrübesiz erkek; beklenen sonuç: Kategori B</span></li>
+      <li><b>b</b><span>55 yaşında, kayıtlı olmayan, 2 yıllık tecrübeli kadın; beklenen sonuç: Kategori A</span></li>
+      <li><b>c</b><span>19 yaşında, kayıtlı, 5 yıllık tecrübeli kadın; beklenen sonuç: Kategori D</span></li>
+      <li><b>d</b><span>Zaten elde edilmiş olan karar tablosu kapsamını artıracak başka bir test senaryosu bulunmamaktadır.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Gürültüyü at: cinsiyet tabloda bir koşul değil.</b>
+      <span>&ldquo;erkek&rdquo; / &ldquo;kadın&rdquo; hiçbir koşul satırına karşılık gelmiyor.
+      Tabloda olmayan hiçbir bilgi eşlemeye girmez. Üç koşul var: <b>yaş, tecrübe, kayıt</b>.</span></li>
+
+    <li><b>Sütunları say ve <code>&ndash;</code> olanları işaretle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Sütun</th><th>Yaş</th><th>Tecrübe</th><th>Kayıtlı</th><th class="ctr">Kategori</th></tr>
+        <tr><td class="ctr">R1</td><td>0-18</td><td><b>önemsiz</b></td><td>HAYIR</td><td class="ctr">A</td></tr>
+        <tr><td class="ctr">R2</td><td>19-65</td><td>0-4</td><td>HAYIR</td><td class="ctr">A</td></tr>
+        <tr><td class="ctr">R3</td><td>19-65</td><td>&gt;4</td><td>HAYIR</td><td class="ctr">B</td></tr>
+        <tr><td class="ctr">R4</td><td>&gt;65</td><td><b>önemsiz</b></td><td>HAYIR</td><td class="ctr">B</td></tr>
+        <tr><td class="ctr">R5</td><td>0-18</td><td><b>önemsiz</b></td><td>EVET</td><td class="ctr">B</td></tr>
+        <tr><td class="ctr">R6</td><td>19-65</td><td><b>önemsiz</b></td><td>EVET</td><td class="ctr">D</td></tr>
+        <tr><td class="ctr">R7</td><td>&gt;65</td><td><b>önemsiz</b></td><td>EVET</td><td class="ctr">C</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">Payda <b>7</b>. Tecrübe yalnızca <b>R2 ve R3</b>'te anlamlı;
+      diğer beş sütunda tecrübeye hiç bakılmıyor.</p>
+      </div></li>
+
+    <li><b>Mevcut testleri sütun numaralarıyla etiketle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th>Yaş &rarr;</th><th>Tecrübe &rarr;</th><th>Kayıt &rarr;</th><th class="ctr">Sütun</th></tr>
+        <tr><td>TC1 &middot; 19, kayıtsız, tecrübesiz</td><td>19-65</td><td>0-4</td><td>HAYIR</td><td class="ctr ok">R2</td></tr>
+        <tr><td>TC2 &middot; 65, kayıtsız, 5 yıl</td><td>19-65</td><td>&gt;4</td><td>HAYIR</td><td class="ctr ok">R3</td></tr>
+        <tr><td>TC3 &middot; 66, kayıtlı, tecrübesiz</td><td>&gt;65</td><td>önemsiz</td><td>EVET</td><td class="ctr ok">R7</td></tr>
+        <tr><td>TC4 &middot; 65, kayıtlı, 4 yıl</td><td>19-65</td><td>önemsiz</td><td>EVET</td><td class="ctr ok">R6</td></tr>
+      </table></div>
+<pre class="fx">kapsanan   = { R2, R3, R6, R7 }  &rarr;  kapsam = 4 / 7 &asymp; %57
+<b>kapsanmayan</b> = { R1, R4, R5 }</pre>
+      <p style="margin:.4rem 0 0">Doğru cevap, bu üç sütundan birine düşen adaydır.
+      Kapsanmayan listeyi yazmadan şıklara bakma.</p>
+      </div></li>
+
+    <li><b>Adayları aynı yöntemle etiketle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Şık</th><th>Yaş &rarr;</th><th>Tecrübe &rarr;</th><th>Kayıt &rarr;</th><th class="ctr">Sütun</th><th class="ctr">Yeni mi?</th></tr>
+        <tr><td class="ctr ok">a</td><td>66 &rarr; <b>&gt;65</b></td><td>tecrübesiz &rarr; <b>önemsiz</b></td><td><b>HAYIR</b></td>
+            <td class="ctr ok"><b>R4</b></td><td class="ctr ok">&#10004; evet</td></tr>
+        <tr><td class="ctr">b</td><td>55 &rarr; 19-65</td><td>2 yıl &rarr; 0-4</td><td>HAYIR</td>
+            <td class="ctr no">R2</td><td class="ctr no">&#10007; TC1'de var</td></tr>
+        <tr><td class="ctr">c</td><td>19 &rarr; 19-65</td><td>5 yıl &rarr; <b>önemsiz</b></td><td>EVET</td>
+            <td class="ctr no">R6</td><td class="ctr no">&#10007; TC4'te var</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">(c) şıkkında &ldquo;5 yıl tecrübe&rdquo; dikkat dağıtıcıdır:
+      kayıt EVET olduğu anda tablo R5/R6/R7 bloğuna geçer ve orada tecrübe <b>önemsizdir</b>.</p>
+      </div></li>
+
+    <li><b>Kapsamın nasıl değiştiğini yaz.</b>
+      <div>
+<pre class="fx">&ouml;nce  : 4 / 7 &asymp; %57,1
+(a) ile: 5 / 7 &asymp; %71,4     (R4 ilk kez uygulandı)
+(b) ile: 4 / 7                (R2 tekrar)
+(c) ile: 4 / 7                (R6 tekrar)</pre>
+      <p style="margin:.4rem 0 0">(a)'nın beklenen sonucu <b>Kategori B</b>, R4'ün aksiyonu da B &mdash; tutarlı.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: a) 66 yaşında, kayıtlı olmayan ve tecrübesiz erkek</h3>
+    <p style="margin-bottom:0">Bu senaryo henüz hiç uygulanmamış olan <b>R4</b> kuralına düşer
+    (yaş &gt;65, kayıt HAYIR, tecrübe önemsiz) ve kapsamı 4/7'den 5/7'ye çıkarır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Düştüğü sütun</th><th>Neden katkı yok</th></tr>
+      <tr><td class="ctr">b</td><td>R2</td><td>TC1 ile zaten kapsanmış. Yaş ve tecrübe sayıları farklı
+          ama <b>aynı aralıklara</b> düşüyor: 55 &isin; 19-65, 2 &isin; 0-4.</td></tr>
+      <tr><td class="ctr">c</td><td>R6</td><td>TC4 ile zaten kapsanmış. R6'da tecrübe önemsiz olduğundan
+          &ldquo;5 yıl&rdquo; ile &ldquo;4 yıl&rdquo; aynı sütundadır.</td></tr>
+      <tr><td class="ctr">d</td><td>&mdash;</td><td>R1, R4 ve R5 hâlâ boşta; kapsamı artıracak testler
+          <b>var</b>, (a) bunlardan biri.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: farklı sayı gördüğü için &ldquo;farklı kural&rdquo; sanmak</h3>
+    <p>Bu sorunun bütün kurgusu bunun üzerine. 55 ile 19 farklı sayılar, 2 yıl ile 0 yıl farklı tecrübeler &mdash;
+    ama ikisi de <b>19-65</b> ve <b>0-4</b> kutularına düşüyor, yani aynı sütun.</p>
+    <p style="margin-bottom:0"><b>Refleks:</b> sayıyı gördüğün anda <i>hangi kutuya</i> düştüğünü yaz,
+    sayıyı değil kutuyu karşılaştır. Önemsiz (&ndash;) işaretli koşullarda ise sayıyı hiç yazma bile.</p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li class="right"><b>a</b><span>66 / kayıtsız / tecrübesiz &nbsp;&#10004; &nbsp;&mdash;&nbsp; R4, kapsam 4/7 &rarr; 5/7</span></li>
+      <li class="wrong"><b>b</b><span>55 / kayıtsız / 2 yıl &nbsp;&mdash;&nbsp; R2, TC1 ile aynı sütun</span></li>
+      <li class="wrong"><b>c</b><span>19 / kayıtlı / 5 yıl &nbsp;&mdash;&nbsp; R6, TC4 ile aynı sütun</span></li>
+      <li><b>d</b><span>&ldquo;artıracak test yok&rdquo; &nbsp;&mdash;&nbsp; R1, R4, R5 boşta</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s11">
+  <div class="shead"><div class="num">11</div>
+    <div><h2>Soru 5 &mdash; sigorta primi, 8 sütunlu tam tablo</h2>
+    <div class="lo">Örnek sınav E &middot; Soru 21 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir sigorta poliçe hesaplama motorunun yıllık prim üzerinde uygulayacağı düzeltmeler
+    aşağıdaki karar tablosuyla tanımlanmıştır (E = evet, H = hayır):</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Koşullar</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+      <tr><td>Sürücü 25 yaşından küçük mü?</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Son 3 yılda hasar kaydı var mı?</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Kasko paketi seçildi mi?</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><th>Aksiyonlar</th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th><th class="ctr"></th></tr>
+      <tr><td>Genç sürücü ek primi</td><td class="ctr">X</td><td class="ctr">X</td><td class="ctr">X</td><td class="ctr">X</td><td class="ctr"></td><td class="ctr"></td><td class="ctr"></td><td class="ctr"></td></tr>
+      <tr><td>Hasarsızlık indirimi</td><td class="ctr"></td><td class="ctr"></td><td class="ctr">X</td><td class="ctr">X</td><td class="ctr"></td><td class="ctr"></td><td class="ctr">X</td><td class="ctr">X</td></tr>
+      <tr><td>Kasko ek ücreti</td><td class="ctr">X</td><td class="ctr"></td><td class="ctr">X</td><td class="ctr"></td><td class="ctr">X</td><td class="ctr"></td><td class="ctr">X</td><td class="ctr"></td></tr>
+    </table></div>
+    <p>Aşağıdaki test senaryoları yürütülmüştür:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th>Sürücü yaşı</th><th>Son 3 yılda hasar</th><th>Kasko paketi</th></tr>
+      <tr><td>TS1</td><td class="ctr">30</td><td class="ctr">var</td><td class="ctr">seçilmedi</td></tr>
+      <tr><td>TS2</td><td class="ctr">22</td><td class="ctr">yok</td><td class="ctr">seçildi</td></tr>
+      <tr><td>TS3</td><td class="ctr">40</td><td class="ctr">yok</td><td class="ctr">seçilmedi</td></tr>
+      <tr><td>TS4</td><td class="ctr">19</td><td class="ctr">var</td><td class="ctr">seçildi</td></tr>
+      <tr><td>TS5</td><td class="ctr">55</td><td class="ctr">var</td><td class="ctr">seçilmedi</td></tr>
+    </table></div>
+    <p>Bu test senaryolarıyla elde edilen karar tablosu kapsamı nedir?</p>
+    <ul class="opts">
+      <li><b>a</b><span>%62,5</span></li>
+      <li><b>b</b><span>%50</span></li>
+      <li><b>c</b><span>%80</span></li>
+      <li><b>d</b><span>%37,5</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Paydayı sabitle.</b>
+      <div><pre class="fx">3 koşul &times; 2 değer  &rarr;  2&sup3; = <b>8 sütun</b>   (tabloda da 8 sütun var &rarr; tam tablo)
+payda = <b>8</b></pre>
+      <p style="margin:.4rem 0 0">Aksiyon satırları kapsam hesabına <b>girmez</b>. Üç aksiyon olması
+      paydayı değiştirmez; onlar sütunun sonucudur, kapsam öğesi değildir.</p>
+      </div></li>
+
+    <li><b>Her testi, tablonun koşul sırasına göre tek satıra çevir.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th>&lt; 25 yaş?</th><th>Hasar var?</th><th>Kasko?</th><th class="ctr">Üçlü</th></tr>
+        <tr><td>TS1 &middot; 30 yaş, hasar var, kasko yok</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">(H, E, H)</td></tr>
+        <tr><td>TS2 &middot; 22 yaş, hasar yok, kasko var</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">(E, H, E)</td></tr>
+        <tr><td>TS3 &middot; 40 yaş, hasar yok, kasko yok</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">(H, H, H)</td></tr>
+        <tr><td>TS4 &middot; 19 yaş, hasar var, kasko var</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">(E, E, E)</td></tr>
+        <tr><td>TS5 &middot; 55 yaş, hasar var, kasko yok</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">(H, E, H)</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">&ldquo;30 yaş&rdquo;, &ldquo;55 yaş&rdquo; gibi farklı sayılar burada aynı cevabı veriyor:
+      soru <b>&ldquo;25'ten küçük mü?&rdquo;</b>. Sayıyı değil, <b>sorunun cevabını</b> yaz.</p>
+      </div></li>
+
+    <li><b>Üçlüleri sütun numarasına çevir.</b>
+      <div><pre class="fx">E &rarr; 0,  H &rarr; 1      s&uuml;tun no = 1 + 4&middot;K1 + 2&middot;K2 + 1&middot;K3
+
+TS1 (H, E, H) &rarr; 1 + 4 + 0 + 1 = <b>R6</b>
+TS2 (E, H, E) &rarr; 1 + 0 + 2 + 0 = <b>R3</b>
+TS3 (H, H, H) &rarr; 1 + 4 + 2 + 1 = <b>R8</b>
+TS4 (E, E, E) &rarr; 1 + 0 + 0 + 0 = <b>R1</b>
+TS5 (H, E, H) &rarr; 1 + 4 + 0 + 1 = <b>R6</b>  &larr; TS1 ile aynı</pre></div></li>
+
+    <li><b>Tabloya işaretle, tekrarı gör.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sütun</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+        <tr><td>Hangi test</td><td class="ctr ok">TS4</td><td class="ctr no">&mdash;</td><td class="ctr ok">TS2</td><td class="ctr no">&mdash;</td><td class="ctr no">&mdash;</td><td class="ctr ok">TS1<br>TS5</td><td class="ctr no">&mdash;</td><td class="ctr ok">TS3</td></tr>
+        <tr><td>Kapsandı mı?</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl.</b>
+      <div><pre class="fx">kapsanan k&uuml;me = { R1, R3, R6, R8 }   &rarr;  <b>4</b> farklı sütun
+(5 test &mdash; ama TS1 ile TS5 aynı sütunda)
+
+kapsam = 4 / 8 = 0,50 = <b>%50</b>
+
+kapsanmayanlar: R2, R4, R5, R7</pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: b) %50</h3>
+    <p style="margin-bottom:0">TS1 ve TS5 aynı koşul birleşimine (H&ndash;E&ndash;H) düştüğü için beş test
+    yalnızca dört farklı kuralı (R1, R3, R6, R8) tetikler; kapsam 4/8 = %50'dir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hangi hesaptan çıkar</th><th>Hatası</th></tr>
+      <tr><td class="ctr">a</td><td>5 / 8 = %62,5</td><td>TS1 ile TS5'in aynı sütunda olduğunu kaçırmak &mdash;
+          beş testi beş kural saymak.</td></tr>
+      <tr><td class="ctr">c</td><td>4 / 5 = %80</td><td>Paydaya <b>test sayısını</b> yazmak.
+          Payda tablodaki sütun sayısıdır.</td></tr>
+      <tr><td class="ctr">d</td><td>3 / 8 = %37,5</td><td>Üç farklı kural kapsandığı varsayımı;
+          burada dördüncü sütun (örneğin R8, TS3) gözden kaçırılmış.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: üç aksiyon satırını kapsam öğesi sanmak</h3>
+    <p>Bu tabloda üç aksiyon var (genç sürücü ek primi, hasarsızlık indirimi, kasko ek ücreti)
+    ve bu, &ldquo;kaç aksiyon tetiklendi&rdquo; diye saymaya davet ediyor.
+    <b>Kapsam öğesi aksiyon değil, sütundur.</b></p>
+    <p style="margin-bottom:0">Test yürütüldüğünde &ldquo;hasarsızlık indirimi&rdquo; aksiyonu birden çok sütunda
+    tetiklenebilir; bir aksiyonu görmüş olman, onun geçtiği <b>bütün</b> sütunları kapsadığın anlamına gelmez.</p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li class="wrong"><b>a</b><span>%62,5 &nbsp;&mdash;&nbsp; 5/8; TS1 = TS5 tekrarını kaçırmak</span></li>
+      <li class="right"><b>b</b><span>%50 &nbsp;&#10004; &nbsp;&mdash;&nbsp; 4/8</span></li>
+      <li class="wrong"><b>c</b><span>%80 &nbsp;&mdash;&nbsp; 4/5; payda test sayısı sanılmış</span></li>
+      <li><b>d</b><span>%37,5 &nbsp;&mdash;&nbsp; 3/8 olurdu</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s12">
+  <div class="shead"><div class="num">12</div>
+    <div><h2>Soru 6 &mdash; spor salonu indirimi</h2>
+    <div class="lo">Örnek sınav F &middot; Soru 22 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir spor salonu üyelik sisteminde kayıt indirimi aşağıdaki karar tablosuna göre hesaplanır
+    (E: evet, H: hayır):</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+      <tr><td>K1: Yıllık üyelik</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>K2: Öğrenci belgesi var</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>K3: Peşin ödeme</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><td>Eylem: İndirim</td><td class="ctr">%35</td><td class="ctr">%25</td><td class="ctr">%20</td><td class="ctr">%10</td><td class="ctr">%15</td><td class="ctr">%10</td><td class="ctr">%5</td><td class="ctr">%0</td></tr>
+    </table></div>
+    <p>Yürütülen test senaryoları şunlardır:</p>
+    <ul>
+      <li>T1: Yıllık üyelik, öğrenci belgesi var, peşin ödeme</li>
+      <li>T2: Yıllık üyelik, öğrenci belgesi yok, peşin ödeme</li>
+      <li>T3: Aylık üyelik, öğrenci belgesi var, taksitli ödeme</li>
+      <li>T4: Yıllık üyelik, öğrenci belgesi var, peşin ödeme</li>
+    </ul>
+    <p>Elde edilen karar tablosu kapsamı yüzde kaçtır?</p>
+    <ul class="opts">
+      <li><b>a</b><span>%25</span></li>
+      <li><b>b</b><span>%37,5</span></li>
+      <li><b>c</b><span>%50</span></li>
+      <li><b>d</b><span>%75</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Testler T1&hellip;T4 adlandırılmış &rarr; hücre dili E/H.</b>
+      <span>Tablo &ldquo;E: evet, H: hayır&rdquo; diyor. Kendi notunu da E/H tut;
+      &ldquo;Doğru/Yanlış&rdquo; diye çevirmeye kalkarsan gereksiz bir dil katmanı eklersin.</span></li>
+
+    <li><b>Metindeki ifadeleri koşul değerine çevir &mdash; olumsuzları dikkatle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metinde</th><th>Hangi koşul</th><th class="ctr">Değer</th></tr>
+        <tr><td>&ldquo;Yıllık üyelik&rdquo;</td><td>K1</td><td class="ctr ok">E</td></tr>
+        <tr><td>&ldquo;<b>Aylık</b> üyelik&rdquo;</td><td>K1</td><td class="ctr no">H</td></tr>
+        <tr><td>&ldquo;öğrenci belgesi var&rdquo;</td><td>K2</td><td class="ctr ok">E</td></tr>
+        <tr><td>&ldquo;öğrenci belgesi <b>yok</b>&rdquo;</td><td>K2</td><td class="ctr no">H</td></tr>
+        <tr><td>&ldquo;peşin ödeme&rdquo;</td><td>K3</td><td class="ctr ok">E</td></tr>
+        <tr><td>&ldquo;<b>taksitli</b> ödeme&rdquo;</td><td>K3</td><td class="ctr no">H</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">&ldquo;Aylık&rdquo; ve &ldquo;taksitli&rdquo; kelimeleri koşulun <b>olumsuzudur</b>;
+      tabloda böyle bir satır yoktur, H ile kodlanırlar.</p>
+      </div></li>
+
+    <li><b>Dört testi sütuna eşle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th class="ctr">K1</th><th class="ctr">K2</th><th class="ctr">K3</th><th class="ctr">Üçlü</th><th class="ctr">Sütun</th><th>Beklenen indirim</th></tr>
+        <tr><td>T1</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">(E,E,E)</td><td class="ctr ok">R1</td><td>%35</td></tr>
+        <tr><td>T2</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">(E,H,E)</td><td class="ctr ok">R3</td><td>%20</td></tr>
+        <tr><td>T3</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">(H,E,H)</td><td class="ctr ok">R6</td><td>%10</td></tr>
+        <tr><td>T4</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">(E,E,E)</td><td class="ctr no">R1 (tekrar)</td><td>%35</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">T1 ile T4 <b>kelime kelime aynı</b> senaryodur. Soru metnini hızlı okuyunca
+      &ldquo;dört ayrı test&rdquo; diye geçmek kolaydır; iki satırı yan yana koyup karşılaştır.</p>
+      </div></li>
+
+    <li><b>Böl.</b>
+      <div><pre class="fx">kapsanan k&uuml;me = { R1, R3, R6 }  &rarr;  <b>3</b> farklı sütun
+toplam sütun                    &rarr;  <b>8</b>
+
+kapsam = 3 / 8 = 0,375 = <b>%37,5</b>
+
+kapsanmayanlar: R2, R4, R5, R7, R8  (5 sütun)</pre></div></li>
+
+    <li><b>Şıkları paydaya göre ayıkla.</b>
+      <span>Dört şıkkın hepsi &ldquo;3 ya da 4 sütun&rdquo; ile &ldquo;8 ya da 4 payda&rdquo; birleşimlerinden üretilmiş:
+      <code>2/8</code>, <code>3/8</code>, <code>4/8</code>, <code>3/4</code>.
+      Doğru olan tek payda <b>8</b>, doğru pay <b>3</b>.</span></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: b) %37,5</h3>
+    <p style="margin-bottom:0">T1 ve T4 aynı koşul birleşimini (R1) çalıştırdığı için dört test
+    yalnızca üç kuralı (R1, R3, R6) kapsar; kapsam 3/8 = %37,5'tir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hesap</th><th>Hatası</th></tr>
+      <tr><td class="ctr">a</td><td>2 / 8 = %25</td><td>Yalnızca iki kural sayılmış &mdash; genellikle T2 yanlışlıkla
+          R2 ile eşleştirilip R3 ile çakıştırıldığında ya da T3 atlandığında.</td></tr>
+      <tr><td class="ctr">c</td><td>4 / 8 = %50</td><td>T1 ile T4'ün aynı kural olduğu görülmemiş;
+          dört test = dört kural varsayımı.</td></tr>
+      <tr><td class="ctr">d</td><td>3 / 4 = %75</td><td>Pay doğru, <b>payda yanlış</b>:
+          kapsanan kural sayısı test sayısına bölünmüş.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: aynı testin iki kez listelenmesi</h3>
+    <p>Bu soruda tekrar <b>gizlenmiş değil</b>, açıkça duruyor: T1 ve T4 birebir aynı cümle.
+    Buna rağmen en sık seçilen yanlış şık %50'dir, çünkü göz &ldquo;dört madde&rdquo; görür,
+    &ldquo;dört farklı birleşim&rdquo; sanır.</p>
+    <p style="margin-bottom:0"><b>Savunma:</b> testleri koşul değerlerine çevirdikten sonra
+    <i>üçlüleri</i> karşılaştır, cümleleri değil. <code>(E,E,E)</code> iki kez yazılmışsa
+    kümeye bir kez girer.</p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li><b>a</b><span>%25 &nbsp;&mdash;&nbsp; 2/8 olurdu</span></li>
+      <li class="right"><b>b</b><span>%37,5 &nbsp;&#10004; &nbsp;&mdash;&nbsp; 3/8</span></li>
+      <li class="wrong"><b>c</b><span>%50 &nbsp;&mdash;&nbsp; T1 = T4 tekrarı görülmemiş</span></li>
+      <li class="wrong"><b>d</b><span>%75 &nbsp;&mdash;&nbsp; 3/4; payda test sayısı sanılmış</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s13">
+  <div class="shead"><div class="num">13</div>
+    <div><h2>Soru 7 &mdash; sadeleştirilmiş tablo ve &ldquo;önemsiz&rdquo;</h2>
+    <div class="lo">Örnek sınav G &middot; Soru 22 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir vergi beyanname hesaplayıcısında geç beyan işlemi aşağıdaki karar tablosuna göre belirlenir
+    (E: evet, H: hayır, -: önemsiz):</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th></tr>
+      <tr><td>K1: Beyanname yasal süresinde verildi</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>K2: Gecikme 30 günden az</td><td class="ctr">-</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>K3: Mükellefin önceki yılda gecikmesi yok</td><td class="ctr">-</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><td>Eylem: Uygulanan işlem</td><td class="ctr">İşlem yok</td><td class="ctr">Yazılı uyarı</td><td class="ctr">Vergi tutarının %5'i</td><td class="ctr">Vergi tutarının %10'u</td><td class="ctr">Vergi tutarının %25'i</td></tr>
+    </table></div>
+    <p>Yürütülen test senaryoları şunlardır:</p>
+    <ul>
+      <li>T1: Beyanname süresinde verildi, mükellefin önceki yılda gecikmesi yok</li>
+      <li>T2: Beyanname 12 gün gecikmeli verildi, önceki yılda gecikmesi yok</li>
+      <li>T3: Beyanname 45 gün gecikmeli verildi, önceki yılda gecikmesi yok</li>
+      <li>T4: Beyanname 8 gün gecikmeli verildi, önceki yılda gecikmesi yok</li>
+    </ul>
+    <p>Elde edilen karar tablosu kapsamı yüzde kaçtır?</p>
+    <ul class="opts">
+      <li><b>a</b><span>%40</span></li>
+      <li><b>b</b><span>%50</span></li>
+      <li><b>c</b><span>%60</span></li>
+      <li><b>d</b><span>%80</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Önce paydayı doğrula: 3 koşul var ama tablo 8 değil <b>5</b> sütunlu.</b>
+      <div>
+      <p style="margin:0 0 .4rem">Çünkü tablo sadeleştirilmiş: K1 = E olduğunda gecikme de geçmiş sicil de
+      anlamını yitirir, o yüzden tam tablodaki dört sütun tek sütunda (R1) toplanmış ve
+      iki koşul <b>-</b> ile işaretlenmiş.</p>
+      <div class="scroll"><table class="dt">
+        <tr><th>Tablo</th><th class="ctr">Sütun sayısı</th><th>Neden</th></tr>
+        <tr><td>Tam (full)</td><td class="ctr">2&sup3; = 8</td><td>Bütün birleşimler ayrı sütun</td></tr>
+        <tr><td class="ok">Verilen (sadeleştirilmiş)</td><td class="ctr ok"><b>5</b></td>
+            <td class="ok">K1 = E olan 4 sütun &rarr; tek R1 sütunu (K2, K3 önemsiz)</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0"><b>Payda 5'tir</b> &mdash; 8 değil. Şıklardaki %40, %60, %80
+      zaten 5'lik paydadan üretilmiş; %50 ise 4'lük bir paydadan.</p>
+      </div></li>
+
+    <li><b>Testleri koşul değerlerine çevir &mdash; gün sayısını eşikle karşılaştır.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th>K1: süresinde?</th><th>K2: gecikme &lt; 30 gün?</th><th>K3: önceki yıl temiz?</th></tr>
+        <tr><td>T1 &middot; süresinde</td><td class="ctr ok">E</td><td class="ctr">önemsiz</td><td class="ctr">önemsiz</td></tr>
+        <tr><td>T2 &middot; 12 gün gecikme</td><td class="ctr">H</td><td class="ctr ok">E &nbsp;<i>(12 &lt; 30)</i></td><td class="ctr ok">E</td></tr>
+        <tr><td>T3 &middot; 45 gün gecikme</td><td class="ctr">H</td><td class="ctr no">H &nbsp;<i>(45 &ge; 30)</i></td><td class="ctr ok">E</td></tr>
+        <tr><td>T4 &middot; 8 gün gecikme</td><td class="ctr">H</td><td class="ctr ok">E &nbsp;<i>(8 &lt; 30)</i></td><td class="ctr ok">E</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">Dördünde de &ldquo;önceki yılda gecikmesi yok&rdquo; &rarr; K3 = E.
+      Bu, R3 ve R5'in (K3 = H isteyen sütunların) <b>hiç</b> denenmeyeceği anlamına gelir.</p>
+      </div></li>
+
+    <li><b>Sütuna eşle. T1'de K2 ve K3 bilinmiyor &mdash; sorun değil.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th class="ctr">(K1, K2, K3)</th><th>Eşleşme mantığı</th><th class="ctr">Sütun</th></tr>
+        <tr><td>T1</td><td class="ctr">(E, &ndash;, &ndash;)</td><td>R1 yalnızca K1 = E ister; K2, K3 önemsiz &rarr; eşleşir</td><td class="ctr ok">R1</td></tr>
+        <tr><td>T2</td><td class="ctr">(H, E, E)</td><td>R2 birebir: H, E, E</td><td class="ctr ok">R2</td></tr>
+        <tr><td>T3</td><td class="ctr">(H, H, E)</td><td>R4 birebir: H, H, E</td><td class="ctr ok">R4</td></tr>
+        <tr><td>T4</td><td class="ctr">(H, E, E)</td><td>Yine R2 &mdash; T2 ile aynı birleşim</td><td class="ctr no">R2 (tekrar)</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Tabloya işaretle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sütun</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th></tr>
+        <tr><td>Hangi test</td><td class="ctr ok">T1</td><td class="ctr ok">T2, T4</td><td class="ctr no">&mdash;</td><td class="ctr ok">T3</td><td class="ctr no">&mdash;</td></tr>
+        <tr><td>Kapsandı mı?</td><td class="ctr ok">&#10004;</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl.</b>
+      <div><pre class="fx">kapsanan k&uuml;me = { R1, R2, R4 }  &rarr;  <b>3</b>
+toplam sütun                    &rarr;  <b>5</b>
+
+kapsam = 3 / 5 = 0,60 = <b>%60</b>
+
+kapsanmayanlar: R3 ve R5 &mdash; ikisi de &ldquo;önceki yılda gecikmesi <b>var</b>&rdquo; durumunu sınar</pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: c) %60</h3>
+    <p style="margin-bottom:0">T1 R1'i, T2 ile T4 aynı şekilde R2'yi, T3 ise R4'ü çalıştırır;
+    beş sütunun üçü kapsandığı için kapsam 3/5 = %60'tır. R3 ve R5 hiç denenmemiştir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hesap</th><th>Hatası</th></tr>
+      <tr><td class="ctr">a</td><td>2 / 5 = %40</td><td>R1 &ldquo;önemsiz koşul içerdiği için kapsanamaz&rdquo; sanılmış.
+          <b>&ndash; işareti kapsamı engellemez</b>, tam tersine kolaylaştırır.</td></tr>
+      <tr><td class="ctr">b</td><td>2 / 4 = %50</td><td>R1 hem paydan hem paydadan atılmış;
+          sütun silmek keyfî değildir, tabloda duran her sütun paydadadır.</td></tr>
+      <tr><td class="ctr">d</td><td>4 / 5 = %80</td><td>T2 ile T4 farklı kurallar sanılmış;
+          12 gün ile 8 gün <b>aynı</b> aralıkta (&lt; 30).</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;testte o koşulun değeri belirtilmemiş, o hâlde kapsayamam&rdquo;</h3>
+    <p>T1 yalnızca iki bilgi veriyor: beyanname süresinde verildi, önceki yılda gecikme yok.
+    Gecikme süresi hiç söylenmiyor &mdash; çünkü beyanname zamanında verildiyse <b>gecikme diye bir şey yok</b>.
+    R1 de zaten K2 ve K3'e bakmıyor.</p>
+    <p style="margin-bottom:0"><b>Kural:</b> bir sütunun eşleşmesi için yalnızca <b>belirlenmiş</b>
+    (E/H yazan) hücrelerin tutması gerekir. <code>&ndash;</code> hücreleri hiçbir şey talep etmez.</p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li class="wrong"><b>a</b><span>%40 &nbsp;&mdash;&nbsp; R1'i &ldquo;önemsiz var&rdquo; diye saymamak</span></li>
+      <li class="wrong"><b>b</b><span>%50 &nbsp;&mdash;&nbsp; R1'i tablodan silip 2/4 hesaplamak</span></li>
+      <li class="right"><b>c</b><span>%60 &nbsp;&#10004; &nbsp;&mdash;&nbsp; 3/5</span></li>
+      <li class="wrong"><b>d</b><span>%80 &nbsp;&mdash;&nbsp; 12 gün ile 8 günü ayrı kural sanmak</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s14">
+  <div class="shead"><div class="num">14</div>
+    <div><h2>Soru 8 &mdash; telekom tarifesi</h2>
+    <div class="lo">Örnek sınav H &middot; Soru 21 &middot; FL-4.2.3 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir telekom operatörünün fatura tarifelendirme motoru, aboneye uygulanacak aylık indirim oranını
+    aşağıdaki karar tablosuna (decision table) göre belirlemektedir.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+      <tr><td>Abonelik kurumsal mı?</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Aylık kullanım 1000 dakikayı aşıyor mu?</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">H</td></tr>
+      <tr><td>Otomatik ödeme talimatı var mı?</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td><td class="ctr">E</td><td class="ctr">H</td></tr>
+      <tr><td>İndirim oranı</td><td class="ctr">%25</td><td class="ctr">%20</td><td class="ctr">%15</td><td class="ctr">%10</td><td class="ctr">%12</td><td class="ctr">%8</td><td class="ctr">%5</td><td class="ctr">%0</td></tr>
+    </table></div>
+    <p>Test uzmanı şu dört test senaryosunu yürütmüştür:</p>
+    <ul>
+      <li>TS1: Kurumsal abone, 1450 dakika, otomatik ödeme talimatı var.</li>
+      <li>TS2: Bireysel abone, 300 dakika, otomatik ödeme talimatı yok.</li>
+      <li>TS3: Kurumsal abone, 1210 dakika, otomatik ödeme talimatı var.</li>
+      <li>TS4: Bireysel abone, 1600 dakika, otomatik ödeme talimatı yok.</li>
+    </ul>
+    <p>Bu dört test senaryosunun sağladığı karar tablosu kapsamı yüzde kaçtır?</p>
+    <ul class="opts">
+      <li><b>a</b><span>%75</span></li>
+      <li><b>b</b><span>%50</span></li>
+      <li><b>c</b><span>%37,5</span></li>
+      <li><b>d</b><span>%25</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Payda: 3 evet/hayır koşulu &rarr; 2&sup3; = 8, tabloda da 8 sütun.</b>
+      <span>&ldquo;İndirim oranı&rdquo; satırı tek bir aksiyon satırıdır; sekiz farklı yüzde görmek
+      sütun sayısını değiştirmez, onlar zaten sekiz sütunun sonuçlarıdır.</span></li>
+
+    <li><b>Sayıları koşul cevabına çevir &mdash; &ldquo;1000 dakikayı aşıyor mu?&rdquo;</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th>Kurumsal?</th><th>Dakika &rarr; &gt; 1000?</th><th>Otomatik ödeme?</th><th class="ctr">Üçlü</th></tr>
+        <tr><td>TS1 &middot; kurumsal, 1450, var</td><td class="ctr">E</td><td class="ctr">1450 &rarr; <b>E</b></td><td class="ctr">E</td><td class="ctr">(E, E, E)</td></tr>
+        <tr><td>TS2 &middot; bireysel, 300, yok</td><td class="ctr">H</td><td class="ctr">300 &rarr; <b>H</b></td><td class="ctr">H</td><td class="ctr">(H, H, H)</td></tr>
+        <tr><td>TS3 &middot; kurumsal, 1210, var</td><td class="ctr">E</td><td class="ctr">1210 &rarr; <b>E</b></td><td class="ctr">E</td><td class="ctr">(E, E, E)</td></tr>
+        <tr><td>TS4 &middot; bireysel, 1600, yok</td><td class="ctr">H</td><td class="ctr">1600 &rarr; <b>E</b></td><td class="ctr">H</td><td class="ctr">(H, E, H)</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0">1450 ile 1210 farklı sayılar ama aynı cevabı veriyor: ikisi de 1000'i aşıyor.
+      Koşul &ldquo;kaç dakika&rdquo; değil, <b>&ldquo;1000'i aşıyor mu&rdquo;</b>.</p>
+      </div></li>
+
+    <li><b>Üçlüleri sütuna çevir.</b>
+      <div><pre class="fx">E &rarr; 0,  H &rarr; 1      s&uuml;tun no = 1 + 4&middot;K1 + 2&middot;K2 + 1&middot;K3
+
+TS1 (E, E, E) &rarr; 1 + 0 + 0 + 0 = <b>R1</b>
+TS2 (H, H, H) &rarr; 1 + 4 + 2 + 1 = <b>R8</b>
+TS3 (E, E, E) &rarr; 1 + 0 + 0 + 0 = <b>R1</b>  &larr; TS1 ile aynı
+TS4 (H, E, H) &rarr; 1 + 4 + 0 + 1 = <b>R6</b></pre></div></li>
+
+    <li><b>Tabloya işaretle.</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sütun</th><th class="ctr">R1</th><th class="ctr">R2</th><th class="ctr">R3</th><th class="ctr">R4</th><th class="ctr">R5</th><th class="ctr">R6</th><th class="ctr">R7</th><th class="ctr">R8</th></tr>
+        <tr><td>Hangi test</td><td class="ctr ok">TS1<br>TS3</td><td class="ctr no">&mdash;</td><td class="ctr no">&mdash;</td><td class="ctr no">&mdash;</td><td class="ctr no">&mdash;</td><td class="ctr ok">TS4</td><td class="ctr no">&mdash;</td><td class="ctr ok">TS2</td></tr>
+        <tr><td>Beklenen indirim</td><td class="ctr ok">%25</td><td class="ctr">%20</td><td class="ctr">%15</td><td class="ctr">%10</td><td class="ctr">%12</td><td class="ctr ok">%8</td><td class="ctr">%5</td><td class="ctr ok">%0</td></tr>
+        <tr><td>Kapsandı mı?</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td><td class="ctr no">&#10007;</td><td class="ctr no">&#10007;</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td><td class="ctr no">&#10007;</td><td class="ctr ok">&#10004;</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl.</b>
+      <div><pre class="fx">kapsanan k&uuml;me = { R1, R6, R8 }  &rarr;  <b>3</b> farklı sütun
+toplam sütun                    &rarr;  <b>8</b>
+
+kapsam = 3 / 8 = 0,375 = <b>%37,5</b>
+
+kapsanmayanlar: R2, R3, R4, R5, R7</pre>
+      <p style="margin:.4rem 0 0">Dikkat: hiçbir test &ldquo;otomatik ödeme talimatı var&rdquo; ile
+      &ldquo;bireysel&rdquo;i birleştirmiyor (R5, R7) ve hiçbir test kurumsalda otomatik ödemesiz
+      senaryoyu denemiyor (R2, R4).</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap: c) %37,5</h3>
+    <p style="margin-bottom:0">TS1 ve TS3 aynı koşul birleşimine (R1) düştüğü için dört test
+    yalnızca üç kuralı (R1, R6, R8) tetikler; sekiz sütunun üçü kapsandığından kapsam 3/8 = %37,5'tir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hesap</th><th>Hatası</th></tr>
+      <tr><td class="ctr">a</td><td>3 / 4 = %75</td><td>Pay doğru, payda yanlış: farklı kural sayısı
+          <b>test sayısına</b> bölünmüş.</td></tr>
+      <tr><td class="ctr">b</td><td>4 / 8 = %50</td><td>TS3'ün TS1 ile aynı kuralı kapsadığı gözden kaçmış.</td></tr>
+      <tr><td class="ctr">d</td><td>2 / 8 = %25</td><td>Yalnızca iki kural sayılmış; R6 (TS4) atlanmış &mdash;
+          muhtemelen 1600 dakikanın 1000'i aştığı gözden kaçırılarak TS4 de R8 sanılmış.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;bireysel abone&rdquo; görünce diğer koşulları okumamak</h3>
+    <p>TS2 ve TS4'ün ikisi de bireysel ve ikisinde de otomatik ödeme yok. Fark tek bir yerde:
+    <b>300 dakika ile 1600 dakika</b>. Bu tek fark, R8 ile R6'yı ayırır ve kapsamı %25 yerine %37,5 yapar.</p>
+<pre>TS2:  H  <b>H</b>  H   &rarr;  R8   (%0 indirim)
+TS4:  H  <b>E</b>  H   &rarr;  R6   (%8 indirim)
+         &#8593;
+    tek fark burada</pre>
+    <p style="margin-bottom:0">Her testi <b>üç koşulun üçü için de</b> çevirmeden sütun arama.
+    Bir koşulu atlamak, iki testi aynı sütuna yapıştırır ve payı eksiltir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Şıklar</h3>
+    <ul class="opts">
+      <li class="wrong"><b>a</b><span>%75 &nbsp;&mdash;&nbsp; 3/4; payda test sayısı sanılmış</span></li>
+      <li class="wrong"><b>b</b><span>%50 &nbsp;&mdash;&nbsp; TS1 = TS3 tekrarı görülmemiş</span></li>
+      <li class="right"><b>c</b><span>%37,5 &nbsp;&#10004; &nbsp;&mdash;&nbsp; 3/8</span></li>
+      <li><b>d</b><span>%25 &nbsp;&mdash;&nbsp; 2/8; R6 atlanmış</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s15">
+  <div class="shead"><div class="num">15</div>
+    <div><h2>Tuzaklar ve tek sayfalık özet</h2>
+    <div class="lo">Sınavdan önce son okuma</div></div></div>
+
+  <div class="card trap">
+    <h3>Klasik tuzaklar</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Paydaya test sayısını yazmak.</b> Payda <b>her zaman</b> tablodaki sütun sayısıdır.
+        Sekiz şıktan en az biri <code>pay / test sayısı</code> hesabıyla üretilmiştir
+        (Soru 6'da %75, Soru 8'de %75, Soru 5'te %80).</li>
+      <li><b>Tekrar eden testi iki kez saymak.</b> Bu sayfadaki beş kapsam sorusunun
+        <b>beşinde de</b> iki test aynı sütuna düşüyor. Tekrarı bulamazsan payın bir fazla çıkar
+        ve o değer mutlaka bir şıktır.</li>
+      <li><b>2&#8319; ezberine güvenmek.</b> Koşul ikiden fazla değer alıyorsa (yaş aralıkları, kolesterol
+        aralıkları) ya da tablo sadeleştirilmişse sütun sayısı 2&#8319; değildir. <b>Say.</b></li>
+      <li><b>Önemsiz (&ndash;) hücreyi &ldquo;kapsanamaz&rdquo; sanmak.</b> &ndash; hiçbir şey talep etmez;
+        belirlenmiş hücreler tutuyorsa kural kapsanmıştır (Soru 7 &middot; %40 tuzağı).</li>
+      <li><b>Farklı sayıyı farklı kural sanmak.</b> 12 gün ile 8 gün, 1450 dk ile 1210 dk,
+        55 yaş ile 19 yaş &mdash; aynı kutuya düşüyorlarsa aynı sütundurlar.</li>
+      <li><b>D/Y tablosunda Y'yi &ldquo;Yes&rdquo; okumak.</b> Y = <b>Yanlış</b>. Parantezi işaretle.</li>
+      <li><b>Boş aksiyon satırını hata sanmak.</b> &ldquo;Hiçbir aksiyon yok&rdquo; geçerli bir sonuçtur
+        ve o sütun yine kapsanmalıdır (Soru 1 &middot; R6 tuzağı).</li>
+      <li><b>Çelişki ile eksikliği karıştırmak.</b> 0 kural &rarr; eksiklik,
+        2+ kural ve farklı aksiyon &rarr; çelişki. Soru hangisini istiyor?</li>
+      <li><b>Aksiyon satırlarını kapsam öğesi sanmak.</b> Kapsam öğesi sütundur, aksiyon değil.</li>
+    </ul>
+  </div>
+
+  <div class="fgrid">
+    <div class="fbox"><h4>Kapsam öğesi</h4>
+      <p>Tablonun <b>bir sütunu</b> = bir kural</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Satır değil, hücre değil, aksiyon değil</p></div>
+    <div class="fbox"><h4>Kapsam</h4>
+      <p><code>kapsanan sütun / toplam sütun</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Payda test sayısı <b>değil</b></p></div>
+    <div class="fbox"><h4>Tam tablo</h4>
+      <p><code>2&#8319;</code> &mdash; n tane evet/hayır koşulu</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">3 koşul &rarr; 8 sütun</p></div>
+    <div class="fbox"><h4>Sade tablo</h4>
+      <p>İmkânsız ve birleştirilebilir sütunlar silinmiş</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Payda küçülür &mdash; yeniden say</p></div>
+    <div class="fbox"><h4>İşaretler</h4>
+      <p><code>D/Y</code> = T/F &middot; <code>E/H</code> = Y/N &middot; <code>&ndash;</code> = don't care &middot; <code>X</code> = tetiklenir</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">T1&hellip;Tn varsa hücreler E/H olur</p></div>
+    <div class="fbox"><h4>Sütun kısayolu</h4>
+      <p><code>1 + 4&middot;K1 + 2&middot;K2 + K3</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">E=0, H=1 &middot; standart sıralı 8 sütun</p></div>
+    <div class="fbox"><h4>İmkânsız kural</h4>
+      <p>Aksiyonu işaretli, ama o aksiyonun ön şartı sağlanmamış</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Aksiyon satırından başla</p></div>
+    <div class="fbox"><h4>Çelişki</h4>
+      <p>Bir girdi <b>2+</b> kurala düşüyor ve aksiyonlar farklı</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">0 kural &rarr; eksiklik</p></div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>Sekiz sorunun tek tabloda özeti</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soru</th><th>Ne soruyor</th><th class="ctr">Sütun</th><th>Testler &rarr; sütunlar</th><th class="ctr">Sonuç</th></tr>
+      <tr><td>A &middot; 22</td><td>İmkânsız kural</td><td class="ctr">8</td>
+          <td>Aksiyonlu sütunlar: R2, R3, R4 geçerli; R8 çelişik</td><td class="ctr ok"><b>d) R8</b></td></tr>
+      <tr><td>B &middot; 22</td><td>Kapsam %</td><td class="ctr">5</td>
+          <td>TC1,TC2&rarr;K4 &middot; TC3,TC4&rarr;K2 &middot; TC5&rarr;K5</td><td class="ctr ok"><b>b) 3/5 = %60</b></td></tr>
+      <tr><td>C &middot; 22</td><td>Çelişki</td><td class="ctr">3</td>
+          <td>(Y,Y,Y) &rarr; hem R2 hem R3</td><td class="ctr ok"><b>d) (Y,Y,Y)</b></td></tr>
+      <tr><td>D &middot; 22</td><td>Kapsamı artıran test</td><td class="ctr">7</td>
+          <td>Kapsanan {R2,R3,R6,R7}; aday (a) &rarr; R4</td><td class="ctr ok"><b>a) 4/7 &rarr; 5/7</b></td></tr>
+      <tr><td>E &middot; 21</td><td>Kapsam %</td><td class="ctr">8</td>
+          <td>TS1,TS5&rarr;R6 &middot; TS2&rarr;R3 &middot; TS3&rarr;R8 &middot; TS4&rarr;R1</td><td class="ctr ok"><b>b) 4/8 = %50</b></td></tr>
+      <tr><td>F &middot; 22</td><td>Kapsam %</td><td class="ctr">8</td>
+          <td>T1,T4&rarr;R1 &middot; T2&rarr;R3 &middot; T3&rarr;R6</td><td class="ctr ok"><b>b) 3/8 = %37,5</b></td></tr>
+      <tr><td>G &middot; 22</td><td>Kapsam %</td><td class="ctr">5</td>
+          <td>T1&rarr;R1 &middot; T2,T4&rarr;R2 &middot; T3&rarr;R4</td><td class="ctr ok"><b>c) 3/5 = %60</b></td></tr>
+      <tr><td>H &middot; 21</td><td>Kapsam %</td><td class="ctr">8</td>
+          <td>TS1,TS3&rarr;R1 &middot; TS2&rarr;R8 &middot; TS4&rarr;R6</td><td class="ctr ok"><b>c) 3/8 = %37,5</b></td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Sekiz sorunun sekizinde de aynı iki hamle karar verdi:
+    <b>sütunları say</b> ve <b>tekrar eden testi bul</b>.</p>
+  </div>
+
+  <div class="card key">
+    <h3>Gerçek hayatta</h3>
+    <p>Karar tablosu, iş kuralını koddan önce <b>tablolaştırma</b> alışkanlığıdır. Bir analistle
+    &ldquo;peki müşteri üye değilse ama 15. kiralamaysa ne olacak?&rdquo; diye konuşmak, aslında
+    tam tablonun boş bir hücresini doldurmaktır &mdash; ve bu konuşma çoğu zaman <b>kod yazılmadan önce</b>
+    bir gereksinim hatası bulur.</p>
+    <p>Pratikte aynı işi parametreli testler yapar: <code>@CsvSource</code> / <code>test.each</code> tablosunun
+    her satırı bir kuraldır. Karmaşık fiyatlandırma, yetkilendirme ve uygunluk kurallarında
+    tablo bir de <b>kural motoru</b> (rules engine) olarak kodun içine girer.</p>
+    <p style="margin-bottom:0">Tablonun asıl kazancı tek tek testler değil, <b>tamlık denetimidir</b>:
+    2&#8319; sütunu yazdığın anda hangi birleşimin hiç düşünülmediği, hangisinin iki farklı sonuç
+    verdiği (çelişki) ortaya çıkar. Soru 1 ve Soru 3 tam olarak bu denetimi ölçüyor.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Sınav modu</h3>
+    <p style="margin-bottom:0">Soruyu çözerken mühendis sezgini kapat. Sana verilen tablo
+    <b>spesifikasyondur</b>; &ldquo;bu iki sütun zaten aynı kod yolundan geçer&rdquo; diye birleştirme,
+    &ldquo;bu kural gereksiz&rdquo; diye silme. Payda, önünde duran tablonun sütun sayısıdır &mdash;
+    ne daha fazla, ne daha az.</p>
+  </div>
+</section>
+
+
+<div class="next">
+  <a href="../istqub/pratik_testler_tr.html"><b>&#127919; Konu Pratikleri</b>
+    <span>Karar tablosu sorularını &ccedil;&ouml;zerek pekiştir &mdash; adım adım &ccedil;&ouml;z&uuml;mler</span></a>
+  <a href="../istqub/questions_tr.html"><b>&#127481;&#127479; Sınav Sim&uuml;lat&ouml;r&uuml;</b>
+    <span>8 sınav &middot; 320 soru &mdash; karar tablosu soruları: A22, B22, C22, D22, E21, F22, G22, H21</span></a>
+  <a href="../istqub/cozum_yontemleri_tr.html"><b>&#128214; &Ccedil;&ouml;z&uuml;m Y&ouml;ntemleri</b>
+    <span>Beş hesaplı konunun re&ccedil;etesi tek sayfada</span></a>
+</div>
+
+<footer class="ft">Konular &middot; Karar Tablosu Testi &middot; ISTQB&reg; CTFL v4.0 &sect;4.2.3.
+&Ccedil;&ouml;z&uuml;ml&uuml; soruların ilk d&ouml;rd&uuml; resm&icirc; CTFL v4.0 &ouml;rnek sınavları A, B, C ve D'nin 22. sorularıdır (&copy; ISTQB);
+kalan d&ouml;rt&uuml; aynı &ouml;ğrenme hedefi i&ccedil;in hazırlanmış pratik sorulardır (E21, F22, G22, H21).</footer>
+</main>
+</body>
+</html>

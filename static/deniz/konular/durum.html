@@ -1,0 +1,2080 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Durum Geçişi Testi &middot; Konular</title>
+<style>
+:root{
+  --bg:#f6f6fb; --surface:#fff; --ink:#1c1c2c; --muted:#61617a; --line:#e5e4ef;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -14px rgba(28,28,60,.18);
+  --good:#059669; --good-soft:#e7f6ef; --bad:#dc2626; --bad-soft:#fdecec;
+  --warn:#d97706; --warn-soft:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
+  --dim:#b9b7c9;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+  --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+  --warn:#fbbf24; --warn-soft:#2e2210;
+  --c:#818cf8; --cd:#a5b4fc; --cs:#222247; --cl:#3b3b78; --dim:#5a5a78; } }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;font-size:16px}
+
+header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 42%,#0e7490 100%);padding:2.9rem 1.3rem 2.4rem}
+.in{max-width:1000px;margin:0 auto}
+.back{display:inline-flex;gap:.4rem;align-items:center;text-decoration:none;color:#c7d2fe;font-size:.82rem;
+  font-weight:700;margin-bottom:1.1rem}
+.back:hover{color:#fff}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .7rem}
+.hero h1{color:#fff;font-size:clamp(1.85rem,5.2vw,2.8rem);line-height:1.07;margin:0 0 .7rem;font-weight:900;letter-spacing:-.02em}
+.hero p.lede{color:#dbe3ff;max-width:64ch;margin:0 0 1.7rem;font-size:1.03rem}
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,168px),1fr));gap:.55rem}
+.jump a{display:flex;gap:.6rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);border-radius:13px;padding:.6rem .75rem;color:#fff;
+  transition:background .15s,transform .15s;min-width:0}
+.jump a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.jump .n{width:25px;height:25px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:rgba(255,255,255,.22)}
+.jump b{display:block;font-size:.85rem;font-weight:800;line-height:1.25}
+
+nav.sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.sticky .in{display:flex;gap:.35rem;align-items:center;padding:.5rem 1.3rem;overflow-x:auto;scrollbar-width:none}
+nav.sticky .in::-webkit-scrollbar{display:none}
+nav.sticky a{white-space:nowrap;text-decoration:none;font-size:.8rem;font-weight:700;color:var(--muted);
+  border-radius:9px;padding:.3rem .6rem}
+nav.sticky a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+main{max-width:1000px;margin:0 auto;padding:2.1rem 1.3rem 4rem}
+section{margin-bottom:2.9rem;scroll-margin-top:62px}
+.shead{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
+.shead .num{width:42px;height:42px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;background:var(--c)}
+.shead h2{margin:0;font-size:1.38rem;letter-spacing:-.015em;line-height:1.2}
+.shead .lo{font-size:.73rem;font-weight:700;color:var(--muted);font-family:var(--mono)}
+.lead{margin:0 0 1rem;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:1.1rem 1.25rem;
+  box-shadow:var(--shadow);margin-bottom:.95rem;min-width:0}
+.card > h3{margin:0 0 .65rem;font-size:.75rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.card.q{border-left:4px solid var(--c)}
+.card.sol{background:color-mix(in srgb,var(--c) 4%,var(--surface))}
+.card.trap{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.card.trap > h3{color:var(--bad)}
+.card.key{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 32%,transparent)}
+.card.key > h3{color:var(--good)}
+.card.warnc{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.card.warnc > h3{color:var(--warn)}
+.card p{margin:.5rem 0}
+.card p:first-of-type{margin-top:0}
+.card ul,.card ol{margin:.5rem 0;padding-left:1.2rem}
+.card li{margin:.26rem 0}
+.recog{background:var(--cs);border-radius:12px;padding:.68rem .9rem;margin:0 0 1rem;font-size:.92rem}
+.recog b{color:var(--cd)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.52rem}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);min-width:0;gap:.7rem;align-items:start;
+  padding:.58rem .72rem;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,transparent)}
+ol.steps li::before{content:counter(s);width:23px;height:23px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.76rem;font-weight:900;color:#fff;background:var(--c)}
+ol.steps li > b{grid-column:2;display:block;font-size:.94rem;min-width:0;overflow-wrap:anywhere}
+ol.steps li > span{grid-column:2;display:block;font-size:.88rem;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+ol.steps li > div{grid-column:2;min-width:0;max-width:100%}
+ol.steps li > div > *:first-child{margin-top:.4rem}
+
+pre{font-family:var(--mono);font-size:.83rem;background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:11px;padding:.7rem .9rem;margin:.65rem 0;overflow-x:auto;line-height:1.55;white-space:pre}
+pre.fx{background:var(--cs);color:var(--cd);font-weight:600;border:1px dashed var(--cl)}
+code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .35em;border-radius:5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.65rem 0}
+table.dt{border-collapse:collapse;width:100%;font-size:.86rem}
+.scroll table.dt{min-width:420px}
+table.dt th,table.dt td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top;
+  word-break:break-word;overflow-wrap:anywhere}
+table.dt th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.78rem}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+table.dt td.ctr,table.dt th.ctr{text-align:center}
+
+svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
+.nlw{margin:.85rem 0 .3rem}
+.nlw .scroll{margin:0}
+.shint{display:none;margin:.3rem 0 0;font-size:.74rem;color:var(--muted);text-align:center;font-weight:700}
+@media (max-width:830px){ .shint{display:block} }
+.nl .bd{stroke-width:1.5}
+.nl .bd.bad{fill:var(--bad-soft);stroke:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .bd.good{fill:var(--good-soft);stroke:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .ar.bad{fill:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .ar.good{fill:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .bl{text-anchor:middle;font-size:13px;font-weight:800;font-family:var(--sans)}
+.nl .bl.bad{fill:var(--bad)} .nl .bl.good{fill:var(--good)}
+.nl .bd.neu{fill:var(--cs);stroke:var(--cl)}
+.nl .bd.neu2{fill:color-mix(in srgb,var(--c) 11%,transparent);stroke:var(--cl)}
+.nl .bl.neu,.nl .bl.neu2{fill:var(--cd)}
+.nl .dot.miss{fill:none;stroke:var(--bad);stroke-width:2;stroke-dasharray:3.5 3}
+.nl .dv.miss{fill:var(--bad)}
+.nl .cut{stroke:var(--c);stroke-width:2;stroke-dasharray:5 4;opacity:.85}
+.nl .cl{text-anchor:middle;font-size:11px;font-weight:800;fill:var(--c);font-family:var(--mono)}
+.nl .ax{stroke:var(--dim);stroke-width:1.5}
+.nl .tk{stroke:var(--dim);stroke-width:1.5}
+.nl .dot{fill:var(--c)}
+.nl .dot.new{fill:var(--warn)}
+.nl .dv{text-anchor:middle;font-size:14px;font-weight:800;fill:#fff;font-family:var(--sans)}
+.nl .dp{text-anchor:middle;font-size:13px;font-weight:600;fill:var(--dim);font-family:var(--sans)}
+.nlleg{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;font-size:.8rem;color:var(--muted);margin:.1rem 0 .3rem}
+.nlleg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
+.nlleg i.a{background:var(--c)} .nlleg i.b{background:var(--warn)}
+.nlleg i.m{background:transparent;border:2px dashed var(--bad)}
+
+.opts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
+.opts li{display:grid;grid-template-columns:28px minmax(0,1fr);min-width:0;gap:.6rem;align-items:center;
+  border:1px solid var(--line);border-radius:11px;padding:.5rem .65rem;font-size:.95rem;background:var(--surface)}
+.opts li b{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--muted)}
+.opts li.right{border-color:color-mix(in srgb,var(--good) 45%,transparent);background:var(--good-soft)}
+.opts li.right b{background:var(--good);color:#fff}
+.opts li.wrong b{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.75rem}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;box-shadow:var(--shadow)}
+.fbox h4{margin:0 0 .4rem;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.fbox p{margin:.3rem 0;font-size:.88rem}
+.fbox code{font-size:.84em}
+
+.next{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.3rem}
+.next a{flex:1 1 220px;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:.9rem 1.1rem;box-shadow:var(--shadow);color:var(--ink);transition:transform .15s}
+.next a:hover{transform:translateY(-3px)}
+.next b{display:block;font-size:.98rem;margin-bottom:.15rem}
+.next span{font-size:.84rem;color:var(--muted)}
+footer.ft{border-top:1px solid var(--line);margin-top:2.6rem;padding-top:1.2rem;color:var(--muted);font-size:.82rem}
+</style>
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><a href="/deniz/konular/">Konular</a></li><li><span aria-current="page">Durum Geçişi Testi</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+
+
+
+
+<header class="hero"><div class="in">
+  <p class="kicker">Konular &middot; CTFL v4.0 &middot; FL-4.2.4</p>
+  <h1>Durum Geçişi Testi</h1>
+  <p class="lede">Durum geçiş diyagramını ve durum geçiş tablosunu aynı modelin iki yüzü olarak okumayı;
+  durum, geçerli geçiş ve tüm geçiş kapsamlarının <b>paydalarını</b> ayırt etmeyi ve bir olay dizisini
+  adım adım izleyip kapsam yüzdesini hesaplamayı öğren.
+  Sonunda resm&icirc; örnek sınavlardaki (A, B, C, D) ve pratik setlerdeki (E, F, G, H)
+  <b>bütün durum geçişi soruları</b> aynı reçeteyle baştan sona çözülüyor.</p>
+  <div class="jump"><a href="#s1"><span class="n">1</span><b>Kara kutu kuralı</b></a>
+<a href="#s2"><span class="n">2</span><b>Beş yapı taşı</b></a>
+<a href="#s3"><span class="n">3</span><b>Diyagram &amp; tablo</b></a>
+<a href="#s4"><span class="n">4</span><b>Üç kapsam ölçütü</b></a>
+<a href="#s5"><span class="n">5</span><b>Durum &ne; geçiş</b></a>
+<a href="#s6"><span class="n">6</span><b>Diziyi izleme</b></a>
+<a href="#s7"><span class="n">7</span><b>Sınav reçetesi</b></a>
+<a href="#s8"><span class="n">8</span><b>Soru 1 &middot; A 23</b></a>
+<a href="#s9"><span class="n">9</span><b>Soru 2 &middot; B 23</b></a>
+<a href="#s10"><span class="n">10</span><b>Soru 3 &middot; C 23</b></a>
+<a href="#s11"><span class="n">11</span><b>Soru 4 &middot; D 23</b></a>
+<a href="#s12"><span class="n">12</span><b>Soru 5 &middot; E 22</b></a>
+<a href="#s13"><span class="n">13</span><b>Soru 6 &middot; F 23</b></a>
+<a href="#s14"><span class="n">14</span><b>Soru 7 &middot; G 23</b></a>
+<a href="#s15"><span class="n">15</span><b>Soru 8 &middot; H 22</b></a>
+<a href="#s16"><span class="n">16</span><b>Tuzaklar &amp; özet</b></a></div>
+</div></header>
+
+<nav class="sticky"><div class="in"><a href="#s1">1. Kara kutu kuralı</a>
+<a href="#s2">2. Beş yapı taşı</a>
+<a href="#s3">3. Diyagram &amp; tablo</a>
+<a href="#s4">4. Üç kapsam ölçütü</a>
+<a href="#s5">5. Durum &ne; geçiş</a>
+<a href="#s6">6. Diziyi izleme</a>
+<a href="#s7">7. Sınav reçetesi</a>
+<a href="#s8">8. Soru 1 &middot; A 23</a>
+<a href="#s9">9. Soru 2 &middot; B 23</a>
+<a href="#s10">10. Soru 3 &middot; C 23</a>
+<a href="#s11">11. Soru 4 &middot; D 23</a>
+<a href="#s12">12. Soru 5 &middot; E 22</a>
+<a href="#s13">13. Soru 6 &middot; F 23</a>
+<a href="#s14">14. Soru 7 &middot; G 23</a>
+<a href="#s15">15. Soru 8 &middot; H 22</a>
+<a href="#s16">16. Tuzaklar &amp; özet</a></div></nav>
+
+<main>
+
+<section id="s1">
+  <div class="shead"><div class="num">1</div>
+    <div><h2>Modeli oku, kodu hiç görmediğini varsay</h2>
+    <div class="lo">FL-4.2.4 &middot; K3 &middot; Kara kutu tekniği</div></div></div>
+
+  <p class="lead">ISTQB, durum geçişi testini (state transition testing) <b>&sect;4.2 Kara Kutu Test
+  Teknikleri</b> altında tanımlar. Tekniğin girdisi <b>yalnızca modeldir</b> &mdash; sorudaki
+  durum geçiş diyagramı (state transition diagram) ya da durum geçiş tablosu (state table).</p>
+
+  <div class="recog"><b>Pratik sonucu:</b> modelde <i>yazmayan</i> hiçbir geçiş yoktur, modelde
+  <i>yazan</i> hiçbir geçiş de &ldquo;zaten mantıken olmaz&rdquo; diye atılmaz. Sınavda tek doğru kaynak
+  sorunun kendi diyagramıdır; &ldquo;gerçek bir asansör şöyle davranır&rdquo; cümlesi her zaman yanlış cevaba götürür.</div>
+
+  <div class="card">
+    <h3>Soru tipini ilk bakışta ayır</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soruda ne var</th><th>Hangi bölüm</th><th>Ne yaparsın</th></tr>
+      <tr><td>Durumlar, oklar, olay adları &mdash; ya da satır/sütun tablosu</td>
+          <td><b>&sect;4.2.4</b> Durum geçişi testi</td><td>Geçişleri numaralandır</td></tr>
+      <tr><td>Metin + sayı aralıkları (&ldquo;6 ila 12 karakter&rdquo;)</td>
+          <td><b>&sect;4.2.1&ndash;2</b> EP / BVA</td><td>Payları çiz, uçları al</td></tr>
+      <tr><td>Koşul&ndash;eylem kombinasyonları, T/F satırları</td>
+          <td><b>&sect;4.2.3</b> Karar tablosu</td><td>2&#8319; kural çıkar</td></tr>
+      <tr><td>Kod parçası / akış şeması</td>
+          <td><b>&sect;4.3</b> Komut &amp; dal kapsamı &mdash; beyaz kutu</td><td>Satırları / dalları say</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Durum geçişi sorusunun imzası:</b> sistemin <i>hafızası</i> vardır &mdash;
+    aynı olay, hangi durumda olduğuna göre farklı sonuç verir. Bir olayın tek başına anlamı yoktur.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Mühendis refleksi vs. sınav refleksi</h3>
+    <p>Gerçek bir sistemde &ldquo;KAPALI durumundayken <code>kilidi aç</code> gelirse ne olur?&rdquo; sorusunun
+    cevabı genelde <i>&ldquo;hiçbir şey, olay yutulur&rdquo;</i>dır ve kimse buna test yazmaz. Mühendislik olarak
+    bu <b>doğrudur</b>: tanımsız olaylar çoğu zaman zararsızdır.</p>
+    <p>Ama durum geçişi testi tam olarak orayı sorar. Modelde boş bırakılan hücre bir <b>geçersiz geçiştir</b>
+    (invalid transition) ve &ldquo;tüm geçiş kapsamı&rdquo; ölçütünün paydasında <b>sayılır</b>. Çünkü gerçek
+    hatalar çoğunlukla orada yaşar: kilitli ekranda tuşa basınca çöken uygulama, bitmiş siparişe ikinci kez
+    ödeme alan servis.</p>
+    <p style="margin-bottom:0">İki farklı girdiyle çalışan iki farklı yöntem. Kodu görüyorsan zaten durum
+    makinesini okur, <code>default:</code> dalına bakarsın; durum geçişi testi kodu görmediğin
+    durumlar için var: protokol testi, 3rd-party cihaz, kod yazılmadan önce test tasarımı.</p>
+  </div>
+</section>
+
+
+<section id="s2">
+  <div class="shead"><div class="num">2</div>
+    <div><h2>Beş yapı taşı: durum, olay, koruma, eylem, geçiş</h2>
+    <div class="lo">Bir okun üstünde ne yazar?</div></div></div>
+
+  <p class="lead">Durum geçiş modelinde tek bir ok, beş bilgiyi aynı anda taşır.
+  Sınav soruları bu beşinin hangisini saydığını her seferinde ayrıca söyler &mdash; o yüzden
+  isimlerini karıştırmamak gerekir.</p>
+
+  <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 222" role="img" aria-label="bir gecisin anatomisi">
+<rect class="bd neu" x="60" y="100" width="200" height="52" rx="15"/><text class="bl neu" x="160" y="131">KİLİTLİ</text>
+<rect class="bd neu" x="660" y="100" width="180" height="52" rx="15"/><text class="bl neu" x="750" y="131">AÇIK</text>
+<path d="M 260.0 126.0 L 651.0 126.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="660.0,126.0 650.0,130.5 650.0,121.5" fill="var(--c)"/>
+<text x="400" y="92" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--muted)">olay (event)</text>
+<text x="400" y="114" text-anchor="middle" font-family="var(--sans)" font-size="13" font-weight="700" fill="var(--c)">kart okut</text>
+<text x="560" y="92" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--muted)">koruma koşulu (guard)</text>
+<text x="560" y="114" text-anchor="middle" font-family="var(--sans)" font-size="13" font-weight="700" fill="var(--cd)">[kart geçerli]</text>
+<text x="460" y="150" text-anchor="middle" font-family="var(--sans)" font-size="13" font-weight="700" fill="var(--good)">/ kilidi aç</text>
+<text x="460" y="168" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--muted)">eylem (action)</text>
+<text x="160" y="178" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--muted)">kaynak durum (source state)</text>
+<text x="750" y="178" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--muted)">hedef durum (target state)</text>
+<text x="473" y="206" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--c)">geçiş (transition) = kaynak durum + olay + [koruma] / eylem + hedef durum</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+
+  <div class="card">
+    <h3>Tanımlar</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Terim</th><th>İngilizcesi</th><th>Ne demek</th><th>Örnekte</th></tr>
+      <tr><td><b>Durum</b></td><td>state</td>
+          <td>Sistemin, sonraki davranışını belirleyen hafızası. Kutularla gösterilir.</td><td><code>KİLİTLİ</code>, <code>AÇIK</code></td></tr>
+      <tr><td><b>Olay</b></td><td>event</td>
+          <td>Dışarıdan gelen ve geçişi tetikleyen uyaran. Okun üstünde, köşeli parantezden önce yazar.</td><td><code>kart okut</code></td></tr>
+      <tr><td><b>Koruma koşulu</b></td><td>guard condition</td>
+          <td>Olay geldiğinde geçişin gerçekleşmesi için sağlanması gereken şart. <code>[&hellip;]</code> içinde yazar.</td><td><code>[kart geçerli]</code></td></tr>
+      <tr><td><b>Eylem</b></td><td>action</td>
+          <td>Geçiş sırasında üretilen çıktı veya yan etki. <code>/</code> işaretinden sonra yazar.</td><td><code>/ kilidi aç</code></td></tr>
+      <tr><td><b>Geçiş</b></td><td>transition</td>
+          <td>Yukarıdakilerin tamamı + hedef durum. <b>Kapsam öğesi budur.</b></td><td>bütün ok</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card key">
+    <h3>Altın kural &mdash; bir geçişin kimliği</h3>
+    <p style="margin-bottom:.5rem"><b>Geçiş = (kaynak durum, olay) çifti.</b> Aynı olay farklı durumlarda
+    gerçekleşiyorsa bu <b>iki ayrı geçiştir</b>; aynı durumda iki kez gerçekleşiyorsa <b>tek geçiştir</b>.</p>
+<pre>S1 &#9472;&#9472;&#9472; Müsait &#9472;&#9472;&#9594; S2      geçiş T1
+S3 &#9472;&#9472;&#9472; Müsait &#9472;&#9472;&#9594; S2      geçiş T6     &#8592; aynı olay, farklı kaynak = FARKLI geçiş
+
+S2 &#9472;&#9472;&#9472; İptal  &#9472;&#9472;&#9594; S4      geçiş T4
+S2 &#9472;&#9472;&#9472; Öde    &#9472;&#9472;&#9594; S4      geçiş T5     &#8592; aynı çift ama farklı olay = FARKLI geçiş</pre>
+    <p style="margin-bottom:0">Bu yüzden kapsam sayarken <b>okları</b> sayarsın, durumları veya olayları değil.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Koruma koşulu bir hücreyi ikiye böler</h3>
+    <p>Aynı durumda, aynı olay için <b>farklı koruma koşullarıyla</b> iki geçiş tanımlanmış olabilir:</p>
+<pre>DOLU DEĞİL &#9472;&#9472; Ekle [N &lt; 2] / N:=N+1 &#9472;&#9594; DOLU DEĞİL
+DOLU DEĞİL &#9472;&#9472; Ekle [N = 2] / N:=N+1 &#9472;&#9594; DOLU</pre>
+    <p style="margin-bottom:0">Tabloda tek bir <code>(DOLU DEĞİL, Ekle)</code> hücresi var ama içinde
+    <b>iki geçiş</b> duruyor. Geçerli geçişleri sayarken ikisini de say; bu durumda
+    <code>durum &times; olay</code> formülü artık geçerli geçiş sayısını vermez &mdash;
+    oklar tek tek sayılır.</p>
+  </div>
+</section>
+
+
+<section id="s3">
+  <div class="shead"><div class="num">3</div>
+    <div><h2>Diyagram ve tablo: aynı modelin iki yüzü</h2>
+    <div class="lo">Satır = durum &middot; sütun = olay &middot; hücre = hedef durum</div></div></div>
+
+  <p class="lead">Sınav aynı modeli iki farklı biçimde verir: ya ok ok çizilmiş bir <b>diyagram</b>,
+  ya da satırları durum, sütunları olay olan bir <b>tablo</b>. İkisi arasında dönüşüm yapmayı bilmek,
+  sorunun yarısını çözer &mdash; çünkü <b>sayma işi tabloda, izleme işi diyagramda</b> kolaydır.</p>
+
+  <div class="card">
+    <h3>Örnek: basit bir medya oynatıcı</h3>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 214" role="img" aria-label="medya oynatici durum gecis diyagrami">
+<rect class="bd neu" x="40" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="125" y="101">DURDU</text>
+<rect class="bd neu" x="388" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="473" y="101">ÇALIYOR</text>
+<rect class="bd neu" x="736" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="821" y="101">DURAKLATILDI</text>
+<path d="M 210.0 90.0 L 379.0 90.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="388.0,90.0 378.0,94.5 378.0,85.5" fill="var(--c)"/>
+<text x="299" y="80" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">oynat</text>
+<path d="M 558.0 90.0 L 727.0 90.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="736.0,90.0 726.0,94.5 726.0,85.5" fill="var(--c)"/>
+<text x="647" y="80" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">duraklat</text>
+<path d="M 455.0 122.0 L 455.0 152.0 L 143.0 152.0 L 143.0 131.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="143.0,122.0 147.5,132.0 138.5,132.0" fill="var(--c)"/>
+<text x="299" y="146" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">durdur</text>
+<path d="M 803.0 122.0 L 803.0 152.0 L 491.0 152.0 L 491.0 131.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="491.0,122.0 495.5,132.0 486.5,132.0" fill="var(--c)"/>
+<text x="647" y="146" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">devam et</text>
+<path d="M 839.0 122.0 L 839.0 196.0 L 107.0 196.0 L 107.0 131.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="107.0,122.0 111.5,132.0 102.5,132.0" fill="var(--c)"/>
+<text x="473" y="190" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">durdur</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <p style="margin-bottom:0;font-size:.9rem;color:var(--muted)">
+    3 durum, 4 farklı olay (<code>oynat</code>, <code>duraklat</code>, <code>devam et</code>,
+    <code>durdur</code>), 5 ok. Not: <code>durdur</code> iki ayrı okta geçiyor &mdash;
+    kaynak durumları farklı olduğu için <b>iki ayrı geçiş</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Aynı model, tablo hali</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Durum &#8595; &nbsp;/&nbsp; Olay &#8594;</th><th class="ctr">oynat</th><th class="ctr">duraklat</th>
+          <th class="ctr">devam et</th><th class="ctr">durdur</th></tr>
+      <tr><th>DURDU</th><td class="ok ctr">ÇALIYOR</td><td class="no ctr">&mdash;</td>
+          <td class="no ctr">&mdash;</td><td class="no ctr">&mdash;</td></tr>
+      <tr><th>ÇALIYOR</th><td class="no ctr">&mdash;</td><td class="ok ctr">DURAKLATILDI</td>
+          <td class="no ctr">&mdash;</td><td class="ok ctr">DURDU</td></tr>
+      <tr><th>DURAKLATILDI</th><td class="no ctr">&mdash;</td><td class="no ctr">&mdash;</td>
+          <td class="ok ctr">ÇALIYOR</td><td class="ok ctr">DURDU</td></tr>
+    </table></div>
+    <div class="scroll"><table class="dt">
+      <tr><th>Tabloda ne görürsün</th><th>Anlamı</th><th>Adı</th></tr>
+      <tr><td class="ok">Dolu hücre &mdash; içinde bir hedef durum yazıyor</td>
+          <td>Bu durumda bu olay gelirse sistem oraya gider</td><td><b>geçerli geçiş</b> (valid transition)</td></tr>
+      <tr><td class="no">Boş hücre &mdash; çizgi, tire veya hiçbir şey</td>
+          <td>Bu durumda bu olay tanımlı değil; sistem ya yutar, ya hata verir, ya çöker</td>
+          <td><b>geçersiz geçiş</b> (invalid transition)</td></tr>
+    </table></div>
+    <pre class="fx">tablodaki toplam hücre = durum sayısı &times; olay sayısı = 3 &times; 4 = <b>12</b>
+dolu hücre (geçerli geçiş)                              = <b>5</b>
+boş hücre (geçersiz geçiş)                              = 12 &minus; 5 = <b>7</b></pre>
+  </div>
+
+  <div class="card key">
+    <h3>Dönüşüm refleksi</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Soru diyagram veriyorsa</b> &rarr; okları numaralandır (T1, T2, &hellip;). Sayı lazımsa
+        tabloyu çizmene bile gerek yok, ok saymak yeter.</li>
+      <li><b>Soru tablo veriyorsa</b> &rarr; dolu hücreleri soldan sağa, yukarıdan aşağıya numaralandır.
+        Bu, geçerli geçiş listendir.</li>
+      <li><b>&ldquo;Tüm geçiş&rdquo; soruluyorsa</b> &rarr; tabloyu tamamla: <code>durum &times; olay</code>
+        kadar hücre vardır, boşlar da kapsam öğesidir.</li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s4">
+  <div class="shead"><div class="num">4</div>
+    <div><h2>Üç kapsam ölçütü &mdash; üç farklı payda</h2>
+    <div class="lo">Soru hangisini soruyor?</div></div></div>
+
+  <p class="lead">Durum geçişi testinin sınavda çıkan üç ölçütü var ve hepsinin <b>paydası farklı</b>.
+  Soruyu okurken ilk iş, hangi paydanın istendiğini tespit etmektir &mdash; aritmetik ondan sonra gelir.</p>
+
+  <pre class="fx">tüm durum kapsamı      = ziyaret edilen farklı durum  /  modeldeki toplam durum
+geçerli geçiş kapsamı  = yürütülen farklı geçerli geçiş /  modeldeki toplam geçerli geçiş
+tüm geçiş kapsamı      = yürütülen farklı geçiş         /  (durum sayısı &times; olay sayısı)</pre>
+
+  <div class="card">
+    <h3>Karşılaştırma</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Ölçüt</th><th>Kapsam öğesi</th><th class="ctr">Payda</th><th>Soruda böyle geçer</th></tr>
+      <tr><td><b>Tüm durum kapsamı</b><br><i>all states coverage</i></td>
+          <td>Her <b>durum</b> en az bir kez ziyaret edilir</td>
+          <td class="ctr">durum sayısı<br><b>kutular</b></td>
+          <td>&ldquo;tüm durumlar&rdquo;, &ldquo;her durum ziyaret edilsin&rdquo;</td></tr>
+      <tr><td><b>Geçerli geçiş kapsamı</b><br><i>valid transitions / <b>0&#8209;switch</b></i></td>
+          <td>Her <b>geçerli geçiş</b> en az bir kez yürütülür</td>
+          <td class="ctr">dolu hücre sayısı<br><b>oklar</b></td>
+          <td>&ldquo;geçerli geçiş kapsamı&rdquo;, &ldquo;0&#8209;switch&rdquo;, &ldquo;%100 geçiş kapsamı&rdquo;</td></tr>
+      <tr><td><b>Tüm geçiş kapsamı</b><br><i>all transitions coverage</i></td>
+          <td>Geçerli <b>ve geçersiz</b> her geçiş denenir</td>
+          <td class="ctr">durum &times; olay<br><b>tablodaki tüm hücreler</b></td>
+          <td>&ldquo;tüm geçişler&rdquo;, &ldquo;geçersiz geçişler dahil&rdquo;</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>En sık çıkan:</b> ortadaki. Sınav sorularının neredeyse tamamı
+    <b>geçerli geçiş / 0&#8209;switch</b> kapsamını sorar. &ldquo;Tüm geçiş&rdquo; ifadesi geçmiyorsa,
+    paydaya <b>yalnızca okları</b> yaz.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ölçütler birbirini kapsar &mdash; ama tek yönlü</h3>
+<pre>%100 tüm geçiş kapsamı
+      &#9660;  gerektirir
+%100 geçerli geçiş kapsamı (0-switch)
+      &#9660;  gerektirir
+%100 tüm durum kapsamı</pre>
+    <p style="margin-bottom:0">Okun yönü tek taraflıdır: <b>aşağıdaki sağlanmışsa yukarıdaki sağlanmış olmaz.</b>
+    Bütün durumları gezmiş olmak, bütün okları yürüttüğün anlamına gelmez &mdash; bir sonraki bölüm tam olarak bunu gösteriyor.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>En sık yapılan hata</h3>
+    <p style="margin-bottom:0">Payda <b>kapsam öğesi sayısıdır</b> &mdash; <b>test senaryosu sayısı veya
+    olay sayısı değil.</b> 6 olaylık bir dizi yürüttün diye payda 6 olmaz; dizide aynı geçiş iki kez
+    geçtiyse pay 1 artar, 2 değil. Önce modeldeki listeyi çıkar, sonra işaretle.</p>
+  </div>
+</section>
+
+
+<section id="s5">
+  <div class="shead"><div class="num">5</div>
+    <div><h2>%100 durum kapsamı, %80 geçiş kapsamı, %33 tüm geçiş</h2>
+    <div class="lo">Aynı tek test, üç farklı yüzde</div></div></div>
+
+  <p class="lead">Sınavın en sevdiği tuzak bu: test <b>bütün durumları</b> gezer, aday
+  <i>&ldquo;demek ki %100&rdquo;</i> der ve geçiş kapsamını sorduğunu kaçırır.
+  Aynı modeli, tek bir test senaryosuyla üç ölçüte göre ölçelim.</p>
+
+  <div class="card q">
+    <h3>Test senaryosu</h3>
+    <p style="margin-bottom:0">DURDU durumundan başla:
+    <code>oynat</code> &rarr; <code>duraklat</code> &rarr; <code>devam et</code> &rarr; <code>durdur</code></p>
+  </div>
+
+  <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 214" role="img" aria-label="medya oynatici durum gecis diyagrami">
+<rect class="bd neu" x="40" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="125" y="101">DURDU</text>
+<rect class="bd neu" x="388" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="473" y="101">ÇALIYOR</text>
+<rect class="bd neu" x="736" y="70" width="170" height="52" rx="15"/><text class="bl neu" x="821" y="101">DURAKLATILDI</text>
+<path d="M 210.0 90.0 L 379.0 90.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="388.0,90.0 378.0,94.5 378.0,85.5" fill="var(--good)"/>
+<text x="299" y="80" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">oynat</text>
+<path d="M 558.0 90.0 L 727.0 90.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="736.0,90.0 726.0,94.5 726.0,85.5" fill="var(--good)"/>
+<text x="647" y="80" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">duraklat</text>
+<path d="M 455.0 122.0 L 455.0 152.0 L 143.0 152.0 L 143.0 131.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="143.0,122.0 147.5,132.0 138.5,132.0" fill="var(--good)"/>
+<text x="299" y="146" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">durdur</text>
+<path d="M 803.0 122.0 L 803.0 152.0 L 491.0 152.0 L 491.0 131.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="491.0,122.0 495.5,132.0 486.5,132.0" fill="var(--good)"/>
+<text x="647" y="146" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">devam et</text>
+<path d="M 839.0 122.0 L 839.0 196.0 L 107.0 196.0 L 107.0 131.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="107.0,122.0 111.5,132.0 102.5,132.0" fill="var(--bad)"/>
+<text x="473" y="190" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">durdur</text>
+<circle class="dot" cx="350" cy="90" r="12"/><text class="dv" x="350" y="95">1</text>
+<circle class="dot" cx="698" cy="90" r="12"/><text class="dv" x="698" y="95">2</text>
+<circle class="dot" cx="200" cy="152" r="12"/><text class="dv" x="200" y="157">4</text>
+<circle class="dot" cx="750" cy="152" r="12"/><text class="dv" x="750" y="157">3</text>
+<circle class="dot miss" cx="650" cy="196" r="12"/><text class="dv miss" x="650" y="201">&#10007;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+  <p class="nlleg"><span><i class="a"></i>yürütülen geçiş (sıra numarasıyla)</span><span><i class="m"></i>hiç yürütülmeyen geçiş</span></p>
+
+  <ol class="steps">
+    <li><b>Yolu adım adım yaz, yanına bulunduğun durumu not et</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Adım</th><th>Bulunduğum durum</th><th>Olay</th><th>Geçiş</th><th>Yeni durum</th></tr>
+        <tr><td class="ctr">&mdash;</td><td><b>DURDU</b></td><td><i>başlangıç</i></td><td>&mdash;</td><td>DURDU</td></tr>
+        <tr><td class="ctr">1</td><td>DURDU</td><td><code>oynat</code></td><td class="ok">T1</td><td>ÇALIYOR</td></tr>
+        <tr><td class="ctr">2</td><td>ÇALIYOR</td><td><code>duraklat</code></td><td class="ok">T2</td><td>DURAKLATILDI</td></tr>
+        <tr><td class="ctr">3</td><td>DURAKLATILDI</td><td><code>devam et</code></td><td class="ok">T4</td><td>ÇALIYOR</td></tr>
+        <tr><td class="ctr">4</td><td>ÇALIYOR</td><td><code>durdur</code></td><td class="ok">T3</td><td>DURDU</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Durumları işaretle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Durum</th><td class="ctr">DURDU</td><td class="ctr">ÇALIYOR</td><td class="ctr">DURAKLATILDI</td></tr>
+        <tr><th>Ziyaret edildi mi?</th><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td></tr>
+      </table></div>
+      <pre class="fx">tüm durum kapsamı = 3 / 3 = <b>%100</b></pre>
+      </div></li>
+
+    <li><b>Geçerli geçişleri işaretle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Geçiş</th><th>Ok</th><th class="ctr">Yürütüldü mü?</th></tr>
+        <tr><td><b>T1</b></td><td>DURDU &#8212;<code>oynat</code>&#8594; ÇALIYOR</td><td class="ok ctr">&#10004; adım 1</td></tr>
+        <tr><td><b>T2</b></td><td>ÇALIYOR &#8212;<code>duraklat</code>&#8594; DURAKLATILDI</td><td class="ok ctr">&#10004; adım 2</td></tr>
+        <tr><td><b>T3</b></td><td>ÇALIYOR &#8212;<code>durdur</code>&#8594; DURDU</td><td class="ok ctr">&#10004; adım 4</td></tr>
+        <tr><td><b>T4</b></td><td>DURAKLATILDI &#8212;<code>devam et</code>&#8594; ÇALIYOR</td><td class="ok ctr">&#10004; adım 3</td></tr>
+        <tr><td><b>T5</b></td><td>DURAKLATILDI &#8212;<code>durdur</code>&#8594; DURDU</td><td class="no ctr">&#10007; hiç</td></tr>
+      </table></div>
+      <pre class="fx">geçerli geçiş (0-switch) kapsamı = 4 / 5 = 0,8 = <b>%80</b></pre>
+      <p style="margin-bottom:0;font-size:.88rem;color:var(--muted)">DURAKLATILDI durumunu
+      <b>ziyaret ettik</b>, ama oradan çıkan <b>iki okun yalnızca birini</b> kullandık.
+      Durum kapsamı doldu, geçiş kapsamı dolmadı.</p>
+      </div></li>
+
+    <li><b>Tüm geçiş kapsamına bak</b>
+      <div>
+      <pre class="fx">payda = durum &times; olay = 3 &times; 4 = 12
+pay   = 4   (denenen geçersiz geçiş yok)
+tüm geçiş kapsamı = 4 / 12 = 0,333&hellip; = <b>%33,3</b></pre>
+      <p style="margin-bottom:0">Örneğin ÇALIYOR durumundayken <code>oynat</code> göndermek
+      geçersiz bir geçiştir ve hiç denenmemiştir.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key">
+    <h3>Tek cümlelik sonuç</h3>
+    <p style="margin-bottom:0">Aynı tek test senaryosu: <b>%100</b> durum, <b>%80</b> geçerli geçiş,
+    <b>%33,3</b> tüm geçiş. Soru hangi kelimeyi kullanıyorsa o paydayı kullan.</p>
+  </div>
+</section>
+
+
+<section id="s6">
+  <div class="shead"><div class="num">6</div>
+    <div><h2>Bir olay dizisini izleme</h2>
+    <div class="lo">&ldquo;Hangi test senaryosu en yüksek kapsamı sağlar?&rdquo;</div></div></div>
+
+  <p class="lead">Şıklarda olay dizileri verilen sorularda tek yöntem vardır: diziyi <b>baştan sona,
+  parmakla tabloda</b> izlemek. Kenara iki şey yazarsın: <b>o anki durum</b> ve varsa
+  <b>koruma koşulundaki değişken</b>.</p>
+
+  <ol class="steps">
+    <li><b>Başlangıç durumunu kenara yaz.</b>
+      <span>Soru genellikle söyler: &ldquo;tüm test senaryoları S1'de başlar&rdquo;, &ldquo;sistem BAŞLANGIÇ'ta başlar&rdquo;.</span></li>
+    <li><b>Her olayda hücreye bak: dolu mu, boş mu?</b>
+      <span>Dolu &rarr; geçiş numarasını işaretle, durumu güncelle.
+      Boş &rarr; dizi <b>uygulanabilir değildir</b> (not feasible); o şık elenir.</span></li>
+    <li><b>Koruma koşulu varsa değişkeni güncelle.</b>
+      <span>Aynı <code>(durum, olay)</code> çifti için iki ok varsa, hangisinin tetiklendiğini
+      koruma koşulu belirler. <code>N</code>'i her adımda yaz.</span></li>
+    <li><b>Tekrarları tek sayarak farklı geçişleri topla.</b>
+      <span>Aynı geçişten ikinci kez geçmek payı artırmaz. Kapsam = <b>farklı</b> geçiş sayısı / toplam.</span></li>
+  </ol>
+
+  <div class="card trap">
+    <h3>Diziyi bitiren üç durum</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Son duruma erken düşmek.</b> SON / KAPALI gibi çıkışı olmayan bir duruma girdiysen,
+        dizinin geri kalan olayları hiçbir geçiş üretmez. Şık genelde burada tuzak kurar.</li>
+      <li><b>Boş hücreye gelmek.</b> Tanımsız bir olay &rarr; dizi geçerli geçiş kapsamı için
+        hiç aday değildir; &ldquo;en yüksek kapsam&rdquo; yarışından çıkar.</li>
+      <li><b>Koruma koşulunun sağlanmaması.</b> <code>N = 3</code> iken <code>[N &lt; 2]</code>
+        oku tetiklenmez; başka bir ok yoksa dizi yine tıkanır.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Mini alıştırma &mdash; aynı oynatıcı</h3>
+    <p>Dizi: <code>oynat, durdur, oynat, duraklat, durdur</code></p>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Adım</th><th>Durum</th><th>Olay</th><th>Hücre</th><th>Geçiş</th><th>Yeni durum</th></tr>
+      <tr><td class="ctr">1</td><td>DURDU</td><td>oynat</td><td class="ok">dolu</td><td>T1 <i>yeni</i></td><td>ÇALIYOR</td></tr>
+      <tr><td class="ctr">2</td><td>ÇALIYOR</td><td>durdur</td><td class="ok">dolu</td><td>T3 <i>yeni</i></td><td>DURDU</td></tr>
+      <tr><td class="ctr">3</td><td>DURDU</td><td>oynat</td><td class="ok">dolu</td><td>T1 <i>tekrar</i></td><td>ÇALIYOR</td></tr>
+      <tr><td class="ctr">4</td><td>ÇALIYOR</td><td>duraklat</td><td class="ok">dolu</td><td>T2 <i>yeni</i></td><td>DURAKLATILDI</td></tr>
+      <tr><td class="ctr">5</td><td>DURAKLATILDI</td><td>durdur</td><td class="ok">dolu</td><td>T5 <i>yeni</i></td><td>DURDU</td></tr>
+    </table></div>
+    <pre class="fx">5 olay yürütüldü, ama farklı geçiş sayısı = <b>4</b>   (T1, T3, T2, T5)
+kapsam = 4 / 5 = <b>%80</b>      &#8212; eksik olan: T4 (DURAKLATILDI &#8212;devam et&#8594; ÇALIYOR)</pre>
+    <p style="margin-bottom:0"><b>Dikkat:</b> olay sayısı 5, kapsam payı 4. Aradaki fark, adım 3'teki
+    tekrardır. Bu farkı görmek, &ldquo;en yüksek kapsam&rdquo; sorularının tamamını çözer.</p>
+  </div>
+</section>
+
+
+<section id="s7">
+  <div class="shead"><div class="num">7</div>
+    <div><h2>Sınav reçetesi &mdash; 6 adım</h2>
+    <div class="lo">Her durum geçişi sorusunda aynı sırayı uygula</div></div></div>
+
+  <ol class="steps">
+    <li><b>Soruyu etiketle: ne isteniyor?</b>
+      <span>Üç kalıp var &rarr; <b>(a)</b> kapsam yüzdesi, <b>(b)</b> %100 için en az test senaryosu sayısı,
+      <b>(c)</b> en yüksek kapsamı veren / kapsamı tamamlayan dizi. Kritik kelimeler:
+      <code>geçerli geçiş</code> &middot; <code>0-switch</code> &middot; <code>tüm geçişler</code> &middot;
+      <code>tüm durumlar</code> &middot; <code>EN AZ</code> &middot; <code>EN YÜKSEK</code>.</span></li>
+    <li><b>Modeli tek biçime indir: geçişleri numaralandır.</b>
+      <span>Diyagram verildiyse okları, tablo verildiyse dolu hücreleri T1, T2, &hellip; diye yaz.
+      <b>Özdöngüleri (self-loop) saymayı unutma</b> &mdash; onlar da birer geçiştir.</span></li>
+    <li><b>Paydayı sabitle.</b>
+      <span><code>geçerli geçiş</code> &rarr; ok sayısı. <code>tüm geçiş</code> &rarr;
+      <code>durum &times; olay</code>. <code>tüm durum</code> &rarr; kutu sayısı. Paydayı en başta yaz ki
+      sonra unutma.</span></li>
+    <li><b>Her test senaryosunu/diziyi adım adım izle.</b>
+      <span>Kenara durumu (ve varsa <code>N</code>'i) yaz; her adımda hangi T'nin tetiklendiğini işaretle.
+      Boş hücreye veya çıkışsız duruma gelirsen dizi orada biter.</span></li>
+    <li><b>Farklı geçişleri say &mdash; tekrarlar bir kez.</b>
+      <span>İki test senaryosu varsa kümelerin <b>birleşimini</b> al, ortak geçişleri iki kez sayma.</span></li>
+    <li><b>Böl ve şıkla eşleştir; olmadıysa yanlış paydayı dene.</b>
+      <span>Şıkların çoğu &ldquo;yanlış payda&rdquo; cevaplarıdır: <code>6/7</code>, <code>6/8</code>,
+      <code>4/5</code>&hellip; Hangi hatanın hangi şıkkı ürettiğini görmek, doğru şıkkı doğrular.</span></li>
+  </ol>
+
+  <div class="card key">
+    <h3>&ldquo;EN AZ kaç test senaryosu?&rdquo; soruları için ek kural</h3>
+    <p>Bir test senaryosu = başlangıç durumundan son duruma uzanan <b>bir yol</b>; yol boyunca birden
+    çok geçişi birden kapsar. O yüzden cevap <b>asla geçiş sayısı değildir</b>.</p>
+    <ul style="margin-bottom:0">
+      <li><b>Alt sınır:</b> son duruma giren <b>farklı geçiş sayısı</b>. Sona varan her farklı ok,
+        ayrı bir senaryonun sonudur.</li>
+      <li><b>Birbirini dışlayan geçişleri ara:</b> bir yolda aynı durumdan yalnızca bir kez çıkılıyorsa,
+        o durumdan çıkan oklar aynı senaryoya sığmaz.</li>
+      <li><b>Döngü varsa işin kolay:</b> <code>duraklat / devam et</code> gibi bir döngüyü tek senaryo
+        içinde tekrarlayarak kalan okları aynı yola sıkıştırabilirsin.</li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s8">
+  <div class="shead"><div class="num">8</div>
+    <div><h2>Soru 1 &mdash; en az kaç test senaryosu?</h2>
+    <div class="lo">Resm&icirc; örnek sınav A &middot; Soru 23 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Yaşam döngüsü aşağıdaki durum geçiş diyagramıyla modellenen bir sistemi test ettiğinizi varsayın.
+    Sistem BAŞLANGIÇ durumunda başlar ve çalışmasını KAPALI durumunda sonlandırır.</p>
+<pre>BAŞLANGIÇ          &#8212;test&#8594;         HATA AYIKLAMA MODU
+BAŞLANGIÇ          &#8212;çalıştır&#8594;     ÇALIŞIYOR
+HATA AYIKLAMA MODU &#8212;tamamlandı&#8594;   KAPALI
+ÇALIŞIYOR          &#8212;hata&#8594;         HATA AYIKLAMA MODU
+ÇALIŞIYOR          &#8212;duraklat&#8594;     BEKLEMEDE
+BEKLEMEDE          &#8212;devam et&#8594;     ÇALIŞIYOR
+BEKLEMEDE          &#8212;tamamlandı&#8594;   KAPALI</pre>
+    <p>Geçerli geçiş kapsamını elde etmek için EN AZ kaç test senaryosuna ihtiyaç vardır?
+    (Bir test senaryosu birden fazla geçişi kapsayabilir.)</p>
+    <ul class="opts">
+      <li><b>A</b><span>4</span></li>
+      <li><b>B</b><span>2</span></li>
+      <li><b>C</b><span>7</span></li>
+      <li><b>D</b><span>3</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soruyu etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sorudaki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;<b>Geçerli geçiş</b> kapsamı&rdquo;</td><td>Kapsam öğesi = oklar (0&#8209;switch)</td></tr>
+        <tr><td>&ldquo;<b>EN AZ</b> kaç test senaryosu&rdquo;</td><td>Yüzde değil, <b>yol sayısı</b> soruluyor</td></tr>
+        <tr><td>&ldquo;bir senaryo birden fazla geçişi kapsayabilir&rdquo;</td><td>Cevap <b>geçiş sayısı değil</b></td></tr>
+        <tr><td>&ldquo;BAŞLANGIÇ'ta başlar, KAPALI'da sonlanır&rdquo;</td><td>Her senaryo bu iki uç arasında bir yol</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Modeli çiz, okları numaralandır</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 262" role="img" aria-label="A23 durum gecis diyagrami">
+<rect class="bd neu" x="30" y="40" width="160" height="52" rx="15"/><text class="bl neu" x="110" y="71">BAŞLANGIÇ</text>
+<rect class="bd neu" x="330" y="40" width="160" height="52" rx="15"/><text class="bl neu" x="410" y="71">ÇALIŞIYOR</text>
+<rect class="bd neu" x="630" y="40" width="160" height="52" rx="15"/><text class="bl neu" x="710" y="71">BEKLEMEDE</text>
+<rect class="bd neu" x="190" y="190" width="230" height="52" rx="15"/><text class="bl neu" x="305" y="221">HATA AYIKLAMA MODU</text>
+<rect class="bd neu" x="640" y="190" width="150" height="52" rx="15"/><text class="bl neu" x="715" y="221">KAPALI</text>
+<path d="M 190.0 66.0 L 321.0 66.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="330.0,66.0 320.0,70.5 320.0,61.5" fill="var(--c)"/>
+<text x="260" y="56" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">çalıştır</text>
+<path d="M 490.0 58.0 L 621.0 58.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="630.0,58.0 620.0,62.5 620.0,53.5" fill="var(--c)"/>
+<text x="560" y="48" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">duraklat</text>
+<path d="M 630.0 76.0 L 499.0 76.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="490.0,76.0 500.0,71.5 500.0,80.5" fill="var(--c)"/>
+<text x="560" y="92" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">devam et</text>
+<path d="M 110.0 92.0 L 110.0 216.0 L 181.0 216.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="190.0,216.0 180.0,220.5 180.0,211.5" fill="var(--c)"/>
+<text x="152" y="152" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">test</text>
+<path d="M 380.0 92.0 L 380.0 181.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="380.0,190.0 375.5,180.0 384.5,180.0" fill="var(--c)"/>
+<text x="414" y="145" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">hata</text>
+<path d="M 420.0 216.0 L 631.0 216.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="640.0,216.0 630.0,220.5 630.0,211.5" fill="var(--c)"/>
+<text x="530" y="206" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">tamamlandı</text>
+<path d="M 710.0 92.0 L 710.0 181.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="710.0,190.0 705.5,180.0 714.5,180.0" fill="var(--c)"/>
+<text x="772" y="145" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">tamamlandı</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Kaynak</th><th>Olay</th><th>Hedef</th></tr>
+        <tr><td class="ctr"><b>1</b></td><td>BAŞLANGIÇ</td><td>test</td><td>HATA AYIKLAMA MODU</td></tr>
+        <tr><td class="ctr"><b>2</b></td><td>BAŞLANGIÇ</td><td>çalıştır</td><td>ÇALIŞIYOR</td></tr>
+        <tr><td class="ctr"><b>3</b></td><td>HATA AYIKLAMA MODU</td><td>tamamlandı</td><td>KAPALI</td></tr>
+        <tr><td class="ctr"><b>4</b></td><td>ÇALIŞIYOR</td><td>hata</td><td>HATA AYIKLAMA MODU</td></tr>
+        <tr><td class="ctr"><b>5</b></td><td>ÇALIŞIYOR</td><td>duraklat</td><td>BEKLEMEDE</td></tr>
+        <tr><td class="ctr"><b>6</b></td><td>BEKLEMEDE</td><td>devam et</td><td>ÇALIŞIYOR</td></tr>
+        <tr><td class="ctr"><b>7</b></td><td>BEKLEMEDE</td><td>tamamlandı</td><td>KAPALI</td></tr>
+      </table></div>
+      <pre class="fx">kapsanacak geçiş sayısı = <b>7</b>      &#8212; ama bu cevap DEĞİL, bu paydadır</pre>
+      </div></li>
+
+    <li><b>Alt sınırı bul: sona kaç farklı okla giriliyor?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>KAPALI durumuna giren geçiş</th><th>Nereden</th><th class="ctr">Sonuç</th></tr>
+        <tr><td><b>3</b> &middot; tamamlandı</td><td>HATA AYIKLAMA MODU</td><td class="ctr">bir senaryonun sonu</td></tr>
+        <tr><td><b>7</b> &middot; tamamlandı</td><td>BEKLEMEDE</td><td class="ctr">başka bir senaryonun sonu</td></tr>
+      </table></div>
+      <p style="margin-bottom:0">Her senaryo KAPALI'da biter ve bitişte <b>tek bir</b> ok kullanır.
+      İki farklı bitiş oku var &rarr; <b>en az 2</b> senaryo şart. Şimdi 2'nin yetip yetmediğine bakalım.</p>
+      </div></li>
+
+    <li><b>2 neden yetmiyor?</b>
+      <div>
+      <p style="margin:0 0 .4rem">BAŞLANGIÇ'tan da yalnızca bir okla çıkılır: ya <b>1</b> (test) ya <b>2</b> (çalıştır).</p>
+<pre>Senaryo X : 1 (test) ile başlarsa &rarr; HATA AYIKLAMA MODU'ndasın
+            oradan tek çıkış 3 (tamamlandı) &rarr; KAPALI. Yol biter.
+            X = { 1, 3 }                     &#8212; başka ok ekleyemez
+
+Senaryo Y : geriye kalan 2, 4, 5, 6, 7 TEK yola sığmalı
+            2 &#8594; ÇALIŞIYOR
+            4 (hata) &#8594; HATA AYIKLAMA MODU &#8594; buradan tek çıkış 3 &#8594; KAPALI
+                        &#8658; 5, 6, 7 dışarıda kaldı  &#10007;
+            5 (duraklat) &#8594; BEKLEMEDE &#8594; 6 ya da 7
+                        &#8658; 4 dışarıda kaldı        &#10007;</pre>
+      <p style="margin-bottom:0"><b>Sebep:</b> <code>hata</code> geçişi (4) seni HATA AYIKLAMA MODU'na
+      sokar ve oradan tek çıkış KAPALI'dır. Yani 4'ü kullanan senaryo 3 ile biter, 7 ile bitemez.
+      4 ve 7 <b>aynı senaryoya sığmaz</b>. Üçüncü bir yol gerekir.</p>
+      </div></li>
+
+    <li><b>3 yolla hepsini kapsa</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test senaryosu</th><th>Olay dizisi</th><th>Kapsadığı geçişler</th></tr>
+        <tr><td><b>TC1</b></td><td>test, tamamlandı</td><td class="ok">1, 3</td></tr>
+        <tr><td><b>TC2</b></td><td>çalıştır, hata, tamamlandı</td><td class="ok">2, 4, <i>3</i></td></tr>
+        <tr><td><b>TC3</b></td><td>çalıştır, duraklat, devam et, duraklat, tamamlandı</td><td class="ok"><i>2</i>, 5, 6, <i>5</i>, 7</td></tr>
+      </table></div>
+      <pre class="fx">birleşim = {1, 3} &#8746; {2, 4, 3} &#8746; {2, 5, 6, 7} = <b>{1, 2, 3, 4, 5, 6, 7}</b>
+7 / 7 = %100 geçerli geçiş kapsamı,  test senaryosu sayısı = <b>3</b></pre>
+      <p style="margin-bottom:0;font-size:.88rem;color:var(--muted)">TC3'te <code>duraklat</code>
+      iki kez geçiyor (döngü) &mdash; kapsamı artırmaz ama 7 numaralı oka ulaşmayı sağlar.
+      Döngüler tam da bunun için kullanılır.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li><b>A</b><span>4</span></li>
+      <li><b>B</b><span>2</span></li>
+      <li class="wrong"><b>C</b><span>7</span></li>
+      <li class="right"><b>D</b><span>3 &nbsp;&#10004;</span></li>
+    </ul>
+    <p style="margin-bottom:0">Sona iki farklı okla girildiği için 2 senaryo zorunlu, <code>hata</code>
+    geçişi 7 numaralı okla aynı yola sığmadığı için 3. senaryo da zorunlu &mdash; ve 3 yeterli.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hata</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td><b>4</b> gereğinden fazla. Üç yol 7 okun tamamını veriyor;
+        &ldquo;EN AZ&rdquo; sorulduğu için fazlası yanlıştır.</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td><b>2</b> yetersiz. İki senaryoyla ya <code>hata</code> (4) ya da
+        BEKLEMEDE'den çıkan <code>tamamlandı</code> (7) kapsanmadan kalır.</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td><b>7</b> klasik tuzak: bu, <i>geçiş sayısıdır</i>.
+        Her geçiş için ayrı senaryo yazmak gerekseydi doğru olurdu, ama soru &ldquo;bir senaryo birden
+        fazla geçişi kapsayabilir&rdquo; diyerek bunu açıkça dışlıyor.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td class="ok">Hem gerekli hem yeterli: 3.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: payda cevabın yerine geçiyor</h3>
+    <p style="margin-bottom:0">Bu soruda 7 sayısı <b>doğru bir hesabın sonucudur</b> &mdash; ama sorulan
+    şey o değildir. &ldquo;Kaç geçiş var?&rdquo; ile &ldquo;kaç test senaryosu gerekir?&rdquo; iki ayrı
+    sorudur. Şıklarda geçiş sayısını birebir görüyorsan (burada 7), neredeyse her zaman çeldiricidir.</p>
+  </div>
+</section>
+
+
+<section id="s9">
+  <div class="shead"><div class="num">9</div>
+    <div><h2>Soru 2 &mdash; koruma koşullu depolama</h2>
+    <div class="lo">Resm&icirc; örnek sınav B &middot; Soru 23 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir depolama sistemi en fazla üç eleman saklayabilmektedir ve aşağıdaki durum geçiş diyagramıyla
+    modellenmiştir. N değişkeni o anda saklanan eleman sayısını temsil eder.</p>
+<pre>BAŞLANGIÇ  &#8212;Ekle / N := 1&#8594;                DOLU DEĞİL
+DOLU DEĞİL &#8212;Ekle [N &lt; 2] / N := N + 1&#8594;    DOLU DEĞİL
+DOLU DEĞİL &#8212;Ekle [N = 2] / N := N + 1&#8594;    DOLU
+DOLU       &#8212;Kaldır / N := N &minus; 1&#8594;          DOLU DEĞİL
+DOLU DEĞİL &#8212;Kaldır [N &gt; 0] / N := N &minus; 1&#8594;  DOLU DEĞİL</pre>
+    <p>Olay dizileri olarak temsil edilen aşağıdaki test senaryolarından hangisi EN YÜKSEK geçerli
+    geçiş kapsamına ulaşır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Ekle, Kaldır, Ekle, Ekle, Ekle</span></li>
+      <li><b>B</b><span>Ekle, Ekle, Ekle, Ekle, Kaldır, Kaldır</span></li>
+      <li><b>C</b><span>Ekle, Ekle, Ekle, Kaldır, Kaldır</span></li>
+      <li><b>D</b><span>Ekle, Ekle, Ekle, Kaldır, Ekle</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soruyu etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sorudaki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;EN YÜKSEK <b>geçerli geçiş</b> kapsamı&rdquo;</td><td>Payda = ok sayısı; şıkları tek tek izleyeceğiz</td></tr>
+        <tr><td>&ldquo;<b>N</b> değişkeni &hellip; eleman sayısı&rdquo;</td><td><b>Koruma koşulu</b> var &rarr; N'i her adımda yaz</td></tr>
+        <tr><td>Sadece iki olay: <code>Ekle</code>, <code>Kaldır</code></td><td>Hangi okun tetiklendiğini <i>olay değil</i>, N belirler</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Beş geçişi numaralandır</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 252" role="img" aria-label="B23 depolama sistemi durum gecis diyagrami">
+<rect class="bd neu" x="40" y="92" width="190" height="52" rx="15"/><text class="bl neu" x="135" y="123">BAŞLANGIÇ</text>
+<rect class="bd neu" x="378" y="92" width="190" height="52" rx="15"/><text class="bl neu" x="473" y="123">DOLU DEĞİL</text>
+<rect class="bd neu" x="716" y="92" width="190" height="52" rx="15"/><text class="bl neu" x="811" y="123">DOLU</text>
+<path d="M 230.0 118.0 L 369.0 118.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="378.0,118.0 368.0,122.5 368.0,113.5" fill="var(--c)"/>
+<text x="304" y="108" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Ekle / N := 1</text>
+<text x="304" y="134" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--c)">E1</text>
+<path d="M 447 92 C 433 44, 513 44, 499 92" fill="none" stroke="var(--c)" stroke-width="1.7"/><polygon points="499.0,92.0 497.5,81.1 506.1,83.7" fill="var(--c)"/>
+<text x="473" y="34" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Ekle [N &lt; 2] / N := N + 1</text>
+<text x="473" y="50" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--c)">E2</text>
+<path d="M 456 144 C 470 192, 390 192, 404 144" fill="none" stroke="var(--c)" stroke-width="1.7"/><polygon points="404.0,144.0 405.5,154.9 396.9,152.3" fill="var(--c)"/>
+<text x="430" y="206" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Kaldır [N &gt; 0] / N := N &minus; 1</text>
+<text x="430" y="190" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--c)">E4</text>
+<path d="M 568.0 118.0 L 707.0 118.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="716.0,118.0 706.0,122.5 706.0,113.5" fill="var(--c)"/>
+<text x="642" y="108" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Ekle [N = 2] / N := N + 1</text>
+<text x="642" y="134" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--c)">E3</text>
+<path d="M 806.0 144.0 L 806.0 228.0 L 540.0 228.0 L 540.0 153.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="540.0,144.0 544.5,154.0 535.5,154.0" fill="var(--c)"/>
+<text x="665" y="222" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Kaldır / N := N &minus; 1</text>
+<text x="665" y="242" text-anchor="middle" font-family="var(--sans)" font-size="10.5" font-weight="700" fill="var(--c)">E5</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Kaynak</th><th>Olay + koruma</th><th>Hedef</th><th>Eylem</th></tr>
+        <tr><td class="ctr"><b>E1</b></td><td>BAŞLANGIÇ</td><td>Ekle</td><td>DOLU DEĞİL</td><td>N := 1</td></tr>
+        <tr><td class="ctr"><b>E2</b></td><td>DOLU DEĞİL</td><td>Ekle <b>[N &lt; 2]</b></td><td>DOLU DEĞİL</td><td>N := N + 1</td></tr>
+        <tr><td class="ctr"><b>E3</b></td><td>DOLU DEĞİL</td><td>Ekle <b>[N = 2]</b></td><td>DOLU</td><td>N := N + 1</td></tr>
+        <tr><td class="ctr"><b>E4</b></td><td>DOLU DEĞİL</td><td>Kaldır <b>[N &gt; 0]</b></td><td>DOLU DEĞİL</td><td>N := N &minus; 1</td></tr>
+        <tr><td class="ctr"><b>E5</b></td><td>DOLU</td><td>Kaldır</td><td>DOLU DEĞİL</td><td>N := N &minus; 1</td></tr>
+      </table></div>
+      <pre class="fx">payda = <b>5</b> geçerli geçiş       (E2, E3, E4 özdöngü/koruma varyantları &#8212; hepsi ayrı ok)</pre>
+      <p style="margin-bottom:0;font-size:.88rem;color:var(--muted)">Dikkat: <code>(DOLU DEĞİL, Ekle)</code>
+      tablo hücresi <b>tek</b> ama içinde <b>iki</b> geçiş var (E2 ve E3). Bu yüzden burada
+      <code>durum &times; olay</code> formülü kullanılmaz.</p>
+      </div></li>
+
+    <li><b>Dört şıkkı da izle &mdash; kenara N yaz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Adım adım</th><th class="ctr">Farklı geçiş</th><th class="ctr">Kapsam</th></tr>
+        <tr><td><b>A</b></td>
+            <td>Ekle &rarr; <b>E1</b> (N=1) &middot; Kaldır [N&gt;0] &rarr; <b>E4</b> (N=0) &middot;
+                Ekle [N&lt;2] &rarr; <b>E2</b> (N=1) &middot; Ekle [N&lt;2] &rarr; <b>E2</b> (N=2) &middot;
+                Ekle [N=2] &rarr; <b>E3</b> (N=3, DOLU)</td>
+            <td class="ctr">E1, E4, E2, E3 = <b>4</b></td><td class="ctr no">4/5 = %80</td></tr>
+        <tr><td><b>B</b></td>
+            <td>Ekle &rarr; <b>E1</b> (N=1) &middot; Ekle &rarr; <b>E2</b> (N=2) &middot;
+                Ekle &rarr; <b>E3</b> (N=3, <b>DOLU</b>) &middot;
+                <b>Ekle</b> &rarr; DOLU durumunda <code>Ekle</code> tanımlı <b>değil</b> &#10007;</td>
+            <td class="ctr">dizi tıkanır</td><td class="ctr no">uygulanamaz</td></tr>
+        <tr><td><b>C</b></td>
+            <td>Ekle &rarr; <b>E1</b> (N=1) &middot; Ekle [N&lt;2] &rarr; <b>E2</b> (N=2) &middot;
+                Ekle [N=2] &rarr; <b>E3</b> (N=3, DOLU) &middot; Kaldır &rarr; <b>E5</b> (N=2, DOLU DEĞİL) &middot;
+                Kaldır [N&gt;0] &rarr; <b>E4</b> (N=1)</td>
+            <td class="ctr">E1, E2, E3, E5, E4 = <b>5</b></td><td class="ctr ok">5/5 = %100</td></tr>
+        <tr><td><b>D</b></td>
+            <td>Ekle &rarr; <b>E1</b> (N=1) &middot; Ekle &rarr; <b>E2</b> (N=2) &middot;
+                Ekle &rarr; <b>E3</b> (N=3, DOLU) &middot; Kaldır &rarr; <b>E5</b> (N=2, DOLU DEĞİL) &middot;
+                Ekle [N=2] &rarr; <b>E3</b> tekrar (N=3)</td>
+            <td class="ctr">E1, E2, E3, E5 = <b>4</b></td><td class="ctr no">4/5 = %80</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl ve karşılaştır</b>
+      <div>
+      <pre class="fx">A : 4 / 5 = %80
+B : uygulanabilir değil &#8212; yarış dışı
+C : 5 / 5 = <b>%100</b>   &#9668; en yüksek
+D : 4 / 5 = %80</pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li><b>A</b><span>Ekle, Kaldır, Ekle, Ekle, Ekle</span></li>
+      <li class="wrong"><b>B</b><span>Ekle, Ekle, Ekle, Ekle, Kaldır, Kaldır</span></li>
+      <li class="right"><b>C</b><span>Ekle, Ekle, Ekle, Kaldır, Kaldır &nbsp;&#10004;</span></li>
+      <li><b>D</b><span>Ekle, Ekle, Ekle, Kaldır, Ekle</span></li>
+    </ul>
+    <p style="margin-bottom:0">C, beş geçerli geçişin tamamını tek dizide tetikler: E1, E2, E3, E5, E4.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hata</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td>İlk <code>Kaldır</code> sistemi DOLU durumuna hiç sokmadan
+        E4'ü kullanıyor; dizi sonunda DOLU'ya ulaşıyor ama oradan çıkmıyor &rarr; <b>E5 hiç tetiklenmiyor</b>.
+        4/5 = %80.</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td>En uzun dizi olduğu için cazip, ama üçüncü <code>Ekle</code>'den sonra
+        sistem DOLU'dur ve DOLU satırında <code>Ekle</code> hücresi <b>boştur</b>. Dördüncü <code>Ekle</code>
+        geçerli bir geçişe karşılık gelmez &rarr; dizi uygulanabilir değil.</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td class="ok">Beş geçişin beşini de kapsar: %100.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td>C ile ilk dört adımı aynı; farkı son adımda. Son <code>Ekle</code>
+        N=2 olduğu için <b>E3'ü tekrar</b> tetikler, yeni geçiş eklemez &rarr; <b>E4 eksik</b>. 4/5 = %80.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: uzun dizi = yüksek kapsam değildir</h3>
+    <p style="margin-bottom:0">B şıkkı 6 olayla en uzun dizidir ve tam da bu yüzden konur.
+    Kapsamı <b>olay sayısı</b> belirlemez; belirleyen şey <b>farklı geçiş</b> sayısıdır &mdash; ve bir dizi
+    tanımsız bir olaya çarptığı anda yarıştan çıkar. Koruma koşullu modellerde her adımda
+    <code>N</code>'i yazmadan bu görülemez.</p>
+  </div>
+</section>
+
+
+<section id="s10">
+  <div class="shead"><div class="num">10</div>
+    <div><h2>Soru 3 &mdash; oda rezervasyonu, en az senaryo</h2>
+    <div class="lo">Resm&icirc; örnek sınav C &middot; Soru 23 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Aşağıdaki durum geçiş diyagramına göre test senaryoları tasarladığınızı varsayın:</p>
+<pre>Durumlar: BAŞLANGIÇ, TALEP EDİLİYOR, BEKLEME LİSTESİ, ONAYLANDI, SON
+
+BAŞLANGIÇ       &#8212;Oda talebi&#8594;    TALEP EDİLİYOR
+TALEP EDİLİYOR  &#8212;Müsait değil&#8594;  BEKLEME LİSTESİ
+TALEP EDİLİYOR  &#8212;Müsait&#8594;        ONAYLANDI
+BEKLEME LİSTESİ &#8212;Müsait&#8594;        ONAYLANDI
+BEKLEME LİSTESİ &#8212;İptal&#8594;         SON
+ONAYLANDI       &#8212;Öde&#8594;           SON</pre>
+    <p>%100 geçerli geçiş kapsamı elde etmek için gereken EN AZ test senaryosu sayısı nedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>3</span></li>
+      <li><b>B</b><span>2</span></li>
+      <li><b>C</b><span>5</span></li>
+      <li><b>D</b><span>6</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soruyu etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sorudaki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;%100 <b>geçerli geçiş</b> kapsamı&rdquo;</td><td>Altı okun hepsi yürütülecek</td></tr>
+        <tr><td>&ldquo;<b>EN AZ</b> test senaryosu sayısı&rdquo;</td><td>Yol sayısı soruluyor, geçiş sayısı değil</td></tr>
+        <tr><td>Diyagramda <b>geri dönen ok yok</b></td><td><b>Döngüsüz</b> model &rarr; her yol tek yön, kısayol var</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Modeli çiz ve okları say</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 308" role="img" aria-label="C23 oda rezervasyonu durum gecis diyagrami">
+<rect class="bd neu" x="20" y="40" width="150" height="52" rx="15"/><text class="bl neu" x="95" y="71">BAŞLANGIÇ</text>
+<rect class="bd neu" x="250" y="40" width="180" height="52" rx="15"/><text class="bl neu" x="340" y="71">TALEP EDİLİYOR</text>
+<rect class="bd neu" x="530" y="40" width="170" height="52" rx="15"/><text class="bl neu" x="615" y="71">ONAYLANDI</text>
+<rect class="bd neu" x="800" y="40" width="120" height="52" rx="15"/><text class="bl neu" x="860" y="71">SON</text>
+<rect class="bd neu" x="340" y="190" width="200" height="52" rx="15"/><text class="bl neu" x="440" y="221">BEKLEME LİSTESİ</text>
+<path d="M 170.0 66.0 L 241.0 66.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="250.0,66.0 240.0,70.5 240.0,61.5" fill="var(--c)"/>
+<text x="210" y="56" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Oda talebi</text>
+<path d="M 430.0 66.0 L 521.0 66.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="530.0,66.0 520.0,70.5 520.0,61.5" fill="var(--c)"/>
+<text x="480" y="56" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Müsait</text>
+<path d="M 700.0 66.0 L 791.0 66.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="800.0,66.0 790.0,70.5 790.0,61.5" fill="var(--c)"/>
+<text x="750" y="56" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Öde</text>
+<path d="M 380.0 92.0 L 380.0 181.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="380.0,190.0 375.5,180.0 384.5,180.0" fill="var(--c)"/>
+<text x="450" y="145" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Müsait değil</text>
+<path d="M 540.0 216.0 L 610.0 216.0 L 610.0 101.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="610.0,92.0 614.5,102.0 605.5,102.0" fill="var(--c)"/>
+<text x="658" y="152" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Müsait</text>
+<path d="M 500.0 242.0 L 500.0 290.0 L 860.0 290.0 L 860.0 101.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="860.0,92.0 864.5,102.0 855.5,102.0" fill="var(--c)"/>
+<text x="680" y="284" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">İptal</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">geçiş sayısı = <b>6</b>      durum sayısı = 5      olay sayısı = 5
+payda (geçerli geçiş kapsamı) = 6</pre>
+      </div></li>
+
+    <li><b>Döngüsüz modelde kısayol: başlangıçtan sona tüm yolları yaz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Yol</th><th>Durum dizisi</th><th>Olay dizisi</th><th class="ctr">Geçiş</th></tr>
+        <tr><td><b>T1</b></td><td>BAŞLANGIÇ &rarr; TALEP EDİLİYOR &rarr; ONAYLANDI &rarr; SON</td>
+            <td>Oda talebi, Müsait, Öde</td><td class="ctr">3</td></tr>
+        <tr><td><b>T2</b></td><td>BAŞLANGIÇ &rarr; TALEP EDİLİYOR &rarr; BEKLEME LİSTESİ &rarr; ONAYLANDI &rarr; SON</td>
+            <td>Oda talebi, Müsait değil, Müsait, Öde</td><td class="ctr">4</td></tr>
+        <tr><td><b>T3</b></td><td>BAŞLANGIÇ &rarr; TALEP EDİLİYOR &rarr; BEKLEME LİSTESİ &rarr; SON</td>
+            <td>Oda talebi, Müsait değil, İptal</td><td class="ctr">3</td></tr>
+      </table></div>
+      <p style="margin-bottom:0">Model döngüsüz olduğu için başlangıçtan sona <b>tam olarak üç</b> farklı
+      yol vardır. Üçünün birleşimi altı okun tamamını verir &rarr; <b>3 senaryo yeterli</b>.</p>
+      </div></li>
+
+    <li><b>Üçten az olabilir mi? Birbirini dışlayan okları bul</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Ok</th><th>Neden tek başına bir senaryo ister</th></tr>
+        <tr><td>TALEP EDİLİYOR &#8212;<code>Müsait</code>&#8594; ONAYLANDI</td>
+            <td>Bir yol TALEP EDİLİYOR durumundan <b>yalnızca bir kez</b> çıkar (döngü yok).
+            Bu oku seçen yol, &ldquo;Müsait değil&rdquo; okunu kullanamaz.</td></tr>
+        <tr><td>BEKLEME LİSTESİ &#8212;<code>Müsait</code>&#8594; ONAYLANDI</td>
+            <td>BEKLEME LİSTESİ'nden de yalnızca bir kez çıkılır.</td></tr>
+        <tr><td>BEKLEME LİSTESİ &#8212;<code>İptal</code>&#8594; SON</td>
+            <td>Üstteki okla aynı durumdan çıkıyor &rarr; ikisi aynı senaryoya sığmaz.</td></tr>
+      </table></div>
+      <pre class="fx">üç ok ikişer ikişer birbirini dışlıyor &#8658; alt sınır = <b>3</b>
+üç yol da hepsini kapsıyor             &#8658; yeterli  = <b>3</b>
+cevap = 3</pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="right"><b>A</b><span>3 &nbsp;&#10004;</span></li>
+      <li><b>B</b><span>2</span></li>
+      <li><b>C</b><span>5</span></li>
+      <li class="wrong"><b>D</b><span>6</span></li>
+    </ul>
+    <p style="margin-bottom:0">Döngüsüz bir modelde başlangıçtan sona giden farklı yol sayısı doğrudan
+    cevaptır: burada 3.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hata</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td class="ok">Hem gerekli hem yeterli.</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td>İki senaryoyla, birbirini dışlayan üç oktan en fazla ikisi
+        yürütülebilir &rarr; kapsam %100 olmaz (en iyi ihtimalle 5/6).</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td><b>5</b> durum sayısıdır. Durum sayısı ile senaryo sayısının
+        birbiriyle ilgisi yoktur.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td><b>6</b> geçiş sayısıdır &mdash; A sorusundaki ile aynı tuzak.
+        Bir senaryo yol boyunca 3&ndash;4 geçişi birden kapsar.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card warnc">
+    <h3>Döngü var mı, yok mu? Yöntemi o belirler</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Model</th><th>En az senaryo sayısı nasıl bulunur</th><th>Örnek</th></tr>
+      <tr><td><b>Döngüsüz</b> (bu soru)</td><td>Başlangıçtan sona giden <b>farklı yolları</b> say</td>
+          <td>3 yol &rarr; 3 senaryo</td></tr>
+      <tr><td><b>Döngülü</b> (Soru 1)</td><td>Önce sona giren farklı ok sayısı = alt sınır;
+          sonra kalan okları bu yollara sıkıştırmayı dene, döngüleri tekrar ederek</td>
+          <td>2 bitiş oku ama 3 senaryo</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Her iki yöntemde de son adım aynıdır: seçtiğin yolların birleşiminin
+    <b>tüm okları</b> içerdiğini tek tek doğrula.</p>
+  </div>
+</section>
+
+
+<section id="s11">
+  <div class="shead"><div class="num">11</div>
+    <div><h2>Soru 4 &mdash; tablo verilmiş, en yüksek kapsam</h2>
+    <div class="lo">Resm&icirc; örnek sınav D &middot; Soru 23 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Aşağıdaki durum geçiş tablosuyla modellenen, 4 durumu ve 5 farklı olayı bulunan otel odası
+    rezervasyon sistemine durum geçiş testi uyguladığınızı varsayın:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Durum</th><th class="ctr">Müsait</th><th class="ctr">MüsaitDeğil</th>
+          <th class="ctr">OdayıDeğiştir</th><th class="ctr">İptal</th><th class="ctr">Öde</th></tr>
+      <tr><th>S1: Talep ediliyor</th><td class="ok ctr">S2</td><td class="ok ctr">S3</td>
+          <td class="ctr"></td><td class="ctr"></td><td class="ctr"></td></tr>
+      <tr><th>S2: Onaylandı</th><td class="ctr"></td><td class="ctr"></td>
+          <td class="ok ctr">S1</td><td class="ok ctr">S4</td><td class="ok ctr">S4</td></tr>
+      <tr><th>S3: Bekleme listesinde</th><td class="ok ctr">S2</td><td class="ctr"></td>
+          <td class="ctr"></td><td class="ok ctr">S4</td><td class="ctr"></td></tr>
+      <tr><th>S4: Son</th><td class="ctr"></td><td class="ctr"></td>
+          <td class="ctr"></td><td class="ctr"></td><td class="ctr"></td></tr>
+    </table></div>
+    <p>Tüm test senaryolarının &ldquo;Talep ediliyor&rdquo; durumunda başladığını varsayarsak, olay dizileri
+    olarak temsil edilen aşağıdaki test senaryolarından hangisi en yüksek geçerli geçiş kapsamını sağlar?</p>
+    <ul class="opts">
+      <li><b>A</b><span>MevcutDeğil, Mevcut, OdayıDeğiştir, Mevcut Değil, İptal</span></li>
+      <li><b>B</b><span>Mevcut, OdayıDeğiştir, MevcutDeğil, Mevcut, Öde</span></li>
+      <li><b>C</b><span>Mevcut, OdayıDeğiştir, Mevcut, OdayıDeğiştir, MevcutDeğil</span></li>
+      <li><b>D</b><span>MevcutDeğil, İptal, OdayıDeğiştir, Mevcut, Öde</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soruyu etiketle ve adları eşleştir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Sorudaki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;en yüksek <b>geçerli geçiş</b> kapsamı&rdquo;</td><td>Payda = <b>dolu hücre</b> sayısı</td></tr>
+        <tr><td>&ldquo;tüm senaryolar <b>Talep ediliyor</b>'da başlar&rdquo;</td><td>Başlangıç durumu = <b>S1</b></td></tr>
+        <tr><td>Şıklarda <b>Mevcut / MevcutDeğil</b></td><td>Tablodaki <b>Müsait / MüsaitDeğil</b> olaylarının karşılığı</td></tr>
+        <tr><td>&ldquo;4 durum ve 5 farklı olay&rdquo;</td><td>Tüm geçiş kapsamı sorulsaydı payda <b>4&times;5 = 20</b> olurdu &mdash; sorulmuyor</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Dolu hücreleri numaralandır &mdash; bu senin payda listen</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 272" role="img" aria-label="D23 otel rezervasyonu durum gecis diyagrami">
+<rect class="bd neu" x="40" y="40" width="200" height="52" rx="15"/><text class="bl neu" x="140" y="71">S1 &middot; Talep ediliyor</text>
+<rect class="bd neu" x="400" y="40" width="200" height="52" rx="15"/><text class="bl neu" x="500" y="71">S2 &middot; Onaylandı</text>
+<rect class="bd neu" x="400" y="200" width="240" height="52" rx="15"/><text class="bl neu" x="520" y="231">S3 &middot; Bekleme listesinde</text>
+<rect class="bd neu" x="760" y="120" width="140" height="52" rx="15"/><text class="bl neu" x="830" y="151">S4 &middot; Son</text>
+<path d="M 240.0 56.0 L 391.0 56.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="400.0,56.0 390.0,60.5 390.0,51.5" fill="var(--c)"/>
+<text x="320" y="46" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Müsait &middot; T1</text>
+<path d="M 400.0 76.0 L 249.0 76.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="240.0,76.0 250.0,71.5 250.0,80.5" fill="var(--c)"/>
+<text x="320" y="92" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">OdayıDeğiştir &middot; T3</text>
+<path d="M 140.0 92.0 L 140.0 226.0 L 391.0 226.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="400.0,226.0 390.0,230.5 390.0,221.5" fill="var(--c)"/>
+<text x="246" y="216" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">MüsaitDeğil &middot; T2</text>
+<path d="M 500.0 200.0 L 500.0 101.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="500.0,92.0 504.5,102.0 495.5,102.0" fill="var(--c)"/>
+<text x="566" y="150" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Müsait &middot; T6</text>
+<path d="M 600.0 60.0 L 838.0 60.0 L 838.0 111.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="838.0,120.0 833.5,110.0 842.5,110.0" fill="var(--c)"/>
+<text x="712" y="50" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">Öde &middot; T5</text>
+<path d="M 600.0 82.0 L 786.0 82.0 L 786.0 111.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="786.0,120.0 781.5,110.0 790.5,110.0" fill="var(--c)"/>
+<text x="690" y="98" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">İptal &middot; T4</text>
+<path d="M 640.0 226.0 L 862.0 226.0 L 862.0 181.0" fill="none" stroke="var(--c)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="862.0,172.0 866.5,182.0 857.5,182.0" fill="var(--c)"/>
+<text x="752" y="216" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--cd)">İptal &middot; T7</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Kaynak</th><th>Olay</th><th>Hedef</th></tr>
+        <tr><td class="ctr"><b>T1</b></td><td>S1</td><td>Müsait</td><td>S2</td></tr>
+        <tr><td class="ctr"><b>T2</b></td><td>S1</td><td>MüsaitDeğil</td><td>S3</td></tr>
+        <tr><td class="ctr"><b>T3</b></td><td>S2</td><td>OdayıDeğiştir</td><td>S1</td></tr>
+        <tr><td class="ctr"><b>T4</b></td><td>S2</td><td>İptal</td><td>S4</td></tr>
+        <tr><td class="ctr"><b>T5</b></td><td>S2</td><td>Öde</td><td>S4</td></tr>
+        <tr><td class="ctr"><b>T6</b></td><td>S3</td><td>Müsait</td><td>S2</td></tr>
+        <tr><td class="ctr"><b>T7</b></td><td>S3</td><td>İptal</td><td>S4</td></tr>
+      </table></div>
+      <pre class="fx">toplam hücre      = 4 durum &times; 5 olay = 20
+dolu hücre        = <b>7</b>   &#8592; geçerli geçiş kapsamının paydası
+boş hücre         = 13  (geçersiz geçiş &#8212; bu soruda kullanılmıyor)</pre>
+      </div></li>
+
+    <li><b>Her şıkkı S1'den başlatarak izle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Adım adım (durum &rarr; olay &rarr; geçiş)</th><th class="ctr">Farklı geçiş</th></tr>
+        <tr><td><b>A</b></td>
+            <td>S1 &middot; MüsaitDeğil &rarr; <b>T2</b> &rarr; S3 &middot;&nbsp; Müsait &rarr; <b>T6</b> &rarr; S2 &middot;&nbsp;
+                OdayıDeğiştir &rarr; <b>T3</b> &rarr; S1 &middot;&nbsp; MüsaitDeğil &rarr; <b>T2 tekrar</b> &rarr; S3 &middot;&nbsp;
+                İptal &rarr; <b>T7</b> &rarr; S4</td>
+            <td class="ctr no">T2, T6, T3, T7 = <b>4</b></td></tr>
+        <tr><td><b>B</b></td>
+            <td>S1 &middot; Müsait &rarr; <b>T1</b> &rarr; S2 &middot;&nbsp; OdayıDeğiştir &rarr; <b>T3</b> &rarr; S1 &middot;&nbsp;
+                MüsaitDeğil &rarr; <b>T2</b> &rarr; S3 &middot;&nbsp; Müsait &rarr; <b>T6</b> &rarr; S2 &middot;&nbsp;
+                Öde &rarr; <b>T5</b> &rarr; S4</td>
+            <td class="ctr ok">T1, T3, T2, T6, T5 = <b>5</b></td></tr>
+        <tr><td><b>C</b></td>
+            <td>S1 &middot; Müsait &rarr; <b>T1</b> &rarr; S2 &middot;&nbsp; OdayıDeğiştir &rarr; <b>T3</b> &rarr; S1 &middot;&nbsp;
+                Müsait &rarr; <b>T1 tekrar</b> &rarr; S2 &middot;&nbsp; OdayıDeğiştir &rarr; <b>T3 tekrar</b> &rarr; S1 &middot;&nbsp;
+                MüsaitDeğil &rarr; <b>T2</b> &rarr; S3</td>
+            <td class="ctr no">T1, T3, T2 = <b>3</b></td></tr>
+        <tr><td><b>D</b></td>
+            <td>S1 &middot; MüsaitDeğil &rarr; <b>T2</b> &rarr; S3 &middot;&nbsp; İptal &rarr; <b>T7</b> &rarr; <b>S4 (Son)</b> &middot;&nbsp;
+                S4 satırı tamamen boş &rarr; kalan üç olay hiçbir geçiş üretmez &#10007;</td>
+            <td class="ctr no">T2, T7 = <b>2</b></td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl ve karşılaştır</b>
+      <div>
+      <pre class="fx">A : 4 / 7 &#8776; %57,1
+B : <b>5 / 7 &#8776; %71,4</b>   &#9668; en yüksek
+C : 3 / 7 &#8776; %42,9
+D : 2 / 7 &#8776; %28,6   (dizinin geri kalanı uygulanabilir değil)</pre>
+      <p style="margin-bottom:0;font-size:.88rem;color:var(--muted)">Dört şıkkın da olay sayısı 5.
+      Farkı yaratan şey, kaç <b>farklı</b> geçişe dokunulduğu.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li><b>A</b><span>MevcutDeğil, Mevcut, OdayıDeğiştir, Mevcut Değil, İptal</span></li>
+      <li class="right"><b>B</b><span>Mevcut, OdayıDeğiştir, MevcutDeğil, Mevcut, Öde &nbsp;&#10004;</span></li>
+      <li><b>C</b><span>Mevcut, OdayıDeğiştir, Mevcut, OdayıDeğiştir, MevcutDeğil</span></li>
+      <li class="wrong"><b>D</b><span>MevcutDeğil, İptal, OdayıDeğiştir, Mevcut, Öde</span></li>
+    </ul>
+    <p style="margin-bottom:0">B'deki iki <code>Müsait</code> olayı <b>farklı kaynak durumlarda</b>
+    gerçekleşir (S1'den T1, S3'ten T6) &mdash; bu yüzden ikisi de sayılır ve dizi 5 farklı geçişe ulaşır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hata</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td>İki <code>MüsaitDeğil</code> olayı da <b>aynı</b> kaynak
+        durumdan (S1) tetikleniyor &rarr; ikisi de T2, tek sayılır. 4 farklı geçiş.</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td class="ok">5 farklı geçiş &mdash; en yüksek.</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td>S1 &#8646; S2 arasında gidip geliyor; T1 ve T3 ikişer kez
+        tekrarlanıyor. Tekrarlar kapsamı artırmaz &rarr; yalnızca 3 farklı geçiş.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td>İkinci adımda <code>İptal</code> ile S4 (Son) durumuna düşüyor.
+        S4 satırı tamamen boş olduğu için dizinin kalanı <b>uygulanabilir değil</b>.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: aynı olay adı &#8800; aynı geçiş</h3>
+<pre>A şıkkı:  MüsaitDeğil (S1'den)  ve  MüsaitDeğil (S1'den)   &#8594;  AYNI geçiş (T2)  &#8212; 1 sayılır
+B şıkkı:  Müsait      (S1'den)  ve  Müsait      (S3'ten)   &#8594;  FARKLI geçiş (T1, T6) &#8212; 2 sayılır</pre>
+    <p style="margin-bottom:0">Geçişin kimliği <code>(kaynak durum, olay)</code> çiftidir.
+    Diziyi izlerken <b>her adımda bulunduğun durumu kenara yazmazsan</b> bu ayrımı göremezsin &mdash;
+    ve A ile B'yi karıştırırsın. Bu sorunun bütün zorluğu tam olarak burada.</p>
+  </div>
+</section>
+
+
+<section id="s12">
+  <div class="shead"><div class="num">12</div>
+    <div><h2>Soru 5 &mdash; şarj soketi, iki senaryonun birleşimi</h2>
+    <div class="lo">Pratik sınav E &middot; Soru 22 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir elektrikli araç şarj istasyonu ağındaki bir şarj soketinin davranışı aşağıdaki durum ve
+    geçişlerle tanımlanmıştır:</p>
+<pre>BOŞTA       &#8212;rezerve et&#8594;        REZERVE
+REZERVE     &#8212;iptal et&#8594;          BOŞTA
+REZERVE     &#8212;kabloyu tak&#8594;       ŞARJ EDİYOR
+BOŞTA       &#8212;kabloyu tak&#8594;       ŞARJ EDİYOR
+ŞARJ EDİYOR &#8212;şarj tamamlandı&#8594;   TAMAMLANDI
+ŞARJ EDİYOR &#8212;hata algılandı&#8594;    ARIZALI
+TAMAMLANDI  &#8212;kabloyu çıkar&#8594;     BOŞTA
+ARIZALI     &#8212;bakım tamamlandı&#8594;  BOŞTA</pre>
+    <p>Aşağıdaki iki test senaryosu yürütülmüştür:</p>
+<pre>TS1: BOŞTA - rezerve et - REZERVE - kabloyu tak - ŞARJ EDİYOR -
+     şarj tamamlandı - TAMAMLANDI - kabloyu çıkar - BOŞTA
+
+TS2: BOŞTA - kabloyu tak - ŞARJ EDİYOR - hata algılandı - ARIZALI -
+     bakım tamamlandı - BOŞTA</pre>
+    <p>Bu iki test senaryosuyla elde edilen geçerli geçiş (0-switch) kapsamı nedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%75</span></li>
+      <li><b>B</b><span>%62,5</span></li>
+      <li><b>C</b><span>%87,5</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soruyu etiketle ve paydayı sabitle</b>
+      <div>
+      <p style="margin:0 0 .5rem">&ldquo;<b>0-switch</b>&rdquo; kelimesi geçiyor &rarr; kapsam öğesi
+      <b>geçerli geçişler</b>. Modelde listelenen ok sayısını say:</p>
+      <pre class="fx">payda = <b>8</b> geçerli geçiş       (durum sayısı 5, olay sayısı 7 &#8212; ama ikisi de payda değil)</pre>
+      </div></li>
+
+    <li><b>Modeli çiz ve iki senaryoyu üstüne işaretle</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 362" role="img" aria-label="E22 sarj soketi durum gecis diyagrami">
+<rect class="bd neu" x="30" y="140" width="150" height="52" rx="15"/><text class="bl neu" x="105" y="171">BOŞTA</text>
+<rect class="bd neu" x="270" y="30" width="160" height="52" rx="15"/><text class="bl neu" x="350" y="61">REZERVE</text>
+<rect class="bd neu" x="520" y="140" width="180" height="52" rx="15"/><text class="bl neu" x="610" y="171">ŞARJ EDİYOR</text>
+<rect class="bd neu" x="760" y="30" width="170" height="52" rx="15"/><text class="bl neu" x="845" y="61">TAMAMLANDI</text>
+<rect class="bd neu" x="600" y="300" width="150" height="52" rx="15"/><text class="bl neu" x="675" y="331">ARIZALI</text>
+<path d="M 130.0 140.0 L 130.0 56.0 L 261.0 56.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="270.0,56.0 260.0,60.5 260.0,51.5" fill="var(--good)"/>
+<text x="206" y="46" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">rezerve et</text>
+<circle class="dot" cx="255" cy="56" r="12"/><text class="dv" x="255" y="61">1</text>
+<path d="M 270.0 70.0 L 170.0 70.0 L 170.0 131.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="170.0,140.0 165.5,130.0 174.5,130.0" fill="var(--bad)"/>
+<text x="222" y="86" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">iptal et</text>
+<circle class="dot miss" cx="170" cy="110" r="12"/><text class="dv miss" x="170" y="115">&#10007;</text>
+<path d="M 430.0 70.0 L 610.0 70.0 L 610.0 131.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="610.0,140.0 605.5,130.0 614.5,130.0" fill="var(--good)"/>
+<text x="512" y="60" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">kabloyu tak</text>
+<circle class="dot" cx="610" cy="108" r="12"/><text class="dv" x="610" y="113">2</text>
+<path d="M 180.0 166.0 L 511.0 166.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="520.0,166.0 510.0,170.5 510.0,161.5" fill="var(--good)"/>
+<text x="350" y="156" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">kabloyu tak</text>
+<circle class="dot" cx="450" cy="166" r="12"/><text class="dv" x="450" y="171">5</text>
+<path d="M 700.0 160.0 L 845.0 160.0 L 845.0 91.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="845.0,82.0 849.5,92.0 840.5,92.0" fill="var(--good)"/>
+<text x="772" y="150" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">şarj tamamlandı</text>
+<circle class="dot" cx="845" cy="124" r="12"/><text class="dv" x="845" y="129">3</text>
+<path d="M 660.0 192.0 L 660.0 291.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="660.0,300.0 655.5,290.0 664.5,290.0" fill="var(--good)"/>
+<text x="734" y="250" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">hata algılandı</text>
+<circle class="dot" cx="660" cy="250" r="12"/><text class="dv" x="660" y="255">6</text>
+<path d="M 800.0 30.0 L 800.0 14.0 L 90.0 14.0 L 90.0 131.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="90.0,140.0 85.5,130.0 94.5,130.0" fill="var(--good)"/>
+<text x="520" y="30" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">kabloyu çıkar</text>
+<circle class="dot" cx="90" cy="80" r="12"/><text class="dv" x="90" y="85">4</text>
+<path d="M 600.0 326.0 L 105.0 326.0 L 105.0 201.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="105.0,192.0 109.5,202.0 100.5,202.0" fill="var(--good)"/>
+<text x="352" y="316" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">bakım tamamlandı</text>
+<circle class="dot" cx="105" cy="262" r="12"/><text class="dv" x="105" y="267">7</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>yürütülen geçiş</span><span><i class="m"></i>hiç yürütülmeyen geçiş</span></p>
+      </div></li>
+
+    <li><b>TS1'i izle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Durum</th><th>Olay</th><th>Yeni durum</th><th class="ctr">Geçiş</th></tr>
+        <tr><td class="ctr">1</td><td>BOŞTA</td><td>rezerve et</td><td>REZERVE</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">2</td><td>REZERVE</td><td>kabloyu tak</td><td>ŞARJ EDİYOR</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">3</td><td>ŞARJ EDİYOR</td><td>şarj tamamlandı</td><td>TAMAMLANDI</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">4</td><td>TAMAMLANDI</td><td>kabloyu çıkar</td><td>BOŞTA</td><td class="ok ctr">yeni</td></tr>
+      </table></div>
+      <pre class="fx">TS1 &rarr; <b>4</b> farklı geçiş</pre>
+      </div></li>
+
+    <li><b>TS2'yi izle ve birleşimi al</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Durum</th><th>Olay</th><th>Yeni durum</th><th class="ctr">Geçiş</th></tr>
+        <tr><td class="ctr">5</td><td>BOŞTA</td><td>kabloyu tak</td><td>ŞARJ EDİYOR</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">6</td><td>ŞARJ EDİYOR</td><td>hata algılandı</td><td>ARIZALI</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">7</td><td>ARIZALI</td><td>bakım tamamlandı</td><td>BOŞTA</td><td class="ok ctr">yeni</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0;font-size:.88rem;color:var(--muted)">Dikkat: TS2'nin ilk adımı
+      <code>kabloyu tak</code> ama kaynak durumu <b>BOŞTA</b>; TS1'deki <code>kabloyu tak</code>
+      <b>REZERVE</b>'den çıkıyordu. Farklı kaynak &rarr; <b>farklı geçiş</b>, ikisi de sayılır.</p>
+      </div></li>
+
+    <li><b>Eksik kalan oku bul ve böl</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Geçiş</th><th class="ctr">TS1</th><th class="ctr">TS2</th><th class="ctr">Kapsandı mı?</th></tr>
+        <tr><td>BOŞTA &#8212;rezerve et&#8594; REZERVE</td><td class="ctr">&#10004;</td><td class="ctr"></td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td>REZERVE &#8212;<b>iptal et</b>&#8594; BOŞTA</td><td class="ctr"></td><td class="ctr"></td><td class="no ctr">&#10007;</td></tr>
+        <tr><td>REZERVE &#8212;kabloyu tak&#8594; ŞARJ EDİYOR</td><td class="ctr">&#10004;</td><td class="ctr"></td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td>BOŞTA &#8212;kabloyu tak&#8594; ŞARJ EDİYOR</td><td class="ctr"></td><td class="ctr">&#10004;</td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td>ŞARJ EDİYOR &#8212;şarj tamamlandı&#8594; TAMAMLANDI</td><td class="ctr">&#10004;</td><td class="ctr"></td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td>ŞARJ EDİYOR &#8212;hata algılandı&#8594; ARIZALI</td><td class="ctr"></td><td class="ctr">&#10004;</td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td>TAMAMLANDI &#8212;kabloyu çıkar&#8594; BOŞTA</td><td class="ctr">&#10004;</td><td class="ctr"></td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td>ARIZALI &#8212;bakım tamamlandı&#8594; BOŞTA</td><td class="ctr"></td><td class="ctr">&#10004;</td><td class="ok ctr">&#10004;</td></tr>
+      </table></div>
+      <pre class="fx">birleşim = 4 + 3 = <b>7</b> farklı geçiş   (ortak geçiş yok, çıkarma gerekmiyor)
+kapsam   = 7 / 8 = 0,875 = <b>%87,5</b></pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li><b>A</b><span>%75</span></li>
+      <li><b>B</b><span>%62,5</span></li>
+      <li class="right"><b>C</b><span>%87,5 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>D</b><span>%100</span></li>
+    </ul>
+    <p style="margin-bottom:0">Sekiz okun yedisi yürütüldü; eksik olan tek ok
+    <b>REZERVE &#8212;iptal et&#8594; BOŞTA</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hangi hatadan çıkar</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td>%75 = 6/8. İki senaryodaki iki <code>kabloyu tak</code>
+        olayını <b>aynı geçiş</b> sanıp tek saymaktan çıkar.</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td>%62,5 = 5/8. Senaryolardan birinin geçişleri eksik sayıldığında
+        (örneğin TS2'nin ilk adımı atlandığında) elde edilir.</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td class="ok">7/8 = %87,5.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td>%100, <b>durum kapsamına</b> bakmaktan çıkar: beş durumun
+        (BOŞTA, REZERVE, ŞARJ EDİYOR, TAMAMLANDI, ARIZALI) hepsi gerçekten ziyaret edilmiştir &mdash;
+        ama bir ok hiç yürütülmemiştir.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: %100 durum kapsamı &#8800; %100 geçiş kapsamı</h3>
+    <p style="margin-bottom:0">Bu soru 5. bölümdeki örneğin sınav hali. Beş durumun hepsi ziyaret
+    edildi, yine de kapsam %87,5. Sebebi: REZERVE durumundan <b>iki</b> ok çıkıyor
+    (<code>iptal et</code> ve <code>kabloyu tak</code>) ama testler yalnızca birini kullandı.
+    <b>Kontrol refleksi:</b> birden fazla çıkışı olan durumları işaretle ve her çıkışın
+    kullanılıp kullanılmadığına ayrı ayrı bak.</p>
+  </div>
+</section>
+
+
+<section id="s13">
+  <div class="shead"><div class="num">13</div>
+    <div><h2>Soru 6 &mdash; asansör kapısı, kapsamı tamamlayan senaryo</h2>
+    <div class="lo">Pratik sınav F &middot; Soru 23 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir asansör kontrol yazılımının kapı davranışı aşağıdaki durum geçiş modeliyle tanımlanmıştır:</p>
+<pre>BEKLEMEDE      &#8212;çağrı al&#8594;            KAPI AÇILIYOR
+KAPI AÇILIYOR  &#8212;açılma tamamlandı&#8594;   KAPI AÇIK
+KAPI AÇIK      &#8212;aç butonu&#8594;           KAPI AÇIK
+KAPI AÇIK      &#8212;zaman aşımı&#8594;         KAPI KAPANIYOR
+KAPI KAPANIYOR &#8212;engel algılandı&#8594;     KAPI AÇILIYOR
+KAPI KAPANIYOR &#8212;kapanma tamamlandı&#8594; HAREKET
+HAREKET        &#8212;kata varış&#8594;          KAPI AÇILIYOR
+HAREKET        &#8212;çağrı yok&#8594;           BEKLEMEDE</pre>
+    <p>Şu test senaryosu çalıştırılmıştır:</p>
+<pre>TS1: BEKLEMEDE &#8212;çağrı al&#8594; KAPI AÇILIYOR &#8212;açılma tamamlandı&#8594; KAPI AÇIK
+     &#8212;zaman aşımı&#8594; KAPI KAPANIYOR &#8212;engel algılandı&#8594; KAPI AÇILIYOR
+     &#8212;açılma tamamlandı&#8594; KAPI AÇIK &#8212;zaman aşımı&#8594; KAPI KAPANIYOR
+     &#8212;kapanma tamamlandı&#8594; HAREKET &#8212;çağrı yok&#8594; BEKLEMEDE</pre>
+    <p>TS1'e eklendiğinde geçerli geçiş kapsamını (0-switch) %100'e çıkaran test senaryosu hangisidir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>BEKLEMEDE &#8212;çağrı al&#8594; KAPI AÇILIYOR &#8212;açılma tamamlandı&#8594; KAPI AÇIK
+        &#8212;zaman aşımı&#8594; KAPI KAPANIYOR &#8212;kapanma tamamlandı&#8594; HAREKET &#8212;çağrı yok&#8594; BEKLEMEDE</span></li>
+      <li><b>B</b><span>BEKLEMEDE &#8212;çağrı al&#8594; KAPI AÇILIYOR &#8212;açılma tamamlandı&#8594; KAPI AÇIK
+        &#8212;aç butonu&#8594; KAPI AÇIK &#8212;zaman aşımı&#8594; KAPI KAPANIYOR &#8212;engel algılandı&#8594; KAPI AÇILIYOR</span></li>
+      <li><b>C</b><span>BEKLEMEDE &#8212;çağrı al&#8594; KAPI AÇILIYOR &#8212;açılma tamamlandı&#8594; KAPI AÇIK
+        &#8212;zaman aşımı&#8594; KAPI KAPANIYOR &#8212;kapanma tamamlandı&#8594; HAREKET &#8212;kata varış&#8594; KAPI AÇILIYOR</span></li>
+      <li><b>D</b><span>BEKLEMEDE &#8212;çağrı al&#8594; KAPI AÇILIYOR &#8212;açılma tamamlandı&#8594; KAPI AÇIK
+        &#8212;aç butonu&#8594; KAPI AÇIK &#8212;zaman aşımı&#8594; KAPI KAPANIYOR &#8212;kapanma tamamlandı&#8594; HAREKET
+        &#8212;kata varış&#8594; KAPI AÇILIYOR</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soruyu etiketle</b>
+      <div>
+      <p style="margin:0">Soru kalıbı: <b>&ldquo;kapsamı tamamlayan dizi hangisi?&rdquo;</b>
+      Yöntem her zaman aynıdır: önce <b>eksik geçişlerin listesini</b> çıkar, sonra
+      hangi şıkkın <b>hepsini birden</b> içerdiğine bak. Şıkları baştan okumak zaman kaybıdır.</p>
+      </div></li>
+
+    <li><b>Okları numaralandır &mdash; özdöngüyü unutma</b>
+      <div>
+      <pre class="fx">payda = <b>8</b> geçerli geçiş
+         (KAPI AÇIK &#8212;aç butonu&#8594; KAPI AÇIK bir <b>özdöngüdür</b> ve geçerli bir geçiştir)</pre>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 400" role="img" aria-label="F23 asansor kapisi durum gecis diyagrami">
+<rect class="bd neu" x="15" y="170" width="130" height="52" rx="15"/><text class="bl neu" x="80" y="201">BEKLEMEDE</text>
+<rect class="bd neu" x="255" y="170" width="160" height="52" rx="15"/><text class="bl neu" x="335" y="201">KAPI AÇILIYOR</text>
+<rect class="bd neu" x="525" y="170" width="120" height="52" rx="15"/><text class="bl neu" x="585" y="201">KAPI AÇIK</text>
+<rect class="bd neu" x="755" y="170" width="175" height="52" rx="15"/><text class="bl neu" x="842" y="201">KAPI KAPANIYOR</text>
+<rect class="bd neu" x="420" y="340" width="130" height="52" rx="15"/><text class="bl neu" x="485" y="371">HAREKET</text>
+<path d="M 145.0 196.0 L 246.0 196.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="255.0,196.0 245.0,200.5 245.0,191.5" fill="var(--good)"/>
+<text x="200" y="160" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">çağrı al</text>
+<circle class="dot" cx="200" cy="196" r="12"/><text class="dv" x="200" y="201">1</text>
+<path d="M 415.0 196.0 L 516.0 196.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="525.0,196.0 515.0,200.5 515.0,191.5" fill="var(--good)"/>
+<text x="470" y="160" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">açılma tamamlandı</text>
+<circle class="dot" cx="470" cy="196" r="12"/><text class="dv" x="470" y="201">2</text>
+<path d="M 645.0 196.0 L 746.0 196.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="755.0,196.0 745.0,200.5 745.0,191.5" fill="var(--good)"/>
+<text x="700" y="160" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">zaman aşımı</text>
+<circle class="dot" cx="700" cy="196" r="12"/><text class="dv" x="700" y="201">3</text>
+<path d="M 842.0 170.0 L 842.0 60.0 L 335.0 60.0 L 335.0 161.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="335.0,170.0 330.5,160.0 339.5,160.0" fill="var(--good)"/>
+<text x="588" y="50" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">engel algılandı</text>
+<circle class="dot" cx="700" cy="60" r="12"/><text class="dv" x="700" y="65">4</text>
+<path d="M 842.0 222.0 L 842.0 366.0 L 559.0 366.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="550.0,366.0 560.0,361.5 560.0,370.5" fill="var(--good)"/>
+<text x="700" y="356" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">kapanma tamamlandı</text>
+<circle class="dot" cx="800" cy="366" r="12"/><text class="dv" x="800" y="371">5</text>
+<path d="M 420.0 366.0 L 80.0 366.0 L 80.0 231.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="80.0,222.0 84.5,232.0 75.5,232.0" fill="var(--good)"/>
+<text x="250" y="356" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">çağrı yok</text>
+<circle class="dot" cx="150" cy="366" r="12"/><text class="dv" x="150" y="371">6</text>
+<path d="M 440.0 340.0 L 440.0 280.0 L 390.0 280.0 L 390.0 231.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="390.0,222.0 394.5,232.0 385.5,232.0" fill="var(--bad)"/>
+<text x="510" y="274" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">kata varış</text>
+<circle class="dot miss" cx="440" cy="310" r="12"/><text class="dv miss" x="440" y="315">&#10007;</text>
+<path d="M 559 170 C 545 122, 625 122, 611 170" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-dasharray="7 5"/><polygon points="611.0,170.0 609.5,159.1 618.1,161.7" fill="var(--bad)"/>
+<text x="585" y="106" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">aç butonu</text>
+<circle class="dot miss" cx="585" cy="131" r="12"/><text class="dv miss" x="585" y="136">&#10007;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>TS1'in yürüttüğü geçiş</span><span><i class="m"></i>TS1'de eksik kalan geçiş</span></p>
+      </div></li>
+
+    <li><b>TS1'i izle, tekrarları işaretle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Olay</th><th>Kaynak &rarr; Hedef</th><th class="ctr">Yeni mi?</th></tr>
+        <tr><td class="ctr">1</td><td>çağrı al</td><td>BEKLEMEDE &rarr; KAPI AÇILIYOR</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">2</td><td>açılma tamamlandı</td><td>KAPI AÇILIYOR &rarr; KAPI AÇIK</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">3</td><td>zaman aşımı</td><td>KAPI AÇIK &rarr; KAPI KAPANIYOR</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">4</td><td>engel algılandı</td><td>KAPI KAPANIYOR &rarr; KAPI AÇILIYOR</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">5</td><td>açılma tamamlandı</td><td>KAPI AÇILIYOR &rarr; KAPI AÇIK</td><td class="ctr">tekrar</td></tr>
+        <tr><td class="ctr">6</td><td>zaman aşımı</td><td>KAPI AÇIK &rarr; KAPI KAPANIYOR</td><td class="ctr">tekrar</td></tr>
+        <tr><td class="ctr">7</td><td>kapanma tamamlandı</td><td>KAPI KAPANIYOR &rarr; HAREKET</td><td class="ok ctr">yeni</td></tr>
+        <tr><td class="ctr">8</td><td>çağrı yok</td><td>HAREKET &rarr; BEKLEMEDE</td><td class="ok ctr">yeni</td></tr>
+      </table></div>
+      <pre class="fx">8 olay yürütüldü &#8212; ama farklı geçiş sayısı = <b>6</b>
+TS1 kapsamı = 6 / 8 = <b>%75</b></pre>
+      </div></li>
+
+    <li><b>Eksik listesini çıkar</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Yürütülmeyen geçiş</th><th>Neden TS1'de yok</th></tr>
+        <tr><td class="no">KAPI AÇIK &#8212;<b>aç butonu</b>&#8594; KAPI AÇIK</td>
+            <td>TS1 kapı açıkken hiç butona basmıyor; özdöngü hiç tetiklenmiyor</td></tr>
+        <tr><td class="no">HAREKET &#8212;<b>kata varış</b>&#8594; KAPI AÇILIYOR</td>
+            <td>TS1 HAREKET durumundan <code>çağrı yok</code> ile çıkıyor, diğer çıkışı kullanmıyor</td></tr>
+      </table></div>
+      <p style="margin-bottom:0"><b>Aranan senaryo, bu iki geçişi birlikte içermeli.</b>
+      Şıklara artık sadece bu iki satırı arayarak bak.</p>
+      </div></li>
+
+    <li><b>Şıkları iki sütunla tara</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Şık</th><th class="ctr">aç butonu<br>özdöngüsü</th><th class="ctr">kata varış</th>
+            <th class="ctr">Eklendiğinde kapsam</th></tr>
+        <tr><td class="ctr"><b>A</b></td><td class="no ctr">&#10007;</td><td class="no ctr">&#10007;</td>
+            <td class="ctr no">6/8 = %75 &mdash; hiç değişmez</td></tr>
+        <tr><td class="ctr"><b>B</b></td><td class="ok ctr">&#10004;</td><td class="no ctr">&#10007;</td>
+            <td class="ctr no">7/8 = %87,5</td></tr>
+        <tr><td class="ctr"><b>C</b></td><td class="no ctr">&#10007;</td><td class="ok ctr">&#10004;</td>
+            <td class="ctr no">7/8 = %87,5</td></tr>
+        <tr><td class="ctr"><b>D</b></td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ctr ok">8/8 = <b>%100</b></td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>&hellip; zaman aşımı &rarr; kapanma tamamlandı &rarr; çağrı yok</span></li>
+      <li><b>B</b><span>&hellip; aç butonu &rarr; zaman aşımı &rarr; engel algılandı</span></li>
+      <li><b>C</b><span>&hellip; zaman aşımı &rarr; kapanma tamamlandı &rarr; kata varış</span></li>
+      <li class="right"><b>D</b><span>&hellip; <b>aç butonu</b> &rarr; zaman aşımı &rarr; kapanma tamamlandı &rarr; <b>kata varış</b> &nbsp;&#10004;</span></li>
+    </ul>
+    <p style="margin-bottom:0">Yalnızca D, eksik kalan iki geçişi (<code>aç butonu</code> özdöngüsü ve
+    <code>kata varış</code>) <b>tek senaryoda birlikte</b> içerir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hata</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td>Tamamen TS1'de zaten yürütülmüş geçişlerden oluşuyor.
+        Yeni bir ok eklemiyor, kapsam %75'te kalıyor. (&ldquo;Uzun ve tanıdık&rdquo; göründüğü için seçiliyor.)</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td>Özdöngüyü kapsıyor ama HAREKET durumuna hiç ulaşmıyor
+        &rarr; <code>kata varış</code> eksik. %87,5.</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td><code>kata varış</code>'ı kapsıyor ama kapı açıkken butona
+        basmıyor &rarr; özdöngü eksik. %87,5.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td class="ok">İkisini de içeriyor &rarr; 8/8 = %100.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: özdöngüyü saymamak</h3>
+    <p style="margin-bottom:0"><code>KAPI AÇIK &#8212;aç butonu&#8594; KAPI AÇIK</code> kaynak ile hedefi
+    aynı olduğu için diyagramda &ldquo;bir yere gitmiyor&rdquo; gibi durur ve sayılmaz. Oysa tablodaki
+    <code>(KAPI AÇIK, aç butonu)</code> hücresi <b>doludur</b> ve tam yetkili bir geçerli geçiştir.
+    Özdöngüyü unutmak paydayı 8 yerine 7 yapar ve bütün yüzdeleri kaydırır
+    (6/7 &#8776; %85,7 gibi gerçekte var olmayan bir sonuç çıkar).</p>
+  </div>
+</section>
+
+
+<section id="s14">
+  <div class="shead"><div class="num">14</div>
+    <div><h2>Soru 7 &mdash; akıllı ev aydınlatması, kapsam yüzdesi</h2>
+    <div class="lo">Pratik sınav G &middot; Soru 23 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir akıllı ev aydınlatma denetleyicisinin davranışı aşağıdaki durum geçiş modeliyle tanımlanmıştır:</p>
+<pre>KAPALI    &#8212;hareket algılandı&#8594;          AÇIK
+KAPALI    &#8212;gece zamanlayıcısı başladı&#8594; GECE MODU
+AÇIK      &#8212;5 dakika hareket yok&#8594;       KAPALI
+AÇIK      &#8212;el ile kilitle&#8594;             KİLİTLİ
+GECE MODU &#8212;hareket algılandı&#8594;          LOŞ
+GECE MODU &#8212;gün doğdu&#8594;                  KAPALI
+LOŞ       &#8212;2 dakika hareket yok&#8594;       GECE MODU
+KİLİTLİ   &#8212;kilidi aç&#8594;                  AÇIK</pre>
+    <p>Test ekibi KAPALI durumundan başlayan tek bir test senaryosu yürütmüştür:</p>
+<pre>hareket algılandı, 5 dakika hareket yok, gece zamanlayıcısı başladı,
+hareket algılandı, 2 dakika hareket yok, gün doğdu</pre>
+    <p>Bu test senaryosunun sağladığı geçerli geçiş kapsamı (0-switch) yüzde kaçtır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%75</span></li>
+      <li><b>B</b><span>%80</span></li>
+      <li><b>C</b><span>%85,7</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Paydayı en başta sabitle</b>
+      <div>
+      <pre class="fx">modelde listelenen ok sayısı = <b>8</b>        &#8592; payda
+durum sayısı = 5   (KAPALI, AÇIK, GECE MODU, LOŞ, KİLİTLİ)   &#8212; payda DEĞİL
+olay sayısı  = 7                                              &#8212; payda DEĞİL</pre>
+      <p style="margin-bottom:0">Üç sayı da şıklarda karşına çıkacak. &ldquo;0-switch&rdquo; dendiği için
+      doğru payda <b>8</b>'dir.</p>
+      </div></li>
+
+    <li><b>Modeli çiz ve yolu üstüne işaretle</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 400" role="img" aria-label="G23 akilli ev aydinlatma durum gecis diyagrami">
+<rect class="bd neu" x="400" y="40" width="140" height="52" rx="15"/><text class="bl neu" x="470" y="71">KAPALI</text>
+<rect class="bd neu" x="40" y="180" width="170" height="52" rx="15"/><text class="bl neu" x="125" y="211">AÇIK</text>
+<rect class="bd neu" x="40" y="330" width="170" height="52" rx="15"/><text class="bl neu" x="125" y="361">KİLİTLİ</text>
+<rect class="bd neu" x="700" y="180" width="170" height="52" rx="15"/><text class="bl neu" x="785" y="211">GECE MODU</text>
+<rect class="bd neu" x="700" y="330" width="170" height="52" rx="15"/><text class="bl neu" x="785" y="361">LOŞ</text>
+<path d="M 420.0 92.0 L 420.0 126.0 L 110.0 126.0 L 110.0 171.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="110.0,180.0 105.5,170.0 114.5,170.0" fill="var(--good)"/>
+<text x="265" y="116" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">hareket algılandı</text>
+<circle class="dot" cx="360" cy="126" r="12"/><text class="dv" x="360" y="131">1</text>
+<path d="M 165.0 180.0 L 165.0 152.0 L 480.0 152.0 L 480.0 101.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="480.0,92.0 484.5,102.0 475.5,102.0" fill="var(--good)"/>
+<text x="310" y="168" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">5 dakika hareket yok</text>
+<circle class="dot" cx="420" cy="152" r="12"/><text class="dv" x="420" y="157">2</text>
+<path d="M 520.0 92.0 L 520.0 126.0 L 760.0 126.0 L 760.0 171.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="760.0,180.0 755.5,170.0 764.5,170.0" fill="var(--good)"/>
+<text x="650" y="116" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">gece zamanlayıcısı başladı</text>
+<circle class="dot" cx="760" cy="166" r="12"/><text class="dv" x="760" y="171">3</text>
+<path d="M 805.0 180.0 L 805.0 152.0 L 500.0 152.0 L 500.0 101.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="500.0,92.0 504.5,102.0 495.5,102.0" fill="var(--good)"/>
+<text x="560" y="144" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">gün doğdu</text>
+<circle class="dot" cx="650" cy="152" r="12"/><text class="dv" x="650" y="157">6</text>
+<path d="M 720.0 232.0 L 720.0 321.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="720.0,330.0 715.5,320.0 724.5,320.0" fill="var(--good)"/>
+<text x="785" y="278" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">hareket algılandı</text>
+<circle class="dot" cx="720" cy="250" r="12"/><text class="dv" x="720" y="255">4</text>
+<path d="M 850.0 330.0 L 850.0 241.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="850.0,232.0 854.5,242.0 845.5,242.0" fill="var(--good)"/>
+<text x="785" y="300" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">2 dakika hareket yok</text>
+<circle class="dot" cx="850" cy="250" r="12"/><text class="dv" x="850" y="255">5</text>
+<path d="M 70.0 232.0 L 70.0 321.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="70.0,330.0 65.5,320.0 74.5,320.0" fill="var(--bad)"/>
+<text x="116" y="268" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">el ile kilitle</text>
+<circle class="dot miss" cx="70" cy="300" r="12"/><text class="dv miss" x="70" y="305">&#10007;</text>
+<path d="M 180.0 330.0 L 180.0 241.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="180.0,232.0 184.5,242.0 175.5,242.0" fill="var(--bad)"/>
+<text x="125" y="300" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">kilidi aç</text>
+<circle class="dot miss" cx="180" cy="268" r="12"/><text class="dv miss" x="180" y="273">&#10007;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>yürütülen geçiş (sıra numarasıyla)</span><span><i class="m"></i>hiç yürütülmeyen geçiş</span></p>
+      </div></li>
+
+    <li><b>Diziyi adım adım izle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Durum</th><th>Olay</th><th>Yeni durum</th><th class="ctr">Yeni geçiş mi?</th></tr>
+        <tr><td class="ctr">1</td><td>KAPALI</td><td>hareket algılandı</td><td>AÇIK</td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td class="ctr">2</td><td>AÇIK</td><td>5 dakika hareket yok</td><td>KAPALI</td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td class="ctr">3</td><td>KAPALI</td><td>gece zamanlayıcısı başladı</td><td>GECE MODU</td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td class="ctr">4</td><td>GECE MODU</td><td>hareket algılandı</td><td>LOŞ</td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td class="ctr">5</td><td>LOŞ</td><td>2 dakika hareket yok</td><td>GECE MODU</td><td class="ok ctr">&#10004;</td></tr>
+        <tr><td class="ctr">6</td><td>GECE MODU</td><td>gün doğdu</td><td>KAPALI</td><td class="ok ctr">&#10004;</td></tr>
+      </table></div>
+      <p style="margin:.4rem 0 0;font-size:.88rem;color:var(--muted)">Adım 1 ile adım 4'teki olay aynı
+      (<code>hareket algılandı</code>) ama kaynak durumlar farklı (KAPALI ve GECE MODU)
+      &rarr; <b>iki ayrı geçiş</b>, ikisi de sayılır.</p>
+      <pre class="fx">yürütülen farklı geçiş = <b>6</b></pre>
+      </div></li>
+
+    <li><b>Eksikleri bul</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Yürütülmeyen geçiş</th><th>Neden</th></tr>
+        <tr><td class="no">AÇIK &#8212;<b>el ile kilitle</b>&#8594; KİLİTLİ</td>
+            <td>Dizi AÇIK durumundan yalnızca <code>5 dakika hareket yok</code> ile çıkıyor</td></tr>
+        <tr><td class="no">KİLİTLİ &#8212;<b>kilidi aç</b>&#8594; AÇIK</td>
+            <td>KİLİTLİ durumuna hiç girilmiyor</td></tr>
+      </table></div>
+      <p style="margin-bottom:0"><b>Not:</b> KİLİTLİ durumu hiç ziyaret edilmedi &rarr;
+      tüm durum kapsamı da %100 değil: 4/5 = %80. Bu sayı B şıkkında bekliyor.</p>
+      </div></li>
+
+    <li><b>Böl</b>
+      <div><pre class="fx">geçerli geçiş kapsamı = 6 / 8 = 0,75 = <b>%75</b></pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="right"><b>A</b><span>%75 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>B</b><span>%80</span></li>
+      <li><b>C</b><span>%85,7</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+    <p style="margin-bottom:0">8 geçerli geçişin 6'sı yürütüldü &rarr; 6 / 8 = %75.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış &mdash; her şık bir yanlış payda</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hesap</th><th>Hangi hata</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td class="ok">6 / 8</td><td class="ok">Doğru: payda = geçerli geçiş sayısı</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td>4 / 5</td><td><b>Durum kapsamı</b> hesaplanmış: 5 durumdan 4'ü
+        ziyaret edildi. Soru geçiş kapsamını soruyor.</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td>6 / 7</td><td>KİLİTLİ durumundan çıkan <code>kilidi aç</code>
+        oku <b>sayılmamış</b>, payda 7 olmuş. Hiç ziyaret edilmeyen bir durumun okları da modele dahildir.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td>&mdash;</td><td>Dizi KAPALI durumuna geri döndüğü için
+        &ldquo;tur tamamlandı&rdquo; sanılmış. Oysa KİLİTLİ ile ilgili iki ok hiç denenmedi.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: payda olarak durum sayısını kullanmak</h3>
+    <p style="margin-bottom:0">Bu soruda <b>%80</b> şıkkı tek işi bu olan bir çeldiricidir:
+    gerçekten <i>bir şeyin</i> doğru cevabıdır (tüm durum kapsamı), ama sorulan şeyin değil.
+    Reçetenin 3. adımı (&ldquo;paydayı en başta sabitle&rdquo;) tam olarak bunu önlemek için var:
+    hesaba başlamadan önce kâğıdın kenarına <code>payda = 8 ok</code> yaz.</p>
+  </div>
+</section>
+
+
+<section id="s15">
+  <div class="shead"><div class="num">15</div>
+    <div><h2>Soru 8 &mdash; kimlik doğrulama, tek senaryo kapsamı</h2>
+    <div class="lo">Pratik sınav H &middot; Soru 22 &middot; FL-4.2.4 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir kimlik doğrulama servisinin davranışı aşağıdaki durum modeliyle tanımlanmıştır.</p>
+<pre>BAŞLANGIÇ    &#8212;kimlik bilgisi gönder&#8594;   DOĞRULANIYOR
+DOĞRULANIYOR &#8212;bilgiler geçerli&#8594;        OTURUM AÇIK
+DOĞRULANIYOR &#8212;bilgiler geçersiz&#8594;       HATALI GİRİŞ
+HATALI GİRİŞ &#8212;yeniden dene&#8594;            DOĞRULANIYOR
+HATALI GİRİŞ &#8212;üçüncü hatalı deneme&#8594;    KİLİTLİ
+KİLİTLİ      &#8212;yönetici sıfırlar&#8594;       BAŞLANGIÇ
+OTURUM AÇIK  &#8212;çıkış yap&#8594;               BAŞLANGIÇ
+OTURUM AÇIK  &#8212;zaman aşımı&#8594;             BAŞLANGIÇ</pre>
+    <p>Test uzmanı tek bir test senaryosu yürütür:</p>
+<pre>BAŞLANGIÇ &#8212;kimlik bilgisi gönder&#8594; DOĞRULANIYOR &#8212;bilgiler geçersiz&#8594;
+HATALI GİRİŞ &#8212;yeniden dene&#8594; DOĞRULANIYOR &#8212;bilgiler geçerli&#8594;
+OTURUM AÇIK &#8212;çıkış yap&#8594; BAŞLANGIÇ</pre>
+    <p>Bu test senaryosunun sağladığı geçerli geçiş (0-switch) kapsamı yüzde kaçtır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%50</span></li>
+      <li><b>B</b><span>%62,5</span></li>
+      <li><b>C</b><span>%71,4</span></li>
+      <li><b>D</b><span>%75</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Okları say &mdash; durumları değil</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Kaynak</th><th>Olay</th><th>Hedef</th></tr>
+        <tr><td class="ctr"><b>1</b></td><td>BAŞLANGIÇ</td><td>kimlik bilgisi gönder</td><td>DOĞRULANIYOR</td></tr>
+        <tr><td class="ctr"><b>2</b></td><td>DOĞRULANIYOR</td><td>bilgiler geçerli</td><td>OTURUM AÇIK</td></tr>
+        <tr><td class="ctr"><b>3</b></td><td>DOĞRULANIYOR</td><td>bilgiler geçersiz</td><td>HATALI GİRİŞ</td></tr>
+        <tr><td class="ctr"><b>4</b></td><td>HATALI GİRİŞ</td><td>yeniden dene</td><td>DOĞRULANIYOR</td></tr>
+        <tr><td class="ctr"><b>5</b></td><td>HATALI GİRİŞ</td><td>üçüncü hatalı deneme</td><td>KİLİTLİ</td></tr>
+        <tr><td class="ctr"><b>6</b></td><td>KİLİTLİ</td><td>yönetici sıfırlar</td><td>BAŞLANGIÇ</td></tr>
+        <tr><td class="ctr"><b>7</b></td><td>OTURUM AÇIK</td><td>çıkış yap</td><td>BAŞLANGIÇ</td></tr>
+        <tr><td class="ctr"><b>8</b></td><td>OTURUM AÇIK</td><td>zaman aşımı</td><td>BAŞLANGIÇ</td></tr>
+      </table></div>
+      <pre class="fx">payda = <b>8</b>
+dikkat: 7 ve 8 aynı durum çiftini (OTURUM AÇIK &rarr; BAŞLANGIÇ) birleştirir
+        ama olayları farklı &#8658; <b>iki ayrı geçiş</b></pre>
+      </div></li>
+
+    <li><b>Modeli çiz ve yolu işaretle</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 448" role="img" aria-label="H22 kimlik dogrulama servisi durum gecis diyagrami">
+<rect class="bd neu" x="30" y="150" width="160" height="52" rx="15"/><text class="bl neu" x="110" y="181">BAŞLANGIÇ</text>
+<rect class="bd neu" x="330" y="150" width="180" height="52" rx="15"/><text class="bl neu" x="420" y="181">DOĞRULANIYOR</text>
+<rect class="bd neu" x="670" y="40" width="170" height="52" rx="15"/><text class="bl neu" x="755" y="71">OTURUM AÇIK</text>
+<rect class="bd neu" x="650" y="260" width="170" height="52" rx="15"/><text class="bl neu" x="735" y="291">HATALI GİRİŞ</text>
+<rect class="bd neu" x="330" y="380" width="140" height="52" rx="15"/><text class="bl neu" x="400" y="411">KİLİTLİ</text>
+<path d="M 190.0 176.0 L 321.0 176.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="330.0,176.0 320.0,180.5 320.0,171.5" fill="var(--good)"/>
+<text x="260" y="140" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">kimlik bilgisi gönder</text>
+<circle class="dot" cx="260" cy="176" r="12"/><text class="dv" x="260" y="181">1</text>
+<path d="M 510.0 160.0 L 755.0 160.0 L 755.0 101.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="755.0,92.0 759.5,102.0 750.5,102.0" fill="var(--good)"/>
+<text x="630" y="150" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">bilgiler geçerli</text>
+<circle class="dot" cx="710" cy="160" r="12"/><text class="dv" x="710" y="165">4</text>
+<path d="M 470.0 202.0 L 470.0 290.0 L 641.0 290.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="650.0,290.0 640.0,294.5 640.0,285.5" fill="var(--good)"/>
+<text x="566" y="272" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">bilgiler geçersiz</text>
+<circle class="dot" cx="566" cy="290" r="12"/><text class="dv" x="566" y="295">2</text>
+<path d="M 690.0 312.0 L 690.0 345.0 L 370.0 345.0 L 370.0 211.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="370.0,202.0 374.5,212.0 365.5,212.0" fill="var(--good)"/>
+<text x="530" y="329" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">yeniden dene</text>
+<circle class="dot" cx="530" cy="345" r="12"/><text class="dv" x="530" y="350">3</text>
+<path d="M 820.0 312.0 L 880.0 312.0 L 880.0 406.0 L 479.0 406.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="470.0,406.0 480.0,401.5 480.0,410.5" fill="var(--bad)"/>
+<text x="675" y="390" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">üçüncü hatalı deneme</text>
+<circle class="dot miss" cx="675" cy="406" r="12"/><text class="dv miss" x="675" y="411">&#10007;</text>
+<path d="M 330.0 406.0 L 100.0 406.0 L 100.0 211.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="100.0,202.0 104.5,212.0 95.5,212.0" fill="var(--bad)"/>
+<text x="215" y="396" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">yönetici sıfırlar</text>
+<circle class="dot miss" cx="100" cy="330" r="12"/><text class="dv miss" x="100" y="335">&#10007;</text>
+<path d="M 720.0 40.0 L 720.0 14.0 L 90.0 14.0 L 90.0 141.0" fill="none" stroke="var(--good)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><polygon points="90.0,150.0 85.5,140.0 94.5,140.0" fill="var(--good)"/>
+<text x="405" y="30" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--good)">çıkış yap</text>
+<circle class="dot" cx="550" cy="14" r="12"/><text class="dv" x="550" y="19">5</text>
+<path d="M 670.0 80.0 L 130.0 80.0 L 130.0 141.0" fill="none" stroke="var(--bad)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5"/><polygon points="130.0,150.0 125.5,140.0 134.5,140.0" fill="var(--bad)"/>
+<text x="400" y="70" text-anchor="middle" font-family="var(--sans)" font-size="11.5" font-weight="700" fill="var(--bad)">zaman aşımı</text>
+<circle class="dot miss" cx="520" cy="80" r="12"/><text class="dv miss" x="520" y="85">&#10007;</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>yürütülen geçiş (sıra numarasıyla)</span><span><i class="m"></i>hiç yürütülmeyen geçiş</span></p>
+      </div></li>
+
+    <li><b>Senaryoyu adım adım izle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Durum</th><th>Olay</th><th>Yeni durum</th><th class="ctr">Geçiş</th></tr>
+        <tr><td class="ctr">1</td><td>BAŞLANGIÇ</td><td>kimlik bilgisi gönder</td><td>DOĞRULANIYOR</td><td class="ok ctr">1</td></tr>
+        <tr><td class="ctr">2</td><td>DOĞRULANIYOR</td><td>bilgiler geçersiz</td><td>HATALI GİRİŞ</td><td class="ok ctr">3</td></tr>
+        <tr><td class="ctr">3</td><td>HATALI GİRİŞ</td><td>yeniden dene</td><td>DOĞRULANIYOR</td><td class="ok ctr">4</td></tr>
+        <tr><td class="ctr">4</td><td>DOĞRULANIYOR</td><td>bilgiler geçerli</td><td>OTURUM AÇIK</td><td class="ok ctr">2</td></tr>
+        <tr><td class="ctr">5</td><td>OTURUM AÇIK</td><td>çıkış yap</td><td>BAŞLANGIÇ</td><td class="ok ctr">7</td></tr>
+      </table></div>
+      <pre class="fx">yürütülen farklı geçiş = {1, 3, 4, 2, 7} = <b>5</b></pre>
+      </div></li>
+
+    <li><b>Eksikleri bul</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Yürütülmeyen geçiş</th><th>Neden</th></tr>
+        <tr><td class="ctr no"><b>5</b></td><td class="no">HATALI GİRİŞ &#8212;üçüncü hatalı deneme&#8594; KİLİTLİ</td>
+            <td>Senaryo HATALI GİRİŞ'ten <code>yeniden dene</code> ile çıkıyor</td></tr>
+        <tr><td class="ctr no"><b>6</b></td><td class="no">KİLİTLİ &#8212;yönetici sıfırlar&#8594; BAŞLANGIÇ</td>
+            <td>KİLİTLİ durumuna hiç girilmiyor</td></tr>
+        <tr><td class="ctr no"><b>8</b></td><td class="no">OTURUM AÇIK &#8212;zaman aşımı&#8594; BAŞLANGIÇ</td>
+            <td>Oturum <code>çıkış yap</code> ile kapanıyor; ikinci çıkış yolu denenmiyor</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl</b>
+      <div><pre class="fx">kapsam = 5 / 8 = 0,625 = <b>%62,5</b></pre></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li><b>A</b><span>%50</span></li>
+      <li class="right"><b>B</b><span>%62,5 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>C</b><span>%71,4</span></li>
+      <li><b>D</b><span>%75</span></li>
+    </ul>
+    <p style="margin-bottom:0">Sekiz geçerli geçişten beşi yürütüldü: 5 / 8 = %62,5.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğerleri neden yanlış &mdash; her şık bir sayma hatası</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">Şık</th><th>Hesap</th><th>Hangi hata</th></tr>
+      <tr><td class="ctr"><b>A</b></td><td>4 / 8</td><td>Başlangıç durumundan çıkan <b>ilk geçiş</b>
+        (<code>kimlik bilgisi gönder</code>) sayılmamış &mdash; &ldquo;o zaten kurulum&rdquo; sanılır.
+        Başlangıç oku da bir geçiştir.</td></tr>
+      <tr><td class="ctr"><b>B</b></td><td class="ok">5 / 8</td><td class="ok">Doğru.</td></tr>
+      <tr><td class="ctr"><b>C</b></td><td>5 / 7</td><td>OTURUM AÇIK'tan çıkan <b>iki</b> oktan biri
+        (<code>zaman aşımı</code>) sayılmamış; aynı durum çiftine gittikleri için tek geçiş sanılmış.</td></tr>
+      <tr><td class="ctr"><b>D</b></td><td>6 / 8</td><td>Yürütülen geçiş sayısı fazla sayılmış;
+        senaryoda 5 olay var ve hiçbiri tekrar etmiyor, yani pay tam olarak 5'tir.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: aynı hedefe giden iki ok</h3>
+<pre>OTURUM AÇIK &#8212;çıkış yap&#8594;   BAŞLANGIÇ      geçiş 7
+OTURUM AÇIK &#8212;zaman aşımı&#8594; BAŞLANGIÇ      geçiş 8   &#8592; AYNI çift, FARKLI olay</pre>
+    <p style="margin-bottom:0">Diyagramda bu ikisi çoğu zaman üst üste binmiş iki ok gibi çizilir ve
+    tek ok sanılır; o zaman payda 8 yerine 7 olur ve <b>%71,4</b> (C şıkkı) çıkar.
+    <b>Kural:</b> geçiş sayarken durum çiftlerini değil, <b>olay etiketlerini</b> say.
+    Aynı iki kutu arasında üç farklı olay varsa orada üç geçiş vardır.</p>
+  </div>
+</section>
+
+
+<section id="s16">
+  <div class="shead"><div class="num">16</div>
+    <div><h2>Tuzaklar ve tek sayfalık özet</h2>
+    <div class="lo">Sınavdan önce son okuma</div></div></div>
+
+  <div class="card trap">
+    <h3>Klasik tuzaklar</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Payda olarak durum sayısını kullanmak.</b> Geçiş kapsamının paydası <b>oklardır</b>.
+        Soru 7'de %80 şıkkı tam olarak bunun için konmuştur.</li>
+      <li><b>Geçerli geçiş ile tüm geçişi karıştırmak.</b> &ldquo;Tüm geçişler&rdquo; dendiyse payda
+        <code>durum &times; olay</code>'dır ve <b>boş hücreler de sayılır</b>; dendiği gibi yazmıyorsa
+        payda yalnızca dolu hücrelerdir.</li>
+      <li><b>Özdöngüyü saymamak.</b> <code>KAPI AÇIK &#8212;aç butonu&#8594; KAPI AÇIK</code> bir geçiştir.
+        Unutmak paydayı 8 yerine 7 yapar.</li>
+      <li><b>Aynı kutular arasındaki farklı olayları tek geçiş sanmak.</b>
+        <code>İptal</code> ve <code>Öde</code> ikisi de S2'den S4'e gidiyor &rarr; <b>iki</b> geçiş.</li>
+      <li><b>Aynı olayı farklı durumlarda tek geçiş sanmak.</b> Geçişin kimliği
+        <code>(kaynak durum, olay)</code> çiftidir.</li>
+      <li><b>Tekrarları iki kez saymak.</b> Dizide aynı geçiş ikinci kez geçtiyse pay artmaz.
+        <b>Olay sayısı &#8800; kapsam payı.</b></li>
+      <li><b>&ldquo;En az kaç senaryo?&rdquo; sorusuna geçiş sayısını yazmak.</b>
+        Bir senaryo yol boyunca birçok geçişi birden kapsar.</li>
+      <li><b>Son duruma erken düşen diziyi kapsamlı sanmak.</b> Çıkışı olmayan duruma girdikten
+        sonraki olaylar hiçbir geçiş üretmez.</li>
+      <li><b>Koruma koşulunu atlamak.</b> <code>N</code> gibi bir değişken varsa her adımda yaz;
+        aynı olay, farklı koruma ile <b>farklı</b> oku tetikler.</li>
+      <li><b>Ziyaret edilmeyen durumun oklarını paydadan düşürmek.</b> Model ne diyorsa payda odur;
+        hiç uğranmayan KİLİTLİ'nin oku da sayılır (Soru 7, %85,7 şıkkı).</li>
+    </ul>
+  </div>
+
+  <div class="fgrid">
+    <div class="fbox"><h4>Geçerli geçiş kapsamı</h4>
+      <p><code>yürütülen farklı ok / toplam ok</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">0-switch &mdash; sınavda en sık sorulan</p></div>
+    <div class="fbox"><h4>Tüm durum kapsamı</h4>
+      <p><code>ziyaret edilen durum / toplam durum</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">En zayıf ölçüt; %100 olması aldatır</p></div>
+    <div class="fbox"><h4>Tüm geçiş kapsamı</h4>
+      <p><code>denenen geçiş / (durum &times; olay)</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Boş hücreler = geçersiz geçiş, dahil</p></div>
+    <div class="fbox"><h4>Geçişin kimliği</h4>
+      <p><code>(kaynak durum, olay)</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Aynı olay farklı durumda &rarr; farklı geçiş</p></div>
+    <div class="fbox"><h4>Tablo okuma</h4>
+      <p>Dolu hücre &rarr; <b>geçerli</b> &middot; boş hücre &rarr; <b>geçersiz</b></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Satır = durum, sütun = olay</p></div>
+    <div class="fbox"><h4>En az senaryo</h4>
+      <p>Döngüsüz &rarr; <b>yol sayısı</b>; döngülü &rarr; <b>bitiş oku sayısı</b> + dışlayan oklar</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Asla geçiş sayısı değil</p></div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>Sekiz sorunun tek tabloda özeti</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soru</th><th>Ne soruyor</th><th class="ctr">Payda</th><th class="ctr">Pay</th>
+          <th class="ctr">Sonuç</th><th class="ctr">Cevap</th></tr>
+      <tr><td><b>A 23</b></td><td>%100 için en az senaryo</td><td class="ctr">7 ok</td>
+          <td class="ctr">&mdash;</td><td class="ctr">3 yol yeterli ve gerekli</td><td class="ctr ok"><b>D</b></td></tr>
+      <tr><td><b>B 23</b></td><td>En yüksek kapsamlı dizi</td><td class="ctr">5 ok</td>
+          <td class="ctr">5</td><td class="ctr">5/5 = %100</td><td class="ctr ok"><b>C</b></td></tr>
+      <tr><td><b>C 23</b></td><td>%100 için en az senaryo</td><td class="ctr">6 ok</td>
+          <td class="ctr">&mdash;</td><td class="ctr">3 yol (döngüsüz)</td><td class="ctr ok"><b>A</b></td></tr>
+      <tr><td><b>D 23</b></td><td>En yüksek kapsamlı dizi</td><td class="ctr">7 ok</td>
+          <td class="ctr">5</td><td class="ctr">5/7 &#8776; %71,4</td><td class="ctr ok"><b>B</b></td></tr>
+      <tr><td><b>E 22</b></td><td>İki senaryonun kapsamı</td><td class="ctr">8 ok</td>
+          <td class="ctr">7</td><td class="ctr">7/8 = %87,5</td><td class="ctr ok"><b>C</b></td></tr>
+      <tr><td><b>F 23</b></td><td>Kapsamı %100 yapan ek senaryo</td><td class="ctr">8 ok</td>
+          <td class="ctr">6 &rarr; 8</td><td class="ctr">%75 &rarr; %100</td><td class="ctr ok"><b>D</b></td></tr>
+      <tr><td><b>G 23</b></td><td>Tek senaryonun kapsamı</td><td class="ctr">8 ok</td>
+          <td class="ctr">6</td><td class="ctr">6/8 = %75</td><td class="ctr ok"><b>A</b></td></tr>
+      <tr><td><b>H 22</b></td><td>Tek senaryonun kapsamı</td><td class="ctr">8 ok</td>
+          <td class="ctr">5</td><td class="ctr">5/8 = %62,5</td><td class="ctr ok"><b>B</b></td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Desen:</b> sekiz sorunun sekizi de <b>geçerli geçiş (0-switch)</b>
+    kapsamını ölçüyor. Payda her seferinde <b>ok sayısı</b>. Soruların yarısı yüzde,
+    yarısı dizi/senaryo seçimi istiyor &mdash; ama yöntem aynı: okları numaralandır, diziyi izle,
+    farklı geçişleri say.</p>
+  </div>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Gerçek hayatta</h3>
+    <p>Durum geçişi testi, sınav dışında da en çok işe yarayan kara kutu tekniğidir:
+    protokol yığınları (TCP el sıkışması), sipariş / ödeme akışları, cihaz firmware'i,
+    oturum ve yetkilendirme servisleri &mdash; hepsi durum makinesidir.</p>
+    <p>Pratikte diyagramı çizmek çoğu zaman testlerden daha değerlidir: tanımsız bırakılmış
+    <code>(durum, olay)</code> hücrelerini görmek, henüz kod yazılmadan tasarım hatasını ortaya çıkarır.
+    &ldquo;Tüm geçiş kapsamı&rdquo; da zaten bunun için var &mdash; asıl hatalar boş hücrelerde yaşar.</p>
+    <p style="margin-bottom:0">N-switch kapsamı (1-switch, 2-switch &hellip;) ardışık <i>geçiş çiftlerini</i>
+    ve daha uzun dizileri hedefler; CTFL seviyesinde yalnızca <b>0-switch</b> sorulur, ama adını
+    duyduğunda &ldquo;daha uzun geçiş dizileri&rdquo; diye hatırla.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Sınav modu</h3>
+    <p style="margin-bottom:0">Soruyu çözerken pratik sezgini kapat. <b>Model ne diyorsa o.</b>
+    &ldquo;Bu geçiş gerçek hayatta olmaz&rdquo; deme, &ldquo;bu olay zaten yutulur&rdquo; deme.
+    Okları say, diziyi izle, böl. Sınavdan çıkınca sezgini geri aç.</p>
+  </div>
+</section>
+
+
+<div class="next">
+  <a href="../istqub/pratik_testler_tr.html"><b>&#127919; Konu Pratikleri</b>
+    <span>Durum geçişi sorularını çözerek pekiştir &mdash; adım adım çözümler</span></a>
+  <a href="../istqub/questions_tr.html"><b>&#127481;&#127479; Sınav Simülatörü</b>
+    <span>8 sınav &middot; 320 soru &mdash; durum geçişi soruları: A23, B23, C23, D23, E22, F23, G23, H22</span></a>
+  <a href="../istqub/cozum_yontemleri_tr.html"><b>&#128214; Çözüm Yöntemleri</b>
+    <span>Beş hesaplı konunun reçetesi tek sayfada</span></a>
+</div>
+
+<footer class="ft">Konular &middot; Durum Geçişi Testi &middot; ISTQB&reg; CTFL v4.0 &sect;4.2.4.
+Çözümlü soruların ilk dördü resm&icirc; CTFL v4.0 örnek sınavları A, B, C ve D'nin 23. sorularıdır (&copy; ISTQB);
+kalan dördü aynı öğrenme hedefi için hazırlanmış pratik sorulardır.</footer>
+</main>
+</body>
+</html>

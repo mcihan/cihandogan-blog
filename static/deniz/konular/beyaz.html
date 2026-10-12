@@ -1,0 +1,2497 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beyaz Kutu: Komut ve Dal Kapsamı &middot; Konular</title>
+<style>
+:root{
+  --bg:#f6f6fb; --surface:#fff; --ink:#1c1c2c; --muted:#61617a; --line:#e5e4ef;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -14px rgba(28,28,60,.18);
+  --good:#059669; --good-soft:#e7f6ef; --bad:#dc2626; --bad-soft:#fdecec;
+  --warn:#d97706; --warn-soft:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
+  --dim:#b9b7c9;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+  --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+  --warn:#fbbf24; --warn-soft:#2e2210;
+  --c:#818cf8; --cd:#a5b4fc; --cs:#222247; --cl:#3b3b78; --dim:#5a5a78; } }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;font-size:16px}
+
+header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 42%,#0e7490 100%);padding:2.9rem 1.3rem 2.4rem}
+.in{max-width:1000px;margin:0 auto}
+.back{display:inline-flex;gap:.4rem;align-items:center;text-decoration:none;color:#c7d2fe;font-size:.82rem;
+  font-weight:700;margin-bottom:1.1rem}
+.back:hover{color:#fff}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .7rem}
+.hero h1{color:#fff;font-size:clamp(1.85rem,5.2vw,2.8rem);line-height:1.07;margin:0 0 .7rem;font-weight:900;letter-spacing:-.02em}
+.hero p.lede{color:#dbe3ff;max-width:64ch;margin:0 0 1.7rem;font-size:1.03rem}
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,168px),1fr));gap:.55rem}
+.jump a{display:flex;gap:.6rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);border-radius:13px;padding:.6rem .75rem;color:#fff;
+  transition:background .15s,transform .15s;min-width:0}
+.jump a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.jump .n{width:25px;height:25px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:rgba(255,255,255,.22)}
+.jump b{display:block;font-size:.85rem;font-weight:800;line-height:1.25}
+
+nav.sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.sticky .in{display:flex;gap:.35rem;align-items:center;padding:.5rem 1.3rem;overflow-x:auto;scrollbar-width:none}
+nav.sticky .in::-webkit-scrollbar{display:none}
+nav.sticky a{white-space:nowrap;text-decoration:none;font-size:.8rem;font-weight:700;color:var(--muted);
+  border-radius:9px;padding:.3rem .6rem}
+nav.sticky a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+main{max-width:1000px;margin:0 auto;padding:2.1rem 1.3rem 4rem}
+section{margin-bottom:2.9rem;scroll-margin-top:62px}
+.shead{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
+.shead .num{width:42px;height:42px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;background:var(--c)}
+.shead h2{margin:0;font-size:1.38rem;letter-spacing:-.015em;line-height:1.2}
+.shead .lo{font-size:.73rem;font-weight:700;color:var(--muted);font-family:var(--mono)}
+.lead{margin:0 0 1rem;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:1.1rem 1.25rem;
+  box-shadow:var(--shadow);margin-bottom:.95rem;min-width:0}
+.card > h3{margin:0 0 .65rem;font-size:.75rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.card.q{border-left:4px solid var(--c)}
+.card.sol{background:color-mix(in srgb,var(--c) 4%,var(--surface))}
+.card.trap{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.card.trap > h3{color:var(--bad)}
+.card.key{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 32%,transparent)}
+.card.key > h3{color:var(--good)}
+.card.warnc{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.card.warnc > h3{color:var(--warn)}
+.card p{margin:.5rem 0}
+.card p:first-of-type{margin-top:0}
+.card ul,.card ol{margin:.5rem 0;padding-left:1.2rem}
+.card li{margin:.26rem 0}
+.recog{background:var(--cs);border-radius:12px;padding:.68rem .9rem;margin:0 0 1rem;font-size:.92rem}
+.recog b{color:var(--cd)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.52rem}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);min-width:0;gap:.7rem;align-items:start;
+  padding:.58rem .72rem;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,transparent)}
+ol.steps li::before{content:counter(s);width:23px;height:23px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.76rem;font-weight:900;color:#fff;background:var(--c)}
+ol.steps li > b{grid-column:2;display:block;font-size:.94rem;min-width:0;overflow-wrap:anywhere}
+ol.steps li > span{grid-column:2;display:block;font-size:.88rem;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+ol.steps li > div{grid-column:2;min-width:0;max-width:100%}
+ol.steps li > div > *:first-child{margin-top:.4rem}
+
+pre{font-family:var(--mono);font-size:.83rem;background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:11px;padding:.7rem .9rem;margin:.65rem 0;overflow-x:auto;line-height:1.55;white-space:pre}
+pre.fx{background:var(--cs);color:var(--cd);font-weight:600;border:1px dashed var(--cl)}
+code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .35em;border-radius:5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.65rem 0}
+table.dt{border-collapse:collapse;width:100%;font-size:.86rem}
+.scroll table.dt{min-width:420px}
+table.dt th,table.dt td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top;
+  word-break:break-word;overflow-wrap:anywhere}
+table.dt th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.78rem}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+table.dt td.ctr,table.dt th.ctr{text-align:center}
+
+svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
+.nlw{margin:.85rem 0 .3rem}
+.nlw .scroll{margin:0}
+.shint{display:none;margin:.3rem 0 0;font-size:.74rem;color:var(--muted);text-align:center;font-weight:700}
+@media (max-width:830px){ .shint{display:block} }
+.nl .bd{stroke-width:1.5}
+.nl .bd.bad{fill:var(--bad-soft);stroke:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .bd.good{fill:var(--good-soft);stroke:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .ar.bad{fill:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .ar.good{fill:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .bl{text-anchor:middle;font-size:13px;font-weight:800;font-family:var(--sans)}
+.nl .bl.bad{fill:var(--bad)} .nl .bl.good{fill:var(--good)}
+.nl .bd.neu{fill:var(--cs);stroke:var(--cl)}
+.nl .bd.neu2{fill:color-mix(in srgb,var(--c) 11%,transparent);stroke:var(--cl)}
+.nl .bl.neu,.nl .bl.neu2{fill:var(--cd)}
+.nl .dot.miss{fill:none;stroke:var(--bad);stroke-width:2;stroke-dasharray:3.5 3}
+.nl .dv.miss{fill:var(--bad)}
+.nl .cut{stroke:var(--c);stroke-width:2;stroke-dasharray:5 4;opacity:.85}
+.nl .cl{text-anchor:middle;font-size:11px;font-weight:800;fill:var(--c);font-family:var(--mono)}
+.nl .ax{stroke:var(--dim);stroke-width:1.5}
+.nl .tk{stroke:var(--dim);stroke-width:1.5}
+.nl .dot{fill:var(--c)}
+.nl .dot.new{fill:var(--warn)}
+.nl .dv{text-anchor:middle;font-size:14px;font-weight:800;fill:#fff;font-family:var(--sans)}
+.nl .dp{text-anchor:middle;font-size:13px;font-weight:600;fill:var(--dim);font-family:var(--sans)}
+.nlleg{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;font-size:.8rem;color:var(--muted);margin:.1rem 0 .3rem}
+.nlleg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
+.nlleg i.a{background:var(--c)} .nlleg i.b{background:var(--warn)}
+.nlleg i.m{background:transparent;border:2px dashed var(--bad)}
+
+.opts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
+.opts li{display:grid;grid-template-columns:28px minmax(0,1fr);min-width:0;gap:.6rem;align-items:center;
+  border:1px solid var(--line);border-radius:11px;padding:.5rem .65rem;font-size:.95rem;background:var(--surface)}
+.opts li b{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--muted)}
+.opts li.right{border-color:color-mix(in srgb,var(--good) 45%,transparent);background:var(--good-soft)}
+.opts li.right b{background:var(--good);color:#fff}
+.opts li.wrong b{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.75rem}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;box-shadow:var(--shadow)}
+.fbox h4{margin:0 0 .4rem;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.fbox p{margin:.3rem 0;font-size:.88rem}
+.fbox code{font-size:.84em}
+
+.next{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.3rem}
+.next a{flex:1 1 220px;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:.9rem 1.1rem;box-shadow:var(--shadow);color:var(--ink);transition:transform .15s}
+.next a:hover{transform:translateY(-3px)}
+.next b{display:block;font-size:.98rem;margin-bottom:.15rem}
+.next span{font-size:.84rem;color:var(--muted)}
+footer.ft{border-top:1px solid var(--line);margin-top:2.6rem;padding-top:1.2rem;color:var(--muted);font-size:.82rem}
+</style>
+
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><a href="/deniz/konular/">Konular</a></li><li><span aria-current="page">Beyaz Kutu: Komut & Dal Kapsamı</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+
+
+
+
+<header class="hero"><div class="in">
+  <p class="kicker">Konular &middot; CTFL v4.0 &middot; FL-4.3.1 &middot; FL-4.3.2 &middot; FL-4.3.3</p>
+  <h1>Beyaz Kutu Testi &mdash; Komut ve Dal Kapsamı</h1>
+  <p class="lede">Kodun kendisini test esası olarak kullanmayı: komutları ve dalları ayrı ayrı saymayı,
+  kapsam yüzdesini iki ölçüt için de hesaplamayı, kontrol akış grafiğini okumayı ve
+  &ldquo;dal kapsamı komut kapsamını kapsar, tersi olmaz&rdquo; kuralını adım adım öğren.
+  Sonunda resmî örnek sınavlardaki (A&ndash;H) <b>16 beyaz kutu sorusunun tamamı</b> aynı reçeteyle çözülüyor.</p>
+  <div class="jump"><div style="grid-column:1/-1;color:#a5b4fc;font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin:.2rem 0 -.15rem">Konu anlatımı</div>
+<a href="#s1"><span class="n">1</span><b>Beyaz kutu kuralı</b></a>
+<a href="#s2"><span class="n">2</span><b>Komut ve dal</b></a>
+<a href="#s3"><span class="n">3</span><b>Akış grafiği</b></a>
+<a href="#s4"><span class="n">4</span><b>Kapsam %</b></a>
+<a href="#s5"><span class="n">5</span><b>Kapsama ilişkisi</b></a>
+<a href="#s6"><span class="n">6</span><b>Yüzdeler toplanmaz</b></a>
+<a href="#s7"><span class="n">7</span><b>Beyaz kutunun değeri</b></a>
+<a href="#s8"><span class="n">8</span><b>Sınav reçetesi</b></a>
+<div style="grid-column:1/-1;color:#a5b4fc;font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin:.5rem 0 -.15rem">FL-4.3.1 &middot; Komut kapsamı &middot; 5 soru</div>
+<a href="#s9"><span class="n">9</span><b>Soru 1 &middot; A 24</b></a>
+<a href="#s10"><span class="n">10</span><b>Soru 2 &middot; B 24</b></a>
+<a href="#s11"><span class="n">11</span><b>Soru 3 &middot; D 24</b></a>
+<a href="#s12"><span class="n">12</span><b>Soru 4 &middot; F 24</b></a>
+<a href="#s13"><span class="n">13</span><b>Soru 5 &middot; G 24</b></a>
+<div style="grid-column:1/-1;color:#a5b4fc;font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin:.5rem 0 -.15rem">FL-4.3.2 &middot; Dal kapsamı &middot; 5 soru</div>
+<a href="#s14"><span class="n">14</span><b>Soru 6 &middot; B 25</b></a>
+<a href="#s15"><span class="n">15</span><b>Soru 7 &middot; C 24</b></a>
+<a href="#s16"><span class="n">16</span><b>Soru 8 &middot; E 23</b></a>
+<a href="#s17"><span class="n">17</span><b>Soru 9 &middot; G 25</b></a>
+<a href="#s18"><span class="n">18</span><b>Soru 10 &middot; H 23</b></a>
+<div style="grid-column:1/-1;color:#a5b4fc;font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin:.5rem 0 -.15rem">FL-4.3.3 &middot; Beyaz kutunun değeri &middot; 6 soru</div>
+<a href="#s19"><span class="n">19</span><b>Soru 11 &middot; A 25</b></a>
+<a href="#s20"><span class="n">20</span><b>Soru 12 &middot; C 25</b></a>
+<a href="#s21"><span class="n">21</span><b>Soru 13 &middot; D 25</b></a>
+<a href="#s22"><span class="n">22</span><b>Soru 14 &middot; E 24</b></a>
+<a href="#s23"><span class="n">23</span><b>Soru 15 &middot; F 25</b></a>
+<a href="#s24"><span class="n">24</span><b>Soru 16 &middot; H 24</b></a>
+<div style="grid-column:1/-1;color:#a5b4fc;font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin:.5rem 0 -.15rem">Kapanış</div>
+<a href="#s25"><span class="n">25</span><b>Tuzaklar &amp; özet</b></a></div>
+</div></header>
+
+<nav class="sticky"><div class="in"><a href="#s1">1. Beyaz kutu kuralı</a>
+<a href="#s2">2. Komut ve dal</a>
+<a href="#s3">3. Akış grafiği</a>
+<a href="#s4">4. Kapsam %</a>
+<a href="#s5">5. Kapsama ilişkisi</a>
+<a href="#s6">6. Yüzdeler toplanmaz</a>
+<a href="#s7">7. Değeri</a>
+<a href="#s8">8. Reçete</a>
+<span style="font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--c);padding:0 .3rem;white-space:nowrap">4.3.1</span>
+<a href="#s9">9. S1 &middot; A24</a>
+<a href="#s10">10. S2 &middot; B24</a>
+<a href="#s11">11. S3 &middot; D24</a>
+<a href="#s12">12. S4 &middot; F24</a>
+<a href="#s13">13. S5 &middot; G24</a>
+<span style="font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--c);padding:0 .3rem;white-space:nowrap">4.3.2</span>
+<a href="#s14">14. S6 &middot; B25</a>
+<a href="#s15">15. S7 &middot; C24</a>
+<a href="#s16">16. S8 &middot; E23</a>
+<a href="#s17">17. S9 &middot; G25</a>
+<a href="#s18">18. S10 &middot; H23</a>
+<span style="font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--c);padding:0 .3rem;white-space:nowrap">4.3.3</span>
+<a href="#s19">19. S11 &middot; A25</a>
+<a href="#s20">20. S12 &middot; C25</a>
+<a href="#s21">21. S13 &middot; D25</a>
+<a href="#s22">22. S14 &middot; E24</a>
+<a href="#s23">23. S15 &middot; F25</a>
+<a href="#s24">24. S16 &middot; H24</a>
+<a href="#s25">25. Tuzaklar &amp; özet</a></div></nav>
+
+<main>
+
+<section id="s1">
+  <div class="shead"><div class="num">1</div>
+    <div><h2>Kod görüyorsan &sect;4.3'tesin</h2>
+    <div class="lo">FL-4.3.1 &middot; FL-4.3.2 &middot; K2 &middot; Beyaz kutu tekniği</div></div></div>
+
+  <p class="lead">ISTQB, komut ve dal testini <b>&sect;4.3 Beyaz Kutu Test Teknikleri</b> altında tanımlar.
+  Bu tekniklerin girdisi spesifikasyon değil, <b>test nesnesinin iç yapısıdır</b> &mdash;
+  kaynak kod, sözde kod, mimari ya da kontrol akış grafiği.</p>
+
+  <div class="recog"><b>Pratik sonucu:</b> soruda kod parçası, satır numaraları, bir akış grafiği ya da
+  <i>&ldquo;%100 komut kapsamı&rdquo;</i>, <i>&ldquo;dal kapsamı&rdquo;</i>, <i>&ldquo;kapsam öğesi&rdquo;</i>
+  gibi ifadeler varsa soru beyaz kutudur. Gereksinimden, aralıktan, kullanıcı hikâyesinden
+  türetilmiş bir şey aramana gerek yok &mdash; <b>cevap kodun içindedir.</b></div>
+
+  <div class="card">
+    <h3>Soru tipini ilk bakışta ayır</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Soruda ne var</th><th>Hangi bölüm</th><th>Ne yaparsın</th></tr>
+      <tr><td>Kod parçası, satır numaraları, akış grafiği</td>
+          <td><b>&sect;4.3</b> Komut &amp; dal kapsamı &mdash; beyaz kutu</td><td>Komutları ya da kenarları say</td></tr>
+      <tr><td>Metin + sayı aralıkları (&ldquo;6 ila 12 karakter&rdquo;)</td>
+          <td><b>&sect;4.2.1&ndash;4.2.2</b> EP / BVA &mdash; kara kutu</td><td>Payları çiz, uçları al</td></tr>
+      <tr><td>Koşul&ndash;eylem kombinasyonları</td>
+          <td><b>&sect;4.2.3</b> Karar tablosu</td><td>Kural sütunlarını çıkar</td></tr>
+      <tr><td>Durumlar ve geçişler</td>
+          <td><b>&sect;4.2.4</b> Durum geçiş testi</td><td>Geçiş tablosunu kur</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Kod görmüyorsan zaten dal kapsamı sorusu değildir;
+    kod görüyorsan da BVA sorusu değildir.</b></p>
+  </div>
+
+  <div class="card">
+    <h3>İki ölçüt, iki ayrı kapsam öğesi</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th>Kapsam öğesi</th><th>%100 ne demek</th><th>Grafikte karşılığı</th></tr>
+      <tr><td><b>Komut testi</b><br>(statement testing)</td>
+          <td>Çalıştırılabilir komut<br>(executable statement)</td>
+          <td>Her komut en az bir kez çalıştı</td><td><b>Düğüm</b> (node)</td></tr>
+      <tr><td><b>Dal testi</b><br>(branch testing)</td>
+          <td>Dal (branch) = kontrol aktarımı</td>
+          <td>Her dal en az bir kez izlendi</td><td><b>Kenar</b> (edge, ok)</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Sınavın bütün beyaz kutu soruları bu iki satırdan birine dayanır.
+    Soruyu okurken ilk işin <b>hangi öğenin sayıldığını</b> tespit etmektir.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Mühendis refleksi vs. sınav refleksi</h3>
+    <p>Sahada çalışan biri için &ldquo;%100 kapsam&rdquo; çoğu zaman bir <i>vanity metric</i>'tir:
+    ekip kapsamı yükseltmek için anlamsız testler yazar, assertion koymadan satır çalıştırır,
+    sayı %100 görünür ama kusur bulma gücü artmaz. Bu eleştiri <b>doğrudur</b>.</p>
+    <p>Ama sınav kapsamın <i>faydasını</i> değil <b>tanımını</b> ölçer. &ldquo;%100 komut kapsamı
+    elde edildi&rdquo; cümlesinden çıkarılacak tek şey &ldquo;her çalıştırılabilir komut en az bir kez
+    çalıştırıldı&rdquo;dır &mdash; ne bir fazlası, ne bir eksiği.</p>
+    <p style="margin-bottom:0"><b>Altın kural:</b> şıkta &ldquo;kusur kalmadı&rdquo;, &ldquo;kanıtlar&rdquo;,
+    &ldquo;tüm yollar&rdquo;, &ldquo;tüm kombinasyonlar&rdquo; geçiyorsa o şık tanımdan fazlasını
+    iddia ediyordur ve neredeyse her zaman yanlıştır.</p>
+  </div>
+</section>
+
+
+<section id="s2">
+  <div class="shead"><div class="num">2</div>
+    <div><h2>Komut nedir, dal nedir</h2>
+    <div class="lo">FL-4.3.1 &middot; FL-4.3.2 &middot; Sayılar neden farklı çıkıyor?</div></div></div>
+
+  <p class="lead"><b>Komut</b> (statement), çalıştırılabilir tek bir kod satırıdır.
+  <b>Dal</b> (branch), bir karardan çıkan <b>tek bir ok</b>, yani kontrolün bir noktadan
+  diğerine aktarılmasıdır. İkisi farklı şeyleri sayar; bu yüzden sayıları da farklı çıkar.</p>
+
+  <div class="card">
+    <h3>Tek örnek üzerinde ikisini de say</h3>
+    <p>Bir indirim fonksiyonu. Satırlar numaralı, böylece hangi testin neyi çalıştırdığını
+    satır numarasıyla konuşabiliriz:</p>
+<pre>1   indirim = 0
+2   if (tutar &gt; 100)
+3       indirim = tutar * 0.10
+4   yeniTutar = tutar - indirim
+5   yazdır(yeniTutar)</pre>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 230" role="img" aria-label="kontrol akis grafigi">
+<circle class="dot" cx="90" cy="105" r="20"/><text class="dv" x="90" y="110">1</text>
+<circle class="dot" cx="280" cy="105" r="20"/><text class="dv" x="280" y="110">2</text>
+<circle class="dot" cx="520" cy="48" r="20"/><text class="dv" x="520" y="53">3</text>
+<circle class="dot" cx="760" cy="105" r="20"/><text class="dv" x="760" y="110">4-5</text>
+<text class="dp" x="90" y="152">indirim = 0</text>
+<text class="dp" x="280" y="152">karar: tutar &gt; 100</text>
+<text class="dp" x="520" y="22">indirim hesapla</text>
+<text class="dp" x="790" y="152">yeniTutar, yazdır</text>
+<line class="ax" x1="110" y1="105" x2="247" y2="105"/>
+<path d="M 260 105 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 280 85 V 48 H 487" fill="none"/>
+<path d="M 500 48 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 540 48 H 760 V 72" fill="none"/>
+<path d="M 760 85 l -8 -13 h 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 280 125 V 180 H 760 V 138" fill="none"/>
+<path d="M 760 125 l -8 13 h 16 z" fill="var(--dim)"/>
+<text class="cl" x="380" y="40">dal 1 &middot; koşul DOĞRU</text>
+<text class="cl" x="500" y="200">dal 2 &middot; koşul YANLIŞ (else yazılmamış olsa da vardır)</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <div class="scroll"><table class="dt">
+      <tr><th>Ölçüt</th><th class="ctr">Kapsam öğesi sayısı</th><th>Hangileri</th></tr>
+      <tr><td><b>Komut</b></td><td class="ctr"><b>5</b></td><td>1, 2, 3, 4, 5 &mdash; <code>if</code> satırı da çalıştırılabilir bir komuttur</td></tr>
+      <tr><td><b>Dal</b></td><td class="ctr"><b>2</b></td><td>Karardan çıkan DOĞRU oku ve YANLIŞ oku</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Sayılar neden farklı?</b> Çünkü biri <i>kutuları</i>, diğeri
+    <i>okları</i> sayıyor. Kod ne kadar çok karar içerirse fark o kadar açılır:
+    kararsız düz bir blokta dal yoktur, komut vardır.</p>
+  </div>
+
+  <div class="card key">
+    <h3>Mekanizma &mdash; tek cümle</h3>
+    <p style="margin-bottom:.5rem"><b>Komut kapsamı &ldquo;bu satıra uğradım mı&rdquo; diye sorar;
+    dal kapsamı &ldquo;bu oku geçtim mi&rdquo; diye sorar.</b></p>
+<pre>  tutar = 150  &rarr;  1 2 3 4 5 çalıştı   &rarr;  komut: 5/5 = %100
+               &rarr;  yalnız DOĞRU oku    &rarr;  dal:   1/2 = %50</pre>
+    <p style="margin-bottom:0">Tek bir test komut kapsamını tamamlayabilir ama dal kapsamını
+    tamamlayamaz. <code>tutar = 50</code> testini eklediğinde YANLIŞ oku da geçilir ve
+    dal kapsamı 2/2 = %100 olur.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>&ldquo;else yoksa dal da yoktur&rdquo; yanılgısı</h3>
+    <p style="margin-bottom:0">Kodda <code>else</code> bloğu <b>yazılmamış</b> olması o dalın
+    var olmadığı anlamına gelmez. Koşul yanlış olduğunda akış bir yere gider &mdash;
+    karardan sonraki ilk satıra atlar. O atlayış da bir <b>kenardır</b>, yani bir daldır.
+    Her karar <b>en az iki</b> dal üretir. Dalları sayarken <i>kaç blok yazıldığına</i> değil,
+    <b>kaç karar sonucu olduğuna</b> bak.</p>
+  </div>
+</section>
+
+
+<section id="s3">
+  <div class="shead"><div class="num">3</div>
+    <div><h2>Kontrol akış grafiğini okumak</h2>
+    <div class="lo">Düğüm = komut &middot; Kenar = dal</div></div></div>
+
+  <p class="lead">Sınavda kod yerine doğrudan bir <b>kontrol akış grafiği</b> (control flow graph)
+  verilebilir. Tek kural yeter: <b>düğüm sayısı komut kapsamının öğe sayısını,
+  kenar sayısı dal kapsamının öğe sayısını verir.</b></p>
+
+  <div class="card">
+    <h3>Örnek: döngü + karar</h3>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 300" role="img" aria-label="kontrol akis grafigi">
+<path class="ax" d="M 606 139 V 20 H 216 V 130" fill="none"/>
+<path d="M 216 143 l -8 -13 h 16 z" fill="var(--dim)"/>
+<text class="cl" x="420" y="14">geri kenar &middot; döngü başa döner</text>
+<line class="ax" x1="90" y1="160" x2="197" y2="160"/>
+<path d="M 210 160 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 244 142 V 70 H 387" fill="none"/>
+<path d="M 400 70 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 240 180 V 250 H 387" fill="none"/>
+<path d="M 400 250 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 440 70 H 620 V 127" fill="none"/>
+<path d="M 620 140 l -8 -13 h 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 440 250 H 620 V 193" fill="none"/>
+<path d="M 620 180 l -8 13 h 16 z" fill="var(--dim)"/>
+<line class="ax" x1="640" y1="160" x2="807" y2="160"/>
+<path d="M 820 160 l -13 -8 v 16 z" fill="var(--dim)"/>
+<circle class="dot" cx="70" cy="160" r="20"/><text class="dv" x="70" y="165">N1</text>
+<circle class="dot" cx="230" cy="160" r="20"/><text class="dv" x="230" y="165">N2</text>
+<circle class="dot" cx="420" cy="70" r="20"/><text class="dv" x="420" y="75">N3</text>
+<circle class="dot" cx="420" cy="250" r="20"/><text class="dv" x="420" y="255">N4</text>
+<circle class="dot" cx="620" cy="160" r="20"/><text class="dv" x="620" y="165">N5</text>
+<circle class="dot" cx="840" cy="160" r="20"/><text class="dv" x="840" y="165">N6</text>
+<text class="dp" x="230" y="205">karar</text>
+<text class="dp" x="620" y="205">karar</text>
+<text class="dp" x="840" y="205">çıkış</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">#</th><th>Kenar</th><th>Türü</th></tr>
+      <tr><td class="ctr">1</td><td>N1 &rarr; N2</td><td>koşulsuz (giriş kenarı)</td></tr>
+      <tr><td class="ctr">2</td><td>N2 &rarr; N3</td><td>koşullu &mdash; kararın bir sonucu</td></tr>
+      <tr><td class="ctr">3</td><td>N2 &rarr; N4</td><td>koşullu &mdash; kararın diğer sonucu</td></tr>
+      <tr><td class="ctr">4</td><td>N3 &rarr; N5</td><td>koşulsuz</td></tr>
+      <tr><td class="ctr">5</td><td>N4 &rarr; N5</td><td>koşulsuz</td></tr>
+      <tr><td class="ctr">6</td><td>N5 &rarr; N2</td><td>koşullu &mdash; <b>geri kenar</b>, döngüyü kapatır</td></tr>
+      <tr><td class="ctr">7</td><td>N5 &rarr; N6</td><td>koşullu &mdash; döngüden çıkış</td></tr>
+    </table></div>
+    <pre class="fx">komut kapsamı öğesi = düğüm sayısı  = <b>6</b>
+dal kapsamı öğesi   = kenar sayısı  = <b>7</b></pre>
+    <p style="margin-bottom:0">Bu grafikte düğüm 6, kenar 7. Sınav sorusu &ldquo;kaç kapsam öğesi test
+    etmelisiniz?&rdquo; diye sorduğunda <b>önce hangi ölçütün istendiğine bak</b>, sonra doğru şeyi say.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>Kenar sayarken en sık atlanan üç ok</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Giriş kenarı.</b> N1 &rarr; N2 gibi ilk ok da bir daldır; bir karardan çıkmıyor diye sayılmazlık etmez.</li>
+      <li><b>Geri kenar.</b> Döngüyü başa döndüren ok (N5 &rarr; N2) listeden en çok düşen kenardır.</li>
+      <li><b>Birleşme kenarları.</b> İki kolun aynı düğümde buluştuğu oklar (N3 &rarr; N5, N4 &rarr; N5)
+        koşulsuzdur ama yine birer daldır.</li>
+    </ul>
+  </div>
+
+  <div class="card key">
+    <h3>Dal, karar sonucundan geniştir</h3>
+    <p style="margin-bottom:0">Syllabus dalı <i>&ldquo;bir düğümden diğerine kontrol aktarımı&rdquo;</i>
+    diye tanımlar. Bu, <b>koşullu</b> aktarımları (karardan çıkan oklar) <b>ve koşulsuz</b> aktarımları
+    (düz akış, birleşme, giriş) birlikte kapsar. Bu yüzden &ldquo;dal sayısı&rdquo; ile
+    &ldquo;karar sonucu sayısı&rdquo; aynı şey değildir: yukarıdaki grafikte karar sonucu 4,
+    dal 7'dir. Şıklar arasında ikisi birden varsa, soru hangi kelimeyi kullanıyorsa onu say.</p>
+  </div>
+</section>
+
+
+<section id="s4">
+  <div class="shead"><div class="num">4</div>
+    <div><h2>Kapsam yüzdesi nasıl hesaplanır</h2>
+    <div class="lo">Çalıştırılan öğe / toplam öğe &times; 100</div></div></div>
+
+  <p class="lead">Bütün kapsam ölçütleri <b>tek bir kalıptadır</b>. Değişen şey yalnızca
+  &ldquo;öğe&rdquo;nin ne olduğudur.</p>
+
+<pre class="fx">komut kapsamı = çalıştırılan komut sayısı / toplam çalıştırılabilir komut sayısı &times; 100
+dal kapsamı   = çalıştırılan dal sayısı   / koddaki toplam dal sayısı             &times; 100</pre>
+
+  <div class="card trap">
+    <h3>En sık yapılan hata &mdash; payda</h3>
+    <p style="margin-bottom:0">Payda <b>kapsam öğesi sayısıdır</b> &mdash; <b>test senaryosu sayısı değil.</b>
+    6 test yazmış olman paydayı 6 yapmaz. Payla payda <b>aynı türden</b> öğeyi saymalıdır:
+    dal kapsamının payında dal, paydasında dal olur. Payı dal, paydası karar sonucu olan bir formül
+    gördüğünde şıkkı tek bakışta eleyebilirsin.</p>
+  </div>
+
+  <div class="card">
+    <h3>Mini örnek &mdash; iki karar, dört dal</h3>
+<pre>1   if (kullanıcıVar)
+2       giriş_yap()
+3   if (yöneticiMi)
+4       panel_aç()
+5   anasayfa()</pre>
+    <div class="scroll"><table class="dt">
+      <tr><th>Test</th><th>Girdi</th><th>Çalışan komutlar</th><th>İzlenen dallar</th></tr>
+      <tr><td>T1</td><td>kullanıcı var, yönetici</td><td class="ctr">1, 2, 3, 4, 5</td><td>1-DOĞRU, 3-DOĞRU</td></tr>
+      <tr><td>T2</td><td>kullanıcı yok, yönetici değil</td><td class="ctr">1, 3, 5</td><td>1-YANLIŞ, 3-YANLIŞ</td></tr>
+    </table></div>
+    <pre class="fx">yalnız T1 &rarr; komut 5/5 = <b>%100</b>    dal 2/4 = <b>%50</b>
+T1 + T2   &rarr; komut 5/5 = <b>%100</b>    dal 4/4 = <b>%100</b></pre>
+    <p style="margin-bottom:0">Dikkat: T1 tek başına komut kapsamını zaten tamamlamıştı.
+    T2'nin kattığı tek şey <b>eksik iki dal</b>. Sınavda &ldquo;hangi testi eklemeliyim&rdquo;
+    sorularında aranan şey hep budur: <b>henüz izlenmemiş ok.</b></p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Payda &ldquo;çalıştırılabilir&rdquo; komutları sayar</h3>
+    <p style="margin-bottom:0">Yorum satırları, boş satırlar, yalnızca bildirim olan satırlar
+    çalıştırılabilir komut değildir; paydaya girmez. Hiçbir girdiyle ulaşılamayan <b>ölü kod</b>
+    (dead code) varsa, o kod çalıştırılamadığı için zaten %100 kapsama ulaşılamaz &mdash;
+    nitekim araç %100 raporladıysa <i>ulaşılamayan kod yürütüldü</i> diye bir çıkarım yapılamaz.</p>
+  </div>
+</section>
+
+
+<section id="s5">
+  <div class="shead"><div class="num">5</div>
+    <div><h2>Kapsama ilişkisi: ok tek yönlüdür</h2>
+    <div class="lo">%100 dal &rArr; %100 komut &middot; tersi geçersiz</div></div></div>
+
+  <p class="lead">Sınavın en çok sorduğu tek cümle bu: <b>&ldquo;Dal kapsamı komut kapsamını kapsar
+  (subsumes), komut kapsamı dalı kapsamaz.&rdquo;</b> 16 sorunun en az beşi doğrudan bu ilişkiyi ölçüyor.</p>
+
+  <div class="recog"><b>Neden tek yönlü?</b> Her komut <b>en az bir dalın üzerinde</b> durur.
+  Bütün dallar yürütülürse o dalların üzerindeki bütün komutlar da yürütülmüş olur &mdash; bu zorunludur.
+  Ters yönde böyle bir zorunluluk yoktur: bütün komutlara uğramak için bütün okları geçmek gerekmez.</div>
+
+  <div class="card">
+    <h3>Tersi neden geçersiz &mdash; kanıt: else'i olmayan tek bir if</h3>
+<pre>1   if (tüketim &gt; 500)
+2       ek_tarife_uygula()
+3   fatura_yazdır()</pre>
+    <p>Tek test: <code>tüketim = 700</code>. Koşul doğru, blok çalışıyor, fonksiyondaki bütün
+    çalıştırılabilir komutlar yürütülüyor. Grafikte kesik kırmızı ok <b>hiç geçilmemiş dalı</b> gösteriyor:</p>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 230" role="img" aria-label="kontrol akis grafigi">
+<circle class="dot" cx="130" cy="105" r="20"/><text class="dv" x="130" y="110">1</text>
+<circle class="dot" cx="470" cy="48" r="20"/><text class="dv" x="470" y="53">2</text>
+<circle class="dot" cx="790" cy="105" r="20"/><text class="dv" x="790" y="110">3</text>
+<text class="dp" x="130" y="152">karar: tüketim &gt; 500</text>
+<text class="dp" x="470" y="22">ek_tarife_uygula()</text>
+<text class="dp" x="790" y="152">fatura_yazdır()</text>
+<path class="ax" d="M 130 85 V 48 H 437" fill="none"/>
+<path d="M 450 48 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 490 48 H 790 V 72" fill="none"/>
+<path d="M 790 85 l -8 -13 h 16 z" fill="var(--dim)"/>
+<path class="dot miss" d="M 130 125 V 185 H 790 V 138" fill="none"/>
+<path d="M 790 125 l -8 13 h 16 z" fill="var(--bad)"/>
+<text class="bl good" x="285" y="40">DOĞRU &middot; izlendi</text>
+<text class="bl bad" x="460" y="208">YANLIŞ &middot; hiç izlenmedi &mdash; else yazılmamış olsa da bu bir daldır</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <p class="nlleg"><span><i class="a"></i>izlenen dal</span><span><i class="m"></i>izlenmeyen dal</span></p>
+    <pre class="fx">komut: 3 / 3 = <b>%100</b>        dal: 1 / 2 = <b>%50</b>
+&rarr; %100 komut kapsamı, %100 dal kapsamını <b>garanti etmez</b></pre>
+  </div>
+
+  <div class="card key">
+    <h3>İki yön, tek tabloda</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>İddia</th><th class="ctr">Geçerli mi?</th><th>Neden</th></tr>
+      <tr><td>%100 <b>dal</b> kapsamı &rarr; %100 <b>komut</b> kapsamı</td>
+          <td class="ok ctr">Evet</td>
+          <td>Her komut bir dalın üzerindedir; bütün oklar geçilince bütün kutulara uğranmış olur</td></tr>
+      <tr><td>%100 <b>komut</b> kapsamı &rarr; %100 <b>dal</b> kapsamı</td>
+          <td class="no ctr">Hayır</td>
+          <td>else'siz <code>if</code>: tek test bütün komutları çalıştırır, YANLIŞ dalı boşta kalır (%50)</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Ezber cümlesi:</b> <i>güçlü ölçüt zayıfı kapsar.</i>
+    Dal, komuttan güçlüdür. Sınavda oku ters çevirip sunan şık en sık düşülen tuzaktır &mdash;
+    (b) ve (d) şıkları çoğu zaman birbirinin aynadaki görüntüsüdür, <b>yönü kontrol et.</b></p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Kapsamın söylemediği şeyler</h3>
+    <ul style="margin-bottom:0">
+      <li><b>&ldquo;Kusur yok&rdquo; demez.</b> Test kusurun varlığını gösterir, yokluğunu kanıtlayamaz.</li>
+      <li><b>&ldquo;Her hata arızaya döndü&rdquo; demez.</b> <code>x = y / z</code> komutu her
+        çalıştığında değil, yalnızca <code>z = 0</code> iken arıza (failure) üretir.
+        Hatalı komuta <i>uğramak</i> ile hatayı <i>açığa çıkarmak</i> farklı şeylerdir.</li>
+      <li><b>&ldquo;Tüm yollar denendi&rdquo; demez.</b> Yol kapsamı (path coverage) çok daha güçlüdür;
+        döngüler yüzünden yol sayısı pratikte sonsuza yaklaşır.</li>
+      <li><b>&ldquo;Tüm girdi kombinasyonları denendi&rdquo; demez.</b> O, kapsamlı test
+        (exhaustive testing) olurdu ve gerçek sistemlerde imkânsızdır.</li>
+    </ul>
+  </div>
+</section>
+
+
+<section id="s6">
+  <div class="shead"><div class="num">6</div>
+    <div><h2>İki testin yüzdesi toplanmaz</h2>
+    <div class="lo">Kapsam bir orandır &middot; birleşim ve kesişim mantığı</div></div></div>
+
+  <p class="lead">Kapsam bir <b>yüzde oranıdır</b> ve tanımı gereği <b>%100'ü aşamaz</b>.
+  T1 %40, T2 %65 kapsam sağlıyorsa ikisinin birlikte kapsamı %105 <i>değildir</i>;
+  ortak çalıştırılan komutlar iki kez sayılmaz.</p>
+
+  <div class="card">
+    <h3>Kümelerle düşün</h3>
+    <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 212" role="img" aria-label="kapsam ortusmesi">
+<rect class="bd neu" x="23" y="24" width="900" height="34" rx="9"/>
+<text class="bl neu" x="473" y="46">P'nin çalıştırılabilir komutlarının tamamı &middot; %100</text>
+<rect class="bd good" x="23" y="80" width="360" height="30" rx="9"/>
+<text class="bl good" x="203" y="100">T1 &middot; %40</text>
+<rect class="bd neu2" x="338" y="124" width="585" height="30" rx="9"/>
+<text class="bl neu2" x="640" y="144">T2 &middot; %65</text>
+<line class="cut" x1="338" y1="70" x2="338" y2="186"/>
+<line class="cut" x1="383" y1="70" x2="383" y2="186"/>
+<text class="cl" x="360" y="66">%5</text>
+<text class="bl bad" x="360" y="180">zorunlu örtüşme</text>
+<line class="ax" x1="23" y1="196" x2="923" y2="196"/>
+<line class="tk" x1="23" y1="190" x2="23" y2="202"/>
+<line class="tk" x1="383" y1="190" x2="383" y2="202"/>
+<line class="tk" x1="923" y1="190" x2="923" y2="202"/>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+    <pre class="fx">|T1 &cup; T2| &le; %100   (kapsam %100'ü aşamaz)
+|T1 &cap; T2| = |T1| + |T2| &minus; |T1 &cup; T2|  &ge;  40 + 65 &minus; 100 = <b>%5</b></pre>
+    <p style="margin-bottom:0">Yüzdelerin toplamı %100'ü aşıyorsa, <b>aradaki fark kadar örtüşme zorunludur.</b>
+    Yani en az bir komut hem T1 hem T2 tarafından çalıştırılmıştır. Bu, verilen bilgiden
+    <i>kesinlikle</i> çıkan tek sonuçtur.</p>
+  </div>
+
+  <div class="card key">
+    <h3>Ama birlikte %100'e ulaşabilirler</h3>
+    <p>Yüzdeler toplanmaz; bu, testlerin birleşerek tam kapsama ulaşamayacağı anlamına gelmez.
+    10 komutluk bir programda her biri %50 kapsam sağlayan üç test:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Test</th><th>Çalıştırdığı komutlar</th><th class="ctr">Kapsam</th></tr>
+      <tr><td>T1</td><td>1, 2, 3, 4, 5</td><td class="ctr">5/10 = %50</td></tr>
+      <tr><td>T2</td><td>4, 5, 6, 7, 8</td><td class="ctr">5/10 = %50</td></tr>
+      <tr><td>T3</td><td>6, 7, 8, 9, 10</td><td class="ctr">5/10 = %50</td></tr>
+      <tr><td><b>T1+T2+T3</b></td><td>1&ndash;10</td><td class="ctr ok"><b>10/10 = %100</b></td></tr>
+    </table></div>
+    <pre class="fx">50 + 50 + 50 = 150 &ne; kapsam        birleşim = <b>%100</b>
+T1 çıkarılırsa &rarr; {4&hellip;10} = 7/10 = <b>%70</b>   &mdash; kapsam kaybedilir</pre>
+    <p style="margin-bottom:0">Buradan iki ders: <b>(1)</b> yüzdeler toplanmaz, birleşim alınır;
+    <b>(2)</b> testler örtüşüyor diye herhangi birini atmak güvenli değildir &mdash;
+    bir testi çıkarmak kapsamı düşürebilir, <i>garanti yoktur</i>.</p>
+  </div>
+</section>
+
+
+<section id="s7">
+  <div class="shead"><div class="num">7</div>
+    <div><h2>Beyaz kutu testi ne işe yarar</h2>
+    <div class="lo">FL-4.3.3 &middot; K2 &middot; Değeri ve sınırı</div></div></div>
+
+  <p class="lead">Syllabus beyaz kutu testinin değerini üç noktada toplar &mdash; ve bir de
+  <b>zayıf yönünü</b> açıkça söyler. FL-4.3.3 soruları bu dört cümlenin içinden çıkar.</p>
+
+  <div class="fgrid">
+    <div class="fbox"><h4>1 &middot; Nesnel ölçüm</h4>
+      <p>Kapsam, kod yapısı üzerinden <b>yüzde olarak</b> raporlanır.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">&ldquo;Yeterince test ettik mi?&rdquo;
+      sorusuna kanaat değil <b>sayı</b> ile cevap verir.</p></div>
+    <div class="fbox"><h4>2 &middot; Görünmeyeni gösterir</h4>
+      <p>Ölü kod, gereksiz dal, unutulmuş istisna işleyici, yanlış yerleştirilmiş kontrol.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Spesifikasyonda karşılığı olmayan kod
+      ancak yapıya bakınca görülür.</p></div>
+    <div class="fbox"><h4>3 &middot; Spesifikasyondan bağımsız</h4>
+      <p>Testler <b>yapıdan</b> türetilir; spesifikasyon belirsiz, eski ya da eksik olsa bile çalışır.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Statik testte de kullanılabilir
+      (kod gözden geçirme).</p></div>
+    <div class="fbox"><h4>&times; &middot; Zayıf yönü</h4>
+      <p><b>Eksik gerçekleştirimi göremez.</b> Hiç yazılmamış kodun komutu, dalı, yolu yoktur.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Eksik gereksinim kara kutunun
+      ve gözden geçirmenin işidir.</p></div>
+  </div>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Tek cümlelik ayrım</h3>
+    <p style="margin-bottom:.5rem"><b>Beyaz kutu <i>fazladan olanı</i> görür; kara kutu <i>eksik olanı</i> görür.</b></p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Durum</th><th class="ctr">Beyaz kutu bulur mu?</th><th class="ctr">Kara kutu bulur mu?</th></tr>
+      <tr><td>Hiç çalıştırılmayan ölü kod</td><td class="ok ctr">Evet</td><td class="no ctr">Hayır</td></tr>
+      <tr><td>Spesifikasyonda olmayan fazladan dal / arka kapı</td><td class="ok ctr">Evet</td><td class="no ctr">Hayır</td></tr>
+      <tr><td>Testlerin kodun hangi bölümüne hiç dokunmadığı</td><td class="ok ctr">Evet</td><td class="no ctr">Hayır</td></tr>
+      <tr><td>Hiç gerçekleştirilmemiş bir gereksinim</td><td class="no ctr">Hayır</td><td class="ok ctr">Evet</td></tr>
+      <tr><td>Gereksinimdeki çelişki / belirsizlik</td><td class="no ctr">Hayır</td><td class="ok ctr">Evet &mdash; statik test</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">İki yaklaşım birbirinin <b>alternatifi değil, tamamlayıcısıdır</b>.
+    Beyaz kutunun kara kutuya kattığı somut değer şudur: kara kutu testleri koşulduğunda
+    <b>ne kadar kod çalıştı</b> sorusunu nesnel olarak ölçer ve eksik kalan bölgeler için
+    ek test tasarlamayı mümkün kılar.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>FL-4.3.3 şıklarında mutlak ifade avı</h3>
+    <p style="margin-bottom:0">&ldquo;<b>kanıtlar</b>&rdquo;, &ldquo;<b>garanti eder</b>&rdquo;,
+    &ldquo;<b>tek yoldur</b>&rdquo;, &ldquo;<b>hiç kusur kalmaz</b>&rdquo;, &ldquo;<b>her zaman</b>&rdquo;
+    geçen şıklar ISTQB'de neredeyse her zaman yanlıştır. Ayrıca &ldquo;kapsam yüzdesi kalan kusur sayısını
+    verir&rdquo; tipi şıklar da çeldiricidir: kapsam <b>ne kadar yapının çalıştırıldığını</b> söyler,
+    kusur sayısını değil.</p>
+  </div>
+</section>
+
+
+<section id="s8">
+  <div class="shead"><div class="num">8</div>
+    <div><h2>Sınav reçetesi &mdash; 6 adım</h2>
+    <div class="lo">Her beyaz kutu sorusunda aynı sırayı uygula</div></div></div>
+
+  <ol class="steps">
+    <li><b>Hangi ölçüt soruluyor? Komut mu, dal mı?</b>
+      <span>Anahtar kelimeler: <code>komut</code> &middot; <code>ifade</code> &middot; <code>statement</code>
+      &rarr; düğüm/satır say. <code>dal</code> &middot; <code>branch</code> &middot; <code>karar sonucu</code>
+      &rarr; ok say.</span></li>
+    <li><b>Yapıyı kur: kodu grafiğe, grafiği listeye çevir.</b>
+      <span>Kod verildiyse satırları numarala ve kararları işaretle. Grafik verildiyse kenarları
+      tek tek listele &mdash; giriş kenarını ve geri kenarı unutma.</span></li>
+    <li><b>Paydayı yaz: toplam kapsam öğesi sayısı.</b>
+      <span>Komut &rarr; çalıştırılabilir komut sayısı. Dal &rarr; kenar sayısı; her karar
+      <b>en az 2</b> dal üretir, <code>else</code> yazılmamış olsa bile.</span></li>
+    <li><b>Testleri öğelerle eşleştir: hangi öğe çalıştı, hangisi boşta?</b>
+      <span>Her testin izlediği yolu grafik üzerinde yürü, dokunduğu düğüm ve kenarları işaretle.
+      Birden çok test varsa <b>birleşimi</b> al, yüzdeleri toplama.</span></li>
+    <li><b>Böl: çalıştırılan / toplam &times; 100.</b>
+      <span>Pay ile paydanın <b>aynı türden</b> öğeyi saydığını kontrol et. Sonuç asla %100'ü aşamaz.</span></li>
+    <li><b>Şıkları tanıma göre ele: tanımdan fazlasını iddia eden yanlıştır.</b>
+      <span>&ldquo;Kusur yok&rdquo;, &ldquo;tüm yollar&rdquo;, &ldquo;tüm kombinasyonlar&rdquo;,
+      &ldquo;kanıtlar&rdquo; &rarr; ele. Kapsama ilişkisinin <b>yönünü</b> kontrol et:
+      dal &rArr; komut, tersi değil.</span></li>
+  </ol>
+</section>
+
+
+<section id="s9">
+  <div class="shead"><div class="num">9</div>
+    <div><h2>Soru 1 &mdash; %100 komut kapsamı ne demek</h2>
+    <div class="lo">Resmî örnek sınav A &middot; Soru 24 &middot; FL-4.3.1 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Test takımınız %100 komut (statement) kapsamına ulaştığında elde edilen çıkarım nedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Her komutun en az bir kez çalıştırıldığı</span></li>
+      <li><b>B</b><span>Koştuğunuz test grubundan daha fazla test senaryosuna sahip herhangi bir test
+        grubunun da %100 komut (statement) kapsamına ulaşabileceği</span></li>
+      <li><b>C</b><span>Koddaki her yolun (path) en az bir kez çalıştırıldığı</span></li>
+      <li><b>D</b><span>Girdilerin her kombinasyonunun en az bir kez test edilmiş olduğu</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; hangi ölçüt, ne soruluyor?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;komut (statement) kapsamı&rdquo;</td><td>Kapsam öğesi = <b>çalıştırılabilir komut</b></td></tr>
+        <tr><td>&ldquo;%100 &hellip; ulaştığında&rdquo;</td><td>Pay = payda, yani hiçbir komut boşta kalmadı</td></tr>
+        <tr><td>&ldquo;elde edilen <b>çıkarım</b>&rdquo;</td><td>Tanım sorusu &mdash; hesap yok,
+          <b>tanımdan fazlasını</b> söyleyen şık elenecek</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Tanımı yaz, sonra %100'ü yerine koy</b>
+      <div>
+      <pre class="fx">komut kapsamı = çalıştırılan komut / toplam çalıştırılabilir komut &times; 100
+%100  &rArr;  çalıştırılan = toplam  &rArr;  <b>her komut en az bir kez çalıştı</b></pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Tanımın verdiği tek bilgi budur.
+      Kusurlu olanlar dâhil her komut çalıştırılmış ve değerlendirilmiştir &mdash; ama bu,
+      kodun <i>doğru</i> çalıştığını söylemez.</p>
+      </div></li>
+
+    <li><b>Şıkları tanımla karşılaştır &mdash; her biri ne sayıyor?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Neyin kapsamını anlatıyor</th><th class="ctr">Tanımla uyumlu mu?</th></tr>
+        <tr><td><b>A</b></td><td>Komut kapsamının tanımı</td><td class="ok ctr">Evet</td></tr>
+        <tr><td><b>B</b></td><td>Test senaryosu <b>sayısı</b> &mdash; kapsam öğesi değil</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>C</b></td><td>Yol kapsamı (path coverage) &mdash; çok daha güçlü ölçüt</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>D</b></td><td>Kapsamlı test (exhaustive testing) &mdash; girdi kombinasyonları</td><td class="no ctr">Hayır</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Şıkkı seç</b>
+      <div><p style="margin-bottom:0">Tanımı <b>birebir</b> tekrar eden tek şık (a). Diğer üçü
+      komut kapsamından ya daha güçlü bir ölçütü ya da bambaşka bir şeyi anlatıyor.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>A</b> &mdash; %100 komut kapsamı, tanımı gereği
+    <b>her çalıştırılabilir komutun en az bir kez çalıştırıldığı</b> anlamına gelir; bundan fazlasını söylemez.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>B</b></td><td>Kapsam, <b>kaç test koştuğuna</b> değil <b>hangi kodun çalıştığına</b> bağlıdır.
+        Daha çok senaryo içeren bir küme aynı komutları tekrar tekrar çalıştırıp yine de %100'e ulaşamayabilir.</td></tr>
+      <tr><td><b>C</b></td><td>Yol kapsamı ayrı ve çok daha güçlü bir ölçüttür. Üstelik döngüler yüzünden
+        yol sayısı pratikte sonsuza yaklaşır; %100 yol kapsamı genelde ulaşılamaz.</td></tr>
+      <tr><td><b>D</b></td><td>Girdilerin tüm kombinasyonlarını denemek <b>kapsamlı testtir</b> ve
+        gerçek sistemlerde uygulanabilir değildir; komut kapsamıyla hiç ilgisi yoktur.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;%100 kapsam&rdquo; &ne; &ldquo;kusur yok&rdquo;</h3>
+    <p style="margin-bottom:0">%100 komut kapsamı <b>hiçbir zaman</b> kusursuzluk anlamına gelmez.
+    Üstelik kararların her iki sonucunun denendiğini de söylemez: <code>else</code> dalı bulunmayan bir
+    <code>if</code> yapısında koşulun yanlış olduğu durum hiç sınanmasa bile %100 komut kapsamı elde edilebilir.
+    <b>%100 dal kapsamı %100 komut kapsamını garanti eder; tersi geçerli değildir.</b></p>
+  </div>
+
+  <ul class="opts">
+    <li class="right"><b>A</b><span>Her komutun en az bir kez çalıştırıldığı &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>B</b><span>Daha fazla senaryolu grup da %100'e ulaşır &nbsp;&mdash;&nbsp; kapsamı test sayısıyla karıştırmak</span></li>
+    <li class="wrong"><b>C</b><span>Her yol çalıştırıldı &nbsp;&mdash;&nbsp; yol kapsamı, çok daha güçlü ölçüt</span></li>
+    <li class="wrong"><b>D</b><span>Her girdi kombinasyonu test edildi &nbsp;&mdash;&nbsp; kapsamlı test, imkânsız</span></li>
+  </ul>
+</section>
+
+
+<section id="s10">
+  <div class="shead"><div class="num">10</div>
+    <div><h2>Soru 2 &mdash; %40 ve %65 &mdash; kesinlikle doğru olan</h2>
+    <div class="lo">Resmî örnek sınav B &middot; Soru 24 &middot; FL-4.3.1 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Aynı kod üzerinde T1 ve T2 olmak üzere iki test senaryosu çalıştırdığınızı varsayın.
+    T1 testi %40 komut kapsamı ve T2 testi %65 komut kapsamı elde etti.</p>
+    <p>Aşağıdaki ifadelerden hangisi <b>KESİNLİKLE</b> doğrudur?</p>
+    <ul class="opts">
+      <li><b>A</b><span>T1 ve T2 testlerinden oluşan test grubu %105 komut kapsamına ulaşır.</span></li>
+      <li><b>B</b><span>Hem T1 hem de T2 tarafından koşulmuş olması gereken en az bir komut vardır.</span></li>
+      <li><b>C</b><span>Test edilen koddaki komutların en az %5'i çalıştırılamaz.</span></li>
+      <li><b>D</b><span>T1 ve T2 testlerinden oluşan test grubu tam dal kapsamına ulaşır.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; &ldquo;KESİNLİKLE&rdquo; kelimesi yöntemi belirler</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;Aynı kod üzerinde&rdquo;</td><td>Payda ikisi için de <b>aynı</b> &mdash; oranlar karşılaştırılabilir</td></tr>
+        <tr><td>T1 = %40, T2 = %65</td><td>İki <b>küme</b>, aynı evrenin alt kümeleri</td></tr>
+        <tr><td>&ldquo;<b>KESİNLİKLE</b> doğrudur&rdquo;</td><td>&ldquo;Olabilir&rdquo; yetmez;
+          verilen bilgiden <b>zorunlu olarak</b> çıkan tek ifade aranıyor</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Yapıyı kur: yüzdeleri küme olarak çiz</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 212" role="img" aria-label="kapsam ortusmesi">
+<rect class="bd neu" x="23" y="24" width="900" height="34" rx="9"/>
+<text class="bl neu" x="473" y="46">kodun çalıştırılabilir komutları &middot; %100</text>
+<rect class="bd good" x="23" y="80" width="360" height="30" rx="9"/>
+<text class="bl good" x="203" y="100">T1 &middot; %40</text>
+<rect class="bd neu2" x="338" y="124" width="585" height="30" rx="9"/>
+<text class="bl neu2" x="640" y="144">T2 &middot; %65</text>
+<line class="cut" x1="338" y1="70" x2="338" y2="186"/>
+<line class="cut" x1="383" y1="70" x2="383" y2="186"/>
+<text class="cl" x="360" y="66">%5</text>
+<text class="bl bad" x="360" y="180">en az bu kadarı ortak</text>
+<line class="ax" x1="23" y1="196" x2="923" y2="196"/>
+<line class="tk" x1="23" y1="190" x2="23" y2="202"/>
+<line class="tk" x1="383" y1="190" x2="383" y2="202"/>
+<line class="tk" x1="923" y1="190" x2="923" y2="202"/>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">T1 ve T2 tamamen ayrık olsaydı
+      birleşik kapsam %105 olurdu. Kapsam %100'ü aşamayacağına göre ayrık <b>olamazlar</b>.</p>
+      </div></li>
+
+    <li><b>Aritmetiği yaz</b>
+      <div>
+      <pre class="fx">|T1 &cup; T2| &le; %100
+|T1 &cap; T2| = |T1| + |T2| &minus; |T1 &cup; T2|
+            &ge; 40 + 65 &minus; 100
+            = <b>%5</b>   &rarr;  en az bir ortak komut <b>zorunlu</b></pre>
+      </div></li>
+
+    <li><b>Şıkları zorunluluk testinden geçir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Zorunlu mu, mümkün mü, imkânsız mı?</th></tr>
+        <tr><td><b>A</b></td><td class="no"><b>İmkânsız</b> &mdash; kapsam bir orandır, %100'ü aşamaz</td></tr>
+        <tr><td><b>B</b></td><td class="ok"><b>Zorunlu</b> &mdash; örtüşme en az %5</td></tr>
+        <tr><td><b>C</b></td><td class="no"><b>Çıkarılamaz</b> &mdash; kapsam zaten yalnızca
+          <i>çalıştırılabilir</i> komutlar üzerinden ölçülür</td></tr>
+        <tr><td><b>D</b></td><td class="no"><b>Çıkarılamaz</b> &mdash; ikisi birlikte tam komut
+          kapsamına bile ulaşmayabilir</td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>B</b> &mdash; %40 + %65 = %105 &gt; %100 olduğundan en az %5'lik bir
+    örtüşme zorunludur; yani <b>hem T1 hem T2 tarafından koşulan en az bir komut vardır</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>A</b></td><td>Kapsam bir yüzde oranıdır ve %100'ü aşamaz. İki testin yüzdeleri
+        <b>toplanmaz</b>; birleşim alınır, kesişen komutlar iki kez sayılmaz.</td></tr>
+      <tr><td><b>C</b></td><td>Komut kapsamı <b>koşulabilir</b> komutlar üzerinden ölçülür ve
+        çalıştırılamayan kod hakkında hiçbir çıkarım yapmaya izin vermez. &ldquo;%5&rdquo; sayısı
+        örtüşmeye aittir, ölü koda değil &mdash; şık tam olarak bu karışıklığı bekliyor.</td></tr>
+      <tr><td><b>D</b></td><td>Tam komut kapsamı bile tam dal kapsamını gerektirmez; burada tam komut
+        kapsamına ulaşıldığı dahi söylenmiyor. İlişkinin yönü: <b>dal &rArr; komut</b>.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: iki yüzdeyi toplamak</h3>
+    <p style="margin-bottom:0">%40 + %65 = %105 işlemi <b>kapsam hesabı değildir</b>;
+    yalnızca &ldquo;örtüşme en az %5&rdquo; sonucunu üretmeye yarayan bir ara adımdır.
+    &ldquo;Kesinlikle doğrudur&rdquo; tipi sorularda yüzdeleri toplamak yerine
+    <b>kümelerin birleşimini ve kesişimini</b> düşün.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>Grup %105 kapsama ulaşır &nbsp;&mdash;&nbsp; yüzdeleri toplamak</span></li>
+    <li class="right"><b>B</b><span>Hem T1 hem T2'nin koştuğu en az bir komut vardır &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>C</b><span>Komutların en az %5'i çalıştırılamaz &nbsp;&mdash;&nbsp; %5'i ölü kod sanmak</span></li>
+    <li class="wrong"><b>D</b><span>Grup tam dal kapsamına ulaşır &nbsp;&mdash;&nbsp; ilişkiyi ters kurmak</span></li>
+  </ul>
+</section>
+
+
+<section id="s11">
+  <div class="shead"><div class="num">11</div>
+    <div><h2>Soru 3 &mdash; üç test, %50'şer kapsam</h2>
+    <div class="lo">Resmî örnek sınav D &middot; Soru 24 &middot; FL-4.3.1 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>P programı için oluşturduğunuz S test kümesi, %100 komut kapsama yüzdesi sağlamaktadır.
+    Bu küme, her biri %50 komut kapsama yüzdesi sağlayan üç test senaryosundan oluşmaktadır.
+    Aşağıdaki ifadelerden hangisi DOĞRUDUR?</p>
+    <ul class="opts">
+      <li><b>A</b><span>S&rsquo;nin yürütülmesi, P&rsquo;deki tüm olası arızaları ortaya çıkaracaktır.</span></li>
+      <li><b>B</b><span>S, P için %100 dal kapsamı sağlar.</span></li>
+      <li><b>C</b><span>P&rsquo;de hata içeren her yürütülebilir komut, S&rsquo;nin yürütülmesi sırasında
+        en az bir kez çalıştırılmıştır.</span></li>
+      <li><b>D</b><span>S&rsquo;den bir test senaryosu çıkarıldıktan sonra, kalan iki test senaryosu
+        yine de %100 komut kapsama yüzdesi sağlayacaktır.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; elindeki tek gerçek bilgi ne?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>S &rarr; %100 komut kapsamı</td><td><b>Her yürütülebilir komut</b> en az bir kez çalıştı</td></tr>
+        <tr><td>Üç test, her biri %50</td><td>3 &times; 50 = 150 &gt; 100 &rarr; testler <b>örtüşüyor</b>;
+          ama hangisinin nereyi kapsadığı <b>bilinmiyor</b></td></tr>
+        <tr><td>&ldquo;hangisi <b>DOĞRUDUR</b>&rdquo;</td><td>Her zaman doğru olan tek ifade aranıyor &mdash;
+          &ldquo;olabilir&rdquo; yetmez</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Tanımı harfiyen uygula</b>
+      <div>
+      <pre class="fx">%100 komut kapsamı &rArr; her yürütülebilir komut en az bir kez çalıştı
+                   &rArr; <b>hata içeren komutlar da</b> en az bir kez çalıştı   &rarr; (c)</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">(c) şıkkı tanımın doğrudan bir
+      sonucudur: &ldquo;hata içeren komut&rdquo; da bir yürütülebilir komuttur, dolayısıyla o da çalışmıştır.</p>
+      </div></li>
+
+    <li><b>Hata (defect) ile arıza (failure) ayrımını yap &mdash; (a) burada ölür</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Komut</th><th>Çalıştı mı?</th><th>Arıza üretir mi?</th></tr>
+        <tr><td><code>x := y / z</code> (z kontrolü unutulmuş)</td><td class="ok">Evet &mdash; kapsama dâhil</td>
+            <td class="no">Yalnızca <b>z = 0</b> iken</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Hatalı komuta <b>uğramak</b>,
+      hatanın gözlemlenebilir bir arızaya <b>dönüşmesi</b> için yetmez; belirli veri ve durum koşulları da gerekir.</p>
+      </div></li>
+
+    <li><b>(d) için somut karşı örnek kur</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Test</th><th>Çalıştırdığı komutlar (10 komutluk P)</th><th class="ctr">Kapsam</th></tr>
+        <tr><td>T1</td><td>1, 2, 3, 4, 5</td><td class="ctr">%50</td></tr>
+        <tr><td>T2</td><td>4, 5, 6, 7, 8</td><td class="ctr">%50</td></tr>
+        <tr><td>T3</td><td>6, 7, 8, 9, 10</td><td class="ctr">%50</td></tr>
+        <tr><td><b>S = T1+T2+T3</b></td><td>1&ndash;10</td><td class="ctr ok"><b>%100</b></td></tr>
+        <tr><td><b>S &minus; T1</b></td><td>4&ndash;10</td><td class="ctr no"><b>%70</b></td></tr>
+      </table></div>
+      <pre class="fx">bir test çıkarıldığında kapsam <b>düşebilir</b> &rarr; (d) garanti değil</pre>
+      </div></li>
+
+    <li><b>(b) için kapsama ilişkisini hatırla</b>
+      <div><p style="margin-bottom:0">Komut kapsamı dal kapsamını <b>gerektirmez</b>:
+      <code>else</code>'siz bir <code>if</code>'te tek bir test %100 komut kapsamı verse de
+      YANLIŞ dalı hiç denenmemiş olabilir. Ok yalnızca <b>dal &rArr; komut</b> yönünde işler.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>C</b> &mdash; Tüm yürütülebilir komutlar çalıştırıldığına göre,
+    <b>hata içerenler de en az bir kez çalıştırılmıştır</b>; bu, %100 komut kapsamının doğrudan tanımıdır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>A</b></td><td>Kapsam ölçütünün sağlanması tüm arızaların ortaya çıkacağını göstermez.
+        Test, kusurun varlığını gösterir; yokluğunu kanıtlayamaz. Komutun çalışması &ne; hatanın açığa çıkması.</td></tr>
+      <tr><td><b>B</b></td><td>Komut kapsamı dal kapsamını gerektirmez; kararların yalnızca bir sonucu
+        denenmiş olabilir. İlişki ters yöndedir.</td></tr>
+      <tr><td><b>D</b></td><td>Testler örtüşse bile bir testin çıkarılması bazı komutları kapsam dışı
+        bırakabilir. Yukarıdaki karşı örnekte S &minus; T1 kapsamı %70'e düşüyor &mdash; <b>garanti yoktur</b>.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;150 &minus; 100 = 50 örtüşme var, demek ki biri gereksiz&rdquo;</h3>
+    <p style="margin-bottom:0">Örtüşmenin <b>varlığı</b> aritmetikten çıkar, ama hangi testin
+    <b>gereksiz</b> olduğu çıkmaz. Üç küme karşılıklı örtüşürken her biri yine de kendine özgü
+    komutlar taşıyabilir. Küme mantığında &ldquo;toplam fazla&rdquo; demek &ldquo;biri atılabilir&rdquo; demek değildir.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>Tüm olası arızaları ortaya çıkarır &nbsp;&mdash;&nbsp; kapsamı kusursuzluk sanmak</span></li>
+    <li class="wrong"><b>B</b><span>%100 dal kapsamı sağlar &nbsp;&mdash;&nbsp; ilişkiyi ters kurmak</span></li>
+    <li class="right"><b>C</b><span>Hata içeren her komut en az bir kez çalıştırılmıştır &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>D</b><span>Bir test çıkarılsa da %100 kalır &nbsp;&mdash;&nbsp; örtüşmeyi gereksizlik sanmak</span></li>
+  </ul>
+</section>
+
+
+<section id="s12">
+  <div class="shead"><div class="num">12</div>
+    <div><h2>Soru 4 &mdash; ifade kapsamının tanımı</h2>
+    <div class="lo">Resmî örnek sınav F &middot; Soru 24 &middot; FL-4.3.1 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>İfade kapsamı (statement coverage) ile ilgili aşağıdaki açıklamalardan hangisi DOĞRUdur?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Yürütülen çalıştırılabilir ifadelerin toplam çalıştırılabilir ifadeye oranıdır;
+        %100 kapsam her ifadenin en az bir kez yürütüldüğü anlamına gelir.</span></li>
+      <li><b>B</b><span>Yürütülen test senaryolarının tasarlanan toplam test senaryosuna oranıdır ve
+        test ilerlemesinin ölçüsü olarak raporlanır.</span></li>
+      <li><b>C</b><span>%100 ifade kapsamına ulaşıldığında koddaki bütün dalların da en az bir kez
+        yürütülmüş olması garanti edilir.</span></li>
+      <li><b>D</b><span>Kaynak koda erişim gerektirmediği için kara kutu teknikleriyle birlikte ölçülen
+        bir kapsam türüdür.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Her şıkta pay ve paydayı işaretle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Pay</th><th>Payda</th><th class="ctr">Aynı tür öğe mi?</th></tr>
+        <tr><td><b>A</b></td><td>yürütülen çalıştırılabilir ifade</td><td>toplam çalıştırılabilir ifade</td>
+            <td class="ok ctr">Evet</td></tr>
+        <tr><td><b>B</b></td><td>yürütülen test senaryosu</td><td>tasarlanan test senaryosu</td>
+            <td class="no ctr">Kapsam değil &mdash; <b>ilerleme metriği</b></td></tr>
+        <tr><td><b>C</b></td><td colspan="2">Oran değil, bir <b>garanti iddiası</b></td><td class="no ctr">&mdash;</td></tr>
+        <tr><td><b>D</b></td><td colspan="2">Oran değil, bir <b>erişim iddiası</b></td><td class="no ctr">&mdash;</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Kapsam sorularında ilk refleks:
+      <b>paydanın ne olduğunu kontrol et.</b> İfade mi, dal mı, test senaryosu mu?</p>
+      </div></li>
+
+    <li><b>Doğru tanımı yaz</b>
+      <div>
+      <pre class="fx">ifade kapsamı = yürütülen çalıştırılabilir ifade / toplam çalıştırılabilir ifade &times; 100
+%100 &rArr; her çalıştırılabilir ifade en az bir kez yürütüldü</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">(a) şıkkı hem oranın tanımını
+      hem de %100'ün anlamını birlikte, syllabus ile birebir veriyor.</p>
+      </div></li>
+
+    <li><b>(c) için yönü kontrol et</b>
+      <div>
+      <pre class="fx">doğru yön:  %100 <b>dal</b>   &rArr;  %100 ifade        &#10004;
+(c) diyor:  %100 <b>ifade</b> &rArr;  %100 dal          &#10007;</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Karşı örnek: <code>else</code> dalı
+      bulunmayan bir <code>if</code>'te koşulu doğru yapan tek bir test tüm ifadeleri yürütür,
+      ama koşulun yanlış olduğu dalı hiç denemez.</p>
+      </div></li>
+
+    <li><b>(d) için ölçütün ailesini sor</b>
+      <div><p style="margin-bottom:0">İfade kapsamı kodun <b>iç yapısına</b> dayanır; ölçülebilmesi için
+      koda erişim ve bir araçla enstrümantasyon gerekir. Bu onu tanımı gereği bir
+      <b>beyaz kutu</b> ölçüsü yapar, kara kutu değil.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>A</b> &mdash; İfade kapsamı, yürütülen çalıştırılabilir ifadelerin
+    toplam çalıştırılabilir ifadeye oranıdır ve %100 kapsam <b>her ifadenin en az bir kez yürütüldüğünü</b> gösterir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Hangi kavramla karıştırıyor</th><th>Neden yanlış</th></tr>
+      <tr><td><b>B</b></td><td>Test ilerleme metriği</td><td>Yürütülen test senaryosu oranı
+        <b>kod kapsamı değildir</b>; ilerleme raporlamasına aittir.</td></tr>
+      <tr><td><b>C</b></td><td>Kapsama ilişkisi (subsumption)</td><td>İlişkiyi ters çeviriyor:
+        %100 dal kapsamı %100 ifade kapsamını içerir, tersi doğru değildir.</td></tr>
+      <tr><td><b>D</b></td><td>Kara kutu / beyaz kutu ayrımı</td><td>İfade kapsamı kodun yapısına
+        dayanır; koda erişim olmadan ölçülemez.</td></tr>
+    </table></div>
+  </div>
+
+  <ul class="opts">
+    <li class="right"><b>A</b><span>Yürütülen ifade / toplam ifade; %100 = her ifade en az bir kez &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>B</b><span>Yürütülen test / tasarlanan test &nbsp;&mdash;&nbsp; paydayı test sayısı sanmak</span></li>
+    <li class="wrong"><b>C</b><span>%100 ifade &rArr; tüm dallar &nbsp;&mdash;&nbsp; oku ters çevirmek</span></li>
+    <li class="wrong"><b>D</b><span>Koda erişim gerektirmez &nbsp;&mdash;&nbsp; kara kutu sanmak</span></li>
+  </ul>
+</section>
+
+
+<section id="s13">
+  <div class="shead"><div class="num">13</div>
+    <div><h2>Soru 5 &mdash; bagaj sistemi, araç %100 raporladı</h2>
+    <div class="lo">Resmî örnek sınav G &middot; Soru 24 &middot; FL-4.3.1 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir bagaj yönlendirme sisteminin bileşen testlerinde ölçüm aracı, sınanan bileşen için
+    %100 ifade kapsamına (statement coverage) ulaşıldığını raporlamıştır.
+    Bu sonuca dayanarak aşağıdakilerden hangisi söylenebilir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Koddaki her karar sonucu da en az bir kez yürütülmüştür, dolayısıyla dal kapsamı da
+        %100'e ulaşmıştır.</span></li>
+      <li><b>B</b><span>Bileşende artık kusur bulunmadığı gösterilmiştir, bu nedenle bileşen testi
+        tamamlanmış sayılabilir.</span></li>
+      <li><b>C</b><span>Her çalıştırılabilir ifade en az bir kez yürütülmüştür, ancak bazı karar sonuçları
+        hiç denenmemiş olabilir.</span></li>
+      <li><b>D</b><span>Hiçbir zaman çalıştırılamayan ölü kod da dâhil olmak üzere kaynak kodun tamamı
+        yürütülmüştür.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Ölçütün &ldquo;söylediği&rdquo; ile &ldquo;söylemediği&rdquo;ni ikiye ayır</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>%100 ifade kapsamı &hellip;</th><th>İçerik</th></tr>
+        <tr><td class="ok"><b>şunu söyler</b></td><td>Hiçbir çalıştırılabilir ifade atlanmadı</td></tr>
+        <tr><td class="no"><b>şunu söylemez</b></td><td>Kararların bütün sonuçları denendi</td></tr>
+        <tr><td class="no"><b>şunu söylemez</b></td><td>Kusur kalmadı</td></tr>
+        <tr><td class="no"><b>şunu söylemez</b></td><td>Ulaşılamayan kod da yürütüldü</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Karşı örneği kur: else'siz if</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 220" role="img" aria-label="kontrol akis grafigi">
+<circle class="dot" cx="130" cy="100" r="20"/><text class="dv" x="130" y="105">1</text>
+<circle class="dot" cx="470" cy="45" r="20"/><text class="dv" x="470" y="50">2</text>
+<circle class="dot" cx="790" cy="100" r="20"/><text class="dv" x="790" y="105">3</text>
+<text class="dp" x="130" y="147">karar: bagaj öncelikli mi</text>
+<text class="dp" x="470" y="20">hızlı hatta yönlendir</text>
+<text class="dp" x="790" y="147">bandı ilerlet</text>
+<path class="ax" d="M 130 80 V 45 H 437" fill="none"/>
+<path d="M 450 45 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 490 45 H 790 V 67" fill="none"/>
+<path d="M 790 80 l -8 -13 h 16 z" fill="var(--dim)"/>
+<path class="dot miss" d="M 130 120 V 180 H 790 V 133" fill="none"/>
+<path d="M 790 120 l -8 13 h 16 z" fill="var(--bad)"/>
+<text class="bl good" x="285" y="37">DOĞRU &middot; izlendi</text>
+<text class="bl bad" x="460" y="203">YANLIŞ &middot; denenmemiş karar sonucu</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">ifade: 3 / 3 = <b>%100</b>        dal: 1 / 2 = <b>%50</b></pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Tek test bütün ifadeleri yürütür,
+      ifade kapsamını %100'e taşır &mdash; ama koşulun yanlış olduğu sonuç hiç izlenmemiştir.
+      Tam olarak (c) şıkkının anlattığı durum.</p>
+      </div></li>
+
+    <li><b>&ldquo;Ölü kod&rdquo; şıkkını mantıkla ele</b>
+      <div><p style="margin-bottom:0">Ulaşılamayan kod <b>yürütülemez</b>. Böyle bir kod varsa zaten
+      %100 ifade kapsamına ulaşılamaz; araç %100 raporladıysa bu, ölü kodun da çalıştığı anlamına
+      gelmez &mdash; mantıksal olarak imkânsızdır.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>C</b> &mdash; Bütün çalıştırılabilir ifadeler yürütülmüştür,
+    <b>ancak denenmemiş karar sonuçları kalmış olabilir</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>A</b></td><td>İlişki ters yöndedir: %100 dal kapsamı ifade kapsamını garanti eder,
+        tersi geçerli değildir.</td></tr>
+      <tr><td><b>B</b></td><td>Hiçbir kapsam ölçütü kusur yokluğunu kanıtlamaz; test kusurun varlığını
+        gösterir, yokluğunu değil.</td></tr>
+      <tr><td><b>D</b></td><td>Ulaşılamayan kod yürütülemez; böyle bir kod varsa %100 ifade kapsamına
+        zaten ulaşılamaz.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: kapsam yüzdesini kalite güvencesiyle karıştırmak</h3>
+    <p style="margin-bottom:0">Araç raporu bir <b>ölçüm</b>dür, bir <b>onay</b> değil.
+    %100 kapsam yalnızca ölçülen öğelerin çalıştırıldığını söyler; testin yeterli olduğunu,
+    bileşenin bitmiş sayılabileceğini ya da kusur kalmadığını söylemez.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>Dal kapsamı da %100'dür &nbsp;&mdash;&nbsp; oku ters çevirmek</span></li>
+    <li class="wrong"><b>B</b><span>Kusur kalmadığı gösterilmiştir &nbsp;&mdash;&nbsp; kapsamı kalite kanıtı sanmak</span></li>
+    <li class="right"><b>C</b><span>Her ifade yürütüldü, bazı karar sonuçları denenmemiş olabilir &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>D</b><span>Ölü kod dâhil her şey yürütüldü &nbsp;&mdash;&nbsp; ulaşılamayan kod yürütülemez</span></li>
+  </ul>
+</section>
+
+
+<section id="s14">
+  <div class="shead"><div class="num">14</div>
+    <div><h2>Soru 6 &mdash; BCov formülünde X ve Y</h2>
+    <div class="lo">Resmî örnek sınav B &middot; Soru 25 &middot; FL-4.3.2 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Dal kapsama metriği <b>BCov = (X / Y) * %100</b> olarak tanımlandığını varsayın.
+    Bu formülde X ve Y neyi temsil etmektedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>X = test senaryoları tarafından uygulanan karar sonuçlarının sayısı
+        &nbsp;Y = koddaki toplam karar sonucu sayısı</span></li>
+      <li><b>B</b><span>X = test senaryoları tarafından uygulanan koşullu dal sayısı
+        &nbsp;Y = koddaki toplam dal sayısı</span></li>
+      <li><b>C</b><span>X = test senaryoları tarafından uygulanan dal sayısı
+        &nbsp;Y = koddaki toplam dal sayısı</span></li>
+      <li><b>D</b><span>X = test senaryoları tarafından uygulanan koşullu dal sayısı
+        &nbsp;Y = koddaki toplam karar sonucu sayısı</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Kapsam metriklerinin ortak kalıbını yaz</b>
+      <div>
+      <pre class="fx">her kapsam metriği = uygulanan kapsam öğesi / toplam kapsam öğesi &times; 100
+dal kapsamı       = uygulanan <b>dal</b> sayısı     / koddaki toplam <b>dal</b> sayısı &times; 100</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Metriğin adı kapsam öğesini verir:
+      <b>dal</b> kapsamı &rarr; payda da payda da <b>dal</b>.</p>
+      </div></li>
+
+    <li><b>Pay ile paydanın aynı türü sayıp saymadığına bak &mdash; tek başına üç şık eler</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Pay (X)</th><th>Payda (Y)</th><th class="ctr">Aynı tür mü?</th></tr>
+        <tr><td><b>A</b></td><td>karar sonucu</td><td>karar sonucu</td><td class="ctr">Evet &mdash; ama bu
+          <b>karar kapsamı</b>nın tanımı</td></tr>
+        <tr><td><b>B</b></td><td><b>koşullu</b> dal</td><td>toplam dal</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>C</b></td><td>dal</td><td>dal</td><td class="ok ctr">Evet</td></tr>
+        <tr><td><b>D</b></td><td><b>koşullu</b> dal</td><td>karar sonucu</td><td class="no ctr">Hayır</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>&ldquo;Dal&rdquo; ile &ldquo;karar sonucu&rdquo; farkını hatırla</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Kavram</th><th>Kapsadığı kontrol aktarımları</th><th class="ctr">Kapsam</th></tr>
+        <tr><td><b>Karar sonucu</b></td><td>Yalnızca bir karardan çıkan DOĞRU / YANLIŞ okları</td>
+            <td class="ctr">dar</td></tr>
+        <tr><td><b>Dal</b></td><td>Koşullu <b>ve koşulsuz</b> bütün aktarımlar &mdash;
+          giriş kenarı, birleşme, düz akış dâhil</td><td class="ctr"><b>geniş</b></td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Syllabus dalı
+      <i>&ldquo;kontrol akış grafiğinde bir düğümden diğerine yapılan kontrol aktarımı&rdquo;</i> diye tanımlar.
+      Bu yüzden &ldquo;yalnızca koşullu dal&rdquo; diyen bir pay, dalların bir bölümünü dışarıda bırakır.</p>
+      </div></li>
+
+    <li><b>Şıkkı seç</b>
+      <div><p style="margin-bottom:0">Payı ve paydası birlikte <b>dal</b> sayan tek şık (c);
+      bu zaten tanımın kendisidir.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>C</b> &mdash; Dal kapsamı, <b>test senaryolarının uyguladığı dal sayısının
+    koddaki toplam dal sayısına</b> bölünmesiyle ölçülür ve yüzde olarak ifade edilir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>A</b></td><td>Karar sonuçlarını sayar; bu <b>karar kapsamının</b> tanımıdır ve
+        koşulsuz dalları dışarıda bırakır.</td></tr>
+      <tr><td><b>B</b></td><td>Pay yalnızca koşullu dalları sayarak dalların bir bölümünü göz ardı eder;
+        payla payda aynı türü saymaz.</td></tr>
+      <tr><td><b>D</b></td><td>Pay koşullu dalları, payda ise karar sonuçlarını sayar &mdash;
+        iki farklı türden öğeyi oranlayan bir formül anlamsızdır.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: payla paydayı okumadan şık seçmek</h3>
+    <p style="margin-bottom:0">Bu tip sorularda dört şık birbirinin permütasyonudur.
+    Tek tek okumak yerine <b>önce payı, sonra paydayı</b> işaretle ve
+    &ldquo;aynı türden öğe mi?&rdquo; diye sor. Farklıysa, şıkkın içeriğini hiç tartışmadan elersin.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>Karar sonucu / karar sonucu &nbsp;&mdash;&nbsp; karar kapsamının tanımı</span></li>
+    <li class="wrong"><b>B</b><span>Koşullu dal / toplam dal &nbsp;&mdash;&nbsp; pay eksik sayıyor</span></li>
+    <li class="right"><b>C</b><span>Uygulanan dal / toplam dal &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>D</b><span>Koşullu dal / karar sonucu &nbsp;&mdash;&nbsp; iki farklı tür</span></li>
+  </ul>
+</section>
+
+
+<section id="s15">
+  <div class="shead"><div class="num">15</div>
+    <div><h2>Soru 7 &mdash; grafikte kaç kapsam öğesi var</h2>
+    <div class="lo">Resmî örnek sınav C &middot; Soru 24 &middot; FL-4.3.2 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Aşağıdaki kontrol akış grafiğiyle temsil edilen koda dal (branch) testi uygulamak
+    istediğinizi varsayın.</p>
+    <p>Grafikte yedi düğüm (N1&ndash;N7) ve şu yönlü kenarlar bulunmaktadır:</p>
+<pre>N1 -&gt; N2
+N2 -&gt; N3
+N3 -&gt; N2
+N2 -&gt; N4
+N4 -&gt; N5
+N4 -&gt; N6
+N5 -&gt; N7
+N6 -&gt; N7</pre>
+    <p>Kaç kapsam öğesini test etmeniz gerekmektedir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>2</span></li>
+      <li><b>B</b><span>4</span></li>
+      <li><b>C</b><span>8</span></li>
+      <li><b>D</b><span>7</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Hangi ölçüt? &mdash; &ldquo;dal testi&rdquo; diyor, demek ki kenar sayacağız</b>
+      <div>
+      <pre class="fx">dal testi &rarr; kapsam öğesi = <b>kenar</b> (kontrol aktarımı)
+komut testi olsaydı &rarr; kapsam öğesi = düğüm</pre>
+      </div></li>
+
+    <li><b>Grafiği çiz &mdash; okları gör, düğümleri değil</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 310" role="img" aria-label="kontrol akis grafigi">
+<line class="ax" x1="90" y1="165" x2="197" y2="165"/>
+<path d="M 210 165 l -13 -8 v 16 z" fill="var(--dim)"/>
+<line class="ax" x1="214" y1="145" x2="214" y2="88"/>
+<path d="M 214 75 l -7 12 h 14 z" fill="var(--dim)"/>
+<line class="ax" x1="246" y1="75" x2="246" y2="132"/>
+<path d="M 246 145 l -7 -12 h 14 z" fill="var(--dim)"/>
+<line class="ax" x1="250" y1="165" x2="397" y2="165"/>
+<path d="M 410 165 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 430 145 V 70 H 607" fill="none"/>
+<path d="M 620 70 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 430 185 V 260 H 607" fill="none"/>
+<path d="M 620 260 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 660 70 H 850 V 132" fill="none"/>
+<path d="M 850 145 l -8 -13 h 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 660 260 H 850 V 198" fill="none"/>
+<path d="M 850 185 l -8 13 h 16 z" fill="var(--dim)"/>
+<circle class="dot" cx="70" cy="165" r="20"/><text class="dv" x="70" y="170">N1</text>
+<circle class="dot" cx="230" cy="165" r="20"/><text class="dv" x="230" y="170">N2</text>
+<circle class="dot" cx="230" cy="55" r="20"/><text class="dv" x="230" y="60">N3</text>
+<circle class="dot" cx="430" cy="165" r="20"/><text class="dv" x="430" y="170">N4</text>
+<circle class="dot" cx="640" cy="70" r="20"/><text class="dv" x="640" y="75">N5</text>
+<circle class="dot" cx="640" cy="260" r="20"/><text class="dv" x="640" y="265">N6</text>
+<circle class="dot" cx="850" cy="165" r="20"/><text class="dv" x="850" y="170">N7</text>
+<text class="cl" x="150" y="155">kenar 1</text>
+<text class="cl" x="186" y="115">2</text>
+<text class="cl" x="276" y="115">3</text>
+<text class="cl" x="330" y="155">kenar 4</text>
+<text class="cl" x="520" y="60">kenar 5</text>
+<text class="cl" x="520" y="250">kenar 6</text>
+<text class="cl" x="760" y="60">kenar 7</text>
+<text class="cl" x="760" y="250">kenar 8</text>
+<text class="dp" x="230" y="25">döngü gövdesi</text>
+<text class="dp" x="230" y="210">karar</text>
+<text class="dp" x="430" y="210">karar</text>
+<text class="dp" x="330" y="90">2: ileri &middot; 3: geri kenar</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      </div></li>
+
+    <li><b>Kenarları tek tek say &mdash; listeyi numaralandır</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Kenar</th><th>Türü</th><th>Atlanma riski</th></tr>
+        <tr><td class="ctr">1</td><td>N1 &rarr; N2</td><td>koşulsuz</td><td class="no">Giriş kenarı &mdash; sık atlanır</td></tr>
+        <tr><td class="ctr">2</td><td>N2 &rarr; N3</td><td>koşullu</td><td></td></tr>
+        <tr><td class="ctr">3</td><td>N3 &rarr; N2</td><td>koşulsuz</td><td class="no"><b>Geri kenar</b> &mdash; en sık atlanan</td></tr>
+        <tr><td class="ctr">4</td><td>N2 &rarr; N4</td><td>koşullu</td><td></td></tr>
+        <tr><td class="ctr">5</td><td>N4 &rarr; N5</td><td>koşullu</td><td></td></tr>
+        <tr><td class="ctr">6</td><td>N4 &rarr; N6</td><td>koşullu</td><td></td></tr>
+        <tr><td class="ctr">7</td><td>N5 &rarr; N7</td><td>koşulsuz</td><td class="no">Birleşme kenarı</td></tr>
+        <tr><td class="ctr">8</td><td>N6 &rarr; N7</td><td>koşulsuz</td><td class="no">Birleşme kenarı</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Böl &mdash; ve çeldiricilerin nereden geldiğini gör</b>
+      <div>
+      <pre class="fx">dal kapsamı öğesi  = kenar sayısı       = <b>8</b>   &#10004;
+komut kapsamı öğesi = düğüm sayısı      = 7
+karar düğümü sayısı                     = 2   (N2, N4)
+karar düğümlerinden çıkan koşullu dal   = 4   (2, 4, 5, 6)</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Dört şık da grafikten çıkan
+      <b>gerçek</b> sayılardır &mdash; ama soru dal testinin kapsam öğelerini soruyor,
+      yani <b>kenarları</b>.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>C</b> &mdash; Dal testinde kapsam öğeleri <b>kenarlardır</b>;
+    grafikte 8 kenar bulunduğu için test edilmesi gereken <b>8 kapsam öğesi</b> vardır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Bu sayı neyin sayısı</th><th>Neden cevap değil</th></tr>
+      <tr><td><b>A</b> &mdash; 2</td><td>Karar düğümü sayısı (N2, N4)</td><td>Karar sayısı dal sayısı değildir;
+        her karar en az iki dal üretir.</td></tr>
+      <tr><td><b>B</b> &mdash; 4</td><td>Karar düğümlerinden çıkan koşullu dallar</td>
+          <td>Koşulsuz kenarları (N1&rarr;N2, N3&rarr;N2, N5&rarr;N7, N6&rarr;N7) atlar.</td></tr>
+      <tr><td><b>D</b> &mdash; 7</td><td>Düğüm sayısı</td><td>Düğümler <b>komut</b> kapsamının
+        öğeleridir, dal kapsamının değil.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: giriş kenarını ve geri kenarı saymamak</h3>
+    <p style="margin-bottom:0">Kenar sayarken en sık yapılan hata, döngüyü kapatan geri kenarı
+    (burada N3 &rarr; N2) ve giriş kenarını (N1 &rarr; N2) listeye almamaktır &mdash; ikisi de bir karardan
+    çıkmıyor diye &ldquo;dal değil&rdquo; sanılır. <b>Dal = her ok</b>, koşullu olsun olmasın.
+    Bu iki kenar atlandığında cevap 6 çıkar ve şıklarda bulunmadığı için fark edilmesi zordur.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>2 &nbsp;&mdash;&nbsp; karar düğümü sayısı</span></li>
+    <li class="wrong"><b>B</b><span>4 &nbsp;&mdash;&nbsp; yalnızca koşullu dallar</span></li>
+    <li class="right"><b>C</b><span>8 &nbsp;&mdash;&nbsp; kenar sayısı &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>D</b><span>7 &nbsp;&mdash;&nbsp; düğüm sayısı, yani komut kapsamının öğeleri</span></li>
+  </ul>
+</section>
+
+
+<section id="s16">
+  <div class="shead"><div class="num">16</div>
+    <div><h2>Soru 8 &mdash; dal ile ifade kapsamı arasındaki ilişki</h2>
+    <div class="lo">Resmî örnek sınav E &middot; Soru 23 &middot; FL-4.3.2 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Dal kapsamı (branch coverage) ile ifade kapsamı (statement coverage) arasındaki ilişki hakkında
+    aşağıdaki ifadelerden hangisi DOĞRUdur?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%100 dal kapsamı elde edildiğinde %100 ifade kapsamı da elde edilmiş olur.</span></li>
+      <li><b>B</b><span>%100 ifade kapsamı elde edildiğinde %100 dal kapsamı da elde edilmiş olur.</span></li>
+      <li><b>C</b><span>Dal kapsamı, yürütülen ifade sayısının toplam ifade sayısına oranı olarak hesaplanır.</span></li>
+      <li><b>D</b><span>Bir karar noktasının yalnızca doğru sonucunu yürüten bir test, o karar için
+        %100 dal kapsamı sağlar.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Şıkları iki gruba ayır: yön iddiası mı, tanım iddiası mı?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Ne iddia ediyor</th></tr>
+        <tr><td><b>A</b> / <b>B</b></td><td>Kapsama ilişkisinin <b>yönü</b> &mdash; biri doğru, biri aynanın
+          ters görüntüsü</td></tr>
+        <tr><td><b>C</b></td><td>Dal kapsamının <b>formülü</b></td></tr>
+        <tr><td><b>D</b></td><td>Tek karar için <b>%100 dal</b> ne gerektirir</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Yönü mantıkla kur: her ifade bir dalın üzerindedir</b>
+      <div>
+      <pre class="fx">bütün <b>dallar</b> yürütüldü
+  &rArr; o dalların üzerindeki bütün <b>ifadeler</b> de yürütüldü
+  &rArr; %100 dal kapsamı, %100 ifade kapsamını <b>kapsar</b>   &#10004;</pre>
+      </div></li>
+
+    <li><b>Ters yön için karşı örnek kur</b>
+      <div>
+<pre>1   if (koşul)
+2       işlem_yap()
+3   devam_et()</pre>
+      <pre class="fx">tek test, koşul DOĞRU &rarr; ifade 3/3 = <b>%100</b>,  dal 1/2 = <b>%50</b>
+&rArr; %100 ifade kapsamı dal kapsamını garanti <b>etmez</b>   &#10007; (b)</pre>
+      </div></li>
+
+    <li><b>(c) ve (d)'yi tanımla kontrol et</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Verilen</th><th>Doğrusu</th></tr>
+        <tr><td><b>C</b></td><td>yürütülen <b>ifade</b> / toplam <b>ifade</b></td>
+            <td>yürütülen <b>dal</b> / toplam <b>dal</b></td></tr>
+        <tr><td><b>D</b></td><td>yalnız DOĞRU sonuç &rarr; %100</td>
+            <td>bir karar için %100 dal = <b>hem DOĞRU hem YANLIŞ</b>; tek sonuç %50 verir</td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>A</b> &mdash; Her ifade en az bir dalın üzerinde yer aldığından,
+    <b>tüm dallar yürütüldüğünde tüm ifadeler de yürütülmüş olur</b>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>B</b></td><td>Tam ifade kapsamı, alınmayan bir dal kalabileceği için tam dal kapsamını
+        garanti etmez. (a)'nın ters çevrilmiş hâlidir &mdash; en sık düşülen tuzak.</td></tr>
+      <tr><td><b>C</b></td><td>Bu, dal kapsamının değil <b>ifade kapsamının</b> tanımıdır;
+        dal kapsamında pay da payda da daldır.</td></tr>
+      <tr><td><b>D</b></td><td>Bir kararın tam dal kapsamı için hem doğru hem yanlış sonucun yürütülmesi
+        gerekir; tek sonuç %50 verir.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: (a) ile (b)'yi hızlı okuyup karıştırmak</h3>
+    <p style="margin-bottom:0">İki şık aynı kelimelerden kurulmuştur, yalnızca <b>yönü</b> farklıdır.
+    Şıkları okurken &ldquo;önce hangisi, sonra hangisi&rdquo; diye parmakla takip et:
+    <b>dal &rarr; ifade</b> doğru, <b>ifade &rarr; dal</b> yanlış. Ezber cümlesi:
+    <i>güçlü ölçüt zayıfı kapsar.</i></p>
+  </div>
+
+  <ul class="opts">
+    <li class="right"><b>A</b><span>%100 dal &rArr; %100 ifade &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>B</b><span>%100 ifade &rArr; %100 dal &nbsp;&mdash;&nbsp; oku ters çevirmek</span></li>
+    <li class="wrong"><b>C</b><span>Dal kapsamı = ifade / ifade &nbsp;&mdash;&nbsp; yanlış formül</span></li>
+    <li class="wrong"><b>D</b><span>Yalnız DOĞRU sonuç %100 dal verir &nbsp;&mdash;&nbsp; %50 verir</span></li>
+  </ul>
+</section>
+
+
+<section id="s17">
+  <div class="shead"><div class="num">17</div>
+    <div><h2>Soru 9 &mdash; akıllı ev: 'değilse' dalı olmayan karar</h2>
+    <div class="lo">Resmî örnek sınav G &middot; Soru 25 &middot; FL-4.3.2 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir akıllı ev aydınlatma denetleyicisinin bir fonksiyonu tek bir karar (eğer) yapısı içerir ve
+    bu yapının 'değilse' dalı yoktur. Yürütülen tek test senaryosu kararı doğru yapmakta ve fonksiyondaki
+    bütün çalıştırılabilir ifadeleri çalıştırmaktadır. Bu duruma göre aşağıdakilerden hangisi DOĞRUdur?</p>
+    <ul class="opts">
+      <li><b>A</b><span>İfade kapsamı %100'dür, ancak kararın yanlış sonucu hiç izlenmediği için
+        dal kapsamı %100 değildir.</span></li>
+      <li><b>B</b><span>Hem ifade kapsamı hem de dal kapsamı %100'dür, çünkü kodda yazılmamış bir dal
+        kapsam öğesi sayılmaz.</span></li>
+      <li><b>C</b><span>İfade kapsamı %100 olduğuna göre dal kapsamı da %100'dür; iki ölçüt bu tür kodda
+        eşdeğerdir.</span></li>
+      <li><b>D</b><span>Dal kapsamı %100'dür, ancak karar bir ifade sayılmadığından ifade kapsamı
+        %100'ün altında kalır.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; verilen üç bilgi</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne söylüyor</th></tr>
+        <tr><td>&ldquo;tek bir karar (eğer) yapısı&rdquo;</td><td>Toplam dal sayısı = <b>2</b></td></tr>
+        <tr><td>&ldquo;'değilse' dalı yoktur&rdquo;</td><td>Blok yazılmamış &mdash; ama dal <b>yine vardır</b></td></tr>
+        <tr><td>&ldquo;tek test &hellip; bütün çalıştırılabilir ifadeleri çalıştırmakta&rdquo;</td>
+            <td>İfade kapsamı = <b>%100</b> (verilmiş)</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Yapıyı kur: iki dal, biri boşta</b>
+      <div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 230" role="img" aria-label="kontrol akis grafigi">
+<circle class="dot" cx="140" cy="100" r="22"/><text class="dv" x="140" y="105">K</text>
+<circle class="dot" cx="470" cy="42" r="22"/><text class="dv" x="470" y="47">G</text>
+<circle class="dot" cx="800" cy="100" r="22"/><text class="dv" x="800" y="105">S</text>
+<text class="dp" x="140" y="150">karar: eğer (ortam karanlık)</text>
+<text class="dp" x="470" y="15">gövde: ışıkları aç</text>
+<text class="dp" x="800" y="150">sonraki ifade</text>
+<path class="ax" d="M 140 78 V 42 H 435" fill="none"/>
+<path d="M 448 42 l -13 -8 v 16 z" fill="var(--dim)"/>
+<path class="ax" d="M 492 42 H 800 V 65" fill="none"/>
+<path d="M 800 78 l -8 -13 h 16 z" fill="var(--dim)"/>
+<path class="dot miss" d="M 140 122 V 185 H 800 V 135" fill="none"/>
+<path d="M 800 122 l -8 13 h 16 z" fill="var(--bad)"/>
+<text class="bl good" x="290" y="34">dal 1 &middot; DOĞRU &middot; izlendi</text>
+<text class="bl bad" x="470" y="208">dal 2 &middot; YANLIŞ &middot; blok yazılmamış ama dal var &mdash; hiç izlenmedi</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>izlenen dal</span><span><i class="m"></i>izlenmeyen dal</span></p>
+      </div></li>
+
+    <li><b>İki kapsamı ayrı ayrı hesapla</b>
+      <div>
+      <pre class="fx">ifade kapsamı = bütün çalıştırılabilir ifadeler yürütüldü     = <b>%100</b>
+dal kapsamı   = izlenen dal / toplam dal = 1 / 2 &times; 100      = <b>%50</b></pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Bu, &ldquo;%100 ifade kapsamı
+      %100 dal kapsamını garanti etmez&rdquo; kuralının <b>klasik örneğidir</b>.
+      Tersi her zaman geçerlidir: %100 dal kapsamına ulaşıldığında bütün ifadeler de yürütülmüş olur.</p>
+      </div></li>
+
+    <li><b>Şıkkı seç</b>
+      <div><p style="margin-bottom:0">&ldquo;İfade %100, dal %100 değil&rdquo; diyen tek şık (a).</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>A</b> &mdash; Bütün ifadeler yürütülmüştür, ancak <b>iki daldan yalnızca
+    biri izlenmiştir</b>; dal kapsamı 1/2 = %50'dir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>B</b></td><td>Kararın yanlış sonucu, karşılığında blok yazılmamış olsa bile bir daldır
+        ve kapsam öğesi olarak sayılır. Akış, karardan sonraki ifadeye <b>atlar</b> &mdash; o atlayış bir kenardır.</td></tr>
+      <tr><td><b>C</b></td><td>İki ölçüt eşdeğer değildir; ifade kapsamı dal kapsamını garanti etmez.
+        Bu kod tipi, tam da eşdeğer <b>olmadıklarını</b> gösteren örnektir.</td></tr>
+      <tr><td><b>D</b></td><td>Karar da çalıştırılabilir bir ifadedir. Üstelik bu senaryoda eksik olan
+        dal kapsamıdır, ifade kapsamı değil &mdash; şık iki ölçütü yer değiştirmiş.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: dalları yazılmış bloklardan saymak</h3>
+    <p style="margin-bottom:0">Dal saymanın kuralı &ldquo;kaç blok yazılmış&rdquo; değil,
+    <b>&ldquo;kaç karar sonucu var&rdquo;</b>dır. <code>else</code> bloğu bulunmayan bir karar sınavda
+    sıkça çıkar; böyle bir yapıda dal sayısı <b>yine ikidir</b>.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="right"><b>A</b><span>İfade %100, dal %100 değil &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>B</b><span>İkisi de %100, yazılmamış dal sayılmaz &nbsp;&mdash;&nbsp; dal = karar sonucu</span></li>
+    <li class="wrong"><b>C</b><span>İki ölçüt eşdeğer &nbsp;&mdash;&nbsp; ifade dalı garanti etmez</span></li>
+    <li class="wrong"><b>D</b><span>Dal %100, ifade eksik &nbsp;&mdash;&nbsp; iki ölçüt yer değiştirilmiş</span></li>
+  </ul>
+</section>
+
+
+<section id="s18">
+  <div class="shead"><div class="num">18</div>
+    <div><h2>Soru 10 &mdash; dal testi ile ifade testini EN İYİ ne açıklar</h2>
+    <div class="lo">Resmî örnek sınav H &middot; Soru 23 &middot; FL-4.3.2 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Beyaz kutu test teknikleri arasında dal testi (branch testing) ile ifade testinin
+    (statement testing) ilişkisini EN İYİ hangisi açıklar?</p>
+    <ul class="opts">
+      <li><b>A</b><span>İki ölçüt birbirinden bağımsızdır; birinin %100 olması diğeri hakkında bilgi vermez.</span></li>
+      <li><b>B</b><span>İfade kapsamı %100 olduğunda dal kapsamı da mutlaka %100 olur, ancak tersi
+        geçerli değildir.</span></li>
+      <li><b>C</b><span>Dal kapsamı yalnızca koşulun doğru sonuç verdiği dalları ölçer,
+        yanlış sonuç verenleri ölçmez.</span></li>
+      <li><b>D</b><span>Dal kapsamı %100 olduğunda ifade kapsamı da mutlaka %100 olur, ancak tersi
+        geçerli değildir.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Şıkları üç kalıba ayır</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Kalıp</th><th>Şık</th><th class="ctr">Hızlı karar</th></tr>
+        <tr><td>&ldquo;Bağımsızdır&rdquo;</td><td>A</td><td class="no ctr">Ele &mdash; iki ölçüt bağımsız değil</td></tr>
+        <tr><td>Yön iddiası</td><td>B, D</td><td class="ctr">Yönü kontrol et</td></tr>
+        <tr><td>Tanım iddiası</td><td>C</td><td class="no ctr">Ele &mdash; dal, iki sonucu da sayar</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Yönü somut bir örnekle sabitle</b>
+      <div>
+<pre>1   if (tüketim &gt; 500)
+2       ek_tarife_uygula()
+3   fatura_yazdır()</pre>
+      <pre class="fx">koşul DOĞRU tek test &rarr; ifade 3/3 = <b>%100</b>,  dal 1/2 = <b>%50</b>
+&rArr; ifade &rArr; dal <b>yanlış</b>
+
+tüm dallar yürütülürse &rarr; her ifade bir dalın üzerinde olduğundan ifade de <b>%100</b>
+&rArr; dal &rArr; ifade <b>doğru</b></pre>
+      </div></li>
+
+    <li><b>Kalan iki şıktan doğru yönlü olanı seç</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Kurduğu yön</th><th class="ctr">Geçerli mi?</th></tr>
+        <tr><td><b>B</b></td><td>ifade &rArr; dal</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>D</b></td><td>dal &rArr; ifade</td><td class="ok ctr">Evet</td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>D</b> &mdash; <b>Tüm dallar yürütüldüğünde tüm ifadeler de yürütülmüş olur</b>;
+    tersi ise geçerli değildir. Dal kapsamı, ifade kapsamından daha güçlü bir ölçüttür.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>A</b></td><td>İki ölçüt bağımsız değildir; dal kapsamı, ifade kapsamını kapsayan
+        daha güçlü bir ölçüttür.</td></tr>
+      <tr><td><b>B</b></td><td>İlişki ters kurulmuştur: ifade kapsamının %100 olması dal kapsamını
+        garanti etmez. (d) ile birebir aynadaki görüntüsüdür.</td></tr>
+      <tr><td><b>C</b></td><td>Dal kapsamı, karar noktasının <b>hem doğru hem yanlış</b> çıkışını kapsam
+        öğesi olarak sayar; yalnızca doğru olanı değil.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card warnc">
+    <h3>Bu ilişki tek başına beş soruyu çözüyor</h3>
+    <p style="margin-bottom:0">A24'ün ipucu, D24'ün (b) şıkkı, F24'ün (c) şıkkı, G24'ün (a) şıkkı,
+    E23 ve H23'ün tamamı aynı cümleye dayanıyor:
+    <b>dal kapsamı ifade kapsamını kapsar, ifade kapsamı dalı kapsamaz.</b>
+    Sınavda &ldquo;%100 dal&rdquo; ile &ldquo;%100 ifade&rdquo; geçen her şıkta önce <b>oku</b> bul.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>Bağımsızdır &nbsp;&mdash;&nbsp; kapsama ilişkisi var</span></li>
+    <li class="wrong"><b>B</b><span>İfade %100 &rArr; dal %100 &nbsp;&mdash;&nbsp; oku ters çevirmek</span></li>
+    <li class="wrong"><b>C</b><span>Dal yalnız DOĞRU'yu ölçer &nbsp;&mdash;&nbsp; iki sonucu da ölçer</span></li>
+    <li class="right"><b>D</b><span>Dal %100 &rArr; ifade %100, tersi değil &nbsp;&#10004;</span></li>
+  </ul>
+</section>
+
+
+<section id="s19">
+  <div class="shead"><div class="num">19</div>
+    <div><h2>Soru 11 &mdash; beyaz kutu için YANLIŞ olan</h2>
+    <div class="lo">Resmî örnek sınav A &middot; Soru 25 &middot; FL-4.3.3 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Aşağıdakilerden hangisi beyaz kutu testi için YANLIŞTIR</p>
+    <ul class="opts">
+      <li><b>A</b><span>Beyaz kutu testi sırasında yazılımın iç çalışma mantığı dikkate alınır</span></li>
+      <li><b>B</b><span>Beyaz kutu testi kapsam ölçümleri, kod kapsamını artırmak için ek testlerin
+        belirlenmesine yardımcı olabilir</span></li>
+      <li><b>C</b><span>Beyaz kutu test teknikleri statik testte kullanılabilir</span></li>
+      <li><b>D</b><span>Beyaz kutu testi, gereksinimlerdeki eksikliklerin belirlenmesine yardımcı olabilir.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>&ldquo;YANLIŞ olan&rdquo; sorusunun yöntemi: üçünü doğrula, kalanı işaretle</b>
+      <div><p style="margin-bottom:0">Bu tip soruda doğru cevabı aramak yerine <b>doğru ifadeleri eleme</b>
+      refleksi kullanılır. Her şıkkı tek tek &ldquo;syllabus bunu söylüyor mu?&rdquo; diye sor;
+      geriye tek uyumsuz ifade kalır.</p></div></li>
+
+    <li><b>Şıkları syllabus'ın güçlü/zayıf yön listesiyle eşleştir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Syllabus'taki karşılığı</th><th class="ctr">Durum</th></tr>
+        <tr><td><b>A</b></td><td>Beyaz kutunun güçlü yönü: <b>gerçekleştirimin bütünü</b> dikkate alınır</td>
+            <td class="ok ctr">Doğru</td></tr>
+        <tr><td><b>B</b></td><td>Güçlü yön: kapsam ölçümleri <b>nesnel sayılardır</b>, ek test tasarımına yol gösterir</td>
+            <td class="ok ctr">Doğru</td></tr>
+        <tr><td><b>C</b></td><td>Güçlü yön: kod ve mimari çalıştırılmadan incelenebilir &rarr;
+          <b>statik testte</b> (kod gözden geçirme) kullanılabilir</td><td class="ok ctr">Doğru</td></tr>
+        <tr><td><b>D</b></td><td><b>Zayıf yön</b>: beyaz kutu eksik gerçekleştirimi tespit edemez</td>
+            <td class="no ctr">Yanlış &rarr; <b>aranan</b></td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>(d)'nin neden imkânsız olduğunu mantıkla göster</b>
+      <div>
+      <pre class="fx">gereksinim hiç gerçekleştirilmediyse  &rarr;  ona ait komut yok, dal yok, yol yok
+                                      &rarr;  kapsam ölçümünde <b>eksik görünmez</b>
+                                      &rarr;  kapsam <b>%100</b> bile çıkabilir</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Var olan kodu inceleyerek
+      <b>hiç yazılmamış kod</b> görülemez. Gereksinimlerdeki eksikleri bulmak kara kutu tekniklerinin ve
+      gereksinimlerin gözden geçirilmesinin işidir.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>D</b> &mdash; Beyaz kutu teknikleri yalnızca test nesnesinin yapısına
+    dayandığı için <b>eksik gerçekleştirimi, yani gereksinimlerdeki eksikleri tespit edemez</b>.
+    Bu, tekniğin bilinen zayıf yönüdür.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden doğru (yani cevap değil)</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden doğru bir ifade</th></tr>
+      <tr><td><b>A</b></td><td>Beyaz kutu testinde test esası kodun kendisidir; yazılımın iç çalışma
+        mantığı, yani gerçekleştirimin tamamı dikkate alınır.</td></tr>
+      <tr><td><b>B</b></td><td>Kapsam ölçümleri hangi kod parçasının hâlâ sınanmadığını gösterir ve
+        ek test senaryolarının tasarlanmasına doğrudan yol gösterir.</td></tr>
+      <tr><td><b>C</b></td><td>Kod ve mimari çalıştırılmadan da incelenebilir; beyaz kutu teknikleri
+        kod gözden geçirmeleri gibi statik testlerde kullanılabilir.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: olumsuz soruda ilk doğru şıkkı işaretlemek</h3>
+    <p style="margin-bottom:0">&ldquo;YANLIŞTIR&rdquo; sorularında şıkların üçü <b>doğrudur</b> ve
+    tanıdık geldikleri için refleksle işaretlenirler. Soru kökündeki olumsuzluğu
+    (YANLIŞ / DEĞİLDİR / hangisi <b>değildir</b>) daire içine al, sonra şıkları oku.
+    Kısa kural: <i>beyaz kutu fazladan olanı görür, kara kutu eksik olanı görür.</i></p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>İç çalışma mantığı dikkate alınır &nbsp;&mdash;&nbsp; doğru ifade</span></li>
+    <li class="wrong"><b>B</b><span>Kapsam ölçümü ek test belirlemeye yardım eder &nbsp;&mdash;&nbsp; doğru ifade</span></li>
+    <li class="wrong"><b>C</b><span>Statik testte kullanılabilir &nbsp;&mdash;&nbsp; doğru ifade</span></li>
+    <li class="right"><b>D</b><span>Gereksinim eksikliklerini bulmaya yardım eder &nbsp;&mdash;&nbsp; YANLIŞ, aranan cevap &nbsp;&#10004;</span></li>
+  </ul>
+</section>
+
+
+<section id="s20">
+  <div class="shead"><div class="num">20</div>
+    <div><h2>Soru 12 &mdash; beyaz kutu, kara kutuyu nasıl destekler</h2>
+    <div class="lo">Resmî örnek sınav C &middot; Soru 25 &middot; FL-4.3.3 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Beyaz kutu testi, kara kutu testini desteklemeye nasıl yardımcı olabilir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Beyaz kutu kapsam ölçümleri, test uzmanlarının bu kara kutu testlerinin elde ettiği
+        kod kapsamı açısından kara kutu testlerini değerlendirmelerine yardımcı olabilir.</span></li>
+      <li><b>B</b><span>Beyaz kutu kapsam analizi, test uzmanlarının kaynak kodun ulaşılamayan parçalarını
+        belirlemelerine yardımcı olabilir.</span></li>
+      <li><b>C</b><span>Dal testi, kara kutu test tekniklerini de kapsar, bu nedenle tam dal kapsamı elde etmek,
+        herhangi bir kara kutu tekniğinin tam kapsamını elde etmeyi garanti eder.</span></li>
+      <li><b>D</b><span>Beyaz kutu test teknikleri, kara kutu teknikleri için kapsam öğeleri sağlayabilir.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soru kökünü sabitle: aranan şey bir <i>ilişki</i></b>
+      <div><p style="margin-bottom:0">Soru &ldquo;beyaz kutu <b>kara kutuya ne katar</b>&rdquo; diye soruyor.
+      Yani bir şıkkın <b>kendi başına doğru olması yetmez</b>; sorulan ilişkiyi karşılaması gerekir.
+      Bu, &ldquo;EN İYİ&rdquo; ve &ldquo;nasıl destekler&rdquo; sorularının ortak filtresidir.</p></div></li>
+
+    <li><b>Mekanizmayı kur</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Adım</th></tr>
+        <tr><td class="ctr">1</td><td>Kara kutu test takımı gereksinimlerden türetilir ve yürütülür</td></tr>
+        <tr><td class="ctr">2</td><td>Spesifikasyona bakarak <b>hangi kodun çalıştığı anlaşılamaz</b></td></tr>
+        <tr><td class="ctr">3</td><td>Kod kapsamı ölçümü devreye girer: hangi ifade ve dal hiç çalışmadı?</td></tr>
+        <tr><td class="ctr">4</td><td>Kapsanmayan bölgeler için <b>ek testler</b> tasarlanır</td></tr>
+        <tr><td class="ctr">5</td><td>Kara kutu testinin yeterliliği tahmine değil <b>ölçüme</b> dayanarak değerlendirilir</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">(a) şıkkı tam olarak bu zinciri anlatıyor.</p>
+      </div></li>
+
+    <li><b>Şıkları &ldquo;doğru mu?&rdquo; ve &ldquo;soruya cevap mı?&rdquo; diye iki kez süz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th class="ctr">Kendi başına doğru mu?</th><th class="ctr">Soruya cevap mı?</th></tr>
+        <tr><td><b>A</b></td><td class="ok ctr">Evet</td><td class="ok ctr">Evet</td></tr>
+        <tr><td><b>B</b></td><td class="ok ctr">Evet</td><td class="no ctr">Hayır &mdash; beyaz kutunun
+          <b>kendi</b> faydası</td></tr>
+        <tr><td><b>C</b></td><td class="no ctr">Hayır</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>D</b></td><td class="no ctr">Hayır</td><td class="no ctr">Hayır</td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>A</b> &mdash; Yalnızca kara kutu testi yapmak elde edilen kod kapsamı
+    hakkında hiçbir ölçüm sunmaz; beyaz kutu kapsam ölçümleri <b>kara kutu testlerini kod kapsamı
+    açısından nesnel biçimde değerlendirmeyi</b> sağlar.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>B</b></td><td><b>Doğru ama ilgisiz.</b> Ulaşılamayan kod parçalarını bulmak beyaz kutu
+        analizinin kendi faydasıdır; kara kutu testine sağlanan bir destek değildir.</td></tr>
+      <tr><td><b>C</b></td><td>Dal testi kara kutu tekniklerini kapsamaz; tam dal kapsamı hiçbir kara kutu
+        tekniğinin tam kapsamını garanti etmez. &ldquo;Garanti eder&rdquo; kalıbı zaten uyarı işaretidir.</td></tr>
+      <tr><td><b>D</b></td><td>Kara kutu kapsam öğeleri <b>spesifikasyondan</b>, beyaz kutu kapsam öğeleri
+        <b>koddan</b> türer; biri diğerine kapsam öğesi sağlamaz.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;doğru&rdquo; ile &ldquo;cevap&rdquo; aynı şey değil</h3>
+    <p style="margin-bottom:0">(b) şıkkı syllabus'a tamamen uygun bir cümledir ve bu yüzden güçlü bir
+    çeldiricidir. &ldquo;EN İYİ&rdquo; ve &ldquo;nasıl destekler&rdquo; sorularında ölçüt, şıkkın
+    doğruluğu değil <b>soruyla kurduğu bağdır</b>. Ayrıca iki teknik ailesi arasında
+    &ldquo;biri diğerini kapsar&rdquo; türü mutlak iddia gördüğünde şıkkı hemen eleyebilirsin.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="right"><b>A</b><span>Kara kutu testlerini kod kapsamı açısından değerlendirir &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>B</b><span>Ulaşılamayan kod parçalarını bulur &nbsp;&mdash;&nbsp; doğru ama soruya cevap değil</span></li>
+    <li class="wrong"><b>C</b><span>Dal testi kara kutuyu kapsar &nbsp;&mdash;&nbsp; mutlak ve yanlış iddia</span></li>
+    <li class="wrong"><b>D</b><span>Kara kutuya kapsam öğesi sağlar &nbsp;&mdash;&nbsp; öğeler farklı kaynaktan türer</span></li>
+  </ul>
+</section>
+
+
+<section id="s21">
+  <div class="shead"><div class="num">21</div>
+    <div><h2>Soru 13 &mdash; spesifikasyon zayıfken neden işe yarar</h2>
+    <div class="lo">Resmî örnek sınav D &middot; Soru 25 &middot; FL-4.3.3 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Yazılım spesifikasyonu belirsiz, güncelliğini yitirmiş veya eksik olsa bile beyaz kutu testi,
+    hata tespitini aşağıdaki nedenlerin hangisinden dolayı kolaylaştırır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Test senaryoları, spesifikasyon yerine test nesnesinin yapısına göre tasarlanır.</span></li>
+      <li><b>B</b><span>Her bir beyaz kutu test tekniği için kapsam, net bir şekilde tanımlanabilir ve
+        kolayca ölçülebilir.</span></li>
+      <li><b>C</b><span>Beyaz kutu test teknikleri, gereksinimlerdeki eksiklikleri tespit etmek için
+        son derece iyi tasarlanmıştır.</span></li>
+      <li><b>D</b><span>Beyaz kutu test teknikleri hem statik testlerde hem de dinamik testlerde
+        kullanılabilir.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Soru kökü &ldquo;neden&rdquo; diyor &rarr; nedensellik zinciri kur</b>
+      <div>
+      <pre class="fx">spesifikasyon zayıf
+  &rarr; kara kutu için gereken <b>test esası</b> zayıflar
+  &rarr; ama beyaz kutu test esası olarak <b>kodu</b> kullanır
+  &rarr; bu zaafiyetten <b>etkilenmez</b>   &rarr; (a)</pre>
+      </div></li>
+
+    <li><b>Her şıkkı iki soruyla süz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th class="ctr">İfade doğru mu?</th><th class="ctr">Sorulan <b>nedeni</b> açıklıyor mu?</th></tr>
+        <tr><td><b>A</b></td><td class="ok ctr">Evet</td><td class="ok ctr">Evet</td></tr>
+        <tr><td><b>B</b></td><td class="ok ctr">Evet</td><td class="no ctr">Hayır &mdash; ölçülebilirliğin
+          spesifikasyon kalitesiyle ilgisi yok</td></tr>
+        <tr><td><b>C</b></td><td class="no ctr">Hayır</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>D</b></td><td class="ok ctr">Evet</td><td class="no ctr">Hayır</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Yapıya bakmanın ne gösterdiğini somutlaştır</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Spesifikasyonda hiç yer almayan şey</th><th class="ctr">Yapıya bakınca görünür mü?</th></tr>
+        <tr><td>Ölü kod</td><td class="ok ctr">Evet</td></tr>
+        <tr><td>Gizli arka kapı / fazladan dal</td><td class="ok ctr">Evet</td></tr>
+        <tr><td>Yanlış yerleştirilmiş koşul</td><td class="ok ctr">Evet</td></tr>
+        <tr><td>İşletilemeyen dal</td><td class="ok ctr">Evet</td></tr>
+        <tr><td>Hiç yazılmamış gereksinim</td><td class="no ctr">Hayır &mdash; yapısal olarak imkânsız</td></tr>
+      </table></div>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>A</b> &mdash; Test senaryoları spesifikasyondan değil
+    <b>test nesnesinin yapısından türetildiği</b> için spesifikasyonun belirsiz, eski ya da eksik olması
+    engel oluşturmaz; yazılım gerçekleştiriminin bütünü dikkate alınır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>B</b></td><td>Kapsamın net tanımlanabilmesi gerçek bir avantajdır ama
+        <b>spesifikasyon zayıfken hata bulmayı sağlayan neden</b> değildir.</td></tr>
+      <tr><td><b>C</b></td><td>Beyaz kutu teknikleri gereksinim eksikliklerini tespit <b>edemez</b>;
+        var olmayan kod incelenemez. Şık, tekniğin zayıf yönünü güçlü yönü gibi sunuyor.</td></tr>
+      <tr><td><b>D</b></td><td>İfade genel olarak doğrudur ancak sorulan nedeni açıklamaz &mdash;
+        statik/dinamik ayrımının spesifikasyon kalitesiyle ilgisi yoktur.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: &ldquo;neden&rdquo; sorusunda doğru ama ilgisiz şık</h3>
+    <p style="margin-bottom:0">Bu soruda <b>üç şıktan ikisi doğru bilgidir</b> (b ve d).
+    Şıkkın doğruluğunu değil, <b>soruyla nedensel bağını</b> sorgula:
+    &ldquo;spesifikasyon zayıfken bu özellik işe yarıyor mu?&rdquo; diye sor.
+    Yalnızca (a) bu soruya &ldquo;evet&rdquo; der.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="right"><b>A</b><span>Senaryolar yapıdan tasarlanır &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>B</b><span>Kapsam net ölçülebilir &nbsp;&mdash;&nbsp; doğru ama sorulan neden değil</span></li>
+    <li class="wrong"><b>C</b><span>Gereksinim eksiklerini bulmak için tasarlanmıştır &nbsp;&mdash;&nbsp; tam tersi</span></li>
+    <li class="wrong"><b>D</b><span>Statik ve dinamik testte kullanılabilir &nbsp;&mdash;&nbsp; doğru ama ilgisiz</span></li>
+  </ul>
+</section>
+
+
+<section id="s22">
+  <div class="shead"><div class="num">22</div>
+    <div><h2>Soru 14 &mdash; beyaz kutu testinin değerini EN İYİ açıklayan</h2>
+    <div class="lo">Resmî örnek sınav E &middot; Soru 24 &middot; FL-4.3.3 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Beyaz kutu testinin (white-box testing) değerini EN İYİ hangi ifade açıklar?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Test esasındaki eksik ya da çelişkili gereksinimleri ortaya çıkarmanın en etkili
+        yolunu sunar; ölçüm gereksinimler üzerinden yapılır.</span></li>
+      <li><b>B</b><span>Yanıt süresi ve güvenlik gibi nitelikleri değerlendirmenin tek yolunu sunar;
+        ölçüm çalışma zamanı davranışı üzerinden yapılır.</span></li>
+      <li><b>C</b><span>Tüm dallar yürütüldüğünde yazılımda kusur kalmadığını kanıtlar; ölçüm elde edilen
+        kapsam yüzdesi üzerinden yapılır.</span></li>
+      <li><b>D</b><span>Yürütülen kodu nesnel biçimde ölçer ve ölü kod ile gereksiz dallar gibi eksiklikleri
+        görünür kılar; ölçüm kod yapısı üzerinden yapılır.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Şıkların iki yarısını ayrı ayrı denetle</b>
+      <div>
+      <p style="font-size:.88rem;color:var(--muted);margin:0 0 .4rem">Her şık &ldquo;&hellip;sunar;
+      ölçüm &hellip; üzerinden yapılır&rdquo; kalıbında iki iddia taşıyor. Bir yarısı bile yanlışsa şık düşer.</p>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>1. yarı &mdash; değer iddiası</th><th>2. yarı &mdash; ölçüm esası</th></tr>
+        <tr><td><b>A</b></td><td class="no">Eksik/çelişkili gereksinim &rarr; statik testin alanı</td>
+            <td class="no">&ldquo;gereksinimler üzerinden&rdquo; &rarr; kara kutu</td></tr>
+        <tr><td><b>B</b></td><td class="no">&ldquo;<b>tek yolunu</b>&rdquo; &rarr; mutlak ifade</td>
+            <td class="no">Yanıt süresi/güvenlik &rarr; fonksiyonel olmayan test</td></tr>
+        <tr><td><b>C</b></td><td class="no">&ldquo;<b>kanıtlar</b>&rdquo; &rarr; mutlak ifade</td>
+            <td class="ok">Kapsam yüzdesi doğru bir esastır &mdash; ama 1. yarı şıkkı düşürür</td></tr>
+        <tr><td><b>D</b></td><td class="ok">Nesnel ölçüm + ölü kod ve gereksiz dalların görünmesi</td>
+            <td class="ok">&ldquo;kod yapısı üzerinden&rdquo;</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Syllabus'ın üç maddesiyle eşleştir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">#</th><th>Syllabus'ta beyaz kutunun değeri</th><th class="ctr">(d) karşılıyor mu?</th></tr>
+        <tr><td class="ctr">1</td><td>Kapsam, kod yapısı üzerinden <b>nesnel ve yüzde olarak</b> raporlanabilir</td>
+            <td class="ok ctr">Evet</td></tr>
+        <tr><td class="ctr">2</td><td>Kara kutuyla görülemeyecek durumlar açığa çıkar:
+          <b>ölü kod, gereksiz dal</b>, yanlış yerleştirilmiş kontrol</td><td class="ok ctr">Evet</td></tr>
+        <tr><td class="ctr">3</td><td>Test, yazılanı değil <b>gerçekten hayata geçirileni</b> inceler</td>
+            <td class="ok ctr">Evet</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Üç noktayı birlikte ifade eden tek şık (d).</p>
+      </div></li>
+
+    <li><b>Mutlak ifade avı ile kontrol et</b>
+      <div><p style="margin-bottom:0">&ldquo;<b>en etkili yol</b>&rdquo; (a), &ldquo;<b>tek yol</b>&rdquo; (b),
+      &ldquo;<b>kanıtlar</b>&rdquo; (c) &mdash; üçü de mutlak iddia içeriyor ve ISTQB'de bu kalıp
+      neredeyse her zaman yanlıştır. (d) ise ölçülü bir ifade kullanıyor: <i>ölçer</i>, <i>görünür kılar</i>.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>D</b> &mdash; Beyaz kutu testinin değeri, kapsamı <b>kod yapısı üzerinden
+    nesnel biçimde ölçebilmesi</b> ve kara kutuyla görülemeyecek <b>ölü kod, gereksiz dal</b> gibi
+    eksiklikleri görünür kılmasıdır.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>A</b></td><td>Eksik veya çelişkili gereksinimleri bulmak <b>statik testin</b> ve test
+        esasına dayalı tekniklerin güçlü olduğu alandır; beyaz kutunun değil.</td></tr>
+      <tr><td><b>B</b></td><td>Yanıt süresi ve güvenlik <b>fonksiyonel olmayan</b> test türlerinin konusudur;
+        beyaz kutu testi bunları ölçmenin tek yolu değildir.</td></tr>
+      <tr><td><b>C</b></td><td>Hiçbir kapsam düzeyi kusursuzluğu kanıtlamaz; test kusurun varlığını gösterir,
+        yokluğunu değil.</td></tr>
+    </table></div>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>Eksik gereksinimleri bulmanın en etkili yolu &nbsp;&mdash;&nbsp; statik testin alanı</span></li>
+    <li class="wrong"><b>B</b><span>Yanıt süresi/güvenlik için tek yol &nbsp;&mdash;&nbsp; mutlak ifade</span></li>
+    <li class="wrong"><b>C</b><span>Kusur kalmadığını kanıtlar &nbsp;&mdash;&nbsp; mutlak ifade</span></li>
+    <li class="right"><b>D</b><span>Nesnel ölçüm + ölü kod ve gereksiz dalları görünür kılar &nbsp;&#10004;</span></li>
+  </ul>
+</section>
+
+
+<section id="s23">
+  <div class="shead"><div class="num">23</div>
+    <div><h2>Soru 15 &mdash; kredi başvuru motoru</h2>
+    <div class="lo">Resmî örnek sınav F &middot; Soru 25 &middot; FL-4.3.3 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir kredi başvuru değerlendirme motorunun kod tabanı yalnızca gereksinimlerden türetilmiş testlerle
+    sınanmaktadır. Ekip ayrıca beyaz kutu testi uygulamayı tartışmaktadır.
+    Beyaz kutu testinin değerini EN İYİ hangi açıklama anlatır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Test esasındaki gereksinimlerin eksiksiz karşılandığını doğrular ve eksik kalan
+        iş kurallarını ortaya çıkarır.</span></li>
+      <li><b>B</b><span>Ulaşılan kapsam yüzdesi, kodda kalan kusur sayısının doğrudan ve sayısal bir
+        ölçüsünü verir.</span></li>
+      <li><b>C</b><span>Spesifikasyondan türetilen testlerin ulaşamadığı kod bölümlerini açığa çıkarır ve
+        kapsamı nesnel biçimde ölçülebilir kılar.</span></li>
+      <li><b>D</b><span>Yalnızca tasarım belgeleri üzerinden yürütüldüğü için kod yazılmadan çok önce
+        uygulanabilir olmasıdır.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Senaryodaki boşluğu tespit et</b>
+      <div><p style="margin-bottom:0">Ekip <b>yalnızca gereksinimlerden</b> test türetiyor.
+      Bu durumda gereksinimlerde hiç karşılığı olmayan kod &mdash; artık kullanılmayan bir puanlama kuralı,
+      unutulmuş bir istisna işleyici, ulaşılamayan bir dal &mdash; hiçbir test tarafından çalıştırılmaz ve
+      kimse bunu fark etmez. Aranan şık, <b>tam bu boşluğu kapatan</b> şıktır.</p></div></li>
+
+    <li><b>Beklenen cevabın iki bileşenini yaz</b>
+      <div>
+      <pre class="fx">beyaz kutunun değeri = (1) kara kutunun göremediği <b>kodu açığa çıkarmak</b>
+                     + (2) kapsamı <b>nesnel biçimde ölçülebilir</b> kılmak</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Bu iki bileşeni <b>birlikte</b>
+      ifade eden tek şık aranır.</p>
+      </div></li>
+
+    <li><b>Şıkları bileşenlere göre işaretle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th class="ctr">(1) Görünmeyen kod</th><th class="ctr">(2) Nesnel ölçüm</th><th>Sonuç</th></tr>
+        <tr><td><b>A</b></td><td class="no ctr">&#10007;</td><td class="no ctr">&#10007;</td>
+            <td>Kara kutunun amacını anlatıyor</td></tr>
+        <tr><td><b>B</b></td><td class="no ctr">&#10007;</td><td class="no ctr">&#10007;</td>
+            <td>Kapsamı <b>kusur sayısı</b> sanıyor</td></tr>
+        <tr><td><b>C</b></td><td class="ok ctr">&#10004;</td><td class="ok ctr">&#10004;</td>
+            <td class="ok">İkisini birlikte veriyor</td></tr>
+        <tr><td><b>D</b></td><td class="no ctr">&#10007;</td><td class="no ctr">&#10007;</td>
+            <td>Statik testin özelliğini anlatıyor</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Senaryoya geri dön &mdash; mekanizma nasıl işler</b>
+      <div><p style="margin-bottom:0">Kredi motorunda artık kullanılmayan bir puanlama kuralı kodda kalmışsa,
+      yalnızca gereksinimlere bakan testlerle fark edilmez. Bu kod <b>hiçbir test tarafından yürütülmediği için
+      kapsam ölçümünde eksik olarak görünür</b> ve ekip kaynağa geri dönmek zorunda kalır.
+      İşte (c)'nin anlattığı değer budur.</p></div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>C</b> &mdash; Beyaz kutu testi, <b>spesifikasyondan türetilen testlerin
+    ulaşamadığı kod bölümlerini açığa çıkarır</b> ve kapsamı nesnel biçimde ölçülebilir kılar.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>A</b></td><td>Gereksinimlerin karşılandığını doğrulamak <b>kara kutu testinin</b> amacıdır;
+        beyaz kutu test esasına değil yapıya dayanır ve eksik kalan iş kurallarını göremez.</td></tr>
+      <tr><td><b>B</b></td><td>Kapsam yüzdesi <b>ne kadar yapının çalıştırıldığını</b> gösterir;
+        kalan kusur sayısını ölçmez veya tahmin etmez.</td></tr>
+      <tr><td><b>D</b></td><td>Beyaz kutu <b>dinamik</b> testi için kodun çalıştırılabilir olması gerekir;
+        kod yazılmadan uygulanabilirlik statik testin özelliğidir.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card trap">
+    <h3>Tuzak: kapsam yüzdesini kusur sayısına çevirmek</h3>
+    <p style="margin-bottom:0">&ldquo;%85 kapsam &rarr; %15'lik kısımda şu kadar kusur var&rdquo; gibi bir
+    çıkarım <b>yapılamaz</b>. Kapsam, çalıştırılan yapı miktarının ölçüsüdür; kusur yoğunluğunun değil.
+    Kusur sayısı vaat eden şıklar neredeyse her zaman çeldiricidir.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="wrong"><b>A</b><span>Gereksinimlerin karşılandığını doğrular &nbsp;&mdash;&nbsp; kara kutunun amacı</span></li>
+    <li class="wrong"><b>B</b><span>Kapsam = kalan kusur sayısı &nbsp;&mdash;&nbsp; kapsam kusur ölçmez</span></li>
+    <li class="right"><b>C</b><span>Ulaşılamayan kodu açığa çıkarır + nesnel ölçüm &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>D</b><span>Kod yazılmadan uygulanır &nbsp;&mdash;&nbsp; statik testin özelliği</span></li>
+  </ul>
+</section>
+
+
+<section id="s24">
+  <div class="shead"><div class="num">24</div>
+    <div><h2>Soru 16 &mdash; enerji tüketim raporlama aracı</h2>
+    <div class="lo">Resmî örnek sınav H &middot; Soru 24 &middot; FL-4.3.3 &middot; K2</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir ekip, enerji tüketim raporlama aracının hesaplama bileşenlerinde kara kutu testlerinin yanında
+    beyaz kutu testi (white-box testing) de uygulamaya karar vermiştir.
+    Beyaz kutu testinin bu ekibe sağlayacağı değeri EN İYİ hangisi anlatır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>Kapsam nesnel olarak ölçülebilir ve kara kutu testlerinin ulaşamadığı kod parçaları,
+        örneğin ölü kod, ortaya çıkarılabilir.</span></li>
+      <li><b>B</b><span>Kodun bütün yolları yürütülebildiği için test sonunda üründe hiç kusur kalmadığı
+        kanıtlanabilir.</span></li>
+      <li><b>C</b><span>Gereksinim belgesindeki eksik ve tutarsız ifadeler, kod hiç incelenmeden doğrudan
+        tespit edilebilir.</span></li>
+      <li><b>D</b><span>Test senaryoları yalnızca spesifikasyondan türetildiği için kodun iç yapısını hiç
+        incelemeye gerek kalmaz.</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Senaryoyu oku: kara kutu zaten var, eklenen ne?</b>
+      <div><p style="margin-bottom:0">Ekip kara kutu testlerini sürdürüyor ve üzerine beyaz kutu ekliyor.
+      Soru, <b>eklemenin kattığı farkı</b> soruyor. Kara kutu test kümesi tüm gereksinimleri kapsasa bile
+      kodda hiç yürütülmeyen bir dal, unutulmuş bir istisna işleyici ya da erişilemeyen ölü kod kalabilir.</p></div></li>
+
+    <li><b>Her şıkkı hangi tekniğe ait olduğuna göre etiketle</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Şık</th><th>Aslında neyi tarif ediyor</th><th class="ctr">Beyaz kutunun değeri mi?</th></tr>
+        <tr><td><b>A</b></td><td>Nesnel kapsam ölçümü + kara kutunun göremediği kod</td><td class="ok ctr">Evet</td></tr>
+        <tr><td><b>B</b></td><td>&ldquo;Kusursuzluk kanıtı&rdquo; &mdash; kapsamlı test yanılgısı</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>C</b></td><td>Statik test / gözden geçirme</td><td class="no ctr">Hayır</td></tr>
+        <tr><td><b>D</b></td><td><b>Kara kutu testinin</b> tanımı</td><td class="no ctr">Hayır</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Ölçütün verdiği cevabı somutlaştır</b>
+      <div>
+      <pre class="fx">&ldquo;Yeterince test ettik mi?&rdquo;
+  kara kutu tek başına  &rarr;  <b>öznel</b> cevap (gereksinimleri kapsadık sanıyoruz)
+  + ifade ve dal kapsamı &rarr;  <b>nesnel</b> cevap (hangi kod parçası yürütülmedi, sayı ile)</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Buna karşılık beyaz kutu kusursuzluğu
+      kanıtlamaz: kapsamlı test imkânsızdır ve %100 dal kapsamı bile <b>eksik uygulanmış bir gereksinimi</b>
+      göstermeyebilir.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <p style="margin-bottom:0"><b>A</b> &mdash; <b>Ölçülebilir kapsam</b> ve <b>kara kutu testlerinin
+    göremediği kodun (ör. ölü kod) ortaya çıkarılması</b> beyaz kutu testinin temel değeridir.</p>
+  </div>
+
+  <div class="card">
+    <h3>Diğer şıklar neden yanlış</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th>Şık</th><th>Neden yanlış</th></tr>
+      <tr><td><b>B</b></td><td>Hiçbir test tekniği kusur kalmadığını kanıtlayamaz; kapsamlı test de
+        imkânsızdır. &ldquo;Bütün yollar&rdquo; iddiası döngüler yüzünden zaten gerçekçi değildir.</td></tr>
+      <tr><td><b>C</b></td><td>Gereksinim belgesindeki eksiklikleri bulmak <b>statik testin</b> ve
+        gözden geçirmenin alanıdır.</td></tr>
+      <tr><td><b>D</b></td><td>Yalnızca spesifikasyondan türetmek <b>kara kutu testidir</b>;
+        beyaz kutu testi ise tam tersine kodun iç yapısını inceler.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card warnc">
+    <h3>Altı FL-4.3.3 sorusunun ortak kalıbı</h3>
+    <p style="margin-bottom:0">Doğru şık hep aynı iki anahtar sözcüğü taşır:
+    <b>&ldquo;kara kutunun göremediği kod&rdquo;</b> ve <b>&ldquo;nesnel kapsam ölçümü&rdquo;</b>.
+    Yanlış şıklar ise dört kalıptan birine girer: <i>kara kutunun işini anlatmak</i>,
+    <i>statik testin işini anlatmak</i>, <i>kusur sayısı / kusursuzluk vaat etmek</i>,
+    <i>mutlak ifade kullanmak</i>. Şıkkı okurken önce bu dört kalıbı ara.</p>
+  </div>
+
+  <ul class="opts">
+    <li class="right"><b>A</b><span>Nesnel kapsam + ölü kodun ortaya çıkarılması &nbsp;&#10004;</span></li>
+    <li class="wrong"><b>B</b><span>Hiç kusur kalmadığı kanıtlanır &nbsp;&mdash;&nbsp; mutlak ifade</span></li>
+    <li class="wrong"><b>C</b><span>Gereksinim belgesindeki eksikler bulunur &nbsp;&mdash;&nbsp; statik testin işi</span></li>
+    <li class="wrong"><b>D</b><span>Yalnız spesifikasyondan türetilir &nbsp;&mdash;&nbsp; kara kutunun tanımı</span></li>
+  </ul>
+</section>
+
+
+<section id="s25">
+  <div class="shead"><div class="num">25</div>
+    <div><h2>Tuzaklar ve tek sayfalık özet</h2>
+    <div class="lo">Sınavdan önce son okuma</div></div></div>
+
+  <div class="card trap">
+    <h3>Klasik tuzaklar</h3>
+    <ul style="margin-bottom:0">
+      <li><b>Kapsama ilişkisini ters kurmak.</b> <code>dal &rArr; komut</code> doğru,
+        <code>komut &rArr; dal</code> yanlış. Şıklarda ikisi de bulunur; <b>yönü</b> parmakla takip et.</li>
+      <li><b>else'siz if'te dal saymamak.</b> Blok yazılmamış olsa da kararın YANLIŞ sonucu bir daldır.
+        Her karar <b>en az 2</b> dal üretir.</li>
+      <li><b>Düğüm ile kenarı karıştırmak.</b> Düğüm = komut kapsamı öğesi, kenar = dal kapsamı öğesi.
+        Soru hangisini soruyorsa onu say.</li>
+      <li><b>Giriş kenarını ve geri kenarı atlamak.</b> Bir karardan çıkmayan oklar da daldır:
+        giriş, birleşme, döngüyü kapatan geri kenar.</li>
+      <li><b>&ldquo;Dal&rdquo; ile &ldquo;karar sonucu&rdquo;nu eşitlemek.</b> Dal daha geniştir;
+        koşulsuz aktarımları da içerir.</li>
+      <li><b>Kapsam yüzdelerini toplamak.</b> %40 + %65 = %105 olmaz. Birleşim alınır;
+        toplam %100'ü aşıyorsa aradaki fark kadar <b>örtüşme zorunludur</b>.</li>
+      <li><b>Paydaya test sayısı yazmak.</b> Payda <b>her zaman</b> kapsam öğesi sayısıdır.
+        Payla payda aynı türden öğeyi saymalıdır.</li>
+      <li><b>Örtüşmeyi gereksizlik sanmak.</b> Üç test %50'şer kapsıyor ve birleşimi %100 olsa bile,
+        birini çıkarmak kapsamı düşürebilir &mdash; garanti yoktur.</li>
+      <li><b>Kapsamı kalite kanıtı sanmak.</b> %100 kapsam &ne; kusur yok, &ne; tüm yollar,
+        &ne; tüm girdi kombinasyonları, &ne; her hata arızaya döndü.</li>
+      <li><b>Beyaz kutudan eksik gereksinim beklemek.</b> Hiç yazılmamış kodun komutu da dalı da yoktur;
+        kapsam %100 bile çıkabilir.</li>
+      <li><b>&ldquo;Doğru&rdquo; ile &ldquo;cevap&rdquo;ı karıştırmak.</b> &ldquo;EN İYİ&rdquo; ve
+        &ldquo;neden&rdquo; sorularında doğru ama ilgisiz şıklar bilerek konur.</li>
+    </ul>
+  </div>
+
+  <div class="fgrid">
+    <div class="fbox"><h4>Komut kapsamı</h4>
+      <p><code>çalıştırılan komut / toplam çalıştırılabilir komut</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Grafikte: <b>düğüm</b> sayısı</p></div>
+    <div class="fbox"><h4>Dal kapsamı</h4>
+      <p><code>çalıştırılan dal / toplam dal</code></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Grafikte: <b>kenar</b> sayısı</p></div>
+    <div class="fbox"><h4>Kapsama ilişkisi</h4>
+      <p>%100 <b>dal</b> &rArr; %100 <b>komut</b></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Tersi <b>geçersiz</b> &mdash;
+      else'siz if kanıtlar</p></div>
+    <div class="fbox"><h4>Bir karar</h4>
+      <p>= <b>2 dal</b> (DOĞRU + YANLIŞ)</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Tek sonuç denendiyse %50</p></div>
+    <div class="fbox"><h4>Yüzdeler</h4>
+      <p>Toplanmaz, <b>birleşim</b> alınır. Asla &gt; %100.</p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">40 + 65 &minus; 100 = en az %5 örtüşme</p></div>
+    <div class="fbox"><h4>Beyaz kutunun değeri</h4>
+      <p>Nesnel kapsam ölçümü + <b>kara kutunun göremediği kod</b></p>
+      <p style="color:var(--muted);font-size:.84rem;margin-bottom:0">Eksik gereksinimi <b>göremez</b></p></div>
+  </div>
+
+  <div class="card" style="margin-top:1rem">
+    <h3>16 sorunun tek tablosu</h3>
+    <div class="scroll"><table class="dt">
+      <tr><th class="ctr">#</th><th>Kaynak</th><th>LO</th><th class="ctr">Cevap</th><th>Soruyu çözen tek cümle</th></tr>
+      <tr><td class="ctr">1</td><td>A &middot; 24</td><td>4.3.1</td><td class="ok ctr"><b>A</b></td>
+          <td>%100 komut kapsamı = her komut en az bir kez çalıştı; fazlası değil</td></tr>
+      <tr><td class="ctr">2</td><td>B &middot; 24</td><td>4.3.1</td><td class="ok ctr"><b>B</b></td>
+          <td>40 + 65 &minus; 100 = en az %5 örtüşme &rarr; ortak komut zorunlu</td></tr>
+      <tr><td class="ctr">3</td><td>D &middot; 24</td><td>4.3.1</td><td class="ok ctr"><b>C</b></td>
+          <td>Hata içeren komutlar da çalıştı; ama hata &ne; arıza</td></tr>
+      <tr><td class="ctr">4</td><td>F &middot; 24</td><td>4.3.1</td><td class="ok ctr"><b>A</b></td>
+          <td>Pay ve payda: yürütülen ifade / toplam çalıştırılabilir ifade</td></tr>
+      <tr><td class="ctr">5</td><td>G &middot; 24</td><td>4.3.1</td><td class="ok ctr"><b>C</b></td>
+          <td>Her ifade yürütüldü, ama karar sonuçları eksik kalmış olabilir</td></tr>
+      <tr><td class="ctr">6</td><td>B &middot; 25</td><td>4.3.2</td><td class="ok ctr"><b>C</b></td>
+          <td>BCov = uygulanan dal / toplam dal &mdash; pay ve payda aynı tür</td></tr>
+      <tr><td class="ctr">7</td><td>C &middot; 24</td><td>4.3.2</td><td class="ok ctr"><b>C</b></td>
+          <td>Dal öğesi = kenar; 8 kenar var (7 düğüm değil)</td></tr>
+      <tr><td class="ctr">8</td><td>E &middot; 23</td><td>4.3.2</td><td class="ok ctr"><b>A</b></td>
+          <td>%100 dal &rArr; %100 ifade</td></tr>
+      <tr><td class="ctr">9</td><td>G &middot; 25</td><td>4.3.2</td><td class="ok ctr"><b>A</b></td>
+          <td>else yok &rarr; yine 2 dal; ifade %100, dal 1/2 = %50</td></tr>
+      <tr><td class="ctr">10</td><td>H &middot; 23</td><td>4.3.2</td><td class="ok ctr"><b>D</b></td>
+          <td>Dal %100 &rArr; ifade %100, tersi değil</td></tr>
+      <tr><td class="ctr">11</td><td>A &middot; 25</td><td>4.3.3</td><td class="ok ctr"><b>D</b></td>
+          <td>Beyaz kutu gereksinim eksiğini göremez &mdash; aranan YANLIŞ ifade</td></tr>
+      <tr><td class="ctr">12</td><td>C &middot; 25</td><td>4.3.3</td><td class="ok ctr"><b>A</b></td>
+          <td>Kara kutu testlerini kod kapsamı açısından değerlendirir</td></tr>
+      <tr><td class="ctr">13</td><td>D &middot; 25</td><td>4.3.3</td><td class="ok ctr"><b>A</b></td>
+          <td>Senaryolar spesifikasyondan değil yapıdan türetilir</td></tr>
+      <tr><td class="ctr">14</td><td>E &middot; 24</td><td>4.3.3</td><td class="ok ctr"><b>D</b></td>
+          <td>Nesnel ölçüm + ölü kod ve gereksiz dalların görünmesi</td></tr>
+      <tr><td class="ctr">15</td><td>F &middot; 25</td><td>4.3.3</td><td class="ok ctr"><b>C</b></td>
+          <td>Spesifikasyon testlerinin ulaşamadığı kodu açığa çıkarır</td></tr>
+      <tr><td class="ctr">16</td><td>H &middot; 24</td><td>4.3.3</td><td class="ok ctr"><b>A</b></td>
+          <td>Ölçülebilir kapsam + kara kutunun göremediği ölü kod</td></tr>
+    </table></div>
+    <p style="margin-bottom:0;font-size:.9rem;color:var(--muted)">Dağılım: <b>8</b> soru kapsama
+    ilişkisine, <b>3</b> soru kapsam öğesi saymaya, <b>5</b> soru beyaz kutunun değerine dayanıyor.</p>
+  </div>
+
+  <div class="card key">
+    <h3>Gerçek hayatta</h3>
+    <p>Kapsam ölçümü sahada bir araç işidir: JaCoCo, Istanbul/nyc, coverage.py, gcov.
+    Bu araçlar &ldquo;line coverage&rdquo; ve &ldquo;branch coverage&rdquo; diye iki ayrı sütun
+    raporlar &mdash; sınavdaki komut ve dal kapsamının tam karşılığı. Raporda <b>line %100,
+    branch %72</b> gördüğünde, elinde <code>else</code>'siz <code>if</code>'ler var demektir.</p>
+    <p>Eksiği şudur: kapsam <b>çalıştırmayı</b> ölçer, <b>doğrulamayı</b> değil. Assertion'ı olmayan bir test
+    de kapsamı yükseltir. Bu yüzden olgun ekipler kapsamı tek başına hedef yapmaz;
+    mutation testing (PIT, Stryker) ile birlikte okur.</p>
+    <p style="margin-bottom:0">&ldquo;%100 dal kapsamı&rdquo; zorunluluğu çoğunlukla üç yerde görünür:
+    <b>regüle sektörler</b> (DO-178C, IEC&nbsp;62304, ISO&nbsp;26262, EN&nbsp;50128),
+    <b>sözleşme dili</b> (ölçülebilir teslim kriteri) ve <b>sınav</b>.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>Sınav modu</h3>
+    <p style="margin-bottom:0">Soruyu çözerken pratik sezgini kapat. <b>Tanım ne diyorsa o.</b>
+    &ldquo;Kapsam zaten anlamlı bir metrik değil&rdquo; diye düşünme; sınav kapsamın faydasını değil
+    <b>tanımını ve aritmetiğini</b> ölçüyor. Sınavdan çıkınca sezgini geri aç.</p>
+  </div>
+</section>
+
+
+<div class="next">
+  <a href="../istqub/pratik_testler_tr.html"><b>&#127919; Konu Pratikleri</b>
+    <span>Komut ve dal kapsamı sorularını çözerek pekiştir &mdash; adım adım çözümler</span></a>
+  <a href="../istqub/questions_tr.html"><b>&#127481;&#127479; Sınav Simülatörü</b>
+    <span>8 sınav &middot; 320 soru &mdash; beyaz kutu soruları: A24, A25, B24, B25, C24, C25, D24, D25, E23, E24, F24, F25, G24, G25, H23, H24</span></a>
+  <a href="../istqub/cozum_yontemleri_tr.html"><b>&#128214; Çözüm Yöntemleri</b>
+    <span>Beş hesaplı konunun reçetesi tek sayfada</span></a>
+</div>
+
+<footer class="ft">Konular &middot; Beyaz Kutu Testi: Komut ve Dal Kapsamı &middot; ISTQB&reg; CTFL v4.0 &sect;4.3.1&ndash;4.3.3.
+Çözümlü sorular resmî CTFL v4.0 örnek sınavları A&ndash;H'nin beyaz kutu sorularıdır (&copy; ISTQB).</footer>
+</main>
+</body>
+</html>

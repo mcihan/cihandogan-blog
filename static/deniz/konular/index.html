@@ -28,12 +28,18 @@ a.card:hover{transform:translateY(-5px);box-shadow:0 22px 50px -14px rgba(0,0,0,
   font-size:1.7rem;margin-bottom:.85rem;color:#fff}
 .card.bva .icon{background:linear-gradient(135deg,#4f46e5,#3730a3)}
 .card.ep  .icon{background:linear-gradient(135deg,#0ea5e9,#0369a1)}
+.card.kt  .icon{background:linear-gradient(135deg,#d97706,#92400e)}
+.card.dg  .icon{background:linear-gradient(135deg,#059669,#047857)}
+.card.bk  .icon{background:linear-gradient(135deg,#db2777,#9d174d)}
 .card .lo{display:block;font-family:var(--mono);font-size:.72rem;font-weight:700;color:#8a8aa3;margin-bottom:.3rem}
 .card h2{margin:0 0 .4rem;font-size:1.28rem;font-weight:850;letter-spacing:-.015em}
 .card p{margin:0 0 1.1rem;font-size:.92rem;color:#61617a}
 .card .go{font-weight:800;font-size:.9rem}
 .card.bva .go{color:#3730a3}
 .card.ep  .go{color:#0369a1}
+.card.kt  .go{color:#92400e}
+.card.dg  .go{color:#047857}
+.card.bk  .go{color:#9d174d}
 .card.soon .go{color:#8a8aa3}
 .card .meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem}
 .card .meta span{font-size:.74rem;font-weight:700;background:#f2f2f9;color:#61617a;border-radius:99px;padding:.18rem .7rem}
@@ -168,8 +174,16 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
   <p class="kicker">CTFL v4.0 &middot; Konu anlatımları</p>
   <h1>Konular.</h1>
   <p class="lede">Her konu i&ccedil;in: neden b&ouml;yle &ccedil;&ouml;z&uuml;l&uuml;yor, hangi adımlarla &ccedil;&ouml;z&uuml;l&uuml;yor
-  ve resm&icirc; sınavdan ger&ccedil;ek bir sorunun baştan sona &ccedil;&ouml;z&uuml;m&uuml;.</p>
+  ve o teknikten &ccedil;ıkmış <b>b&uuml;t&uuml;n</b> sınav sorularının baştan sona &ccedil;&ouml;z&uuml;m&uuml;.</p>
   <div class="cards">
+    <a class="card ep" href="ep.html">
+      <span class="icon">&#129518;</span>
+      <span class="lo">FL-4.2.1 &middot; K3</span>
+      <h2>Denklik Payları (EP)</h2>
+      <p>Payları b&ouml;lme kuralları, ge&ccedil;erli/ge&ccedil;ersiz ayrımı, kapsam &ouml;ğesi neden <i>pay</i>dır ve Each Choice ile &ldquo;en az ka&ccedil; test&rdquo; hesabı. EP'nin nerede bitip BVA'nın nerede başladığı da burada.</p>
+      <div class="meta"><span>16 b&ouml;l&uuml;m</span><span>9 sayı doğrusu</span><span>8 tam &ccedil;&ouml;z&uuml;ml&uuml; soru</span></div>
+      <span class="go">Konuyu a&ccedil; &#8594;</span>
+    </a>
     <a class="card bva" href="bva.html">
       <span class="icon">&#128207;</span>
       <span class="lo">FL-4.2.2 &middot; K3</span>
@@ -178,14 +192,30 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
       <div class="meta"><span>11 b&ouml;l&uuml;m</span><span>sayı doğrusu diyagramları</span><span>4 tam &ccedil;&ouml;z&uuml;ml&uuml; soru</span></div>
       <span class="go">Konuyu a&ccedil; &#8594;</span>
     </a>
-    <div class="card ep soon">
-      <span class="icon">&#129518;</span>
-      <span class="lo">FL-4.2.1 &middot; K3</span>
-      <h2>Denklik Payları (EP)</h2>
-      <p>Payları b&ouml;lme, ge&ccedil;erli/ge&ccedil;ersiz ayrımı, Each Choice kapsamı ve &ldquo;en az ka&ccedil; test&rdquo; hesabı.</p>
-      <div class="meta"><span>yakında</span></div>
-      <span class="go">Yakında &#8594;</span>
-    </div>
+    <a class="card kt" href="karar.html">
+      <span class="icon">&#128203;</span>
+      <span class="lo">FL-4.2.3 &middot; K3</span>
+      <h2>Karar Tablosu Testi</h2>
+      <p>Koşul, eylem ve kural; metinden tabloya ge&ccedil;iş; tam tablo ile sadeleştirilmiş tablonun paydayı nasıl değiştirdiği ve D/Y &middot; E/H işaret karmaşası.</p>
+      <div class="meta"><span>15 b&ouml;l&uuml;m</span><span>52 karar tablosu</span><span>8 tam &ccedil;&ouml;z&uuml;ml&uuml; soru</span></div>
+      <span class="go">Konuyu a&ccedil; &#8594;</span>
+    </a>
+    <a class="card dg" href="durum.html">
+      <span class="icon">&#128260;</span>
+      <span class="lo">FL-4.2.4 &middot; K3</span>
+      <h2>Durum Geçişi Testi</h2>
+      <p>Durum, olay, koruma ve ge&ccedil;iş; diyagram ile durum tablosunun aynı şeyi s&ouml;ylediği; &uuml;&ccedil; kapsam &ouml;l&ccedil;&uuml;t&uuml;n&uuml;n &uuml;&ccedil; ayrı paydası ve bir olay dizisini tabloda izleme.</p>
+      <div class="meta"><span>16 b&ouml;l&uuml;m</span><span>11 durum diyagramı</span><span>8 tam &ccedil;&ouml;z&uuml;ml&uuml; soru</span></div>
+      <span class="go">Konuyu a&ccedil; &#8594;</span>
+    </a>
+    <a class="card bk" href="beyaz.html">
+      <span class="icon">&#128270;</span>
+      <span class="lo">FL-4.3 &middot; K2/K3</span>
+      <h2>Beyaz Kutu: Komut &amp; Dal Kapsamı</h2>
+      <p>Komut d&uuml;ğ&uuml;m, dal ok; kontrol akış grafiğini okuma; %100 dal &rarr; %100 komut ama tersi değil; ve iki testin y&uuml;zdelerinin neden toplanmadığı.</p>
+      <div class="meta"><span>25 b&ouml;l&uuml;m</span><span>8 akış grafiği</span><span>16 tam &ccedil;&ouml;z&uuml;ml&uuml; soru</span></div>
+      <span class="go">Konuyu a&ccedil; &#8594;</span>
+    </a>
   </div>
   <footer>ISTQB&reg; CTFL v4.0 syllabus'una g&ouml;re &middot; &ouml;rnek sorular resm&icirc; &ouml;rnek sınavlardan (&copy; ISTQB).</footer>
 </div></div>
