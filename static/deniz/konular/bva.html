@@ -285,7 +285,7 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
   <h1>Sınır Değer Analizi (BVA)</h1>
   <p class="lede">Kodu g&ouml;rmeden, yalnızca spesifikasyondan sınır değerleri &ccedil;ıkarmayı;
   2-değerli ile 3-değerli kapsamı ayırt etmeyi ve kapsam y&uuml;zdesini hesaplamayı adım adım &ouml;ğren.
-  Sonunda resm&icirc; &ouml;rnek sınavlardaki (A, B, C, D) <b>b&uuml;t&uuml;n BVA soruları</b> aynı re&ccedil;eteyle baştan sona &ccedil;&ouml;z&uuml;l&uuml;yor.</p>
+  Sonunda sekiz &ouml;rnek sınavdaki (A&ndash;H) <b>b&uuml;t&uuml;n BVA soruları</b> aynı re&ccedil;eteyle baştan sona &ccedil;&ouml;z&uuml;l&uuml;yor.</p>
   <div class="jump"><a href="#s1"><span class="n">1</span><b>Kara kutu kuralı</b></a>
 <a href="#s2"><span class="n">2</span><b>BVA neden var</b></a>
 <a href="#s3"><span class="n">3</span><b>Sınır bulma</b></a>
@@ -296,7 +296,11 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
 <a href="#s8"><span class="n">8</span><b>Soru 2 &middot; B 21</b></a>
 <a href="#s9"><span class="n">9</span><b>Soru 3 &middot; C 21</b></a>
 <a href="#s10"><span class="n">10</span><b>Soru 4 &middot; D 21</b></a>
-<a href="#s11"><span class="n">11</span><b>Tuzaklar &amp; &ouml;zet</b></a></div>
+<a href="#s11"><span class="n">11</span><b>Soru 5 &middot; E 20</b></a>
+<a href="#s12"><span class="n">12</span><b>Soru 6 &middot; F 21</b></a>
+<a href="#s13"><span class="n">13</span><b>Soru 7 &middot; G 21</b></a>
+<a href="#s14"><span class="n">14</span><b>Soru 8 &middot; H 20</b></a>
+<a href="#s15"><span class="n">15</span><b>Tuzaklar &amp; &ouml;zet</b></a></div>
 </div></header>
 
 <nav class="sticky"><div class="in"><a href="#s1">1. Kara kutu kuralı</a>
@@ -309,7 +313,11 @@ ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
 <a href="#s8">8. Soru 2 &middot; B 21</a>
 <a href="#s9">9. Soru 3 &middot; C 21</a>
 <a href="#s10">10. Soru 4 &middot; D 21</a>
-<a href="#s11">11. Tuzaklar &amp; &ouml;zet</a></div></nav>
+<a href="#s11">11. Soru 5 &middot; E 20</a>
+<a href="#s12">12. Soru 6 &middot; F 21</a>
+<a href="#s13">13. Soru 7 &middot; G 21</a>
+<a href="#s14">14. Soru 8 &middot; H 20</a>
+<a href="#s15">15. Tuzaklar &amp; &ouml;zet</a></div></nav>
 
 <main>
 
@@ -1568,6 +1576,729 @@ kapsam &ouml;ğeleri = <b>&minus;1, 0, 2, 3</b></pre>
 
 <section id="s11">
   <div class="shead"><div class="num">11</div>
+    <div><h2>Soru 5 &mdash; ders kaydı, kapsam y&uuml;zdesi</h2>
+    <div class="lo">&Ouml;rnek sınav E &middot; Soru 20 &middot; FL-4.2.2 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>&Uuml;niversite ders kayıt sisteminde bir &ouml;ğrencinin bir d&ouml;nemde se&ccedil;tiği toplam kredi,
+    <b>0 ile 45 arasında bir tam sayıdır</b>; kayıt ekranı bu aralığın dışındaki değerlerin girilmesine
+    izin vermez. Sistem şu kuralı uygular:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Kredi</th><th>Sistemin davranışı</th></tr>
+      <tr><td>0 &#8211; 11</td><td>kayıt reddedilir</td></tr>
+      <tr><td>12 &#8211; 30</td><td>kayıt onaylanır</td></tr>
+      <tr><td>31 &#8211; 45</td><td>danışman onayı istenir</td></tr>
+    </table></div>
+    <p>Test uzmanı <b>2 değerli</b> sınır değer analizi uygulamayı planlamış, ancak yalnızca
+    <b>0, 11, 12 ve 31</b> değerleriyle test koşabilmiştir. Elde edilen sınır değer kapsamı
+    y&uuml;zde <b>ka&ccedil;tır</b>?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%50</span></li>
+      <li><b>B</b><span>%67</span></li>
+      <li><b>C</b><span>%75</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; u&ccedil;larda somut sayı var mı?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne s&ouml;yl&uuml;yor</th></tr>
+        <tr><td>&Uuml;&ccedil; ayrı kredi aralığı</td><td><b>3 pay</b></td></tr>
+        <tr><td>&ldquo;toplam kredi <b>0 ile 45</b> arasında bir tam sayıdır&rdquo;</td>
+            <td>Alan 0'da başlayıp 45'te bitiyor &mdash; <b>iki u&ccedil; da kapalı</b></td></tr>
+        <tr><td>&ldquo;bu aralığın dışındaki değerlerin girilmesine <b>izin vermez</b>&rdquo;</td>
+            <td>Ge&ccedil;ersiz pay <b>yok</b> &mdash; &minus;1 ve 46 listeye girmez</td></tr>
+        <tr><td>&ldquo;2 değerli &hellip; kapsamı y&uuml;zde <b>ka&ccedil;tır</b>&rdquo;</td>
+            <td>Y&uuml;zde soruluyor &rarr; &ouml;nce paydayı bul</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Her payın min ve max'ını yaz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th class="ctr">min</th><th class="ctr">max</th></tr>
+        <tr><td>P1 &middot; 0 &#8211; 11 &middot; reddedilir</td><td class="ctr"><b>0</b></td><td class="ctr"><b>11</b></td></tr>
+        <tr><td>P2 &middot; 12 &#8211; 30 &middot; onaylanır</td><td class="ctr"><b>12</b></td><td class="ctr"><b>30</b></td></tr>
+        <tr><td>P3 &middot; 31 &#8211; 45 &middot; danışman onayı</td><td class="ctr"><b>31</b></td><td class="ctr"><b>45</b></td></tr>
+      </table></div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="173" y="43">0 &#8211; 11 &middot; reddedilir</text>
+<rect class="bd neu2" x="323" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">12 &#8211; 30 &middot; onaylanır</text>
+<rect class="bd neu" x="623" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="773" y="43">31 &#8211; 45 &middot; danışman onayı</text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11">kesim 1</text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11">kesim 2</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot" cx="48" cy="106" r="16"/><text class="dv" x="48" y="111">0</text>
+<text class="dp" x="173" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">11</text>
+<circle class="dot" cx="348" cy="106" r="16"/><text class="dv" x="348" y="111">12</text>
+<text class="dp" x="473" y="111">&#8230;</text>
+<circle class="dot" cx="598" cy="106" r="16"/><text class="dv" x="598" y="111">30</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">31</text>
+<text class="dp" x="773" y="111">&#8230;</text>
+<circle class="dot" cx="898" cy="106" r="16"/><text class="dv" x="898" y="111">45</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">payda = pay sayısı &times; 2 &minus; a&ccedil;ık u&ccedil; sayısı = 3 &times; 2 &minus; 0 = <b>6</b>
+sınırlar = 0, 11, 12, 30, 31, 45</pre>
+      </div></li>
+
+    <li><b>Koşulan testleri sınır listesiyle eşleştir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Sınır</th><th>Nereden geliyor</th><th>Koşuldu mu?</th></tr>
+        <tr><td class="ctr"><b>0</b></td><td>P1 payının min'i &mdash; aynı zamanda alanın alt ucu</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>11</b></td><td>P1 payının max'ı</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>12</b></td><td>P2 payının min'i</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>30</b></td><td>P2 payının max'ı</td><td class="no">Hayır</td></tr>
+        <tr><td class="ctr"><b>31</b></td><td>P3 payının min'i</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>45</b></td><td>P3 payının max'ı &mdash; aynı zamanda alanın &uuml;st ucu</td><td class="no">Hayır</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Koşulan d&ouml;rt değerin d&ouml;rd&uuml; de sınır
+      ve d&ouml;rd&uuml; de farklı &rarr; <b>4 kapsam &ouml;ğesi</b> &ccedil;alıştırılmış.</p>
+      </div></li>
+
+    <li><b>B&ouml;l</b>
+      <div><div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="173" y="43">0 &#8211; 11 &middot; reddedilir</text>
+<rect class="bd neu2" x="323" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">12 &#8211; 30 &middot; onaylanır</text>
+<rect class="bd neu" x="623" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="773" y="43">31 &#8211; 45 &middot; danışman onayı</text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11">kesim 1</text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11">kesim 2</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot" cx="48" cy="106" r="16"/><text class="dv" x="48" y="111">0</text>
+<text class="dp" x="173" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">11</text>
+<circle class="dot" cx="348" cy="106" r="16"/><text class="dv" x="348" y="111">12</text>
+<text class="dp" x="473" y="111">&#8230;</text>
+<circle class="dot miss" cx="598" cy="106" r="15"/><text class="dv miss" x="598" y="111">30</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">31</text>
+<text class="dp" x="773" y="111">&#8230;</text>
+<circle class="dot miss" cx="898" cy="106" r="15"/><text class="dv miss" x="898" y="111">45</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>kapsanan sınır (4)</span><span><i class="m"></i>kapsanmayan sınır (2)</span></p>
+      <pre class="fx">kapsam = 4 / 6 = 0,6667 &rarr; <b>%67</b>
+kapsanmayanlar: 30, 45</pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">4/6 tam b&ouml;l&uuml;nmez;
+      şıklarda <b>%67</b> yazıyorsa yuvarlanmış halidir.</p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>%50 &nbsp;&mdash;&nbsp; 0'ı sınır saymayıp 3/6 hesaplamak</span></li>
+      <li class="right"><b>B</b><span>%67 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>C</b><span>%75 &nbsp;&mdash;&nbsp; yalnızca kesim noktalarını sayıp 3/4 hesaplamak</span></li>
+      <li class="wrong"><b>D</b><span>%100 &nbsp;&mdash;&nbsp; 30 ve 45 hi&ccedil; test edilmemiş</span></li>
+    </ul>
+  </div>
+
+  <div class="card warnc">
+    <h3>Payda neden 6? 0 ve 45 de birer sınır</h3>
+    <p>2 değerli sınır değer analizinde sınır sayısı <b>pay sayısının iki katıdır</b> &mdash; a&ccedil;ık u&ccedil; yoksa
+    hi&ccedil;bir şey d&uuml;şmez. Burada her iki u&ccedil;ta da somut sayı yazıyor (&ldquo;<b>0</b> ile <b>45</b> arasında&rdquo;),
+    yani 0 da 45 de kapalı u&ccedil;tur.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Hangi değerler sınır?</th><th class="ctr">Sayı</th><th>Neden</th></tr>
+      <tr><td>Kesim &ccedil;izgilerinin iki yanı: 11&#9474;12 ve 30&#9474;31</td><td class="ctr">4</td>
+          <td>Her kesim <b>iki</b> sınır &uuml;retir</td></tr>
+      <tr><td>Alanın u&ccedil;ları: 0 ve 45</td><td class="ctr">2</td>
+          <td class="ok">Somut sayı yazıyor &rarr; kapalı u&ccedil;, sayılır</td></tr>
+      <tr><td><b>Toplam (payda)</b></td><td class="ctr"><b>6</b></td>
+          <td>3 pay &times; 2 &minus; 0 a&ccedil;ık u&ccedil;</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">Alanın u&ccedil;larını unutursan payda 4'e d&uuml;şer ve <b>%75</b> şıkkına
+    (3/4) d&uuml;şersin &mdash; C şıkkı tam olarak bunu bekliyor.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>Buradaki tuzak: &ldquo;her paya dokundum&rdquo; demek yetmez</h3>
+    <p>Koşulan testler &uuml;&ccedil; payın da i&ccedil;ine giriyor: 0 ve 11 P1'de, 12 P2'de, 31 P3'te.
+    Bu <b>denklik payı kapsamını</b> %100 yapar &mdash; ama soru <b>sınır değer kapsamını</b> soruyor.</p>
+<pre>pay kapsamı     = dokunulan pay   / toplam pay   = 3/3 = %100
+sınır kapsamı   = dokunulan sınır / toplam sınır = 4/6 = <b>%67</b></pre>
+    <p style="margin-bottom:0">P2'nin &uuml;st ucu (<b>30</b>) ve P3'&uuml;n &uuml;st ucu (<b>45</b>) hi&ccedil; denenmemiş.
+    İkisi de &ldquo;bir adım &ouml;tesi artık bu paya ait değil&rdquo; noktası &mdash; yani kusurun en &ccedil;ok beklendiği yer.</p>
+  </div>
+</section>
+
+
+<section id="s12">
+  <div class="shead"><div class="num">12</div>
+    <div><h2>Soru 6 &mdash; kredi başvurusu, d&ouml;rt pay</h2>
+    <div class="lo">&Ouml;rnek sınav F &middot; Soru 21 &middot; FL-4.2.2 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir kredi başvuru değerlendirme motorunda başvuranın aylık net geliri
+    <b>0 ile 500000 TL arasında tam sayı</b> olarak girilir ve aşağıdaki ge&ccedil;erli paylara g&ouml;re
+    bir karar &uuml;retilir:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">P1</th><th class="ctr">P2</th><th class="ctr">P3</th><th class="ctr">P4</th></tr>
+      <tr><td>Aylık gelir (TL)</td><td class="ctr">0 &#8211; 9999</td><td class="ctr">10000 &#8211; 24999</td>
+          <td class="ctr">25000 &#8211; 74999</td><td class="ctr">75000 &#8211; 500000</td></tr>
+      <tr><td>Karar</td><td class="ctr">Otomatik ret</td><td class="ctr">Temel limit</td>
+          <td class="ctr">Standart limit</td><td class="ctr">Premium limit</td></tr>
+    </table></div>
+    <p>Test ekibi yalnızca şu gelir değerleriyle test y&uuml;r&uuml;tm&uuml;şt&uuml;r:
+    <b>0, 9999, 10000, 24999, 75000, 500000</b>.</p>
+    <p><b>İki değerli</b> sınır değer analizine (boundary value analysis) g&ouml;re elde edilen
+    sınır değeri kapsamı y&uuml;zde ka&ccedil;tır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%62,5</span></li>
+      <li><b>B</b><span>%66,7</span></li>
+      <li><b>C</b><span>%75</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; u&ccedil;larda somut sayı var mı?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne s&ouml;yl&uuml;yor</th></tr>
+        <tr><td>P1, P2, P3, P4 &mdash; d&ouml;rt ge&ccedil;erli pay</td><td><b>4 pay</b></td></tr>
+        <tr><td>&ldquo;<b>0 ile 500000</b> TL arasında tam sayı&rdquo;</td>
+            <td>Alan 0'da başlıyor, 500000'de bitiyor &mdash; <b>iki u&ccedil; da kapalı</b></td></tr>
+        <tr><td>Tabloda aralıklar bitişik: 9999 &rarr; 10000</td>
+            <td>Her kesim &ccedil;izgisi <b>iki</b> sınır &uuml;retir</td></tr>
+        <tr><td>&ldquo;iki değerli &hellip; kapsamı y&uuml;zde <b>ka&ccedil;tır</b>&rdquo;</td>
+            <td>Y&uuml;zde soruluyor &rarr; &ouml;nce paydayı bul</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Her payın min ve max'ını yaz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th class="ctr">min</th><th class="ctr">max</th></tr>
+        <tr><td>P1 &middot; otomatik ret</td><td class="ctr"><b>0</b></td><td class="ctr"><b>9999</b></td></tr>
+        <tr><td>P2 &middot; temel limit</td><td class="ctr"><b>10000</b></td><td class="ctr"><b>24999</b></td></tr>
+        <tr><td>P3 &middot; standart limit</td><td class="ctr"><b>25000</b></td><td class="ctr"><b>74999</b></td></tr>
+        <tr><td>P4 &middot; premium limit</td><td class="ctr"><b>75000</b></td><td class="ctr"><b>500000</b></td></tr>
+      </table></div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu" x="136" y="43">0 &#8211; 9999 &middot; ret</text>
+<rect class="bd neu2" x="248" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu2" x="361" y="43">10000 &#8211; 24999 &middot; temel</text>
+<rect class="bd neu" x="473" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu" x="586" y="43">25000 &#8211; 74999 &middot; standart</text>
+<rect class="bd neu2" x="698" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu2" x="811" y="43">75000 &#8211; 500000 &middot; premium</text>
+<line class="cut" x1="248" y1="16" x2="248" y2="128"/>
+<text class="cl" x="248" y="11">kesim 1</text>
+<line class="cut" x1="473" y1="16" x2="473" y2="128"/>
+<text class="cl" x="473" y="11">kesim 2</text>
+<line class="cut" x1="698" y1="16" x2="698" y2="128"/>
+<text class="cl" x="698" y="11">kesim 3</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="61" y1="70" x2="61" y2="82"/>
+<line class="tk" x1="210" y1="70" x2="210" y2="82"/>
+<line class="tk" x1="286" y1="70" x2="286" y2="82"/>
+<line class="tk" x1="435" y1="70" x2="435" y2="82"/>
+<line class="tk" x1="511" y1="70" x2="511" y2="82"/>
+<line class="tk" x1="660" y1="70" x2="660" y2="82"/>
+<line class="tk" x1="736" y1="70" x2="736" y2="82"/>
+<line class="tk" x1="885" y1="70" x2="885" y2="82"/>
+<circle class="dot" cx="61" cy="106" r="26"/><text class="dv" x="61" y="111">0</text>
+<text class="dp" x="136" y="111">&#8230;</text>
+<circle class="dot" cx="210" cy="106" r="26"/><text class="dv" x="210" y="111">9999</text>
+<circle class="dot" cx="286" cy="106" r="26"/><text class="dv" x="286" y="111">10000</text>
+<text class="dp" x="361" y="111">&#8230;</text>
+<circle class="dot" cx="435" cy="106" r="26"/><text class="dv" x="435" y="111">24999</text>
+<circle class="dot" cx="511" cy="106" r="26"/><text class="dv" x="511" y="111">25000</text>
+<text class="dp" x="586" y="111">&#8230;</text>
+<circle class="dot" cx="660" cy="106" r="26"/><text class="dv" x="660" y="111">74999</text>
+<circle class="dot" cx="736" cy="106" r="26"/><text class="dv" x="736" y="111">75000</text>
+<text class="dp" x="811" y="111">&#8230;</text>
+<circle class="dot" cx="885" cy="106" r="26"/><text class="dv" x="885" y="111">500000</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">payda = pay sayısı &times; 2 &minus; a&ccedil;ık u&ccedil; sayısı = 4 &times; 2 &minus; 0 = <b>8</b>
+sınırlar = 0, 9999, 10000, 24999, 25000, 74999, 75000, 500000</pre>
+      </div></li>
+
+    <li><b>Y&uuml;r&uuml;t&uuml;len testleri sınır listesiyle eşleştir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Sınır</th><th>Nereden geliyor</th><th>Y&uuml;r&uuml;t&uuml;ld&uuml; m&uuml;?</th></tr>
+        <tr><td class="ctr"><b>0</b></td><td>P1 min &mdash; aynı zamanda alanın alt ucu</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>9999</b></td><td>P1 max</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>10000</b></td><td>P2 min</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>24999</b></td><td>P2 max</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>25000</b></td><td>P3 min</td><td class="no">Hayır</td></tr>
+        <tr><td class="ctr"><b>74999</b></td><td>P3 max</td><td class="no">Hayır</td></tr>
+        <tr><td class="ctr"><b>75000</b></td><td>P4 min</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>500000</b></td><td>P4 max &mdash; aynı zamanda alanın &uuml;st ucu</td><td class="ok">Evet</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">Altı değerin altısı da sınır
+      &rarr; <b>6 kapsam &ouml;ğesi</b>. Eksik olan tek pay <b>P3</b> &mdash; hem min'i hem max'ı boşta.</p>
+      </div></li>
+
+    <li><b>B&ouml;l</b>
+      <div><div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu" x="136" y="43">0 &#8211; 9999 &middot; ret</text>
+<rect class="bd neu2" x="248" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu2" x="361" y="43">10000 &#8211; 24999 &middot; temel</text>
+<rect class="bd neu" x="473" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu" x="586" y="43">25000 &#8211; 74999 &middot; standart</text>
+<rect class="bd neu2" x="698" y="22" width="225" height="32" rx="9"/>
+<text class="bl neu2" x="811" y="43">75000 &#8211; 500000 &middot; premium</text>
+<line class="cut" x1="248" y1="16" x2="248" y2="128"/>
+<text class="cl" x="248" y="11">kesim 1</text>
+<line class="cut" x1="473" y1="16" x2="473" y2="128"/>
+<text class="cl" x="473" y="11">kesim 2</text>
+<line class="cut" x1="698" y1="16" x2="698" y2="128"/>
+<text class="cl" x="698" y="11">kesim 3</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="61" y1="70" x2="61" y2="82"/>
+<line class="tk" x1="210" y1="70" x2="210" y2="82"/>
+<line class="tk" x1="286" y1="70" x2="286" y2="82"/>
+<line class="tk" x1="435" y1="70" x2="435" y2="82"/>
+<line class="tk" x1="511" y1="70" x2="511" y2="82"/>
+<line class="tk" x1="660" y1="70" x2="660" y2="82"/>
+<line class="tk" x1="736" y1="70" x2="736" y2="82"/>
+<line class="tk" x1="885" y1="70" x2="885" y2="82"/>
+<circle class="dot" cx="61" cy="106" r="26"/><text class="dv" x="61" y="111">0</text>
+<text class="dp" x="136" y="111">&#8230;</text>
+<circle class="dot" cx="210" cy="106" r="26"/><text class="dv" x="210" y="111">9999</text>
+<circle class="dot" cx="286" cy="106" r="26"/><text class="dv" x="286" y="111">10000</text>
+<text class="dp" x="361" y="111">&#8230;</text>
+<circle class="dot" cx="435" cy="106" r="26"/><text class="dv" x="435" y="111">24999</text>
+<circle class="dot miss" cx="511" cy="106" r="25"/><text class="dv miss" x="511" y="111">25000</text>
+<text class="dp" x="586" y="111">&#8230;</text>
+<circle class="dot miss" cx="660" cy="106" r="25"/><text class="dv miss" x="660" y="111">74999</text>
+<circle class="dot" cx="736" cy="106" r="26"/><text class="dv" x="736" y="111">75000</text>
+<text class="dp" x="811" y="111">&#8230;</text>
+<circle class="dot" cx="885" cy="106" r="26"/><text class="dv" x="885" y="111">500000</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>kapsanan sınır (6)</span><span><i class="m"></i>kapsanmayan sınır (2)</span></p>
+      <pre class="fx">kapsam = 6 / 8 = 0,75 &rarr; <b>%75</b>
+kapsanmayanlar: 25000, 74999</pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>%62,5 &nbsp;&mdash;&nbsp; 5/8; y&uuml;r&uuml;t&uuml;len bir değer (&ouml;rneğin 0) sınır sayılmamış</span></li>
+      <li class="wrong"><b>B</b><span>%66,7 &nbsp;&mdash;&nbsp; 4/6; payda yalnızca ge&ccedil;iş noktalarından kurulmuş</span></li>
+      <li class="right"><b>C</b><span>%75 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>D</b><span>%100 &nbsp;&mdash;&nbsp; 25000 ve 74999 hi&ccedil; y&uuml;r&uuml;t&uuml;lmemiş</span></li>
+    </ul>
+  </div>
+
+  <div class="card warnc">
+    <h3>D&ouml;rt payın hepsine dokunmak kapsamı %100 yapmaz</h3>
+    <p>Y&uuml;r&uuml;t&uuml;len altı değer d&ouml;rt payın hepsine birden giriyor &mdash; 0 ve 9999 P1'e, 10000 ve 24999 P2'ye,
+    75000 ve 500000 P4'e. P3'e giren bir değer <b>yok</b>; olsaydı bile kapsamı değiştirmezdi,
+    &ccedil;&uuml;nk&uuml; kapsam paylar &uuml;zerinden değil <b>sınır değerleri</b> &uuml;zerinden &ouml;l&ccedil;&uuml;l&uuml;r.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Payda ne olursa</th><th class="ctr">Hesap</th><th class="ctr">Sonu&ccedil;</th><th>Doğru mu?</th></tr>
+      <tr><td>D&ouml;rt payın min + max'ı <i>(doğru payda)</i></td><td class="ctr">6 / 8</td>
+          <td class="ctr ok">%75</td><td class="ok">Evet</td></tr>
+      <tr><td>Yalnızca &uuml;&ccedil; ge&ccedil;iş noktasının u&ccedil;ları (6 değer)</td><td class="ctr">4 / 6</td>
+          <td class="ctr no">%66,7</td><td class="no">Alanın u&ccedil;ları unutulmuş</td></tr>
+      <tr><td>Test senaryosu sayısı payda yapılırsa</td><td class="ctr">6 / 6</td>
+          <td class="ctr no">%100</td><td class="no">Payda asla test sayısı değildir</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Sıra &ouml;nemli:</b> &ouml;nce paydayı (b&uuml;t&uuml;n sınır değerlerinin listesi) yaz,
+    sonra y&uuml;r&uuml;t&uuml;lenleri bu listede tek tek işaretle.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>Buradaki tuzak: 0 ve 500000 da sınırdır</h3>
+    <p>Alanın en k&uuml;&ccedil;&uuml;k ve en b&uuml;y&uuml;k ge&ccedil;erli değeri de birer sınırdır &mdash; metinde
+    &ldquo;<b>0 ile 500000 TL arasında</b>&rdquo; diye somut iki sayı yazıyor, yani iki u&ccedil; da kapalı.
+    Bunları atlarsan payda 8 yerine 6 olur ve kapsam olduğundan <b>y&uuml;ksek</b> g&ouml;r&uuml;n&uuml;r.</p>
+<pre>doğru  : 0  9999 &#9474; 10000  24999 &#9474; 25000  74999 &#9474; 75000  500000   &rarr; 8 sınır
+eksik  :    9999 &#9474; 10000  24999 &#9474; 25000  74999 &#9474; 75000            &rarr; 6 sınır (yanlış)</pre>
+    <p style="margin-bottom:0">A şıkkı (<b>%62,5</b> = 5/8) ise paydayı doğru kurup <i>payı</i> eksik sayar:
+    y&uuml;r&uuml;t&uuml;len 6 değerden biri yanlışlıkla sınır listesinde işaretlenmemiştir.</p>
+  </div>
+</section>
+
+
+<section id="s13">
+  <div class="shead"><div class="num">13</div>
+    <div><h2>Soru 7 &mdash; bagaj y&ouml;nlendirme, ge&ccedil;ersiz pay yok</h2>
+    <div class="lo">&Ouml;rnek sınav G &middot; Soru 21 &middot; FL-4.2.2 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Bir bagaj y&ouml;nlendirme sisteminde her bagajın ağırlığı <b>tam sayı kilogram</b> olarak girilir;
+    ge&ccedil;erli giriş aralığı <b>0 ile 50 kg</b> arasındadır. Sistem ağırlığa g&ouml;re bagajı aşağıdaki
+    ge&ccedil;erli paylara ayırır:</p>
+    <div class="scroll"><table class="dt">
+      <tr><th></th><th class="ctr">P1</th><th class="ctr">P2</th><th class="ctr">P3</th></tr>
+      <tr><td>Ağırlık (kg)</td><td class="ctr">0 &#8211; 22</td><td class="ctr">23 &#8211; 32</td><td class="ctr">33 &#8211; 50</td></tr>
+      <tr><td>Y&ouml;nlendirme</td><td class="ctr">Standart bant</td><td class="ctr">Ağır bagaj bandı</td>
+          <td class="ctr">&Ouml;zel elle&ccedil;leme</td></tr>
+    </table></div>
+    <p>Ağırlık alanına yalnızca 0 ile 50 arasındaki değerler girilebildiği i&ccedil;in
+    <b>ge&ccedil;ersiz pay tanımlanmamıştır</b>; analiz yukarıdaki &uuml;&ccedil; ge&ccedil;erli payın sınır değerleri
+    &uuml;zerinden yapılacaktır.</p>
+    <p>Test ekibi yalnızca şu ağırlık değerleriyle test y&uuml;r&uuml;tm&uuml;şt&uuml;r: <b>0, 22, 23, 32</b>.
+    <b>İki değerli</b> sınır değer analizine (boundary value analysis) g&ouml;re elde edilen
+    sınır değeri kapsamı y&uuml;zde ka&ccedil;tır?</p>
+    <ul class="opts">
+      <li><b>A</b><span>%50</span></li>
+      <li><b>B</b><span>%66,7</span></li>
+      <li><b>C</b><span>%75</span></li>
+      <li><b>D</b><span>%100</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; u&ccedil;larda somut sayı var mı?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne s&ouml;yl&uuml;yor</th></tr>
+        <tr><td>P1, P2, P3 &mdash; &uuml;&ccedil; ge&ccedil;erli pay</td><td><b>3 pay</b></td></tr>
+        <tr><td>&ldquo;ge&ccedil;erli giriş aralığı <b>0 ile 50 kg</b>&rdquo;</td>
+            <td>Alanın iki ucunda da somut sayı &mdash; <b>iki u&ccedil; da kapalı</b></td></tr>
+        <tr><td>&ldquo;<b>ge&ccedil;ersiz pay tanımlanmamıştır</b>&rdquo;</td>
+            <td>&minus;1 ve 51 <b>paydaya girmez</b> &mdash; soru bunu a&ccedil;ık&ccedil;a s&ouml;yl&uuml;yor</td></tr>
+        <tr><td>&ldquo;tam sayı kilogram&rdquo;</td><td>Sıralanabilir veri &rarr; BVA uygulanabilir</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Her payın min ve max'ını yaz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th class="ctr">min</th><th class="ctr">max</th></tr>
+        <tr><td>P1 &middot; 0 &#8211; 22 &middot; standart bant</td><td class="ctr"><b>0</b></td><td class="ctr"><b>22</b></td></tr>
+        <tr><td>P2 &middot; 23 &#8211; 32 &middot; ağır bagaj bandı</td><td class="ctr"><b>23</b></td><td class="ctr"><b>32</b></td></tr>
+        <tr><td>P3 &middot; 33 &#8211; 50 &middot; &ouml;zel elle&ccedil;leme</td><td class="ctr"><b>33</b></td><td class="ctr"><b>50</b></td></tr>
+      </table></div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="173" y="43">0 &#8211; 22 &middot; standart bant</text>
+<rect class="bd neu2" x="323" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">23 &#8211; 32 &middot; ağır bagaj bandı</text>
+<rect class="bd neu" x="623" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="773" y="43">33 &#8211; 50 &middot; &ouml;zel elle&ccedil;leme</text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11">kesim 1</text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11">kesim 2</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot" cx="48" cy="106" r="16"/><text class="dv" x="48" y="111">0</text>
+<text class="dp" x="173" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">22</text>
+<circle class="dot" cx="348" cy="106" r="16"/><text class="dv" x="348" y="111">23</text>
+<text class="dp" x="473" y="111">&#8230;</text>
+<circle class="dot" cx="598" cy="106" r="16"/><text class="dv" x="598" y="111">32</text>
+<circle class="dot" cx="648" cy="106" r="16"/><text class="dv" x="648" y="111">33</text>
+<text class="dp" x="773" y="111">&#8230;</text>
+<circle class="dot" cx="898" cy="106" r="16"/><text class="dv" x="898" y="111">50</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">payda = pay sayısı &times; 2 &minus; a&ccedil;ık u&ccedil; sayısı = 3 &times; 2 &minus; 0 = <b>6</b>
+sınırlar = 0, 22, 23, 32, 33, 50</pre>
+      </div></li>
+
+    <li><b>Y&uuml;r&uuml;t&uuml;len testleri sınır listesiyle eşleştir</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Sınır</th><th>Nereden geliyor</th><th>Y&uuml;r&uuml;t&uuml;ld&uuml; m&uuml;?</th></tr>
+        <tr><td class="ctr"><b>0</b></td><td>P1 min &mdash; aynı zamanda alanın alt ucu</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>22</b></td><td>P1 max</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>23</b></td><td>P2 min</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>32</b></td><td>P2 max</td><td class="ok">Evet</td></tr>
+        <tr><td class="ctr"><b>33</b></td><td>P3 min</td><td class="no">Hayır</td></tr>
+        <tr><td class="ctr"><b>50</b></td><td>P3 max &mdash; aynı zamanda alanın &uuml;st ucu</td><td class="no">Hayır</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">D&ouml;rt değerin d&ouml;rd&uuml; de sınır
+      &rarr; <b>4 kapsam &ouml;ğesi</b>. <b>P3</b> payının iki ucu da hi&ccedil; denenmemiş.</p>
+      </div></li>
+
+    <li><b>B&ouml;l</b>
+      <div><div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="173" y="43">0 &#8211; 22 &middot; standart bant</text>
+<rect class="bd neu2" x="323" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">23 &#8211; 32 &middot; ağır bagaj bandı</text>
+<rect class="bd neu" x="623" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="773" y="43">33 &#8211; 50 &middot; &ouml;zel elle&ccedil;leme</text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11">kesim 1</text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11">kesim 2</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot" cx="48" cy="106" r="16"/><text class="dv" x="48" y="111">0</text>
+<text class="dp" x="173" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="16"/><text class="dv" x="298" y="111">22</text>
+<circle class="dot" cx="348" cy="106" r="16"/><text class="dv" x="348" y="111">23</text>
+<text class="dp" x="473" y="111">&#8230;</text>
+<circle class="dot" cx="598" cy="106" r="16"/><text class="dv" x="598" y="111">32</text>
+<circle class="dot miss" cx="648" cy="106" r="15"/><text class="dv miss" x="648" y="111">33</text>
+<text class="dp" x="773" y="111">&#8230;</text>
+<circle class="dot miss" cx="898" cy="106" r="15"/><text class="dv miss" x="898" y="111">50</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>kapsanan sınır (4)</span><span><i class="m"></i>kapsanmayan sınır (2)</span></p>
+      <pre class="fx">kapsam = 4 / 6 = 0,667 &rarr; <b>%66,7</b>
+kapsanmayanlar: 33, 50</pre>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>%50 &nbsp;&mdash;&nbsp; 4/8; olmayan ge&ccedil;ersiz payların u&ccedil;ları paydaya katılmış</span></li>
+      <li class="right"><b>B</b><span>%66,7 &nbsp;&#10004;</span></li>
+      <li class="wrong"><b>C</b><span>%75 &nbsp;&mdash;&nbsp; 3/4; payda yalnızca ge&ccedil;iş noktalarından kurulmuş</span></li>
+      <li class="wrong"><b>D</b><span>%100 &nbsp;&mdash;&nbsp; 33 ve 50 hi&ccedil; y&uuml;r&uuml;t&uuml;lmemiş</span></li>
+    </ul>
+  </div>
+
+  <div class="card warnc">
+    <h3>Ge&ccedil;ersiz pay yoksa &minus;1 ve 51 paydaya girmez</h3>
+    <p>&Ccedil;oğu BVA sorusunda ge&ccedil;erli aralığın iki yanında birer ge&ccedil;ersiz pay bulunur ve bunların
+    u&ccedil;ları da sınır sayılır. Burada soru bunu a&ccedil;ık&ccedil;a kapatıyor: alana yalnızca 0&#8211;50 girilebiliyor,
+    <b>ge&ccedil;ersiz pay tanımlanmamış</b>.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Varsayım</th><th>Sınır k&uuml;mesi</th><th class="ctr">Payda</th><th class="ctr">Sonu&ccedil;</th></tr>
+      <tr><td>Ge&ccedil;ersiz pay <b>yok</b> <i>(ger&ccedil;ek soru)</i></td>
+          <td>0, 22, 23, 32, 33, 50</td><td class="ctr"><b>6</b></td><td class="ctr ok">4/6 = %66,7</td></tr>
+      <tr><td>&minus;1 ve 51 de sınır sanılırsa</td>
+          <td>&minus;1, 0, 22, 23, 32, 33, 50, 51</td><td class="ctr"><b>8</b></td><td class="ctr no">4/8 = %50</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Kural:</b> paydaya yalnızca <i>metnin tanımladığı</i> payların u&ccedil;ları girer.
+    Soru &ldquo;dışındaki değerler girilemez&rdquo; diyorsa o değerler i&ccedil;in pay da sınır da yoktur.</p>
+  </div>
+
+  <div class="card trap">
+    <h3>&ldquo;&Uuml;&ccedil; paya da dokundum&rdquo; &mdash; neden %100 değil?</h3>
+    <p>Y&uuml;r&uuml;t&uuml;len d&ouml;rt değer yalnızca <b>P1 ve P2</b>'ye giriyor; P3'e giren bir değer bile yok.
+    Ama P3'e 40 gibi bir değerle girilmiş olsaydı bile kapsam yine <b>%66,7</b> kalırdı:
+    40 sınır değeri değildir.</p>
+<pre>pay kapsamı     = dokunulan pay   / toplam pay   = 2/3 = %66,7
+sınır kapsamı   = dokunulan sınır / toplam sınır = 4/6 = <b>%66,7</b>
+                  (sayılar aynı &ccedil;ıktı &mdash; ama &ouml;l&ccedil;&uuml;len şey farklı)</pre>
+    <p style="margin-bottom:0">Payda olarak <b>test senaryosu sayısını</b> kullanmak bu soruda en sık yapılan hatadır:
+    4 test / 4 test = %100 gibi g&ouml;r&uuml;n&uuml;r. Payda <b>her zaman</b> sınır değer sayısıdır.</p>
+  </div>
+</section>
+
+
+<section id="s14">
+  <div class="shead"><div class="num">14</div>
+    <div><h2>Soru 8 &mdash; ilan moderasyonu, &ldquo;t&uuml;m sınırları kapsayan k&uuml;me&rdquo;</h2>
+    <div class="lo">&Ouml;rnek sınav H &middot; Soru 20 &middot; FL-4.2.2 &middot; K3</div></div></div>
+
+  <div class="card q">
+    <h3>Soru</h3>
+    <p>Emlak ilan moderasyon sistemi, ilan a&ccedil;ıklamasındaki karakter sayısına g&ouml;re işlem yapar.
+    A&ccedil;ıklama alanına <b>en az 0, en fazla 4000 karakter</b> girilebilir.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Karakter sayısı</th><th>Uygulanan işlem</th></tr>
+      <tr><td>0 &#8211; 49</td><td>İlan otomatik olarak reddedilir</td></tr>
+      <tr><td>50 &#8211; 999</td><td>İlan moderat&ouml;r kuyruğuna alınır</td></tr>
+      <tr><td>1000 &#8211; 4000</td><td>İlan otomatik olarak yayımlanır</td></tr>
+    </table></div>
+    <p><b>İki değerli</b> sınır değer analizi (boundary value analysis) uygulandığında,
+    <b>t&uuml;m sınır değerlerini kapsayan</b> test verisi k&uuml;mesi hangisidir?</p>
+    <ul class="opts">
+      <li><b>A</b><span>0, 1, 49, 50, 999, 1000</span></li>
+      <li><b>B</b><span>1, 49, 51, 999, 1001, 3999</span></li>
+      <li><b>C</b><span>0, 50, 999, 1000, 3999, 4000</span></li>
+      <li><b>D</b><span>0, 49, 50, 999, 1000, 4000</span></li>
+    </ul>
+  </div>
+
+  <ol class="steps">
+    <li><b>Metni tara &mdash; u&ccedil;larda somut sayı var mı?</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Metindeki ifade</th><th>Ne s&ouml;yl&uuml;yor</th></tr>
+        <tr><td>&Uuml;&ccedil; ayrı karakter aralığı</td><td><b>3 pay</b></td></tr>
+        <tr><td>&ldquo;<b>en az 0</b>, en fazla 4000 karakter&rdquo;</td>
+            <td>Alan 0'da başlıyor, 4000'de bitiyor &mdash; <b>iki u&ccedil; da kapalı</b></td></tr>
+        <tr><td>Aralıklar bitişik: 49 &rarr; 50, 999 &rarr; 1000</td>
+            <td>Bir sınırın komşu paydaki en yakın komşusu, o payın <b>kendi sınırıdır</b></td></tr>
+        <tr><td>&ldquo;t&uuml;m sınır değerlerini <b>kapsayan</b> k&uuml;me hangisidir&rdquo;</td>
+            <td>Y&uuml;zde değil k&uuml;me soruluyor &rarr; listeyi &ccedil;ıkar, şıklarla birebir karşılaştır</td></tr>
+      </table></div>
+      </div></li>
+
+    <li><b>Her payın min ve max'ını yaz</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th>Pay</th><th class="ctr">min</th><th class="ctr">max</th></tr>
+        <tr><td>P1 &middot; 0 &#8211; 49 &middot; reddedilir</td><td class="ctr"><b>0</b></td><td class="ctr"><b>49</b></td></tr>
+        <tr><td>P2 &middot; 50 &#8211; 999 &middot; moderat&ouml;r kuyruğu</td><td class="ctr"><b>50</b></td><td class="ctr"><b>999</b></td></tr>
+        <tr><td>P3 &middot; 1000 &#8211; 4000 &middot; yayımlanır</td><td class="ctr"><b>1000</b></td><td class="ctr"><b>4000</b></td></tr>
+      </table></div>
+      <div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="173" y="43">0 &#8211; 49 &middot; reddedilir</text>
+<rect class="bd neu2" x="323" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">50 &#8211; 999 &middot; moderat&ouml;r kuyruğu</text>
+<rect class="bd neu" x="623" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="773" y="43">1000 &#8211; 4000 &middot; yayımlanır</text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11">kesim 1</text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11">kesim 2</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot" cx="48" cy="106" r="18"/><text class="dv" x="48" y="111">0</text>
+<text class="dp" x="173" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="18"/><text class="dv" x="298" y="111">49</text>
+<circle class="dot" cx="348" cy="106" r="18"/><text class="dv" x="348" y="111">50</text>
+<text class="dp" x="473" y="111">&#8230;</text>
+<circle class="dot" cx="598" cy="106" r="18"/><text class="dv" x="598" y="111">999</text>
+<circle class="dot" cx="648" cy="106" r="18"/><text class="dv" x="648" y="111">1000</text>
+<text class="dp" x="773" y="111">&#8230;</text>
+<circle class="dot" cx="898" cy="106" r="18"/><text class="dv" x="898" y="111">4000</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <pre class="fx">sınır sayısı = pay sayısı &times; 2 &minus; a&ccedil;ık u&ccedil; sayısı = 3 &times; 2 &minus; 0 = <b>6</b>
+kapsam &ouml;ğeleri = <b>0, 49, 50, 999, 1000, 4000</b></pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">
+      Doğru şık bu altı değeri <b>birebir</b> vermelidir &mdash; ne eksik, ne fazla.</p>
+      </div></li>
+
+    <li><b>Şıkları sınır listesiyle karşılaştır</b>
+      <div>
+      <div class="scroll"><table class="dt">
+        <tr><th class="ctr">Şık</th><th>Değerler</th><th>Sınıra denk gelenler</th><th class="ctr">Kapsam</th></tr>
+        <tr><td class="ctr"><b>A</b></td><td>0, <i>1</i>, 49, 50, 999, 1000</td>
+            <td><b>0</b>, <b>49</b>, <b>50</b>, <b>999</b>, <b>1000</b></td><td class="ctr no">5/6 &mdash; 4000 eksik</td></tr>
+        <tr><td class="ctr"><b>B</b></td><td><i>1</i>, 49, <i>51</i>, 999, <i>1001</i>, <i>3999</i></td>
+            <td><b>49</b>, <b>999</b></td><td class="ctr no">2/6</td></tr>
+        <tr><td class="ctr"><b>C</b></td><td>0, 50, 999, 1000, <i>3999</i>, 4000</td>
+            <td><b>0</b>, <b>50</b>, <b>999</b>, <b>1000</b>, <b>4000</b></td><td class="ctr no">5/6 &mdash; 49 eksik</td></tr>
+        <tr><td class="ctr"><b>D</b></td><td>0, 49, 50, 999, 1000, 4000</td>
+            <td><b>0</b>, <b>49</b>, <b>50</b>, <b>999</b>, <b>1000</b>, <b>4000</b></td><td class="ctr ok">6/6 = %100</td></tr>
+      </table></div>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">
+      <i>Eğik</i> yazılanlar sınır listesinde yok &mdash; altı testin biri boşa gidiyor demektir.</p>
+      </div></li>
+
+    <li><b>En yakın yanlışı g&ouml;r: A şıkkı alanın &uuml;st ucunu atlıyor</b>
+      <div><div class="nlw"><div class="scroll"><svg class="nl" viewBox="0 0 946 136" role="img" aria-label="sayi dogrusu">
+<rect class="bd neu" x="23" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="173" y="43">0 &#8211; 49 &middot; reddedilir</text>
+<rect class="bd neu2" x="323" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu2" x="473" y="43">50 &#8211; 999 &middot; moderat&ouml;r kuyruğu</text>
+<rect class="bd neu" x="623" y="22" width="300" height="32" rx="9"/>
+<text class="bl neu" x="773" y="43">1000 &#8211; 4000 &middot; yayımlanır</text>
+<line class="cut" x1="323" y1="16" x2="323" y2="128"/>
+<text class="cl" x="323" y="11">kesim 1</text>
+<line class="cut" x1="623" y1="16" x2="623" y2="128"/>
+<text class="cl" x="623" y="11">kesim 2</text>
+<line class="ax" x1="16" y1="76" x2="930" y2="76"/>
+<line class="tk" x1="48" y1="70" x2="48" y2="82"/>
+<line class="tk" x1="298" y1="70" x2="298" y2="82"/>
+<line class="tk" x1="348" y1="70" x2="348" y2="82"/>
+<line class="tk" x1="598" y1="70" x2="598" y2="82"/>
+<line class="tk" x1="648" y1="70" x2="648" y2="82"/>
+<line class="tk" x1="898" y1="70" x2="898" y2="82"/>
+<circle class="dot" cx="48" cy="106" r="18"/><text class="dv" x="48" y="111">0</text>
+<text class="dp" x="173" y="111">&#8230;</text>
+<circle class="dot" cx="298" cy="106" r="18"/><text class="dv" x="298" y="111">49</text>
+<circle class="dot" cx="348" cy="106" r="18"/><text class="dv" x="348" y="111">50</text>
+<text class="dp" x="473" y="111">&#8230;</text>
+<circle class="dot" cx="598" cy="106" r="18"/><text class="dv" x="598" y="111">999</text>
+<circle class="dot" cx="648" cy="106" r="18"/><text class="dv" x="648" y="111">1000</text>
+<text class="dp" x="773" y="111">&#8230;</text>
+<circle class="dot miss" cx="898" cy="106" r="17"/><text class="dv miss" x="898" y="111">4000</text>
+</svg></div><p class="shint">&#8592; yatay kaydır &#8594;</p></div>
+      <p class="nlleg"><span><i class="a"></i>A şıkkının kapsadığı sınır (5)</span><span><i class="m"></i>kapsanmayan sınır (1)</span></p>
+      <pre class="fx">A şıkkı : 0, <i>1</i>, 49, 50, 999, 1000   &rarr; 5/6   &mdash; 4000 yok, yerine sınır olmayan 1 var
+D şıkkı : 0, 49, 50, 999, 1000, 4000   &rarr; <b>6/6</b></pre>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:0">
+      Aynı sayıda test (6) &mdash; ama A, kotasının birini sınır olmayan bir değere harcıyor.
+      <b>Test sayısı &ne; kapsam.</b></p>
+      </div></li>
+  </ol>
+
+  <div class="card key" style="margin-top:1rem">
+    <h3>Cevap</h3>
+    <ul class="opts">
+      <li class="wrong"><b>A</b><span>0, 1, 49, 50, 999, 1000 &nbsp;&mdash;&nbsp; 4000 eksik, 1 sınır değil</span></li>
+      <li class="wrong"><b>B</b><span>1, 49, 51, 999, 1001, 3999 &nbsp;&mdash;&nbsp; &ccedil;oğu değer 3-değerli komşusu</span></li>
+      <li class="wrong"><b>C</b><span>0, 50, 999, 1000, 3999, 4000 &nbsp;&mdash;&nbsp; 49 eksik, 3999 sınır değil</span></li>
+      <li class="right"><b>D</b><span>0, 49, 50, 999, 1000, 4000 &nbsp;&mdash;&nbsp; altı sınırın tamamı &nbsp;&#10004;</span></li>
+    </ul>
+  </div>
+
+  <div class="card trap">
+    <h3>Buradaki tuzak: 1, 51, 1001 ve 3999 neden sınır değil?</h3>
+    <p>&Ccedil;&uuml;nk&uuml; 2-değerli BVA yalnızca payların <b>kendi u&ccedil;larını</b> alır. Paylar bitişik olduğundan
+    bir sınırın komşu paydaki en yakın komşusu zaten o payın sınırıdır: 49'un komşusu <b>50</b>,
+    999'un komşusu <b>1000</b>. Payın <i>i&ccedil;indeki</i> komşular (1, 51, 1001, 3999) ancak
+    <b>3-değerli</b> yaklaşımda listeye girer.</p>
+<pre>2-değerli :   0        49 &#9474; 50        999 &#9474; 1000        4000
+3-değerli :   0, 1  48, 49 &#9474; 50, 51  998, 999 &#9474; 1000, 1001  3999, 4000</pre>
+    <p style="margin-bottom:0">B şıkkı tam olarak bu karışıklığı hedefliyor: altı değerin d&ouml;rd&uuml;
+    &ldquo;sınıra &ccedil;ok benzeyen&rdquo; ama 2-değerlide kapsam &ouml;ğesi <b>olmayan</b> değerler.</p>
+  </div>
+
+  <div class="card warnc">
+    <h3>En &ccedil;ok atlanan sınır: alanın &uuml;st ucu</h3>
+    <p>&ldquo;En fazla <b>4000</b> karakter&rdquo; c&uuml;mlesi 4000'i ger&ccedil;ek bir &uuml;st sınır yapar &mdash;
+    bir adım &ouml;tesi (4001) artık kabul edilmiyor. Bu y&uuml;zden 4000 mutlaka test edilmelidir.
+    A şıkkı tam olarak bu değeri atladığı i&ccedil;in eleniyor.</p>
+    <div class="scroll"><table class="dt">
+      <tr><th>Spesifikasyon b&ouml;yle yazsaydı</th><th>U&ccedil;lar</th><th class="ctr">Sınır sayısı</th><th>Liste</th></tr>
+      <tr><td>&ldquo;en az <b>0</b>, en fazla <b>4000</b>&rdquo; <i>(ger&ccedil;ek soru)</i></td>
+          <td>iki u&ccedil; da kapalı</td><td class="ctr">3&times;2 &minus; 0 = <b>6</b></td>
+          <td class="ok">0, 49, 50, 999, 1000, 4000</td></tr>
+      <tr><td>&ldquo;<b>1000 ve &uuml;zeri</b> yayımlanır&rdquo; <i>(&uuml;st limit yazmasaydı)</i></td>
+          <td>&uuml;st u&ccedil; a&ccedil;ık</td><td class="ctr">3&times;2 &minus; 1 = <b>5</b></td>
+          <td class="no">0, 49, 50, 999, 1000</td></tr>
+    </table></div>
+    <p style="margin-bottom:0"><b>Kontrol c&uuml;mlesi:</b> &ldquo;Alanın kabul ettiği en k&uuml;&ccedil;&uuml;k ve en b&uuml;y&uuml;k
+    değeri listeme yazdım mı?&rdquo; &mdash; sınavda en sık atlanan iki değer tam olarak bunlardır.</p>
+  </div>
+</section>
+
+
+<section id="s15">
+  <div class="shead"><div class="num">15</div>
     <div><h2>Tuzaklar ve tek sayfalık &ouml;zet</h2>
     <div class="lo">Sınavdan &ouml;nce son okuma</div></div></div>
 
@@ -1641,7 +2372,7 @@ kapsam &ouml;ğeleri = <b>&minus;1, 0, 2, 3</b></pre>
 </div>
 
 <footer class="ft">Konular &middot; Sınır Değer Analizi &middot; ISTQB&reg; CTFL v4.0 &sect;4.2.2.
-&Ccedil;&ouml;z&uuml;ml&uuml; sorular resm&icirc; CTFL v4.0 &ouml;rnek sınavları A, B, C ve D'nin 21. sorularıdır (&copy; ISTQB).</footer>
+&Ccedil;&ouml;z&uuml;ml&uuml; soruların ilk d&ouml;rd&uuml; resm&icirc; CTFL v4.0 &ouml;rnek sınavları A, B, C ve D'nin 21. sorularıdır (&copy; ISTQB); son d&ouml;rd&uuml; E, F, G ve H pratik setlerinin BVA sorularıdır.</footer>
 </main>
 </body>
 </html>
