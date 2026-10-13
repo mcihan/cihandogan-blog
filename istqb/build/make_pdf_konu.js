@@ -59,6 +59,7 @@ const W = '150mm', H = '250mm';
                + (h2 ? h2.textContent.split('\u2014')[0].trim() : '') + '</b></a>';
         }).join('');
       }
+      document.querySelector('header.hero')?.remove();   // pratik kipte kapak gerekmiyor
       const lede = document.querySelector('.hero p.lede');
       if (lede) lede.innerHTML = 'Pratik s\u00fcr\u00fcm: yalnizca sorular. Konu anlat\u0131m\u0131ndan '
         + 'mini \u00f6rnekler ve cevaplar\u0131, sonra s\u0131nav sorular\u0131 \u2014 '
