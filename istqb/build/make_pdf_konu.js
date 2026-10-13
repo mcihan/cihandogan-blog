@@ -2,7 +2,8 @@ const { chromium } = require('playwright');
 const path = require('path');
 // kullanim:  node make_pdf_konu.js karar        (konular/<ad>.html -> <Ad>.pdf)
 const NAME = process.argv[2] || 'karar';
-const SRC  = 'file://' + path.resolve(__dirname, '../../static/deniz/konular/' + NAME + '.html');
+const PRATIK = process.argv.includes('--pratik');
+const SRC  = 'file://' + path.resolve(process.env.KONUDIR || (__dirname + '/../../static/deniz/konular'), NAME + '.html');
 // Galaxy Tab A: 1200x2000 => 3:5.  Sayfa: 150mm x 250mm
 const W = '150mm', H = '250mm';
 
@@ -13,11 +14,57 @@ const W = '150mm', H = '250mm';
   await p.goto(SRC, { waitUntil: 'load' });
   await p.waitForTimeout(400);
 
-  await p.evaluate(() => {
+  await p.evaluate(pr => {
+    window.__pratik = pr;
     document.getElementById('pw-hide')?.remove();
     document.getElementById('pw-gate')?.remove();
     document.querySelector('nav.sticky')?.remove();   // yapisik menu baskida ise yaramaz
     document.querySelector('nav.dz-bc')?.remove();
+
+    // --- PRATIK KIP: cevaplari at ---------------------------------------
+    // konu anlatimi bolumlerinden yalnizca "Mini ornek - soru" kutusu ve onu
+    // izleyen cozum karti kalir; soru bolumlerinden yalnizca sorunun kendisi.
+    if (window.__pratik) {
+      document.querySelectorAll('main section').forEach(sec => {
+        const h2 = sec.querySelector('.shead h2');
+        const isQ = h2 && /^\s*Soru\s+\d/.test(h2.textContent);
+        const keep = new Set();
+        const head = sec.querySelector(':scope > .shead');
+        if (head) keep.add(head);
+        if (isQ) {
+          const q = sec.querySelector(':scope > .card.q');
+          if (q) keep.add(q);
+        } else {
+          sec.querySelectorAll(':scope > .card.q').forEach(c => {
+            const h3 = c.querySelector('h3');
+            if (!h3 || !/Mini .*rnek/i.test(h3.textContent)) return;
+            keep.add(c);
+            let nx = c.nextElementSibling;          // cevap = hemen sonraki kart
+            while (nx && nx.nodeType === 1 && !/^(DIV|OL|P|PRE)$/.test(nx.tagName)) nx = nx.nextElementSibling;
+            if (nx) keep.add(nx);
+          });
+        }
+        [...sec.children].forEach(el => { if (!keep.has(el)) el.remove(); });
+        // icerigi kalmayan bolumu tamamen at
+        if (!sec.querySelector('.card, ol.steps')) sec.remove();
+      });
+      // hero'daki bolum listesini kalanlara gore yeniden yaz
+      const jump = document.querySelector('.jump');
+      if (jump) {
+        jump.innerHTML = [...document.querySelectorAll('main section')].map((sec, i) => {
+          const h2 = sec.querySelector('.shead h2');
+          const num = sec.querySelector('.shead .num');
+          if (num) num.textContent = String(i + 1);
+          return '<a href="#' + sec.id + '"><span class="n">' + (i + 1) + '</span><b>'
+               + (h2 ? h2.textContent.split('\u2014')[0].trim() : '') + '</b></a>';
+        }).join('');
+      }
+      const lede = document.querySelector('.hero p.lede');
+      if (lede) lede.innerHTML = 'Pratik s\u00fcr\u00fcm: yalnizca sorular. Konu anlat\u0131m\u0131ndan '
+        + 'mini \u00f6rnekler ve cevaplar\u0131, sonra s\u0131nav sorular\u0131 \u2014 '
+        + '<b>her sorunun arkas\u0131nda bo\u015f bir \u00e7\u00f6z\u00fcm sayfas\u0131</b>, '
+        + 'cevaplar yok. \u00c7\u00f6z\u00fcmler i\u00e7in siteye bak.';
+    }
 
     // Soru bolumleri: sorunun hemen altina cozum alani + bir tam bos sayfa koy,
     // cozum ondan sonra gelsin
@@ -32,11 +79,11 @@ const W = '150mm', H = '250mm';
       q.insertAdjacentHTML('afterend',
         '<div class="slvrest"></div>' +
         '<div class="slvpage"><p class="slvlbl">\u270E &nbsp;\u00c7\u00f6z\u00fcm alan\u0131 &middot; '
-        + t + '</p></div>' +
-        '<p class="slvafter">\u00c7\u00f6z\u00fcm</p>');
+        + t + '</p></div>'
+        + (window.__pratik ? '' : '<p class="slvafter">\u00c7\u00f6z\u00fcm</p>'));
     });
     window.__nq = n;
-  });
+  }, PRATIK);
   console.log('soru bolumu:', await p.evaluate(() => window.__nq));
 
   await p.addStyleTag({ content: `
@@ -91,7 +138,7 @@ const W = '150mm', H = '250mm';
   });
   console.log('tasma:', JSON.stringify(over));
 
-  await p.pdf({ path: NAME + '.pdf', width: W, height: H,
+  await p.pdf({ path: NAME + (PRATIK ? '-pratik' : '') + '.pdf', width: W, height: H,
                 printBackground: true, preferCSSPageSize: true, outline: true,
                 margin: { top:'0.1mm', right:'0.1mm', bottom:'0.1mm', left:'0.1mm' } });
   console.log('hata:', errs.length);
