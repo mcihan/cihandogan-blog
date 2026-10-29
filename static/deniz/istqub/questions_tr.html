@@ -15,11 +15,18 @@
   --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  :root:not([data-theme="light"]){ --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
     --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
     --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
     --warn:#fbbf24; --warn-soft:#2e2210; }
 }
+:root[data-theme="dark"]{ --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+    --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+    --warn:#fbbf24; --warn-soft:#2e2210; }
+html{color-scheme:light dark}
+html[data-theme="light"]{color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark}
 [data-exam="A"],[data-accent="A"]{--c:#4f46e5;--cd:#3730a3;--cs:#eef2ff;--cl:#c7d2fe}
 [data-exam="B"],[data-accent="B"]{--c:#0284c7;--cd:#075985;--cs:#e8f6fe;--cl:#bae6fd}
 [data-exam="C"],[data-accent="C"]{--c:#7c3aed;--cd:#5b21b6;--cs:#f3efff;--cl:#ddd6fe}
@@ -396,11 +403,48 @@ a.topic-toggle .chev{transform:none}
 </style>
 <meta name="robots" content="noindex,nofollow">
 <style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+<script>
+/* tema: yanip sonmesini onlemek icin govdeden once calisir */
+(function(){
+  var K="deniz.theme";
+  function apply(t){
+    var r=document.documentElement;
+    if(t==="light"||t==="dark") r.setAttribute("data-theme",t); else r.removeAttribute("data-theme");
+  }
+  var t; try{ t=localStorage.getItem(K) }catch(e){}
+  apply(t||"auto");
+  window.__dzTheme=function(t){ try{ localStorage.setItem(K,t) }catch(e){} apply(t); mark(t); };
+  function mark(t){
+    var g=document.getElementById("dz-theme"); if(!g) return;
+    g.querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b.dataset.t===(t||"auto")) });
+  }
+  function wire(){
+    var g=document.getElementById("dz-theme"); if(!g) return;
+    var cur; try{ cur=localStorage.getItem(K) }catch(e){}
+    mark(cur||"auto");
+    g.addEventListener("click", function(ev){
+      var b=ev.target.closest("button[data-t]"); if(b) window.__dzTheme(b.dataset.t);
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
 </head>
 <body>
 <!-- dz-breadcrumb -->
-<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><span aria-current="page">Sınav Sim&uuml;lat&ouml;r&uuml; &middot; T&uuml;rk&ccedil;e</span></li></ol></nav>
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><span aria-current="page">Sınav Sim&uuml;lat&ouml;r&uuml; &middot; T&uuml;rk&ccedil;e</span></li></ol><div class="dz-theme" id="dz-theme" role="group" aria-label="Tema"><button type="button" data-t="auto" title="Sistem ayarı">Oto</button><button type="button" data-t="light" title="A&ccedil;ık tema" aria-label="A&ccedil;ık tema">&#9728;</button><button type="button" data-t="dark" title="Koyu tema" aria-label="Koyu tema">&#9790;</button></div></nav>
 <style id="dz-bc-css">
+.dz-bc{position:relative}
+nav.dz-bc{display:flex;align-items:center}
+nav.dz-bc > ol.dz-bc-in{flex:1}
+.dz-theme{display:inline-flex;flex:none;margin-right:1.15rem;border:1px solid rgba(255,255,255,.22);
+  border-radius:8px;overflow:hidden;background:rgba(255,255,255,.06)}
+.dz-theme button{border:0;background:transparent;color:#c3cafe;font:inherit;font-size:.74rem;
+  font-weight:800;line-height:1.5;padding:.14rem .52rem;cursor:pointer}
+.dz-theme button+button{border-left:1px solid rgba(255,255,255,.18)}
+.dz-theme button:hover{color:#fff;background:rgba(255,255,255,.12)}
+.dz-theme button.on{background:#fff;color:#241f54}
+@media (max-width:520px){ .dz-theme{margin-right:.6rem} .dz-theme button{padding:.12rem .42rem} }
 .dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
   -webkit-font-smoothing:antialiased;position:relative;z-index:5}
