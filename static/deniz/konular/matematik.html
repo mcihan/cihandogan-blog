@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sınav Matematiği &middot; CTFL</title>
+<style>
+:root{
+  --bg:#f6f6fb; --surface:#fff; --ink:#1c1c2c; --muted:#61617a; --line:#e5e4ef;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -14px rgba(28,28,60,.18);
+  --good:#059669; --good-soft:#e7f6ef; --bad:#dc2626; --bad-soft:#fdecec;
+  --warn:#d97706; --warn-soft:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
+  --dim:#b9b7c9;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+  --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+  --warn:#fbbf24; --warn-soft:#2e2210;
+  --c:#818cf8; --cd:#a5b4fc; --cs:#222247; --cl:#3b3b78; --dim:#5a5a78; } }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;font-size:16px}
+
+header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 42%,#0e7490 100%);padding:2.9rem 1.3rem 2.4rem}
+.in{max-width:1000px;margin:0 auto}
+.back{display:inline-flex;gap:.4rem;align-items:center;text-decoration:none;color:#c7d2fe;font-size:.82rem;
+  font-weight:700;margin-bottom:1.1rem}
+.back:hover{color:#fff}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .7rem}
+.hero h1{color:#fff;font-size:clamp(1.85rem,5.2vw,2.8rem);line-height:1.07;margin:0 0 .7rem;font-weight:900;letter-spacing:-.02em}
+.hero p.lede{color:#dbe3ff;max-width:64ch;margin:0 0 1.7rem;font-size:1.03rem}
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,168px),1fr));gap:.55rem}
+.jump a{display:flex;gap:.6rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);border-radius:13px;padding:.6rem .75rem;color:#fff;
+  transition:background .15s,transform .15s;min-width:0}
+.jump a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.jump .n{width:25px;height:25px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:rgba(255,255,255,.22)}
+.jump b{display:block;font-size:.85rem;font-weight:800;line-height:1.25}
+
+nav.sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.sticky .in{display:flex;gap:.35rem;align-items:center;padding:.5rem 1.3rem;overflow-x:auto;scrollbar-width:none}
+nav.sticky .in::-webkit-scrollbar{display:none}
+nav.sticky a{white-space:nowrap;text-decoration:none;font-size:.8rem;font-weight:700;color:var(--muted);
+  border-radius:9px;padding:.3rem .6rem}
+nav.sticky a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+main{max-width:1000px;margin:0 auto;padding:2.1rem 1.3rem 4rem}
+section{margin-bottom:2.9rem;scroll-margin-top:62px}
+.shead{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
+.shead .num{width:42px;height:42px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;background:var(--c)}
+.shead h2{margin:0;font-size:1.38rem;letter-spacing:-.015em;line-height:1.2}
+.shead .lo{font-size:.73rem;font-weight:700;color:var(--muted);font-family:var(--mono)}
+.lead{margin:0 0 1rem;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:1.1rem 1.25rem;
+  box-shadow:var(--shadow);margin-bottom:.95rem;min-width:0}
+.card > h3{margin:0 0 .65rem;font-size:.75rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.card.q{border-left:4px solid var(--c)}
+.card.sol{background:color-mix(in srgb,var(--c) 4%,var(--surface))}
+.card.trap{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.card.trap > h3{color:var(--bad)}
+.card.key{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 32%,transparent)}
+.card.key > h3{color:var(--good)}
+.card.warnc{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.card.warnc > h3{color:var(--warn)}
+.card p{margin:.5rem 0}
+.card p:first-of-type{margin-top:0}
+.card ul,.card ol{margin:.5rem 0;padding-left:1.2rem}
+.card li{margin:.26rem 0}
+.recog{background:var(--cs);border-radius:12px;padding:.68rem .9rem;margin:0 0 1rem;font-size:.92rem}
+.recog b{color:var(--cd)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.52rem}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);min-width:0;gap:.7rem;align-items:start;
+  padding:.58rem .72rem;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,transparent)}
+ol.steps li::before{content:counter(s);width:23px;height:23px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.76rem;font-weight:900;color:#fff;background:var(--c)}
+ol.steps li > b{grid-column:2;display:block;font-size:.94rem;min-width:0;overflow-wrap:anywhere}
+ol.steps li > span{grid-column:2;display:block;font-size:.88rem;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+ol.steps li > div{grid-column:2;min-width:0;max-width:100%}
+ol.steps li > div > *:first-child{margin-top:.4rem}
+
+pre{font-family:var(--mono);font-size:.83rem;background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:11px;padding:.7rem .9rem;margin:.65rem 0;overflow-x:auto;line-height:1.55;white-space:pre}
+pre.fx{background:var(--cs);color:var(--cd);font-weight:600;border:1px dashed var(--cl)}
+code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .35em;border-radius:5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.65rem 0}
+table.dt{border-collapse:collapse;width:100%;font-size:.86rem}
+.scroll table.dt{min-width:420px}
+table.dt th,table.dt td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top;
+  word-break:break-word;overflow-wrap:anywhere}
+table.dt th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.78rem}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+table.dt td.ctr,table.dt th.ctr{text-align:center}
+
+svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
+.nlw{margin:.85rem 0 .3rem}
+.nlw .scroll{margin:0}
+.shint{display:none;margin:.3rem 0 0;font-size:.74rem;color:var(--muted);text-align:center;font-weight:700}
+@media (max-width:830px){ .shint{display:block} }
+.nl .bd{stroke-width:1.5}
+.nl .bd.bad{fill:var(--bad-soft);stroke:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .bd.good{fill:var(--good-soft);stroke:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .ar.bad{fill:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .ar.good{fill:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .bl{text-anchor:middle;font-size:13px;font-weight:800;font-family:var(--sans)}
+.nl .bl.bad{fill:var(--bad)} .nl .bl.good{fill:var(--good)}
+.nl .bd.neu{fill:var(--cs);stroke:var(--cl)}
+.nl .bd.neu2{fill:color-mix(in srgb,var(--c) 11%,transparent);stroke:var(--cl)}
+.nl .bl.neu,.nl .bl.neu2{fill:var(--cd)}
+.nl .dot.miss{fill:none;stroke:var(--bad);stroke-width:2;stroke-dasharray:3.5 3}
+.nl .dv.miss{fill:var(--bad)}
+.nl .cut{stroke:var(--c);stroke-width:2;stroke-dasharray:5 4;opacity:.85}
+.nl .cl{text-anchor:middle;font-size:11px;font-weight:800;fill:var(--c);font-family:var(--mono)}
+.nl .ax{stroke:var(--dim);stroke-width:1.5}
+.nl .tk{stroke:var(--dim);stroke-width:1.5}
+.nl .dot{fill:var(--c)}
+.nl .dot.new{fill:var(--warn)}
+.nl .dv{text-anchor:middle;font-size:14px;font-weight:800;fill:#fff;font-family:var(--sans)}
+.nl .dp{text-anchor:middle;font-size:13px;font-weight:600;fill:var(--dim);font-family:var(--sans)}
+.nlleg{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;font-size:.8rem;color:var(--muted);margin:.1rem 0 .3rem}
+.nlleg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
+.nlleg i.a{background:var(--c)} .nlleg i.b{background:var(--warn)}
+.nlleg i.m{background:transparent;border:2px dashed var(--bad)}
+
+.opts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
+.opts li{display:grid;grid-template-columns:28px minmax(0,1fr);min-width:0;gap:.6rem;align-items:center;
+  border:1px solid var(--line);border-radius:11px;padding:.5rem .65rem;font-size:.95rem;background:var(--surface)}
+.opts li b{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--muted)}
+.opts li.right{border-color:color-mix(in srgb,var(--good) 45%,transparent);background:var(--good-soft)}
+.opts li.right b{background:var(--good);color:#fff}
+.opts li.wrong b{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.75rem}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;box-shadow:var(--shadow)}
+.fbox h4{margin:0 0 .4rem;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.fbox p{margin:.3rem 0;font-size:.88rem}
+.fbox code{font-size:.84em}
+
+.next{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.3rem}
+.next a{flex:1 1 220px;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:.9rem 1.1rem;box-shadow:var(--shadow);color:var(--ink);transition:transform .15s}
+.next a:hover{transform:translateY(-3px)}
+.next b{display:block;font-size:.98rem;margin-bottom:.15rem}
+.next span{font-size:.84rem;color:var(--muted)}
+footer.ft{border-top:1px solid var(--line);margin-top:2.6rem;padding-top:1.2rem;color:var(--muted);font-size:.82rem}
+
+/* ---- matematik sayfasina ozel ---- */
+table.dt.frk{font-size:.8rem}
+table.dt.frk th{width:3.2em;text-align:center;font-family:var(--mono)}
+table.dt.frk td{text-align:center;padding:.3rem .25rem;min-width:4.1em}
+table.dt.frk td b{display:block;font-family:var(--mono);font-size:.82rem;color:var(--ink)}
+table.dt.frk td span{display:block;font-size:.74rem;font-weight:700;color:var(--cd)}
+table.dt.drill td{vertical-align:middle}
+table.dt.drill td.qn{font-family:var(--mono);color:var(--muted);width:2.4em;font-size:.78rem}
+table.dt.drill td b{font-family:var(--mono);font-size:.95rem}
+td.bl{min-width:5.5em;border-bottom:1px solid var(--line)}
+ol.dr{list-style:none;counter-reset:d;margin:.6rem 0 0;padding:0;display:grid;gap:.45rem}
+ol.dr li{counter-increment:d;display:grid;grid-template-columns:26px minmax(0,1fr) 8.5em;gap:.6rem;
+  align-items:center;padding:.5rem .7rem;border:1px solid var(--line);border-radius:12px;
+  background:var(--surface)}
+ol.dr li::before{content:counter(d);width:23px;height:23px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;background:var(--c)}
+ol.dr li code{font-size:.95rem}
+ol.dr .bl.w{height:1.6rem;border-bottom:1.5px dashed var(--line);border-radius:0}
+ol.dr.big li{grid-template-columns:26px minmax(0,1fr);row-gap:.25rem}
+ol.dr.big li > b{font-size:.9rem}
+ol.dr.big li .qq{grid-column:2;font-size:.88rem;color:var(--muted)}
+ol.dr.big li .bl.w{grid-column:2;height:1.5rem;max-width:12em}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:.25rem .9rem;
+  font-size:.86rem}
+.kg.wide{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:.3rem 1rem}
+.kg span{display:block;padding:.12rem 0;border-bottom:1px dotted var(--line)}
+.kg i{font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--muted);margin-right:.35rem}
+.kg b{font-family:var(--mono);color:var(--good)}
+.kg em{font-style:normal;font-size:.8rem;color:var(--muted)}
+@media(max-width:620px){ ol.dr li{grid-template-columns:26px minmax(0,1fr);row-gap:.3rem}
+  ol.dr li .bl.w{grid-column:2;max-width:10em} }
+</style>
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><a href="/deniz/konular/">Konular</a></li><li><span aria-current="page">Sınav Matematiği</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+<header class="hero"><div class="in">
+  <p class="kicker">Konular &middot; CTFL v4.0 &middot; Sınav aritmetiği</p>
+  <h1>Sınav Matematiği</h1>
+  <p class="lede">Kesri yüzdeye çevirmek, bilinmeyeni çekmek, oran uygulamak ve sınavın altı
+  formülünü hatasız kullanmak. Sekiz sınavdaki <b>69 soruda</b> bir hesap adımı var; bu sayfa
+  tam olarak o hesapları çalıştırıyor. Sonunda 44 alıştırma ve cevap anahtarı.</p>
+  <div class="jump"><a href="#s1"><span class="n">1</span><b>Neden bu sayfa</b></a><a href="#s2"><span class="n">2</span><b>Kesir &rarr; y&uuml;zde</b></a><a href="#s3"><span class="n">3</span><b>B&ouml;lme ve yuvarlama</b></a><a href="#s4"><span class="n">4</span><b>Bilinmeyeni bulma</b></a><a href="#s5"><span class="n">5</span><b>Oran ve orantı</b></a><a href="#s6"><span class="n">6</span><b>Sınavın altı form&uuml;l&uuml;</b></a><a href="#s7"><span class="n">7</span><b>Alıştırma A &mdash; kesirler</b></a><a href="#s8"><span class="n">8</span><b>Alıştırma B &mdash; denklemler</b></a><a href="#s9"><span class="n">9</span><b>Alıştırma C &mdash; kapsam</b></a><a href="#s10"><span class="n">10</span><b>Alıştırma D &mdash; form&uuml;ller</b></a><a href="#s11"><span class="n">11</span><b>Cevap anahtarı</b></a></div>
+</div></header>
+
+<nav class="sticky"><div class="in"><a href="#s1">1. Neden bu sayfa</a><a href="#s2">2. Kesir &rarr; y&uuml;zde</a><a href="#s3">3. B&ouml;lme ve yuvarlama</a><a href="#s4">4. Bilinmeyeni bulma</a><a href="#s5">5. Oran ve orantı</a><a href="#s6">6. Sınavın altı form&uuml;l&uuml;</a><a href="#s7">7. Alıştırma A &mdash; kesirler</a><a href="#s8">8. Alıştırma B &mdash; denklemler</a><a href="#s9">9. Alıştırma C &mdash; kapsam</a><a href="#s10">10. Alıştırma D &mdash; form&uuml;ller</a><a href="#s11">11. Cevap anahtarı</a></div></nav>
+
+<main>
+<section id="s1"><div class="shead"><div class="num">1</div><div><h2>Neden bu sayfa</h2><div class="lo">320 sorunun 69'unda aritmetik var</div></div></div>
+<p class="lead">320 sorunun <b>69'unda</b> bir aritmetik adım var — payı paydaya bölmek, yüzdeye
+çevirmek, bilinmeyeni çekmek ya da bir oranı uygulamak. Konuyu bilip işlemde kaybetmek
+sınavda en can sıkıcı puan kaybı.</p>
+<div class="recog"><b>Sınavda hesap makinesi yok.</b> Ama ihtiyacın olan matematik ilkokul
+seviyesinde: dört işlem, kesir, yüzde, basit orantı. Zor olan tarafı, bunları <i>hızlı</i> ve
+<i>hatasız</i> yapmak. Bu sayfa tam olarak sınavda çıkan sayıları çalıştırıyor.</div>
+<div class="scroll"><table class="dt"><thead><tr><th>Hangi hesap</th><th class="ctr">Kaç soruda</th><th>Nerede çıkıyor</th></tr></thead><tbody>
+<tr><td>Kapsam yüzdesi (pay / payda)</td><td class="ctr"><b>38</b></td><td>4.2 · 4.3 — denklik payı, sınır değer, karar tablosu, durum geçişi, komut/dal</td></tr>
+<tr><td>Efor tahmini (adam-gün, $)</td><td class="ctr"><b>15</b></td><td>5.1.4 — üç noktalı, orana dayalı, ekstrapolasyon</td></tr>
+<tr><td>Oran ve orantı</td><td class="ctr"><b>9</b></td><td>5.1.4 · 4.2 — geçmiş projeden yeni projeye</td></tr>
+<tr><td>Risk seviyesi (olasılık × etki)</td><td class="ctr"><b>5</b></td><td>5.2.1</td></tr>
+<tr><td>Sayma: sınır, pay, geçiş, sütun</td><td class="ctr"><b>5</b></td><td>4.2 — paydayı kurmak</td></tr>
+</tbody></table></div>
+<div class="card key"><h3>Altın kural</h3><p>Sınavdaki her yüzde sorusu aynı iki adımdan oluşur:
+<b>paydayı kur</b>, sonra <b>payı say</b>. Hata neredeyse her zaman birinci adımda olur —
+aritmetikte değil. Önce "kaç tane var?" sorusunu doğru cevapla.</p></div>
+</section><section id="s2"><div class="shead"><div class="num">2</div><div><h2>Kesir &rarr; y&uuml;zde</h2><div class="lo">Ezberlenecek tablo &middot; sınavda çıkan paydalar</div></div></div>
+<p class="lead">Aşağıdaki tablo sınavda gerçekten çıkan paydaları kapsıyor. Sınav sorularındaki
+şıklar bu kümeden geliyor: %12,5 · %25 · %33,3 · %37,5 · %50 · %60 · %62,5 · %66,7 · %75 · %80 · %87,5.
+Bunları ezberlersen bölme yapmana çoğu zaman gerek kalmaz.</p>
+<div class="scroll"><table class="dt frk"><tbody><tr><th>/2</th><td><b>1/2</b><span>%50</span></td></tr><tr><th>/3</th><td><b>1/3</b><span>%33,3</span></td><td><b>2/3</b><span>%66,7</span></td></tr><tr><th>/4</th><td><b>1/4</b><span>%25</span></td><td><b>2/4</b><span>%50</span></td><td><b>3/4</b><span>%75</span></td></tr><tr><th>/5</th><td><b>1/5</b><span>%20</span></td><td><b>2/5</b><span>%40</span></td><td><b>3/5</b><span>%60</span></td><td><b>4/5</b><span>%80</span></td></tr><tr><th>/6</th><td><b>1/6</b><span>%16,7</span></td><td><b>2/6</b><span>%33,3</span></td><td><b>3/6</b><span>%50</span></td><td><b>4/6</b><span>%66,7</span></td><td><b>5/6</b><span>%83,3</span></td></tr><tr><th>/8</th><td><b>1/8</b><span>%12,5</span></td><td><b>2/8</b><span>%25</span></td><td><b>3/8</b><span>%37,5</span></td><td><b>4/8</b><span>%50</span></td><td><b>5/8</b><span>%62,5</span></td><td><b>6/8</b><span>%75</span></td><td><b>7/8</b><span>%87,5</span></td></tr><tr><th>/10</th><td><b>1/10</b><span>%10</span></td><td><b>2/10</b><span>%20</span></td><td><b>3/10</b><span>%30</span></td><td><b>4/10</b><span>%40</span></td><td><b>5/10</b><span>%50</span></td><td><b>6/10</b><span>%60</span></td><td><b>7/10</b><span>%70</span></td><td><b>8/10</b><span>%80</span></td><td><b>9/10</b><span>%90</span></td></tr><tr><th>/12</th><td><b>1/12</b><span>%8,3</span></td><td><b>2/12</b><span>%16,7</span></td><td><b>3/12</b><span>%25</span></td><td><b>4/12</b><span>%33,3</span></td><td><b>5/12</b><span>%41,7</span></td><td><b>6/12</b><span>%50</span></td><td><b>7/12</b><span>%58,3</span></td><td><b>8/12</b><span>%66,7</span></td><td><b>9/12</b><span>%75</span></td><td><b>10/12</b><span>%83,3</span></td><td><b>11/12</b><span>%91,7</span></td></tr></tbody></table></div>
+<div class="fgrid">
+  <div class="fbox"><h4>/2 ve /4 ve /8</h4><p>Hepsi yarıya bölmekten çıkar:
+  <code>1/2 = %50</code> → yarısı <code>1/4 = %25</code> → yarısı <code>1/8 = %12,5</code>.
+  Gerisi toplama: <code>3/8 = 25 + 12,5 = %37,5</code>, <code>5/8 = 50 + 12,5 = %62,5</code>.</p></div>
+  <div class="fbox"><h4>/5 ve /10</h4><p>En kolayı: <code>1/5 = %20</code>, say git —
+  40, 60, 80. <code>1/10 = %10</code>.</p></div>
+  <div class="fbox"><h4>/3 ve /6</h4><p>Devirli: <code>1/3 = %33,3</code>, <code>2/3 = %66,7</code>.
+  Altıda birler bunun yarısı: <code>1/6 = %16,7</code>, <code>5/6 = %83,3</code>.</p></div>
+  <div class="fbox"><h4>/12</h4><p>Karar tablolarında çıkar. <code>1/12 = %8,3</code>,
+  <code>3/12 = 1/4 = %25</code>, <code>6/12 = %50</code>, <code>9/12 = %75</code>. Önce sadeleştir.</p></div>
+</div>
+<div class="card trap"><h3>Tuzak</h3><p>Şıklarda <b>%66,7 ve %67 birlikte</b> bulunabilir;
+ikisi de doğrudur, soru hangisini yazdıysa o. Aynı şekilde %33,3 / %33 ve %83,3 / %83.
+Hesabın doğruysa en yakın şıkkı seç, ikinci bir hesap yapma.</p></div>
+</section><section id="s3"><div class="shead"><div class="num">3</div><div><h2>B&ouml;lme ve yuvarlama</h2><div class="lo">Hesap makinesi yok &middot; uzun bölme</div></div></div>
+<p class="lead">Elinde hesap makinesi yokken <code>2/7</code> gibi bir bölmeyi yapmanın yolu
+uzun bölme. Yüzdeye çevirmek için paya <b>önce 100 ekle</b>, sonra böl — ondalıkla uğraşmazsın.</p>
+<pre class="fx">yüzde = pay × 100 ÷ payda        (ters sıra daha zor: 2 ÷ 7 = 0,2857… → ×100)
+
+2/7  →  2 × 100 = 200  →  200 ÷ 7
+        7 × 20 = 140   kalan 60
+        7 × 8  = 56    kalan 4      →  28, kalan 4
+        4 → 40,  7 × 5 = 35          →  28,5…
+                                      2/7 ≈ %28,6</pre>
+<div class="card"><h3>Uzun bölmeyi adım adım</h3>
+<ol class="steps">
+  <li><b>Payı 100 ile çarp</b><div>Virgülle hiç uğraşma. <code>3/8</code> → <code>300 ÷ 8</code>.</div></li>
+  <li><b>Paydanın katlarını çıkar</b><div><code>8 × 30 = 240</code>, kalan 60. <code>8 × 7 = 56</code>, kalan 4.
+    Buraya kadar <b>37</b>.</div></li>
+  <li><b>Kalan varsa virgülden sonrasına geç</b><div>Kalan 4'ü 40 yap: <code>8 × 5 = 40</code>, tam bölündü.
+    Sonuç <b>%37,5</b>.</div></li>
+  <li><b>Kalan devrediyorsa dur</b><div><code>200 ÷ 3 = 66,66…</code> → üçüncü haneye bakma,
+    <b>%66,7</b> yaz. Şıklar zaten bir ondalıktan fazlasını vermez.</div></li>
+</ol></div>
+<div class="card warnc"><h3>Yuvarlama</h3><p>Virgülden sonraki ikinci hane 5 ve üzeriyse yukarı:
+<code>66,66 → 66,7</code>. Sınav şıkları genelde bir ondalık basamak kullanır; iki şık arasında
+0,1'lik fark varsa hesabını bir kez daha kontrol et, çünkü biri yuvarlamadan değil
+<b>yanlış paydadan</b> gelmiştir.</p></div>
+</section><section id="s4"><div class="shead"><div class="num">4</div><div><h2>Bilinmeyeni bulma</h2><div class="lo">a × 3/9 = 200 tipinde denklemler</div></div></div>
+<p class="lead">"<code>a × 3/9 = 200</code>, a kaçtır?" tipindeki sorular. Tek kural var:
+<b>kesri karşı tarafa ters çevirerek geçir.</b></p>
+<pre class="fx">a × 3/9 = 200
+        ↓   kesri ters çevirip sağa geçir
+a = 200 × 9/3  =  200 × 3  =  600
+
+kontrol:  600 × 3/9 = 600 ÷ 9 × 3 = 66,67 × 3 ≈ 200  ✔</pre>
+<div class="scroll"><table class="dt"><thead><tr><th>Denklem</th><th>Ne yaparsın</th><th class="ctr">Sonuç</th></tr></thead><tbody>
+<tr><td><code>a × 3/9 = 200</code></td><td>×<b>9/3</b> ile geçir</td><td class="ctr"><b>600</b></td></tr>
+<tr><td><code>a / 4 = 25</code></td><td>Bölmenin tersi <b>çarpma</b></td><td class="ctr"><b>100</b></td></tr>
+<tr><td><code>a × 0,25 = 90</code></td><td>0,25 = 1/4 → <b>×4</b></td><td class="ctr"><b>360</b></td></tr>
+<tr><td><code>%40 × a = 120</code></td><td><b>÷0,4</b> ya da ×100/40</td><td class="ctr"><b>300</b></td></tr>
+<tr><td><code>a/8 = %37,5</code></td><td>Yüzdeyi kesre çevir: 3/8 → <b>a = 3</b></td><td class="ctr"><b>3</b></td></tr>
+</tbody></table></div>
+<div class="card key"><h3>Sadeleştir, sonra çarp</h3><p><code>200 × 9/3</code> işleminde önce
+<b>9/3 = 3</b> yap, sonra <code>200 × 3</code>. Büyük sayıyı 9 ile çarpıp 3'e bölmek
+daha çok hata üretir. Her zaman önce kesri sadeleştir.</p></div>
+<div class="card trap"><h3>Sınavdaki gerçek hâli</h3><p>Bu hesap karşına "risk seviyesi 1.000 $,
+olasılık %50, etki nedir?" diye çıkar. Formül <code>risk = olasılık × etki</code>; bilinmeyen
+etki olduğunda <code>etki = risk ÷ olasılık = 1.000 ÷ 0,5 = 2.000 $</code>.</p></div>
+</section><section id="s5"><div class="shead"><div class="num">5</div><div><h2>Oran ve orantı</h2><div class="lo">FL-5.1.4 &middot; orana dayalı tahmin</div></div></div>
+<p class="lead">Orana dayalı tahminde (5.1.4) bütün mesele <b>hangi iki sayının oranı</b>
+alınacağını doğru seçmek. İşlem zaten tek bölme.</p>
+<pre class="fx">oran        = toplam test eforu ÷ toplam geliştirme eforu
+yeni tahmin = yeni geliştirme eforu × oran</pre>
+<div class="scroll"><table class="dt"><thead><tr><th>Proje</th><th class="ctr">Geliştirme</th><th class="ctr">Test</th><th class="ctr">Oranı</th></tr></thead><tbody>
+<tr><td>P1</td><td class="ctr">800.000</td><td class="ctr">40.000</td><td class="ctr">%5</td></tr>
+<tr><td>P2</td><td class="ctr">1.200.000</td><td class="ctr">130.000</td><td class="ctr">%10,8</td></tr>
+<tr><td>P3</td><td class="ctr">600.000</td><td class="ctr">70.000</td><td class="ctr">%11,7</td></tr>
+<tr><td>P4</td><td class="ctr">1.000.000</td><td class="ctr">120.000</td><td class="ctr">%12</td></tr>
+<tr><td><b>Toplam</b></td><td class="ctr"><b>3.600.000</b></td><td class="ctr"><b>360.000</b></td><td class="ctr"><b>%10</b></td></tr>
+</tbody></table></div>
+<pre class="fx">ortalamaların oranı : 90.000 / 900.000 = 0,10   →  800.000 × 0,10 = 80.000 $   ✔
+oranların ortalaması: (5 + 10,8 + 11,7 + 12)/4 = %9,875 → 79.000 $            ✘</pre>
+<div class="card trap"><h3>İki farklı sonuç veren iki yol</h3><p>Soru "<b>ortalamaları kullanarak</b>"
+diyorsa toplamı toplama bölersin. "Her projenin oranını" deseydi oranların ortalamasını alırdın.
+Sayılar birbirine yakın çıktığı için yanlış yolu seçtiğini fark etmeyebilirsin —
+<b>soruda hangi ortalamanın istendiğini işaretle.</b></p></div>
+<div class="card key"><h3>Kısayol</h3><p>Toplam/toplam oranı çoğu soruda <b>yuvarlak bir sayı</b>
+çıkacak şekilde kurulmuştur (%10, %12,5, %20). Hesabın küsuratlıysa büyük ihtimalle
+yanlış sütunları topladın.</p></div>
+</section><section id="s6"><div class="shead"><div class="num">6</div><div><h2>Sınavın altı form&uuml;l&uuml;</h2><div class="lo">Kapsam, sınır, sütun, geçiş, efor, risk</div></div></div>
+<p class="lead">Sınavda hesap gerektiren her şey şu altı formülden birine iner.
+Hepsini bir karta yazıp ezberle.</p>
+<div class="fgrid">
+  <div class="fbox"><h4>Kapsam yüzdesi</h4>
+    <pre class="fx">% = çalıştırılan kapsam öğesi
+    ────────────────── × 100
+      toplam kapsam öğesi</pre>
+    <p>Kapsam öğesi tekniğe göre değişir: <b>pay</b> (EP), <b>sınır değer</b> (BVA),
+    <b>sütun</b> (karar tablosu), <b>geçiş</b> (durum geçişi), <b>komut/dal</b> (beyaz kutu).</p></div>
+  <div class="fbox"><h4>Sınır sayısı — 2 değerli</h4>
+    <pre class="fx">sınır = pay sayısı × 2 − açık uç sayısı</pre>
+    <p>Dört bitişik pay, iki uç kapalı → <code>4×2 − 0 = 8</code>. Üst uç açıksa 7.</p></div>
+  <div class="fbox"><h4>Karar tablosu</h4>
+    <pre class="fx">tam tablo sütunu = 2ⁿ   (n = evet/hayır koşulu)</pre>
+    <p>2³ = 8, 2⁴ = 16. <b>Ama</b> sadeleştirilmiş tabloda payda tablonun kendi sütun sayısıdır — say.</p></div>
+  <div class="fbox"><h4>Durum geçişi</h4>
+    <pre class="fx">tüm geçiş = durum sayısı × olay sayısı
+geçerli geçiş = tablodaki dolu hücreler</pre>
+    <p>5 durum × 4 olay = 20 hücre. Soru hangisini istiyorsa onun paydasını kullan.</p></div>
+  <div class="fbox"><h4>Üç noktalı tahmin</h4>
+    <pre class="fx">E = (a + 4m + b) / 6
+a = en iyi, m = en olası, b = en kötü</pre>
+    <p>Birden çok test isteniyorsa <b>sonucu adetle çarpmayı unutma</b>.</p></div>
+  <div class="fbox"><h4>Risk seviyesi</h4>
+    <pre class="fx">risk = olasılık × etki</pre>
+    <p>Bilinmeyen etkiyse böl. Olasılık yüzdeyse önce ondalığa çevir: %50 → 0,5.</p></div>
+</div>
+<div class="card warnc"><h3>Ekstrapolasyon</h3><p>Soruda formül <b>verilir</b>, ezberlemene gerek yok.
+Tek iş indisleri doğru okumak: <code>E(5) = (3×A(4) + A(3)) / 4</code> — <b>A</b> gerçekleşen,
+<b>E</b> tahmin. Tabloda iki sütun da vardır; yanlış sütunu okumak hazır bir çeldiriciye düşürür.</p></div>
+</section><section id="s7"><div class="shead"><div class="num">7</div><div><h2>Alıştırma A &mdash; kesirler</h2><div class="lo">18 soru &middot; kafadan</div></div></div><p class="lead">Kafadan yap, yanına yaz. Hepsi sınavda çıkan paydalar.</p><div class="scroll"><table class="dt drill"><thead><tr><th>#</th><th>Kesir</th><th class="ctr">Yüzde</th><th>#</th><th>Kesir</th><th class="ctr">Yüzde</th></tr></thead><tbody><tr><td class="qn">1</td><td><b>4 / 6</b></td><td class="ctr bl"></td><td class="qn">10</td><td><b>5 / 6</b></td><td class="ctr bl"></td></tr><tr><td class="qn">2</td><td><b>3 / 8</b></td><td class="ctr bl"></td><td class="qn">11</td><td><b>3 / 12</b></td><td class="ctr bl"></td></tr><tr><td class="qn">3</td><td><b>6 / 8</b></td><td class="ctr bl"></td><td class="qn">12</td><td><b>9 / 12</b></td><td class="ctr bl"></td></tr><tr><td class="qn">4</td><td><b>4 / 5</b></td><td class="ctr bl"></td><td class="qn">13</td><td><b>2 / 5</b></td><td class="ctr bl"></td></tr><tr><td class="qn">5</td><td><b>5 / 8</b></td><td class="ctr bl"></td><td class="qn">14</td><td><b>1 / 6</b></td><td class="ctr bl"></td></tr><tr><td class="qn">6</td><td><b>2 / 4</b></td><td class="ctr bl"></td><td class="qn">15</td><td><b>7 / 10</b></td><td class="ctr bl"></td></tr><tr><td class="qn">7</td><td><b>3 / 5</b></td><td class="ctr bl"></td><td class="qn">16</td><td><b>4 / 8</b></td><td class="ctr bl"></td></tr><tr><td class="qn">8</td><td><b>7 / 8</b></td><td class="ctr bl"></td><td class="qn">17</td><td><b>1 / 3</b></td><td class="ctr bl"></td></tr><tr><td class="qn">9</td><td><b>2 / 3</b></td><td class="ctr bl"></td><td class="qn">18</td><td><b>5 / 12</b></td><td class="ctr bl"></td></tr></tbody></table></div></section><section id="s8"><div class="shead"><div class="num">8</div><div><h2>Alıştırma B &mdash; denklemler</h2><div class="lo">8 soru &middot; bilinmeyeni çek</div></div></div><p class="lead">Bilinmeyeni çek. Yanına hem sonucu hem işlemi yaz.</p><ol class="dr"><li><code>a × 3/9 = 200</code><span class="bl w"></span></li><li><code>a × 2/5 = 80</code><span class="bl w"></span></li><li><code>a × 4/7 = 28</code><span class="bl w"></span></li><li><code>3/4 × a = 150</code><span class="bl w"></span></li><li><code>a / 6 = 7,5</code><span class="bl w"></span></li><li><code>%25 × a = 90</code><span class="bl w"></span></li><li><code>%60 × a = 120</code><span class="bl w"></span></li><li><code>a × 5/8 = 250</code><span class="bl w"></span></li></ol><div class="card"><h3>Hatırlatma</h3><p>Kesri karşıya ters çevirerek geçir, sonra <b>önce sadeleştir</b>, sonra çarp.</p></div></section><section id="s9"><div class="shead"><div class="num">9</div><div><h2>Alıştırma C &mdash; kapsam</h2><div class="lo">6 soru &middot; payda + bölme</div></div></div><p class="lead">Önce paydayı söyle, sonra böl. Her biri tek satır.</p><ol class="dr"><li>8 sınırın 6'sı test edildi &rarr; kapsam?<span class="bl w"></span></li><li>5 payın 4'ü kapsandı &rarr; kapsam?<span class="bl w"></span></li><li>12 sütunun 3'ü çalıştırıldı &rarr; kapsam?<span class="bl w"></span></li><li>20 geçişin 7'si denendi &rarr; kapsam?<span class="bl w"></span></li><li>6 komutun 4'ü yürütüldü &rarr; kapsam?<span class="bl w"></span></li><li>8 dalın 5'i alındı &rarr; kapsam?<span class="bl w"></span></li></ol></section><section id="s10"><div class="shead"><div class="num">10</div><div><h2>Alıştırma D &mdash; form&uuml;ller</h2><div class="lo">12 soru &middot; sınav biçiminde</div></div></div><p class="lead">Sınavdaki hâliyle. İşlemi de yaz, sadece sonucu değil.</p><ol class="dr big"><li><b>Üç noktalı tahmin</b><span class="qq">En iyi 2, en olası 5, en kötü 14 saat. Tek test için tahmin?</span><span class="bl w"></span></li><li><b>Üç noktalı + adet</b><span class="qq">En iyi 1, en olası 3, en kötü 8 saat. <b>Dört</b> test için?</span><span class="bl w"></span></li><li><b>Orana dayalı tahmin</b><span class="qq">Geçmiş: toplam geliştirme 3.600.000 $, toplam test 360.000 $. Yeni projenin geliştirmesi 800.000 $. Test eforu?</span><span class="bl w"></span></li><li><b>Ekstrapolasyon</b><span class="qq">E(n) = (3×A(n−1) + A(n−2)) / 4. A(4)=6, A(3)=8. E(5)?</span><span class="bl w"></span></li><li><b>Risk seviyesi</b><span class="qq">Olasılık %50, etki 2.000 $. Risk seviyesi?</span><span class="bl w"></span></li><li><b>Risk — ters hesap</b><span class="qq">Risk seviyesi 1.000 $, olasılık %50. Etki?</span><span class="bl w"></span></li><li><b>Karar tablosu</b><span class="qq">3 evet/hayır koşulu. Tam tabloda kaç sütun?</span><span class="bl w"></span></li><li><b>Karar tablosu kapsamı</b><span class="qq">8 sütunlu tabloda 3 farklı sütun çalıştırıldı.</span><span class="bl w"></span></li><li><b>Sınır sayısı</b><span class="qq">4 bitişik pay, iki uç da kapalı. 2-değerli sınır sayısı?</span><span class="bl w"></span></li><li><b>Durum geçişi</b><span class="qq">5 durum, 4 olay. Tüm geçiş kapsamının paydası?</span><span class="bl w"></span></li><li><b>Geçerli geçiş kapsamı</b><span class="qq">6 geçerli geçişin 4'ü denendi.</span><span class="bl w"></span></li><li><b>Each Choice</b><span class="qq">Paylar 3, 2 ve 4. %100 için en az kaç test?</span><span class="bl w"></span></li></ol></section><section id="s11"><div class="shead"><div class="num">11</div><div><h2>Cevap anahtarı</h2><div class="lo">Önce çöz, sonra bak</div></div></div><p class="lead">Önce kendin çöz, sonra bak.</p><div class="card key"><h3>A &middot; Kesir &rarr; yüzde</h3><div class="kg"><span><i>1.</i> %66,7  (4/6)</span><span><i>2.</i> %37,5  (3/8)</span><span><i>3.</i> %75  (6/8)</span><span><i>4.</i> %80  (4/5)</span><span><i>5.</i> %62,5  (5/8)</span><span><i>6.</i> %50  (2/4)</span><span><i>7.</i> %60  (3/5)</span><span><i>8.</i> %87,5  (7/8)</span><span><i>9.</i> %66,7  (2/3)</span><span><i>10.</i> %83,3  (5/6)</span><span><i>11.</i> %25  (3/12)</span><span><i>12.</i> %75  (9/12)</span><span><i>13.</i> %40  (2/5)</span><span><i>14.</i> %16,7  (1/6)</span><span><i>15.</i> %70  (7/10)</span><span><i>16.</i> %50  (4/8)</span><span><i>17.</i> %33,3  (1/3)</span><span><i>18.</i> %41,7  (5/12)</span></div></div><div class="card key"><h3>B &middot; Bilinmeyeni bulma</h3><div class="kg wide"><span><i>1.</i> <b>600</b> &nbsp;a = 200 × 9/3 &nbsp;<em>Payla böl, paydayla çarp — kesri ters çevirip geçir.</em></span><span><i>2.</i> <b>200</b> &nbsp;a = 80 × 5/2 &nbsp;<em>Aynı kural: 80 ÷ 2 = 40, 40 × 5 = 200.</em></span><span><i>3.</i> <b>49</b> &nbsp;a = 28 × 7/4 &nbsp;<em>28 ÷ 4 = 7, 7 × 7 = 49.</em></span><span><i>4.</i> <b>200</b> &nbsp;a = 150 × 4/3 &nbsp;<em>Sıra önemli değil, çarpma yer değiştirir.</em></span><span><i>5.</i> <b>45</b> &nbsp;a = 7,5 × 6 &nbsp;<em>Bölmenin tersi çarpma.</em></span><span><i>6.</i> <b>360</b> &nbsp;a = 90 × 4 &nbsp;<em>%25 = 1/4, tersi ×4.</em></span><span><i>7.</i> <b>200</b> &nbsp;a = 120 ÷ 0,6 &nbsp;<em>Ya da 120 × 100/60.</em></span><span><i>8.</i> <b>400</b> &nbsp;a = 250 × 8/5 &nbsp;<em>250 ÷ 5 = 50, 50 × 8 = 400.</em></span></div></div><div class="card key"><h3>C &middot; Kapsam</h3><div class="kg"><span><i>1.</i> %75  (6/8)</span><span><i>2.</i> %80  (4/5)</span><span><i>3.</i> %25  (3/12)</span><span><i>4.</i> %35  (7/20)</span><span><i>5.</i> %66,7  (4/6)</span><span><i>6.</i> %62,5  (5/8)</span></div></div><div class="card key"><h3>D &middot; Formüller</h3><div class="kg wide"><span><i>1.</i> <b>6 saat</b> &nbsp;<em>(2 + 4×5 + 14) / 6 = 36/6</em></span><span><i>2.</i> <b>14 saat</b> &nbsp;<em>(1 + 12 + 8)/6 = 3,5 → 3,5 × 4</em></span><span><i>3.</i> <b>80.000 $</b> &nbsp;<em>oran = 360.000/3.600.000 = 0,10 → 800.000 × 0,10</em></span><span><i>4.</i> <b>6,5</b> &nbsp;<em>(3×6 + 8)/4 = 26/4</em></span><span><i>5.</i> <b>1.000 $</b> &nbsp;<em>0,50 × 2.000</em></span><span><i>6.</i> <b>2.000 $</b> &nbsp;<em>1.000 ÷ 0,50</em></span><span><i>7.</i> <b>8 sütun</b> &nbsp;<em>2³</em></span><span><i>8.</i> <b>%37,5</b> &nbsp;<em>3/8</em></span><span><i>9.</i> <b>8 sınır</b> &nbsp;<em>4 × 2 − 0</em></span><span><i>10.</i> <b>20 hücre</b> &nbsp;<em>5 × 4</em></span><span><i>11.</i> <b>%66,7</b> &nbsp;<em>4/6</em></span><span><i>12.</i> <b>4 test</b> &nbsp;<em>max(3, 2, 4)</em></span></div></div><div class="next"><a href="bva.html"><b>Sınır Değer Analizi</b><span>Kapsam yüzdesinin en çok çıktığı yer</span></a><a href="ep.html"><b>Denklik Payları</b><span>Payda nasıl kurulur</span></a><a href="../istqub/questions_tr.html"><b>Sınav simülatörü</b><span>Hesabı gerçek soruda dene</span></a></div></section>
+<footer class="ft">Sayılar ve örnekler ISTQB&reg; CTFL v4.0 &ouml;rnek sınavları A&ndash;D ile
+pratik setler E&ndash;H'deki sorulardan &ccedil;ıkarıldı. Kişisel &ccedil;alışma i&ccedil;indir.</footer>
+</main>
+</body>
+</html>
