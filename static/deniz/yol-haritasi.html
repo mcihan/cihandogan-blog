@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scrum Master &rarr; QA Engineer &middot; Yol Haritası</title>
+<style>
+:root{
+  --bg:#f6f6fb; --surface:#fff; --ink:#1c1c2c; --muted:#61617a; --line:#e5e4ef;
+  --shadow:0 1px 2px rgba(28,28,60,.05), 0 10px 30px -14px rgba(28,28,60,.18);
+  --good:#059669; --good-soft:#e7f6ef; --bad:#dc2626; --bad-soft:#fdecec;
+  --warn:#d97706; --warn-soft:#fdf3e3;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --c:#4f46e5; --cd:#3730a3; --cs:#eef2ff; --cl:#c7d2fe;
+  --dim:#b9b7c9;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --bg:#12121e; --surface:#1b1b2b; --ink:#ececf4; --muted:#a0a0b8; --line:#2d2d42;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.6);
+  --good:#34d399; --good-soft:#0e2b20; --bad:#f87171; --bad-soft:#331416;
+  --warn:#fbbf24; --warn-soft:#2e2210;
+  --c:#818cf8; --cd:#a5b4fc; --cs:#222247; --cl:#3b3b78; --dim:#5a5a78; } }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:66px}
+html,body{margin:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.62;font-size:16px}
+
+header.hero{background:linear-gradient(135deg,#312e81 0%,#4338ca 42%,#0e7490 100%);padding:2.9rem 1.3rem 2.4rem}
+.in{max-width:1000px;margin:0 auto}
+.back{display:inline-flex;gap:.4rem;align-items:center;text-decoration:none;color:#c7d2fe;font-size:.82rem;
+  font-weight:700;margin-bottom:1.1rem}
+.back:hover{color:#fff}
+.kicker{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .7rem}
+.hero h1{color:#fff;font-size:clamp(1.85rem,5.2vw,2.8rem);line-height:1.07;margin:0 0 .7rem;font-weight:900;letter-spacing:-.02em}
+.hero p.lede{color:#dbe3ff;max-width:64ch;margin:0 0 1.7rem;font-size:1.03rem}
+.jump{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,168px),1fr));gap:.55rem}
+.jump a{display:flex;gap:.6rem;align-items:center;text-decoration:none;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);border-radius:13px;padding:.6rem .75rem;color:#fff;
+  transition:background .15s,transform .15s;min-width:0}
+.jump a:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.jump .n{width:25px;height:25px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:rgba(255,255,255,.22)}
+.jump b{display:block;font-size:.85rem;font-weight:800;line-height:1.25}
+
+nav.sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.sticky .in{display:flex;gap:.35rem;align-items:center;padding:.5rem 1.3rem;overflow-x:auto;scrollbar-width:none}
+nav.sticky .in::-webkit-scrollbar{display:none}
+nav.sticky a{white-space:nowrap;text-decoration:none;font-size:.8rem;font-weight:700;color:var(--muted);
+  border-radius:9px;padding:.3rem .6rem}
+nav.sticky a:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+main{max-width:1000px;margin:0 auto;padding:2.1rem 1.3rem 4rem}
+section{margin-bottom:2.9rem;scroll-margin-top:62px}
+.shead{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem}
+.shead .num{width:42px;height:42px;flex:none;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;background:var(--c)}
+.shead h2{margin:0;font-size:1.38rem;letter-spacing:-.015em;line-height:1.2}
+.shead .lo{font-size:.73rem;font-weight:700;color:var(--muted);font-family:var(--mono)}
+.lead{margin:0 0 1rem;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:1.1rem 1.25rem;
+  box-shadow:var(--shadow);margin-bottom:.95rem;min-width:0}
+.card > h3{margin:0 0 .65rem;font-size:.75rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.card.q{border-left:4px solid var(--c)}
+.card.sol{background:color-mix(in srgb,var(--c) 4%,var(--surface))}
+.card.trap{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.card.trap > h3{color:var(--bad)}
+.card.key{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 32%,transparent)}
+.card.key > h3{color:var(--good)}
+.card.warnc{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.card.warnc > h3{color:var(--warn)}
+.card p{margin:.5rem 0}
+.card p:first-of-type{margin-top:0}
+.card ul,.card ol{margin:.5rem 0;padding-left:1.2rem}
+.card li{margin:.26rem 0}
+.recog{background:var(--cs);border-radius:12px;padding:.68rem .9rem;margin:0 0 1rem;font-size:.92rem}
+.recog b{color:var(--cd)}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:.52rem}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);min-width:0;gap:.7rem;align-items:start;
+  padding:.58rem .72rem;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,transparent)}
+ol.steps li::before{content:counter(s);width:23px;height:23px;border-radius:7px;display:flex;
+  align-items:center;justify-content:center;font-size:.76rem;font-weight:900;color:#fff;background:var(--c)}
+ol.steps li > b{grid-column:2;display:block;font-size:.94rem;min-width:0;overflow-wrap:anywhere}
+ol.steps li > span{grid-column:2;display:block;font-size:.88rem;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+ol.steps li > div{grid-column:2;min-width:0;max-width:100%}
+ol.steps li > div > *:first-child{margin-top:.4rem}
+
+pre{font-family:var(--mono);font-size:.83rem;background:color-mix(in srgb,var(--ink) 6%,transparent);
+  border-radius:11px;padding:.7rem .9rem;margin:.65rem 0;overflow-x:auto;line-height:1.55;white-space:pre}
+pre.fx{background:var(--cs);color:var(--cd);font-weight:600;border:1px dashed var(--cl)}
+code{font-family:var(--mono);font-size:.86em;background:color-mix(in srgb,var(--ink) 8%,transparent);
+  padding:.08em .35em;border-radius:5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:.65rem 0}
+table.dt{border-collapse:collapse;width:100%;font-size:.86rem}
+.scroll table.dt{min-width:420px}
+table.dt th,table.dt td{border:1px solid var(--line);padding:.42rem .6rem;text-align:left;vertical-align:top;
+  word-break:break-word;overflow-wrap:anywhere}
+table.dt th{background:var(--cs);color:var(--cd);font-weight:800;font-size:.78rem}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+table.dt td.ctr,table.dt th.ctr{text-align:center}
+
+svg.nl{width:100%;min-width:780px;height:auto;display:block;margin:0}
+.nlw{margin:.85rem 0 .3rem}
+.nlw .scroll{margin:0}
+.shint{display:none;margin:.3rem 0 0;font-size:.74rem;color:var(--muted);text-align:center;font-weight:700}
+@media (max-width:830px){ .shint{display:block} }
+.nl .bd{stroke-width:1.5}
+.nl .bd.bad{fill:var(--bad-soft);stroke:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .bd.good{fill:var(--good-soft);stroke:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .ar.bad{fill:color-mix(in srgb,var(--bad) 38%,transparent)}
+.nl .ar.good{fill:color-mix(in srgb,var(--good) 38%,transparent)}
+.nl .bl{text-anchor:middle;font-size:13px;font-weight:800;font-family:var(--sans)}
+.nl .bl.bad{fill:var(--bad)} .nl .bl.good{fill:var(--good)}
+.nl .bd.neu{fill:var(--cs);stroke:var(--cl)}
+.nl .bd.neu2{fill:color-mix(in srgb,var(--c) 11%,transparent);stroke:var(--cl)}
+.nl .bl.neu,.nl .bl.neu2{fill:var(--cd)}
+.nl .dot.miss{fill:none;stroke:var(--bad);stroke-width:2;stroke-dasharray:3.5 3}
+.nl .dv.miss{fill:var(--bad)}
+.nl .cut{stroke:var(--c);stroke-width:2;stroke-dasharray:5 4;opacity:.85}
+.nl .cl{text-anchor:middle;font-size:11px;font-weight:800;fill:var(--c);font-family:var(--mono)}
+.nl .ax{stroke:var(--dim);stroke-width:1.5}
+.nl .tk{stroke:var(--dim);stroke-width:1.5}
+.nl .dot{fill:var(--c)}
+.nl .dot.new{fill:var(--warn)}
+.nl .dv{text-anchor:middle;font-size:14px;font-weight:800;fill:#fff;font-family:var(--sans)}
+.nl .dp{text-anchor:middle;font-size:13px;font-weight:600;fill:var(--dim);font-family:var(--sans)}
+.nlleg{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;font-size:.8rem;color:var(--muted);margin:.1rem 0 .3rem}
+.nlleg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.35rem;vertical-align:-1px}
+.nlleg i.a{background:var(--c)} .nlleg i.b{background:var(--warn)}
+.nlleg i.m{background:transparent;border:2px dashed var(--bad)}
+
+.opts{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.4rem}
+.opts li{display:grid;grid-template-columns:28px minmax(0,1fr);min-width:0;gap:.6rem;align-items:center;
+  border:1px solid var(--line);border-radius:11px;padding:.5rem .65rem;font-size:.95rem;background:var(--surface)}
+.opts li b{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:900;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--muted)}
+.opts li.right{border-color:color-mix(in srgb,var(--good) 45%,transparent);background:var(--good-soft)}
+.opts li.right b{background:var(--good);color:#fff}
+.opts li.wrong b{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.75rem}
+.fbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;box-shadow:var(--shadow)}
+.fbox h4{margin:0 0 .4rem;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.fbox p{margin:.3rem 0;font-size:.88rem}
+.fbox code{font-size:.84em}
+
+.next{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.3rem}
+.next a{flex:1 1 220px;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:.9rem 1.1rem;box-shadow:var(--shadow);color:var(--ink);transition:transform .15s}
+.next a:hover{transform:translateY(-3px)}
+.next b{display:block;font-size:.98rem;margin-bottom:.15rem}
+.next span{font-size:.84rem;color:var(--muted)}
+footer.ft{border-top:1px solid var(--line);margin-top:2.6rem;padding-top:1.2rem;color:var(--muted);font-size:.82rem}
+
+/* ---- yol haritasi ---- */
+ul.tasks{list-style:none;margin:.7rem 0 0;padding:0;display:grid;gap:.3rem}
+ul.tasks li{min-width:0}
+ul.tasks label{display:grid;grid-template-columns:20px minmax(0,1fr);gap:.6rem;align-items:start;
+  padding:.45rem .6rem;border:1px solid var(--line);border-radius:11px;background:var(--surface);
+  cursor:pointer;font-size:.9rem;transition:border-color .12s,background .12s}
+ul.tasks label:hover{border-color:var(--cl)}
+ul.tasks input{position:absolute;opacity:0;width:0;height:0}
+ul.tasks .bx{width:18px;height:18px;margin-top:.15rem;border:1.5px solid var(--cl);border-radius:5px;
+  display:block;position:relative;flex:none;background:var(--bg)}
+ul.tasks input:checked + .bx{background:var(--good);border-color:var(--good)}
+ul.tasks input:checked + .bx::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;
+  border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(42deg)}
+ul.tasks input:focus-visible + .bx{outline:2px solid var(--c);outline-offset:2px}
+ul.tasks input:checked ~ .tt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--dim)}
+ul.tasks .tt{min-width:0;overflow-wrap:anywhere}
+ul.tasks .tn{display:block;font-size:.78rem;color:var(--muted);text-decoration:none!important;margin-top:.1rem}
+ul.tasks li:has(input:checked) label{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 34%,transparent)}
+
+.wk{border:1px solid var(--line);border-radius:15px;background:var(--surface);box-shadow:var(--shadow);
+  padding:.9rem 1.05rem;margin-bottom:.8rem}
+.wkh{display:flex;gap:.7rem;align-items:center;margin-bottom:.2rem}
+.wkh .wn{width:30px;height:30px;flex:none;border-radius:9px;background:var(--c);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem}
+.wkh b{display:block;font-size:1rem;letter-spacing:-.01em}
+.wkh i{display:block;font-style:normal;font-size:.8rem;color:var(--muted)}
+
+.prog{position:sticky;top:0;z-index:31;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.prog .in{display:flex;align-items:center;gap:.7rem;padding:.5rem 1.3rem}
+.prog .pb{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden;min-width:0}
+.prog .pb i{display:block;height:100%;width:0;background:var(--good);transition:width .25s}
+.prog .pt{font-family:var(--mono);font-size:.78rem;font-weight:800;color:var(--muted);white-space:nowrap}
+.prog button{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:8px;
+  font:inherit;font-size:.74rem;font-weight:800;padding:.2rem .6rem;cursor:pointer;flex:none}
+.prog button:hover{color:var(--bad);border-color:var(--bad)}
+table.dt td.ok{background:var(--good-soft);color:var(--good);font-weight:700}
+table.dt td.no{background:var(--bad-soft);color:var(--bad);font-weight:700}
+@media(max-width:620px){ .prog .in{padding:.45rem 1rem} }
+</style>
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- dz-breadcrumb -->
+<nav class="dz-bc" aria-label="Breadcrumb"><ol class="dz-bc-in"><li><a href="/deniz/">Study Hub</a></li><li><span aria-current="page">QA Yol Haritası</span></li></ol></nav>
+<style id="dz-bc-css">
+.dz-bc{background:#241f54;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased;position:relative;z-index:5}
+ol.dz-bc-in{list-style:none!important;margin:0 auto!important;padding:.5rem 1.15rem!important;
+  max-width:1060px;display:flex!important;flex-wrap:wrap;align-items:center;gap:.05rem .3rem;
+  font-size:.82rem;line-height:1.5}
+ol.dz-bc-in li{margin:0!important;padding:0!important;display:flex;align-items:center;gap:.3rem;
+  list-style:none!important;min-width:0}
+ol.dz-bc-in li::marker{content:""}
+ol.dz-bc-in li+li::before{content:"\203A";color:#7f78cf;font-weight:800;font-size:.95rem}
+ol.dz-bc-in a{color:#c3cafe!important;text-decoration:none!important;font-weight:700!important;
+  padding:.1rem .35rem;border-radius:6px;background:transparent!important;border:0!important;
+  display:inline-block}
+ol.dz-bc-in a:hover,ol.dz-bc-in a:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important}
+ol.dz-bc-in span[aria-current]{color:#fff;font-weight:800;padding:.1rem .35rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+@media print{.dz-bc{display:none}}
+</style>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+<header class="hero"><div class="in">
+  <p class="kicker">Kariyer &middot; QA Engineer yolu</p>
+  <h1>Scrum Master'dan QA Engineer'a</h1>
+  <p class="lede">ISTQB cebinde, Java ve Python temelin var, s&uuml;reci zaten biliyorsun.
+  Eksik olan tek şey elle iş yapabilme kanıtı. Bu sayfada iki plan var:
+  <b>4 haftalık hızlı plan</b> (vaktin yoksa) ve <b>tam plan</b> (4&ndash;5 ay).
+  Kutucukları işaretle, ilerlemen tarayıcıda saklanır.</p>
+  <div class="jump"><a href="#s1"><span class="n">1</span><b>Nerede duruyorsun</b></a><a href="#s2"><span class="n">2</span><b>Tek karar: Java</b></a><a href="#s3"><span class="n">3</span><b>Hızlı plan &mdash; 4 hafta</b></a><a href="#s4"><span class="n">4</span><b>Tam plan &mdash; Faz 1</b></a><a href="#s5"><span class="n">5</span><b>Tam plan &mdash; Faz 2</b></a><a href="#s6"><span class="n">6</span><b>Tam plan &mdash; Faz 3</b></a><a href="#s7"><span class="n">7</span><b>Tam plan &mdash; Faz 4</b></a><a href="#s8"><span class="n">8</span><b>Tam plan &mdash; Faz 5</b></a><a href="#s9"><span class="n">9</span><b>Portf&ouml;y</b></a><a href="#s10"><span class="n">10</span><b>M&uuml;lakat</b></a><a href="#s11"><span class="n">11</span><b>Başvuru stratejisi</b></a></div>
+</div></header>
+
+<div class="prog"><div class="in">
+  <span class="pt">İLERLEME</span>
+  <span class="pb"><i id="pbar"></i></span>
+  <span class="pt" id="ptxt">0 / 0</span>
+  <button type="button" id="preset">Sıfırla</button>
+</div></div>
+
+<nav class="sticky"><div class="in"><a href="#s1">1. Nerede duruyorsun</a><a href="#s2">2. Tek karar: Java</a><a href="#s3">3. Hızlı plan &mdash; 4 hafta</a><a href="#s4">4. Tam plan &mdash; Faz 1</a><a href="#s5">5. Tam plan &mdash; Faz 2</a><a href="#s6">6. Tam plan &mdash; Faz 3</a><a href="#s7">7. Tam plan &mdash; Faz 4</a><a href="#s8">8. Tam plan &mdash; Faz 5</a><a href="#s9">9. Portf&ouml;y</a><a href="#s10">10. M&uuml;lakat</a><a href="#s11">11. Başvuru stratejisi</a></div></nav>
+
+<main>
+<section id="s1"><div class="shead"><div class="num">1</div><div><h2>Nerede duruyorsun</h2><div class="lo">Durum tespiti &middot; neyin var, neyin yok</div></div></div>
+<p class="lead">Scrum Master ge&ccedil;mişin burada k&uuml;&ccedil;&uuml;k bir detay değil: bir&ccedil;ok QA adayında olmayan şey sende var &mdash;
+s&uuml;reci, refinement'ı, kabul kriterini, paydaşla konuşmayı biliyorsun. ISTQB de o dili resm&icirc;leştirdi.
+Eksik olan tek şey <b>elle iş yapabilme kanıtı</b>.</p>
+<div class="recog"><b>Acı ger&ccedil;ek:</b> saf &ldquo;manuel QA tester&rdquo; ilanları daralıyor. 2026 ilanlarında junior seviyede bile
+Playwright/Selenium, API otomasyonu, CI/CD ve SQL standart hâle geldi. Hedefin <i>manuel tester</i> değil,
+<b>&ldquo;otomasyon da yazabilen QA engineer&rdquo;</b> olmalı. Java'yı zaten biliyorsun &mdash; yolun yarısındasın.</div>
+<div class="fgrid">
+  <div class="fbox"><h4>&#9989; Elinde olan</h4><p>Scrum/agile s&uuml;reci &middot; ISTQB CTFL &middot; Java ve Python temelleri
+  (sınıf seviyesi) &middot; paydaş iletişimi &middot; kabul kriteri yazma &middot; DoD/DoR</p></div>
+  <div class="fbox"><h4>&#10060; Eksik olan</h4><p>SQL &middot; API testi &middot; bir otomasyon &ccedil;at&#305;sı &middot; Git/CI
+  &middot; Linux temelleri &middot; <b>ve en &ouml;nemlisi:</b> g&ouml;sterebileceğin bir repo</p></div>
+  <div class="fbox"><h4>&#127919; Hedef unvan</h4><p>QA Engineer &middot; Test Engineer &middot; QA Automation Engineer (Junior)
+  &middot; SDET (Junior). &ldquo;Agile ekipte QA&rdquo; arayan yerlerde avantajlısın.</p></div>
+</div>
+</section><section id="s2"><div class="shead"><div class="num">2</div><div><h2>Tek karar: Java</h2><div class="lo">İki dili birden ilerletme</div></div></div>
+<p class="lead">İkisini birden ilerletme. Kurumsal QA ilanlarının ağırlığı <b>Java</b>'da:
+Selenium/Playwright + RestAssured + JUnit&nbsp;5 + Maven. Python'u script ve veri kontrol&uuml; i&ccedil;in elinde tut,
+ama &ccedil;atıyı Java'da kur.</p>
+<div class="card trap"><h3>Neden tek dil</h3><p>İş g&ouml;r&uuml;şmesinde &ldquo;ikisini de biraz biliyorum&rdquo; demek,
+birini iyi bilmekten <b>zayıf</b>tır. M&uuml;lakatta tek bir dilde derinlik aranıyor; ikinci dil CV'de bir satır,
+birinci dil bir saatlik teknik konuşma.</p></div>
+<div class="scroll"><table class="dt"><thead><tr><th>Katman</th><th>Java (ana yol)</th><th>Python (yedek)</th></tr></thead><tbody>
+<tr><td>Test &ccedil;atısı</td><td><b>JUnit 5</b></td><td>pytest</td></tr>
+<tr><td>API</td><td><b>RestAssured</b></td><td>requests</td></tr>
+<tr><td>UI</td><td><b>Playwright / Selenium</b></td><td>Playwright</td></tr>
+<tr><td>Yapı aracı</td><td><b>Maven</b></td><td>pip / uv</td></tr>
+<tr><td>Nerede işine yarar</td><td>İlanların &ccedil;oğu, kurumsal</td><td>Script, veri kontrol&uuml;, k6/perf</td></tr>
+</tbody></table></div>
+</section><section id="s3"><div class="shead"><div class="num">3</div><div><h2>Hızlı plan &mdash; 4 hafta</h2><div class="lo">Vaktin yoksa &middot; tam gaz, 15&ndash;20 sa/hafta</div></div></div>
+<p class="lead">D&ouml;rt haftada &ldquo;kıdemli&rdquo; olmazsın &mdash; ama <b>başvurabilir</b> hâle gelirsin:
+elinde &ccedil;alışan bir repo, CV'de somut ara&ccedil; isimleri ve m&uuml;lakatta anlatacak bir hikâye olur.
+Hafta i&ccedil;i 2&ndash;3 saat, hafta sonu 4&ndash;5 saat.</p>
+<div class="card warnc"><h3>Bu plan neyi feda ediyor</h3><p>Docker, performans testi (k6/JMeter),
+contract testing, Selenium, yapay zekâ destekli test ve CTFL-AT <b>yok</b>. Hepsi işe girdikten sonra,
+maaşlıyken &ouml;ğrenilecek şeyler. D&ouml;rt haftada hepsine dokunursan hi&ccedil;birini bilmezsin.</p></div>
+
+<div class="wk"><div class="wkh"><span class="wn">1</span><div><b>SQL + HTTP + Postman</b>
+<i>Teknik elemeyi ge&ccedil;iren hafta</i></div></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t1"><span class="bx"></span><span class="tt"><b>SQL</b> &mdash; <code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code> (INNER/LEFT), <code>GROUP BY</code>, <code>HAVING</code>, alt sorgu<span class="tn">3 akşam &middot; SQLBolt ya da benzeri + 20 sorgu yaz</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t2"><span class="bx"></span><span class="tt">Bir veritabanı kur (PostgreSQL/MySQL), &ouml;rnek şema y&uuml;kle, <b>test verisi doğrulama</b> sorguları yaz<span class="tn">&ldquo;Sipariş tutarı ile sat&#305;r toplamları uyuşuyor mu?&rdquo; tipinde</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t3"><span class="bx"></span><span class="tt"><b>HTTP temelleri</b> &mdash; metodlar, status kodları, header, auth, JSON<span class="tn">yarım g&uuml;n</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t4"><span class="bx"></span><span class="tt"><b>Postman</b> &mdash; koleksiyon, environment, değişken, <code>pm.test()</code> assertion<span class="tn">1 g&uuml;n</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t5"><span class="bx"></span><span class="tt"><b>Git</b> &mdash; branch, commit, PR, merge conflict &ccedil;&ouml;zme<span class="tn">yarım g&uuml;n &middot; GitHub hesabını a&ccedil;</span></span></label></li></ul></div>
+
+<div class="wk"><div class="wkh"><span class="wn">2</span><div><b>API otomasyonu &middot; Java</b>
+<i>Repo'nun ilk yarısı</i></div></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t6"><span class="bx"></span><span class="tt"><b>Maven</b> projesi kur, bağımlılıkları ekle (RestAssured, JUnit 5)<span class="tn">yarım g&uuml;n</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t7"><span class="bx"></span><span class="tt"><b>RestAssured</b> &mdash; <code>given/when/then</code>, JSON path, status ve body doğrulama<span class="tn">2 g&uuml;n</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t8"><span class="bx"></span><span class="tt"><b>JUnit 5</b> &mdash; assertion, <code>@BeforeEach</code>, <code>@ParameterizedTest</code><span class="tn">zaten biliyorsun, 1 akşam tazele</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t9"><span class="bx"></span><span class="tt">A&ccedil;ık bir API'ye <b>15 test</b> yaz: CRUD + negatif senaryolar + şema doğrulama<span class="tn">Swagger Petstore ya da kendi k&uuml;&ccedil;&uuml;k Spring Boot servisin</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t10"><span class="bx"></span><span class="tt">GitHub'a <b>push</b> et<span class="tn">repo artık var, bu &ouml;nemli</span></span></label></li></ul></div>
+
+<div class="wk"><div class="wkh"><span class="wn">3</span><div><b>UI otomasyonu + CI</b>
+<i>Repo'nun ikinci yarısı</i></div></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t11"><span class="bx"></span><span class="tt"><b>Playwright (Java)</b> &mdash; locator stratejisi, auto-wait, assertion<span class="tn">2 g&uuml;n</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t12"><span class="bx"></span><span class="tt"><b>Page Object Model</b> &mdash; 3 sayfa nesnesi kur<span class="tn">1 g&uuml;n &middot; m&uuml;lakatta mutlaka sorulur</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t13"><span class="bx"></span><span class="tt"><b>8&ndash;10 senaryo</b> yaz &mdash; &ccedil;ok değil, <i>kırılmayan</i><span class="tn">flaky olanı d&uuml;zelt, nasıl d&uuml;zelttiğini not al</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t14"><span class="bx"></span><span class="tt"><b>GitHub Actions</b> &mdash; her push'ta testler koşsun<span class="tn">yarım g&uuml;n</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t15"><span class="bx"></span><span class="tt"><b>Allure</b> raporu ekle<span class="tn">yarım g&uuml;n &middot; ekran paylaşınca fark yaratır</span></span></label></li></ul></div>
+
+<div class="wk"><div class="wkh"><span class="wn">4</span><div><b>Paketle ve başvur</b>
+<i>Kod yazmayan hafta</i></div></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t16"><span class="bx"></span><span class="tt"><b>README</b> yaz &mdash; mimari kararları, nasıl koşulur, ne kapsıyor<span class="tn">&ldquo;neden Page Object&rdquo;, &ldquo;flaky testi nasıl stabilize ettim&rdquo;</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t17"><span class="bx"></span><span class="tt"><b>CV</b>'yi QA'e g&ouml;re yeniden yaz &mdash; Scrum Master deneyimini <i>kalite</i> diliyle anlat<span class="tn">&ldquo;DoD'a test kriteri ekledim&rdquo;, &ldquo;three amigos y&uuml;r&uuml;tt&uuml;m&rdquo;</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t18"><span class="bx"></span><span class="tt"><b>SQL tekrarı</b> &mdash; 20 sorguyu tahtada yazar gibi &ccedil;&ouml;z<span class="tn">en sık eleme burada</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t19"><span class="bx"></span><span class="tt"><b>Test tasarımı tekrarı</b> &mdash; sınır değer, denklik payı, karar tablosu<span class="tn">ISTQB sayfalarına d&ouml;n</span></span></label></li><li class="tk"><label><input type="checkbox" data-k="t20"><span class="bx"></span><span class="tt"><b>LinkedIn</b> profilini g&uuml;ncelle, 20 ilana başvur<span class="tn">m&uuml;lakat en iyi &ccedil;alışma y&ouml;ntemi</span></span></label></li></ul></div>
+<div class="card key"><h3>D&ouml;rd&uuml;nc&uuml; hafta sonunda elinde</h3>
+<p>&Ccedil;alışan bir <b>API + UI test &ccedil;atısı</b>, CI'da koşan testler, Allure raporu, a&ccedil;ıklamalı bir README,
+QA diline &ccedil;evrilmiş bir CV ve 20 başvuru. Bu, &ccedil;oğu junior adaydan fazlası.</p></div>
+</section><section id="s4"><div class="shead"><div class="num">4</div><div><h2>Tam plan &mdash; Faz 1</h2><div class="lo">Temeller &middot; 3&ndash;4 hafta</div></div></div>
+<p class="lead">Bunlar olmadan başvurma &mdash; ilk teknik elemede sorulurlar.</p>
+<div class="scroll"><table class="dt"><thead><tr><th>Konu</th><th class="ctr">S&uuml;re</th><th>Neden</th></tr></thead><tbody>
+<tr><td><b>SQL</b></td><td class="ctr">2 hafta</td><td>Neredeyse her QA ilanında var. <code>JOIN</code>, <code>GROUP BY</code>, <code>HAVING</code>, alt sorgu yeter. Test verisi doğrulama senaryoları &ccedil;alış.</td></tr>
+<tr><td><b>Git</b></td><td class="ctr">3 g&uuml;n</td><td>branch, PR, merge conflict. &Ccedil;atın GitHub'da duracak.</td></tr>
+<tr><td><b>Linux / CLI</b></td><td class="ctr">3 g&uuml;n</td><td><code>grep</code>, <code>tail -f</code>, <code>ssh</code>, log okuma, <code>curl</code>. Test ortamına bakmak i&ccedil;in.</td></tr>
+<tr><td><b>HTTP + REST</b></td><td class="ctr">1 hafta</td><td>Status kodları, header, auth, JSON. API testinin &ouml;n koşulu.</td></tr>
+</tbody></table></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t21"><span class="bx"></span><span class="tt">SQL: JOIN t&uuml;rlerini ayırt edebiliyorum ve alt sorgu yazabiliyorum</span></label></li><li class="tk"><label><input type="checkbox" data-k="t22"><span class="bx"></span><span class="tt">Git: branch a&ccedil;ıp PR g&ouml;nderdim, bir merge conflict &ccedil;&ouml;zd&uuml;m</span></label></li><li class="tk"><label><input type="checkbox" data-k="t23"><span class="bx"></span><span class="tt">Linux: log dosyasında <code>grep</code> ve <code>tail -f</code> ile hata buldum</span></label></li><li class="tk"><label><input type="checkbox" data-k="t24"><span class="bx"></span><span class="tt">HTTP: 401 ile 403 farkını, PUT ile PATCH farkını anlatabiliyorum</span></label></li></ul></section><section id="s5"><div class="shead"><div class="num">5</div><div><h2>Tam plan &mdash; Faz 2</h2><div class="lo">API testi &middot; 3&ndash;4 hafta &middot; en y&uuml;ksek getiri</div></div></div>
+<p class="lead">Burası UI otomasyonundan hem daha kolay hem işe girerken daha &ccedil;ok işine yarıyor.
+<b>En y&uuml;ksek getirili faz bu.</b></p>
+<ol class="steps">
+  <li><b>Postman</b><div>Koleksiyon, environment, değişken, <code>pm.test()</code> ile assertion,
+    Newman ile komut satırından koşma.</div></li>
+  <li><b>RestAssured (Java)</b><div><code>given/when/then</code>, JSON path ile doğrulama,
+    POJO serileştirme, kimlik doğrulama.</div></li>
+  <li><b>JUnit 5</b><div>Assertion, test yaşam d&ouml;ng&uuml;s&uuml;, <code>@ParameterizedTest</code> &mdash;
+    sınır değer testlerini parametrik yazmak tam buraya oturuyor.</div></li>
+  <li><b>Maven</b><div>Bağımlılık y&ouml;netimi, <code>mvn test</code>, profiller, raporlama eklentileri.</div></li>
+</ol>
+<div class="card key"><h3>&Ccedil;alışma hedefi</h3><p>A&ccedil;ık bir API'ye ya da kendi yazdığın k&uuml;&ccedil;&uuml;k servise
+<b>15&ndash;20 testlik</b> bir paket. CRUD + negatif senaryolar + şema doğrulama. Testler GitHub'da dursun.</p></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t25"><span class="bx"></span><span class="tt">Postman koleksiyonumu Newman ile komut satırından koşturdum</span></label></li><li class="tk"><label><input type="checkbox" data-k="t26"><span class="bx"></span><span class="tt">RestAssured ile 15 test yazdım, negatif senaryolar dahil</span></label></li><li class="tk"><label><input type="checkbox" data-k="t27"><span class="bx"></span><span class="tt">JSON şema doğrulaması ekledim</span></label></li><li class="tk"><label><input type="checkbox" data-k="t28"><span class="bx"></span><span class="tt"><code>mvn test</code> ile hepsi tek komutta koşuyor</span></label></li></ul></section><section id="s6"><div class="shead"><div class="num">6</div><div><h2>Tam plan &mdash; Faz 3</h2><div class="lo">UI otomasyonu &middot; 4&ndash;5 hafta</div></div></div>
+<p class="lead"><b>Playwright (Java)</b> ile başla &mdash; Selenium'dan daha az kırılgan, auto-wait'i var,
+&ouml;ğrenmesi hızlı. Sonra Selenium'a 1 hafta ayır; ilanların &ccedil;oğunda hâlâ adı ge&ccedil;iyor, syntax farkı k&uuml;&ccedil;&uuml;k.</p>
+<div class="fgrid">
+  <div class="fbox"><h4>&Ouml;ğrenecekler</h4><p>Locator stratejisi (CSS / XPath / role) &middot; Page Object Model
+  &middot; bekleme mantığı &middot; test verisi y&ouml;netimi &middot; paralel koşum &middot; ekran g&ouml;r&uuml;nt&uuml;s&uuml; ve trace ile hata ayıklama</p></div>
+  <div class="fbox"><h4>Playwright mi Selenium mu</h4><p>&Ouml;ğrenirken <b>Playwright</b> &mdash; daha az kodla daha sağlam test.
+  CV'de <b>ikisi de</b> &mdash; ilan filtreleri hâlâ Selenium'a bakıyor.</p></div>
+</div>
+<div class="card trap"><h3>Tuzak</h3><p>50 senaryo yazma. <b>10 sağlam, kırılmayan senaryo</b> yaz.
+M&uuml;lakatta &ldquo;flaky testleri nasıl &ccedil;&ouml;zd&uuml;n?&rdquo; sorusunun cevabı tam olarak buradan gelir &mdash;
+50 tane kırık testten gelmez.</p></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t29"><span class="bx"></span><span class="tt">Playwright ile 10 senaryo yazdım ve &uuml;st &uuml;ste 3 kez hepsi ge&ccedil;ti</span></label></li><li class="tk"><label><input type="checkbox" data-k="t30"><span class="bx"></span><span class="tt">Page Object Model kurdum, locator'lar tek yerde</span></label></li><li class="tk"><label><input type="checkbox" data-k="t31"><span class="bx"></span><span class="tt">Bir flaky testi stabilize ettim ve nedenini yazdım</span></label></li><li class="tk"><label><input type="checkbox" data-k="t32"><span class="bx"></span><span class="tt">Selenium ile aynı senaryolardan 2 tanesini yazdım (syntax farkını g&ouml;rmek i&ccedil;in)</span></label></li></ul></section><section id="s7"><div class="shead"><div class="num">7</div><div><h2>Tam plan &mdash; Faz 4</h2><div class="lo">M&uuml;hendis gibi g&ouml;r&uuml;nmek &middot; 2&ndash;3 hafta</div></div></div>
+<p class="lead">Bu faz seni &ldquo;test yazan kişi&rdquo;den <b>&ldquo;m&uuml;hendis&rdquo;</b>e &ccedil;eviriyor.
+İlanların &ldquo;nice to have&rdquo; dediği ama g&ouml;r&uuml;şmede fark yaratan kısım.</p>
+<div class="scroll"><table class="dt"><thead><tr><th>Konu</th><th>Ne yapacaksın</th></tr></thead><tbody>
+<tr><td><b>CI/CD</b></td><td>GitHub Actions ile her push'ta testleri koştur, HTML rapor &uuml;ret. Jenkins'in mantığını da &ouml;ğren &mdash; kurumsalda hâlâ o var.</td></tr>
+<tr><td><b>Docker</b></td><td><code>docker run</code> ile test ortamı ayağa kaldır. Testcontainers'a bak.</td></tr>
+<tr><td><b>Raporlama</b></td><td>Allure entegre et. Ekran paylaşınca fark yaratır.</td></tr>
+<tr><td><b>Jira + Xray/Zephyr</b></td><td>Test senaryosu ve hata yaşam d&ouml;ng&uuml;s&uuml;. Bu kısmı Scrum Master olarak zaten biliyorsun, sadece QA tarafını g&ouml;r.</td></tr>
+</tbody></table></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t33"><span class="bx"></span><span class="tt">Testlerim her push'ta CI'da koşuyor</span></label></li><li class="tk"><label><input type="checkbox" data-k="t34"><span class="bx"></span><span class="tt">Allure raporu &uuml;retiliyor ve CI &ccedil;ıktısından indirilebiliyor</span></label></li><li class="tk"><label><input type="checkbox" data-k="t35"><span class="bx"></span><span class="tt">Docker ile bir test ortamı ayağa kaldırdım</span></label></li></ul></section><section id="s8"><div class="shead"><div class="num">8</div><div><h2>Tam plan &mdash; Faz 5</h2><div class="lo">Ayırt edici &middot; sonra</div></div></div>
+<p class="lead">Bunlar işe girmeden <b>gerekmez</b>. Ama CV'de bir tanesi varsa seni benzer adaylardan ayırır.</p>
+<div class="fgrid">
+  <div class="fbox"><h4>Performans</h4><p><b>k6</b> (JS/Python bilgini kullanır) ya da JMeter.
+  Temel y&uuml;k testi, eşik belirleme.</p></div>
+  <div class="fbox"><h4>Contract testing</h4><p><b>Pact</b>. Mikroservisli şirketlerde &ccedil;ok değerli,
+  bilen aday az.</p></div>
+  <div class="fbox"><h4>Yapay zekâ destekli test</h4><p>Copilot/Claude ile test &uuml;retimi, LLM &ccedil;ıktısı değerlendirme.
+  2026 ilanlarında g&ouml;r&uuml;nmeye başladı, hen&uuml;z zorunlu değil.</p></div>
+  <div class="fbox"><h4>ISTQB Agile Tester</h4><p><b>CTFL-AT</b>. Scrum Master ge&ccedil;mişinle neredeyse bedava;
+  CTFL ile yan yana g&uuml;&ccedil;l&uuml; duruyor.</p></div>
+</div>
+</section><section id="s9"><div class="shead"><div class="num">9</div><div><h2>Portf&ouml;y</h2><div class="lo">İşe alan kişi buraya 5 dakika bakıyor</div></div></div>
+<p class="lead">İşe alan kişi sertifikaya 5 saniye, <b>GitHub'a 5 dakika</b> bakıyor.
+Tek bir repo yeter &mdash; ama ger&ccedil;ek olsun.</p>
+<pre class="fx">qa-framework/
+├── api/          RestAssured + JUnit 5, 15&ndash;20 test
+├── ui/           Playwright + Page Object, 10 test
+├── .github/      Actions pipeline, Allure raporu
+└── README.md     mimari kararları, nasıl koşulur, ne kapsıyor</pre>
+<div class="card key"><h3>README'de ne yazacaksın</h3>
+<p>Kod kalitesinden &ccedil;ok <b>karar gerek&ccedil;eleri</b> konuşuluyor:</p>
+<ul>
+  <li>&ldquo;Neden Page Object kullandım, alternatifi neydi&rdquo;</li>
+  <li>&ldquo;Şu test flaky'ydi, nedeni şuydu, b&ouml;yle stabilize ettim&rdquo;</li>
+  <li>&ldquo;Hangi senaryoyu <b>bilerek</b> otomatikleştirmedim, neden&rdquo;</li>
+  <li>&ldquo;Test verisini nasıl y&ouml;netiyorum&rdquo;</li>
+</ul>
+<p>Son madde &ouml;zellikle &ouml;nemli: <i>neyi otomatikleştirmediğini</i> gerek&ccedil;elendirebilen aday,
+ISTQB'yi ezberlemiş değil anlamış demektir.</p></div>
+<ul class="tasks "><li class="tk"><label><input type="checkbox" data-k="t36"><span class="bx"></span><span class="tt">Repo public ve README'de mimari kararlar yazılı</span></label></li><li class="tk"><label><input type="checkbox" data-k="t37"><span class="bx"></span><span class="tt"><code>git clone</code> + tek komutla testler koşuyor (kimse kurulumla uğraşmak istemez)</span></label></li><li class="tk"><label><input type="checkbox" data-k="t38"><span class="bx"></span><span class="tt">CI rozeti (badge) README'nin en &uuml;st&uuml;nde</span></label></li></ul></section><section id="s10"><div class="shead"><div class="num">10</div><div><h2>M&uuml;lakat</h2><div class="lo">Ne soruluyor, senin kozun ne</div></div></div>
+<div class="scroll"><table class="dt"><thead><tr><th>Ne sorulur</th><th>Nasıl hazırlanırsın</th></tr></thead><tbody>
+<tr><td><b>SQL sorusu</b></td><td>Tahtada JOIN yazdırırlar. <b>En sık eleme burası.</b> 20 sorgu &ccedil;&ouml;z, ezberden değil yazarak.</td></tr>
+<tr><td><b>Test tasarımı</b></td><td>&ldquo;Şu ekranı nasıl test edersin&rdquo;, sınır değer, denklik payı. ISTQB'den geldiğin i&ccedil;in <b>g&uuml;&ccedil;l&uuml;s&uuml;n</b> &mdash; konu sayfalarına d&ouml;n.</td></tr>
+<tr><td><b>Hata raporu</b></td><td>Eksik bir rapor verip &ldquo;ne eksik&rdquo; diye sorarlar. Ortam, s&uuml;r&uuml;m, veri, adımlar &mdash; bu konuyu zaten &ccedil;alıştın.</td></tr>
+<tr><td><b>Kod</b></td><td>String/dizi seviyesi basit bir soru. Java'da yazabilmen yeter, algoritma yarışması değil.</td></tr>
+<tr><td><b>&Ccedil;atı sorusu</b></td><td>&ldquo;Page Object nedir, neden&rdquo;, &ldquo;flaky test nasıl &ccedil;&ouml;z&uuml;l&uuml;r&rdquo;, &ldquo;neyi otomatikleştirmezsin&rdquo;.</td></tr>
+</tbody></table></div>
+<div class="card key"><h3>Senin kozun</h3>
+<p>&ldquo;Scrum Master'ken test s&uuml;recini nasıl kurardım&rdquo; sorusuna <b>ger&ccedil;ek</b> cevabın var:
+shift-left, three amigos, DoD'a test kriteri koyma, refinement'ta test edilebilirlik sorgulama.
+Bunları <i>yaşamışsın</i>. Anlatan 100 adaydan 95'i anlatamıyor &mdash; bu senin en b&uuml;y&uuml;k farkın,
+m&uuml;lakatta mutlaka a&ccedil;.</p></div>
+<div class="card trap"><h3>Yapma</h3><p>&ldquo;Scrum Master'dım ama kod yazmak istiyorum&rdquo; deme &mdash;
+ka&ccedil;ış gibi duyuluyor. &ldquo;S&uuml;reci i&ccedil;eriden biliyorum, şimdi kaliteyi &ouml;l&ccedil;en tarafta olmak istiyorum&rdquo; de.
+Aynı ge&ccedil;miş, tamamen farklı izlenim.</p></div>
+</section><section id="s11"><div class="shead"><div class="num">11</div><div><h2>Başvuru stratejisi</h2><div class="lo">Ne zaman, hangi unvana</div></div></div>
+<p class="lead">Haftada 10&ndash;12 saatle tam plan <b>4&ndash;5 ay</b>, hızlı plan <b>4 hafta</b>.
+Ama ikisinde de erken başvur.</p>
+<div class="card warnc"><h3>Ne zaman başvurmaya başlamalı</h3>
+<p>Tam planda <b>Faz 2 biter bitmez</b> (yaklaşık 2 ay), hızlı planda <b>3. hafta sonunda</b>.
+M&uuml;lakatlar en iyi &ccedil;alışma y&ouml;ntemidir: eksiğini sana &uuml;cretsiz s&ouml;ylerler ve her g&ouml;r&uuml;şme bir sonrakini kolaylaştırır.
+&ldquo;Hazır olunca başvururum&rdquo; diyen kimse hazır olmuyor.</p></div>
+<div class="scroll"><table class="dt"><thead><tr><th>Unvan</th><th>Ne arıyorlar</th><th>Senin durumun</th></tr></thead><tbody>
+<tr><td><b>QA Engineer</b></td><td>Manuel + biraz otomasyon</td><td class="ok">En uygun hedef</td></tr>
+<tr><td><b>Test Engineer</b></td><td>Aynı iş, farklı isim</td><td class="ok">En uygun hedef</td></tr>
+<tr><td><b>QA Automation Engineer (Junior)</b></td><td>Ağırlık otomasyonda</td><td class="ok">Faz 3'ten sonra</td></tr>
+<tr><td><b>SDET (Junior)</b></td><td>Geliştirici seviyesi kod</td><td>Faz 4'ten sonra dene</td></tr>
+<tr><td>Senior / Lead QA</td><td>5+ yıl test deneyimi</td><td class="no">Hen&uuml;z değil</td></tr>
+</tbody></table></div>
+<div class="card key"><h3>Nereye başvur</h3><p>Scrum ge&ccedil;mişin y&uuml;z&uuml;nden <b>&ldquo;agile ekipte QA&rdquo;</b> arayan yerlerde avantajlısın:
+bankacılık, telekom, e-ticaret, sigorta. Bu şirketlerde s&uuml;reci bilen test&ccedil;i aranıyor ve &ccedil;oğu Java kullanıyor &mdash;
+dil se&ccedil;imin de oraya uyuyor.</p></div>
+<div class="next">
+  <a href="konular/"><b>ISTQB konu anlatımları</b><span>Test tasarımı sorularına hazırlık</span></a>
+  <a href="istqub/questions_tr.html"><b>Sınav sim&uuml;lat&ouml;r&uuml;</b><span>Teori tazeleme</span></a>
+  <a href="konular/matematik.html"><b>Sınav matematiği</b><span>Kapsam hesapları</span></a>
+</div>
+</section>
+<footer class="ft">2026 ilan gereksinimleri ve ISTQB CTFL v4.0 temel alınarak hazırlandı.
+Kişisel plandır; her şirket farklı ister &mdash; ilanı oku, planı ona g&ouml;re b&uuml;k.</footer>
+</main>
+<script>
+(function(){
+  var K="deniz.qa-roadmap";
+  var st={}; try{ st=JSON.parse(localStorage.getItem(K))||{} }catch(e){}
+  var boxes=[].slice.call(document.querySelectorAll('ul.tasks input[type=checkbox]'));
+  var bar=document.getElementById('pbar'), txt=document.getElementById('ptxt');
+  function paint(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    bar.style.width=(boxes.length?100*n/boxes.length:0)+'%';
+    txt.textContent=n+' / '+boxes.length;
+  }
+  boxes.forEach(function(b){
+    if(st[b.dataset.k]) b.checked=true;
+    b.addEventListener('change',function(){
+      if(b.checked) st[b.dataset.k]=1; else delete st[b.dataset.k];
+      try{ localStorage.setItem(K,JSON.stringify(st)) }catch(e){}
+      paint();
+    });
+  });
+  document.getElementById('preset').addEventListener('click',function(){
+    if(!confirm('B&uuml;t&uuml;n işaretler silinecek. Devam edilsin mi?')) return;
+    boxes.forEach(function(b){ b.checked=false }); st={};
+    try{ localStorage.removeItem(K) }catch(e){}
+    paint();
+  });
+  paint();
+})();
+</script>
+</body>
+</html>
