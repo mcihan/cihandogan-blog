@@ -394,17 +394,18 @@ CRUMB = block(ref, '<!-- dz-breadcrumb -->', '</style>')
 GATE  = block(ref, '<!-- deniz-pw-gate -->', '})();\n</script>')
 
 def wrap(page, trail):
-    crumb = re.sub(r'<li><a href="/deniz/">Study Hub</a></li>\s*<li><span aria-current="page">.*?</span></li>',
+    crumb = re.sub(r'<li><a href="/deniz/">Study Hub</a></li>\s*(?:<li><a href="/deniz/istqb/">ISTQB</a></li>\s*)?<li><span aria-current="page">.*?</span></li>',
                    trail, CRUMB, count=1, flags=re.S)
     page = page.replace("</head>", HEAD + "\n</head>", 1)
     i = re.search(r"<body[^>]*>", page, re.I).end()
     return page[:i] + "\n" + crumb + "\n" + GATE + page[i:]
 
 os.makedirs(OUTD, exist_ok=True)
-HUB = '<li><a href="/deniz/">Study Hub</a></li><li><span aria-current="page">Bölüm Bazlı Testler</span></li>'
+HUB = '<li><a href="/deniz/">Study Hub</a></li><li><a href="/deniz/istqb/">ISTQB</a></li><li><span aria-current="page">Bölüm Bazlı Testler</span></li>'
 files = [("index.html", wrap(hub_page(), HUB))]
 for ch in CHAPTERS:
     trail = ('<li><a href="/deniz/">Study Hub</a></li>'
+             '<li><a href="/deniz/istqb/">ISTQB</a></li>'
              '<li><a href="/deniz/bolum_testleri/">Bölüm Bazlı Testler</a></li>'
              '<li><span aria-current="page">%s. %s</span></li>' % (ch, esc(CH_T[ch])))
     files.append(("bolum-%s.html" % ch, wrap(chapter_page(ch), trail)))

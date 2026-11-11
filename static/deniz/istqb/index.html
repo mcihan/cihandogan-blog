@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISTQB &middot; Deniz's Study Hub</title>
+<style>
+:root{
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans);color:#1c1c2c;line-height:1.6;min-height:100vh;
+  background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  display:flex;align-items:center;justify-content:center;padding:2.5rem 1.4rem;
+}
+.wrap{max-width:1020px;width:100%}
+.kicker{font-size:.75rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:#a5b4fc;margin:0 0 .9rem}
+h1{color:#fff;font-size:clamp(2.1rem,5.6vw,3.2rem);line-height:1.06;margin:0 0 .8rem;font-weight:900;letter-spacing:-.02em;text-wrap:balance}
+.lede{color:#dbe3ff;max-width:56ch;margin:0 0 2.4rem;font-size:1.06rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem}
+.card{
+  display:block;text-decoration:none;color:#1c1c2c;background:#fff;border-radius:22px;
+  padding:1.6rem 1.6rem 1.4rem;box-shadow:0 14px 40px -14px rgba(0,0,0,.45);
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 22px 50px -14px rgba(0,0,0,.55)}
+.card .icon{
+  width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  font-size:1.7rem;margin-bottom:1rem;color:#fff;
+}
+.card.java .icon{background:linear-gradient(135deg,#e8963c,#c26210)}
+.card.guide .icon{background:linear-gradient(135deg,#6366f1,#4338ca)}
+.card.sim .icon{background:linear-gradient(135deg,#0ea5e9,#0369a1)}
+.card.simtr .icon{background:linear-gradient(135deg,#e11d48,#9f1239)}
+.card.guidetr .icon{background:linear-gradient(135deg,#8b5cf6,#5b21b6)}
+.card.pratik .icon{background:linear-gradient(135deg,#059669,#065f46)}
+.card.yontem .icon{background:linear-gradient(135deg,#a855f7,#6b21a8)}
+.card.konu .icon{background:linear-gradient(135deg,#f43f5e,#be123c)}
+.card.ders .icon{background:linear-gradient(135deg,#0d9488,#0f766e)}
+.card.yol .icon{background:linear-gradient(135deg,#f59e0b,#b45309)}
+    .card.test .icon{background:linear-gradient(135deg,#059669,#047857)}
+.card h2{margin:0 0 .35rem;font-size:1.28rem;font-weight:850;letter-spacing:-.015em}
+.card p{margin:0 0 1.1rem;font-size:.92rem;color:#61617a}
+.card .go{font-weight:800;font-size:.9rem}
+.card.java .go{color:#c26210}
+.card.guide .go{color:#4338ca}
+.card.sim .go{color:#0369a1}
+.card.simtr .go{color:#9f1239}
+.card.guidetr .go{color:#5b21b6}
+.card.pratik .go{color:#065f46}
+.card.yontem .go{color:#6b21a8}
+.card.konu .go{color:#be123c}
+.card.ders .go{color:#0f766e}
+.card.yol .go{color:#b45309}
+    .card.test .go{color:#047857}
+.card .meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.1rem}
+.card .meta span{font-size:.74rem;font-weight:700;background:#f2f2f9;color:#61617a;border-radius:99px;padding:.18rem .7rem}
+.kicker a{color:inherit}
+footer{margin-top:2.4rem;color:#a5b4fc;font-size:.8rem}
+a:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:22px}
+</style>
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+
+<div class="wrap">
+  <p class="kicker"><a href="../">&larr; Study Hub</a> &middot; Java + ISTQB CTFL</p>
+  <h1>ISTQB.</h1>
+  <p class="lede">Everything in one place: refresh your Java, learn the whole ISTQB syllabus visually, then test yourself under real exam conditions.</p>
+  <div class="cards">
+    <a class="card java" href="../java_brushup.html">
+      <span class="icon">&#9749;</span>
+      <h2>Java Brush-Up</h2>
+      <p>All the Java fundamentals from your practice repo — variables, loops, strings, collections, methods, classes — in simple English.</p>
+      <div class="meta"><span>14 topics</span><span>178 practice questions</span><span>hints included</span></div>
+      <span class="go">Start refreshing &#8594;</span>
+    </a>
+    <a class="card guide" href="../istqub/istqb_study_guide.html">
+      <span class="icon">&#129514;</span>
+      <h2>ISTQB Study Guide</h2>
+      <p>The complete CTFL v4.0 syllabus on one visual page — diagrams for every concept, plus the exam traps to watch out for.</p>
+      <div class="meta"><span>6 chapters</span><span>15+ diagrams</span><span>exam traps</span></div>
+      <span class="go">Start learning &#8594;</span>
+    </a>
+    <a class="card sim" href="../istqub/questions.html">
+      <span class="icon">&#9201;&#65039;</span>
+      <h2>Exam Simulator</h2>
+      <p>The four official CTFL sample exams with a real countdown, pass/fail scoring and full explanations for every answer.</p>
+      <div class="meta"><span>4 exams &#183; 160 questions</span><span>60 min timer</span><span>pass at 26/40</span></div>
+      <span class="go">Take an exam &#8594;</span>
+    </a>
+    <a class="card guidetr" href="../istqub/istqb_study_guide_tr.html">
+      <span class="icon">&#129513;</span>
+      <h2>&#199;al&#305;&#351;ma Rehberi &#183; T&#252;rk&#231;e</h2>
+      <p>CTFL v4.0 syllabus'unun tamam&#305; tek bir g&#246;rsel sayfada &#8212; her kavram i&#231;in diyagram, her b&#246;l&#252;m&#252;n sonunda s&#305;nav tuzaklar&#305;.</p>
+      <div class="meta"><span>6 b&#246;l&#252;m</span><span>40+ konu ba&#351;l&#305;&#287;&#305;</span><span>s&#305;nav tuzaklar&#305;</span></div>
+      <span class="go">&#214;&#287;renmeye ba&#351;la &#8594;</span>
+    </a>
+    <a class="card simtr" href="../istqub/questions_tr.html">
+      <span class="icon">&#127481;&#127479;</span>
+      <h2>S&#305;nav Sim&#252;lat&#246;r&#252; &#183; T&#252;rk&#231;e</h2>
+      <p>D&#246;rt resm&#238; ISTQB &#246;rnek s&#305;nav&#305; ve syllabus'a g&#246;re haz&#305;rlanm&#305;&#351; d&#246;rt ek pratik seti &#8212; tamam&#305; T&#252;rk&#231;e. Her cevapta &#246;nce anahtar gerek&#231;esi, alt&#305;nda isteyene ayr&#305;nt&#305;l&#305; a&#231;&#305;klama.</p>
+      <div class="meta"><span>8 s&#305;nav &#183; 320 soru</span><span>60 dk kronometre</span><span>ge&#231;me notu 26/40</span></div>
+      <span class="go">S&#305;nava ba&#351;la &#8594;</span>
+    </a>
+    <a class="card ders" href="../istqub/ders_programi_tr.html">
+      <span class="icon">&#128220;</span>
+      <h2>Ders Programı &#183; T&#252;rk&#231;e</h2>
+      <p>Resm&#238; CTFL v4.0.1 ders programının sadele&#351;tirilmi&#351; hali &#8212; telif, index ve tekrarlar atıldı, geriye yalnızca konular kaldı. Her konunun altında o &#246;&#287;renme hedefinden &#231;ıkmı&#351; sınav soruları a&#231;ılır panelde.</p>
+      <div class="meta"><span>6 konu &#183; 64 &#246;&#287;renme hedefi</span><span>320 soru</span><span>arama &amp; i&#231;indekiler</span></div>
+      <span class="go">Ders programını a&#231; &#8594;</span>
+    </a>
+    <a class="card test" href="../bolum_testleri/">
+      <span class="icon">&#9989;</span>
+      <h2>B&#246;l&#252;m Bazlı Testler</h2>
+      <p>Bitirdi&#287;in konunun b&#252;t&#252;n sorularıyla kendini sına. Onar soruluk setler, i&#351;aretler i&#351;aretlemez cevap, her cevabın ba&#351;ında ilgili konunun ba&#287;lantısı.</p>
+      <div class="meta"><span>1. ve 2. konu hazır</span><span>112 soru &#183; 12 set</span><span>TR / EN</span></div>
+      <span class="go">Testlere ge&#231; &#8594;</span>
+    </a>
+    <a class="card konu" href="../konular/">
+      <span class="icon">&#128218;</span>
+      <h2>Konular &#183; T&#252;rk&#231;e</h2>
+      <p>Her konu i&#231;in derin anlat&#305;m: neden b&#246;yle &#231;&#246;z&#252;l&#252;yor, hangi ad&#305;mlarla &#231;&#246;z&#252;l&#252;yor, klasik tuzaklar &#8212; ve sonunda resm&#238; s&#305;navdan ger&#231;ek bir sorunun ba&#351;tan sona &#231;&#246;z&#252;m&#252;.</p>
+      <div class="meta"><span>S&#305;n&#305;r De&#287;er Analizi (BVA)</span><span>diyagraml&#305;</span><span>tam &#231;&#246;z&#252;ml&#252; soru</span></div>
+      <span class="go">Konular&#305; a&#231; &#8594;</span>
+    </a>
+    <a class="card pratik" href="../istqub/pratik_testler_tr.html">
+      <span class="icon">&#127919;</span>
+      <h2>Konu Pratikleri &#183; T&#252;rk&#231;e</h2>
+      <p>S&#305;nav&#305;n en &#231;ok hesap isteyen be&#351; konusu: onaylama/regresyon, denklik paylar&#305;, s&#305;n&#305;r de&#287;er analizi, karar tablosu, durum ge&#231;i&#351;i. Her test bitince ad&#305;m ad&#305;m &#231;&#246;z&#252;m &#8212; diyagram&#305; ve tablosuyla.</p>
+      <div class="meta"><span>10 test &#183; 50 soru</span><span>5 konu</span><span>ayr&#305;nt&#305;l&#305; &#231;&#246;z&#252;mler</span></div>
+      <span class="go">Pratik yap &#8594;</span>
+    </a>
+    <a class="card yontem" href="../istqub/cozum_yontemleri_tr.html">
+      <span class="icon">&#128214;</span>
+      <h2>&#199;&#246;z&#252;m Y&#246;ntemleri &#183; T&#252;rk&#231;e</h2>
+      <p>Hesap isteyen be&#351; konunun soru tipleri nas&#305;l &#231;&#246;z&#252;l&#252;r? Her konu i&#231;in ad&#305;m ad&#305;m re&#231;ete, birer basit &#246;rnek &#252;zerinden tam &#231;&#246;z&#252;m, klasik tuzaklar ve tek sayfal&#305;k form&#252;l &#246;zeti.</p>
+      <div class="meta"><span>5 konu</span><span>ad&#305;m ad&#305;m re&#231;ete</span><span>form&#252;l &#246;zeti</span></div>
+      <span class="go">Y&#246;ntemi &#246;&#287;ren &#8594;</span>
+    </a>
+    <a class="card yol" href="../yol-haritasi.html">
+      <span class="icon">&#128506;&#65039;</span>
+      <h2>QA Yol Haritası</h2>
+      <p>ISTQB'den sonra ne &#246;&#287;renmeli? Scrum Master ge&#231;mi&#351;iyle QA Engineer / Manuel QA pozisyonuna giden iki plan: 4 haftalık hızlı rota ve 5 fazlık tam rota. Her adım i&#351;aretlenebilir, ilerleme kaydedilir.</p>
+      <div class="meta"><span>Hızlı plan &#183; 4 hafta</span><span>Tam plan &#183; 5 faz</span><span>38 g&#246;rev &#183; portf&#246;y &amp; m&#252;lakat</span></div>
+      <span class="go">Yol haritasını a&#231; &#8594;</span>
+    </a>
+  </div>
+  <footer>Java examples from the java_tutorial practice repo &#183; ISTQB&#174; questions &#169; ISTQB, from the official CTFL v4.0 sample exams.</footer>
+</div>
+</body>
+</html>

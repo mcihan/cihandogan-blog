@@ -1,0 +1,1209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Career Hub</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: ana sayfada kutucuklar; her kutu tek sütunluk bir sayfa açar. Üstte sabit dil düğmesi ve ana sayfa bağlantısı. */
+:root{
+  --bg:#f3f6f7; --surface:#ffffff; --ink:#14212b; --muted:#566774; --line:#d6dee4;
+  --accent:#0b6b6b; --accent-soft:#dcefee; --prev:#a9b8c2;
+  --warn:#a14a07; --warn-soft:#fbead8; --bad:#a8231c; --bad-soft:#fbe3e1;
+  --code-bg:#eaf0f2; --c-str:#2b6a2f; --c-method:#7a3db8;
+  --display:"Space Grotesk","Segoe UI",system-ui,sans-serif;
+  --body:"Inter","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e161b; --surface:#162027; --ink:#e7eef2; --muted:#94a5b1; --line:#2a3741;
+    --accent:#55c7c3; --accent-soft:#143535; --prev:#4a5b67;
+    --warn:#f0a660; --warn-soft:#3a2713; --bad:#f28c84; --bad-soft:#3d1c1a;
+    --code-bg:#0b1216; --c-str:#9bd39f; --c-method:#c9a2f2;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e161b; --surface:#162027; --ink:#e7eef2; --muted:#94a5b1; --line:#2a3741;
+  --accent:#55c7c3; --accent-soft:#143535; --prev:#4a5b67;
+  --warn:#f0a660; --warn-soft:#3a2713; --bad:#f28c84; --bad-soft:#3d1c1a;
+  --code-bg:#0b1216; --c-str:#9bd39f; --c-method:#c9a2f2;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none !important}
+.toc a.on{border-color:var(--accent); color:var(--ink); font-weight:600}
+.shell > .sitetabs{margin-top:-14px}
+html[data-lang="tr"] .e{display:none !important}
+html:not([data-lang="tr"]) .t{display:none !important}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.6;
+  padding-block:20px 64px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+.shell{max-width:820px; margin:0 auto; display:flex; flex-direction:column; gap:32px}
+.topbar{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; padding-bottom:14px; border-bottom:1px solid var(--line)}
+.brand{font-family:var(--display); font-weight:700; font-size:1.05rem; color:var(--ink); text-decoration:none}
+.topbar .right{display:flex; align-items:center; gap:10px}
+.back{font-size:.9rem; text-decoration:none}
+.langbtn{font-family:var(--mono); font-size:.72rem; letter-spacing:.04em; padding:4px 10px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--muted); cursor:pointer}
+html:not([data-lang="tr"]) .langbtn .le, html[data-lang="tr"] .langbtn .lt{color:var(--accent); font-weight:500}
+.langbtn:hover{background:var(--accent-soft)}
+.langbtn:focus-visible,.tile:focus-visible,.brand:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+.page{display:flex; flex-direction:column; gap:48px}
+section{display:flex; flex-direction:column; gap:16px; min-width:0}
+h1,h2,h3{font-family:var(--display); text-wrap:balance; margin:0; line-height:1.2}
+h1{font-size:clamp(1.9rem,5vw,2.6rem); font-weight:700; letter-spacing:-0.01em}
+h2{font-size:1.45rem; font-weight:600}
+h3{font-size:1.05rem; font-weight:600}
+p{margin:0; max-width:68ch}
+.eyebrow{font-family:var(--mono); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.lede{font-size:1.1rem; color:var(--muted)}
+.verdict{border-left:4px solid var(--accent); padding:4px 0 4px 16px; font-size:1.1rem; font-weight:500}
+.note{font-size:.88rem; color:var(--muted)}
+header{display:flex; flex-direction:column; gap:12px}
+
+/* home tiles */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px}
+.tile{display:flex; flex-direction:column; gap:10px; padding:22px; background:var(--surface); border:1px solid var(--line); border-radius:10px; text-decoration:none; color:var(--ink); min-width:0}
+.tile:hover{border-color:var(--accent)}
+.tile .tag{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent)}
+.tile h2{font-size:1.25rem}
+.tile p{font-size:.93rem; color:var(--muted)}
+.tile .go{margin-top:auto; font-size:.9rem; font-weight:600; color:var(--accent)}
+
+/* chart */
+.chart{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:14px}
+.legend{display:flex; flex-wrap:wrap; gap:16px; font-size:.82rem; color:var(--muted)}
+.legend > span{display:inline-flex; align-items:center; gap:6px}
+.sw{width:12px; height:12px; border-radius:2px; display:inline-block}
+.sw.now{background:var(--accent)} .sw.prev{background:var(--prev)}
+.row{display:grid; grid-template-columns:170px 1fr; gap:6px 14px; align-items:center}
+.row .lbl{font-size:.9rem; font-weight:500}
+.bars{display:flex; flex-direction:column; gap:3px; min-width:0}
+.bar{display:flex; align-items:center; gap:8px}
+.bar i{display:block; height:12px; border-radius:2px; min-width:2px}
+.bar.now i{background:var(--accent)} .bar.prev i{background:var(--prev)}
+.bar b{font-family:var(--mono); font-size:.78rem; font-weight:500; font-variant-numeric:tabular-nums; white-space:nowrap}
+.bar.prev b{color:var(--muted)}
+@media (max-width:520px){ .row{grid-template-columns:1fr} }
+
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.92rem; min-width:520px}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:500}
+td.n,th.n{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:.86rem}
+td.m{font-family:var(--mono); font-size:.86rem; font-weight:500; white-space:nowrap; color:var(--accent)}
+
+ul.plain,ol.plain{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:10px; max-width:68ch}
+code{font-family:var(--mono); font-size:.86em; background:var(--code-bg); padding:1px 5px; border-radius:4px; overflow-wrap:anywhere}
+pre{margin:0; background:var(--code-bg); border:1px solid var(--line); border-radius:8px; padding:14px 16px; overflow-x:auto; font-family:var(--mono); font-size:.84rem; line-height:1.55}
+pre code{background:none; padding:0; font-size:inherit; overflow-wrap:normal}
+pre .k{color:var(--accent)} pre .s{color:var(--c-str)} pre .n{color:var(--warn)} pre .b{color:var(--bad)}
+pre .m{color:var(--c-method); font-weight:500} pre .c{color:var(--muted); font-style:italic}
+.codepair{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; align-items:start}
+.codepair pre{min-width:0}
+
+/* blockers */
+.bugs{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:8px; background:var(--surface)}
+.bug{display:grid; grid-template-columns:auto 1fr; gap:4px 14px; padding:16px 18px; border-bottom:1px solid var(--line)}
+.bug:last-child{border-bottom:0}
+.bug .id{font-family:var(--mono); font-size:.78rem; color:var(--muted); padding-top:3px}
+.bug .body{display:flex; flex-direction:column; gap:6px; min-width:0}
+.pill{font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; border-radius:999px; align-self:flex-start}
+.pill.bad{background:var(--bad-soft); color:var(--bad)}
+.pill.warn{background:var(--warn-soft); color:var(--warn)}
+.bug p{font-size:.95rem}
+
+/* roadmap */
+.road{display:flex; flex-direction:column; gap:14px}
+.roadhead{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 14px}
+.sprint{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:18px 20px; display:flex; flex-direction:column; gap:12px}
+.sprint .top{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px}
+.sprint .wk{font-family:var(--mono); font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.tasks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px}
+.tasks label{display:grid; grid-template-columns:20px 1fr; gap:10px; align-items:start; cursor:pointer; font-size:.95rem}
+.tasks input{width:18px; height:18px; margin:3px 0 0; accent-color:var(--accent)}
+.tasks input:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.tasks input:checked + span{color:var(--muted); text-decoration:line-through}
+.outcome{font-size:.92rem; background:var(--accent-soft); border-radius:6px; padding:10px 14px; max-width:none}
+.progress{font-family:var(--mono); font-size:.78rem; color:var(--muted); font-variant-numeric:tabular-nums}
+
+/* tutorial */
+.toc{display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0}
+.toc a{display:inline-block; font-size:.85rem; padding:4px 12px; border:1px solid var(--line); border-radius:999px; background:var(--surface); text-decoration:none}
+.toc a:hover{border-color:var(--accent)}
+.lesson .num{font-family:var(--mono); font-size:.75rem; letter-spacing:.08em; color:var(--accent)}
+.tip{font-size:.92rem; background:var(--warn-soft); color:var(--ink); border-radius:6px; padding:10px 14px; max-width:none}
+.jwt{font-family:var(--mono); font-size:.9rem; overflow-wrap:anywhere}
+.jwt .h{color:var(--bad)} .jwt .p{color:var(--accent)} .jwt .s{color:var(--warn)}
+
+.sources{font-size:.86rem; display:flex; flex-direction:column; gap:6px; padding-left:20px; margin:0}
+a{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+hr{border:0; border-top:1px solid var(--line); margin:0}
+</style>
+<meta name="robots" content="noindex,nofollow">
+<style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
+</head>
+<body>
+<!-- deniz-pw-gate -->
+<div id="pw-gate" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+  <div class="pw-box">
+    <div class="pw-lock" aria-hidden="true">&#128274;</div>
+    <h2 id="pw-h">Özel sayfa</h2>
+    <p>Bu bölüm herkese açık değil. Devam etmek için şifreyi gir.</p>
+    <form id="pw-form" autocomplete="on">
+      <input type="password" id="pw-input" placeholder="Şifre" autocomplete="current-password" autofocus>
+      <button type="submit">Aç</button>
+      <div id="pw-error" role="alert"></div>
+    </form>
+  </div>
+</div>
+<style>
+#pw-gate{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(135deg,#312e81 0%,#4338ca 45%,#0e7490 100%);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#pw-gate .pw-box{background:#fff;color:#1c1c2c;border-radius:20px;padding:34px 28px;max-width:380px;width:100%;
+  text-align:center;box-shadow:0 20px 50px -16px rgba(0,0,0,.55)}
+#pw-gate .pw-lock{font-size:2.1rem;margin-bottom:8px;line-height:1}
+#pw-gate h2{font-size:1.22rem;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+#pw-gate p{font-size:.88rem;color:#61617a;margin:0 0 20px;line-height:1.5}
+#pw-gate input{width:100%;border:1.5px solid #e5e4ef;border-radius:11px;padding:12px 14px;font-size:1rem;
+  outline:none;margin-bottom:10px;font-family:inherit;color:#1c1c2c;background:#fff}
+#pw-gate input:focus{border-color:#4f46e5;box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+#pw-gate button{width:100%;border:0;border-radius:11px;background:#4f46e5;color:#fff;padding:12px 14px;
+  font-size:.98rem;font-weight:700;cursor:pointer;font-family:inherit}
+#pw-gate button:hover{background:#4338ca}
+#pw-error{color:#dc2626;font-size:.85rem;min-height:20px;margin-top:8px}
+</style>
+<script>
+(function(){
+  var KEY="deniz-auth", HASH="2676a34d78a5a52bac7ea209cd8896af7f7eb5554d822d5058987a5ccd427480";
+  function hex(b){return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+  /* saf JS SHA-256 — crypto.subtle olmayan ortamlar icin yedek */
+  function sha256js(s){
+    function rr(n,x){return (x>>>n)|(x<<(32-n))}
+    var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var u=unescape(encodeURIComponent(s)), m=[], i;
+    for(i=0;i<u.length;i++) m.push(u.charCodeAt(i));
+    var bl=m.length*8; m.push(0x80);
+    while(m.length%64!==56) m.push(0);
+    for(i=7;i>=0;i--) m.push((i<4?Math.floor(bl/Math.pow(2,i*8)):0)&0xff);
+    for(var o=0;o<m.length;o+=64){
+      var w=new Array(64);
+      for(i=0;i<16;i++) w[i]=(m[o+i*4]<<24)|(m[o+i*4+1]<<16)|(m[o+i*4+2]<<8)|m[o+i*4+3];
+      for(i=16;i<64;i++){
+        var s0=rr(7,w[i-15])^rr(18,w[i-15])^(w[i-15]>>>3),
+            s1=rr(17,w[i-2])^rr(19,w[i-2])^(w[i-2]>>>10);
+        w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for(i=0;i<64;i++){
+        var S1=rr(6,e)^rr(11,e)^rr(25,e), ch=(e&f)^(~e&g),
+            t1=(h+S1+ch+K[i]+w[i])|0,
+            S0=rr(2,a)^rr(13,a)^rr(22,a), mj=(a&b)^(a&c)^(b&c),
+            t2=(S0+mj)|0;
+        h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0;
+    }
+    return H.map(function(x){return (x>>>0).toString(16).padStart(8,"0")}).join("");
+  }
+  function sha256(t){
+    if(window.crypto && crypto.subtle && window.isSecureContext){
+      return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(hex)
+        .catch(function(){ return sha256js(t); });
+    }
+    return Promise.resolve(sha256js(t));
+  }
+  function unlock(){
+    var h=document.getElementById("pw-hide"); if(h) h.remove();
+    var g=document.getElementById("pw-gate"); if(g) g.remove();
+  }
+  try{ if(localStorage.getItem(KEY)===HASH){ unlock(); return; } }catch(e){}
+  function wire(){
+    var f=document.getElementById("pw-form"); if(!f) return;
+    f.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      var inp=document.getElementById("pw-input"), err=document.getElementById("pw-error");
+      sha256(inp.value).then(function(h){
+        if(h===HASH){ try{ localStorage.setItem(KEY,HASH); }catch(e){} unlock(); }
+        else { err.textContent="Şifre yanlış, tekrar dene."; inp.value=""; inp.focus(); }
+      });
+    });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire); else wire();
+})();
+</script>
+<div class="shell">
+
+<nav class="topbar">
+  <a class="brand" href="../">&larr; Study Hub</a>
+  <div class="right">
+    <button class="langbtn" id="langbtn" type="button" aria-label="Change language"><span class="lt">TR</span> / <span class="le">ENG</span></button>
+  </div>
+</nav>
+<ul class="toc sitetabs">
+  <li><a href="#roadmap" data-tab="roadmap">QA Job Roadmap</a></li>
+  <li><a href="#rest-basics" data-tab="rest-basics">REST API Basics</a></li>
+  <li><a href="#api-practice" data-tab="api-practice">API Practice</a></li>
+  <li><a href="#sql-refresher" data-tab="sql-refresher">SQL Refresher</a></li>
+</ul>
+
+<!-- ============ ROADMAP ============ -->
+<div class="page view" data-view="roadmap">
+
+<header>
+  <span class="eyebrow"><span class="e">QA Job Roadmap · data from 10 November 2026</span><span class="t">QA Job Roadmap · 10 Kasım 2026 verisiyle</span></span>
+  <h1><span class="e">Moving into QA in the UK: the market and two roadmaps</span><span class="t">UK'de QA'e geçiş: piyasa durumu ve iki yol haritası</span></h1>
+  <p class="lede"><span class="e">Job ad numbers, your chances today, and a 3-week plan and a 2-month plan for moving from Scrum Master and BA work into testing.</span><span class="t">Scrum Master ve BA geçmişinden tester'lığa geçiş için güncel ilan verisi, mevcut şansın ve 3 haftalık ile 2 aylık hazırlık planları.</span></p>
+  <p class="verdict"><span class="e">There are QA jobs, and more than last year. But there are almost no "manual tester only" jobs. Aim to be a QA / Test Analyst who knows manual testing + API + SQL + basic Playwright.</span><span class="t">QA işi var ve geçen yıla göre artmış. Ama "sadece manuel tester" ilanı neredeyse yok; hedef manuel + API + SQL + temel Playwright bilen QA / Test Analyst olmalı.</span></p>
+</header>
+
+<section>
+  <span class="eyebrow"><span class="e">Market</span><span class="t">Piyasa</span></span>
+  <h2><span class="e">Are there jobs right now?</span><span class="t">Güncel iş var mı?</span></h2>
+  <p><span class="e">UK permanent job ads on ITJobsWatch: the 6 months to 10 November 2026, and the same period last year.</span><span class="t">UK kalıcı ilanlar, ITJobsWatch, 10 Kasım 2026'ya kadarki son 6 ay ve geçen yılın aynı dönemi.</span></p>
+
+  <div class="chart" role="img" aria-label="Job ads: Test Automation 2718 (last year 1390), QA Engineer 495 (79), Manual Testing 210 (123), Test Analyst 66 (92), Manual Tester 9 (8)">
+    <div class="legend"><span><i class="sw now"></i><span class="e">Last 6 months</span><span class="t">Son 6 ay</span></span><span><i class="sw prev"></i><span class="e">Same period last year</span><span class="t">Geçen yıl aynı dönem</span></span></div>
+    <div class="row"><div class="lbl"><span class="e">Ads with "Test Automation"</span><span class="t">"Test Automation" geçen</span></div><div class="bars">
+      <div class="bar now"><i style="width:86%"></i><b><span class="e">2,718</span><span class="t">2.718</span></b></div>
+      <div class="bar prev"><i style="width:43.98%"></i><b><span class="e">1,390</span><span class="t">1.390</span></b></div></div></div>
+    <div class="row"><div class="lbl"><span class="e">QA Engineer (job title)</span><span class="t">QA Engineer (unvan)</span></div><div class="bars">
+      <div class="bar now"><i style="width:15.66%"></i><b>495</b></div>
+      <div class="bar prev"><i style="width:2.5%"></i><b>79</b></div></div></div>
+    <div class="row"><div class="lbl"><span class="e">Ads with "Manual Testing"</span><span class="t">"Manual Testing" geçen</span></div><div class="bars">
+      <div class="bar now"><i style="width:6.64%"></i><b>210</b></div>
+      <div class="bar prev"><i style="width:3.89%"></i><b>123</b></div></div></div>
+    <div class="row"><div class="lbl"><span class="e">Test Analyst (job title)</span><span class="t">Test Analyst (unvan)</span></div><div class="bars">
+      <div class="bar now"><i style="width:2.09%"></i><b>66</b></div>
+      <div class="bar prev"><i style="width:2.91%"></i><b>92</b></div></div></div>
+    <div class="row"><div class="lbl"><span class="e">Manual Tester (job title)</span><span class="t">Manual Tester (unvan)</span></div><div class="bars">
+      <div class="bar now"><i style="width:0.28%"></i><b>9</b></div>
+      <div class="bar prev"><i style="width:0.25%"></i><b>8</b></div></div></div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Type of ad</span><span class="t">İlan türü</span></th><th class="n"><span class="e">Last 6 months</span><span class="t">Son 6 ay</span></th><th class="n"><span class="e">Last year</span><span class="t">Geçen yıl</span></th><th class="n"><span class="e">Median salary</span><span class="t">Medyan maaş</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="e">Ads with "Test Automation"</span><span class="t">"Test Automation" geçen ilanlar</span></td><td class="n"><span class="e">2,718</span><span class="t">2.718</span></td><td class="n"><span class="e">1,390</span><span class="t">1.390</span></td><td class="n"><span class="e">£62,000</span><span class="t">£62.000</span></td></tr>
+        <tr><td><span class="e">QA Engineer (job title)</span><span class="t">QA Engineer (unvan)</span></td><td class="n">495</td><td class="n">79</td><td class="n"><span class="e">£54,490</span><span class="t">£54.490</span></td></tr>
+        <tr><td><span class="e">Ads with "Manual Testing"</span><span class="t">"Manual Testing" geçen ilanlar</span></td><td class="n">210</td><td class="n">123</td><td class="n"><span class="e">£50,000</span><span class="t">£50.000</span></td></tr>
+        <tr><td><span class="e">Test Analyst (job title)</span><span class="t">Test Analyst (unvan)</span></td><td class="n">66</td><td class="n">92</td><td class="n"><span class="e">£42,500</span><span class="t">£42.500</span></td></tr>
+        <tr><td><span class="e">Manual Tester (job title)</span><span class="t">Manual Tester (unvan)</span></td><td class="n">9</td><td class="n">8</td><td class="n"><span class="e">£33,500</span><span class="t">£33.500</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul class="plain">
+    <li><span class="e"><strong>Do not aim for manual testing only.</strong> Of the 210 ads that ask for manual testing, 90.5% also ask for automation. Only 9 ads in 6 months had the title "Manual Tester".</span><span class="t"><strong>Saf manuel tester'lık hedef olmamalı.</strong> Manuel test isteyen 210 ilanın %90,5'i aynı zamanda otomasyon istiyor. Unvanı "Manual Tester" olan ilan 6 ayda sadece 9.</span></li>
+    <li><span class="e"><strong>Most ads are for QA Engineer and automation.</strong> Playwright is going up (134 → 268 ads). Selenium is going down (262 → 197).</span><span class="t"><strong>En çok ilan QA Engineer ve otomasyon tarafında.</strong> Araç olarak Playwright yükseliyor (134 → 268 ilan), Selenium düşüyor (262 → 197).</span></li>
+    <li><span class="e"><strong>The closest roles for you are Test Analyst / QA Analyst / UAT Tester.</strong> There are fewer ads, but 41% of Test Analyst ads ask for SQL and 38% ask for Agile. Your BA background helps here.</span><span class="t"><strong>Sana en yakın rol Test Analyst / QA Analyst / UAT Tester.</strong> İlan sayısı az, ama Test Analyst ilanlarının %41'i SQL, %38'i Agile istiyor ve BA geçmişin burada avantaj.</span></li>
+    <li><span class="e"><strong>The job market in general is weak.</strong> Total UK vacancies are at a 5-year low and permanent hiring fell in October. IT is one of the few areas where demand is growing. In ads that state a level, there are 14 senior jobs for every 1 junior job.</span><span class="t"><strong>Genel piyasa zayıf.</strong> UK'de toplam açık pozisyon 5 yılın en düşüğünde ve Ekim'de kalıcı işe alımlar düştü. IT talebi ise artan birkaç alandan biri. Seviye belirten ilanlarda 14 senior'a 1 junior düşüyor.</span></li>
+  </ul>
+  <p class="note"><span class="e">ITJobsWatch does not include every ad. LinkedIn and Indeed show higher numbers, but the ratios are similar. The Manual Tester median salary comes from only 6 ads.</span><span class="t">ITJobsWatch tüm ilanları kapsamaz. LinkedIn ve Indeed'de mutlak sayılar daha yüksektir, oranlar benzerdir. Manual Tester maaş medyanı sadece 6 ilana dayanıyor.</span></p>
+</section>
+
+<section>
+  <span class="eyebrow"><span class="e">Where you are now</span><span class="t">Mevcut durum</span></span>
+  <h2><span class="e">Your chances today</span><span class="t">Şu an iş bulma olasılığın</span></h2>
+  <p><span class="e">Low to medium, even with ISTQB and the Python certificate on your CV. This is an estimate, not data. Certificates get you past filters, but the hiring person looks for experience and proof. The reason is not your ability. It is three clear blockers, and you can fix all three in 2 months.</span><span class="t">ISTQB ve Python sertifikası CV'de olsa bile düşük-orta. Bu bir tahmin, veri değil. Sertifikalar seni filtrelerden geçirir, ama işe alan kişi deneyim ve kanıt arar. Sebebi yetenek eksikliği değil, üç somut engel. Üçü de 2 ayda düzeltilebilir.</span></p>
+
+  <div class="bugs">
+    <div class="bug"><span class="id"><span class="e">BLOCKER-1</span><span class="t">ENGEL-1</span></span><div class="body">
+      <span class="pill bad"><span class="e">Blocker · fix in 1 week</span><span class="t">Blocker · 1 haftada çözülür</span></span>
+      <h3><span class="e">Your CV does not show testing experience</span><span class="t">CV'de test deneyimi görünmüyor</span></h3>
+      <p><span class="e">The certificates are there, but the summary, job titles and bullet points still describe a Scrum Master and BA. UAT, test cases and defect tracking must appear in your work experience.</span><span class="t">ISTQB ve Python sertifikası var, ama özet, unvanlar ve iş maddeleri hâlâ Scrum Master ve BA anlatıyor. UAT, test case ve defect takibi iş deneyimi maddelerinde geçmeli.</span></p></div></div>
+    <div class="bug"><span class="id"><span class="e">BLOCKER-2</span><span class="t">ENGEL-2</span></span><div class="body">
+      <span class="pill warn"><span class="e">Major · a portfolio closes it</span><span class="t">Major · portföyle kapanır</span></span>
+      <h3><span class="e">A gap since January 2023</span><span class="t">Ocak 2023'ten beri boşluk</span></h3>
+      <p><span class="e">Fill it with certificates and projects on GitHub. Have a short, clear answer ready for interviews.</span><span class="t">Sertifikalar ve GitHub'daki projelerle doldurulmalı. Mülakatta net ve kısa bir cevabın hazır olmalı.</span></p></div></div>
+    <div class="bug"><span class="id"><span class="e">BLOCKER-3</span><span class="t">ENGEL-3</span></span><div class="body">
+      <span class="pill warn"><span class="e">Major · fix in 2 months</span><span class="t">Major · 2 ayda çözülür</span></span>
+      <h3><span class="e">No proof of automation</span><span class="t">Otomasyon kanıtı yok</span></h3>
+      <p><span class="e">Most ads ask for at least a basic level. A working Playwright project on GitHub is enough proof.</span><span class="t">İlanların çoğu en az temel seviye istiyor. GitHub'da çalışan bir Playwright projesi bunu karşılar.</span></p></div></div>
+  </div>
+
+  <p><span class="e">Even after you prepare, expect more than 100 applications and a few months of searching. What you already have is useful: ISTQB, Agile experience, Postman, basic Python and a BA background all help in the right roles.</span><span class="t">Hazırlıktan sonra bile gerçekçi beklenti 100'den fazla başvuru ve birkaç aylık bir süreçtir. Elindekiler boşa gitmez: ISTQB, Agile deneyimi, Postman, Python temeli ve BA geçmişi doğru rollerde işe yarar.</span></p>
+</section>
+
+<section class="road" data-road="r1">
+  <span class="eyebrow"><span class="e">Roadmap 1</span><span class="t">Yol haritası 1</span></span>
+  <div class="roadhead"><h2><span class="e">Ready to apply in 3 weeks</span><span class="t">3 haftada başvuruya hazır</span></h2><span class="progress" data-progress="r1"></span></div>
+  <p><span class="e">4-5 hours a day. Tick the boxes as you go. Your progress is saved in this browser.</span><span class="t">Günde 4-5 saat. Kutuları işaretledikçe ilerlemen bu tarayıcıda saklanır.</span></p>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Week 1</span><span class="t">Hafta 1</span></span><h3><span class="e">CV, SQL and manual testing practice</span><span class="t">CV, SQL ve manuel test pratiği</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r1-1"><span><span class="e">Turn your CV into a QA CV: rewrite the summary as a tester, move ISTQB CTFL to the top, and add the UAT work from your BA jobs (writing test scenarios, tracking defects, sign-off) to the bullet points.</span><span class="t">CV'yi QA'e çevir: özeti tester olarak yeniden yaz, ISTQB CTFL'i en üste taşı, BA rollerindeki UAT işlerini (test senaryosu yazma, defect takibi, sign-off) iş maddelerine açıkça yaz.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-2"><span><span class="e">Change your LinkedIn headline to "QA / Test Analyst".</span><span class="t">LinkedIn başlığını "QA / Test Analyst" yap.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-3"><span><span class="e">Refresh SQL for 1 hour every day: JOIN, GROUP BY, HAVING, subquery.</span><span class="t">SQL'i her gün 1 saat tazele: JOIN, GROUP BY, HAVING, subquery.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-4"><span><span class="e">Write 30-40 test cases and 10 bug reports on a demo site (saucedemo, automationexercise). Use boundary value, equivalence partitioning and decision table.</span><span class="t">Bir demo sitede (saucedemo, automationexercise) 30-40 test case ve 10 bug report yaz. Boundary value, equivalence partitioning ve decision table tekniklerini uygula.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Week 2</span><span class="t">Hafta 2</span></span><h3><span class="e">API testing and portfolio</span><span class="t">API testi ve portföy</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r1-5"><span><span class="e">Build a Postman collection with assertions for a public API. See the <a href="#api-practice">API Practice</a> page.</span><span class="t">Public bir API için Postman'de assertion'lı bir collection hazırla. <a href="#api-practice">API Practice</a> sayfasına bak.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-6"><span><span class="e">Learn how test management works in Jira (Xray or Zephyr).</span><span class="t">Jira'da test yönetimi (Xray veya Zephyr) mantığını öğren.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-7"><span><span class="e">Put everything on GitHub: test plan, test cases, bug reports, Postman collection.</span><span class="t">Hepsini GitHub'a koy: test planı, test case'ler, bug report'lar, Postman collection.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-8"><span><span class="e">Start applying at the end of the week.</span><span class="t">Hafta sonunda başvurulara başla.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Week 3</span><span class="t">Hafta 3</span></span><h3><span class="e">Basic Playwright and interviews</span><span class="t">Temel Playwright ve mülakat</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r1-9"><span><span class="e">Write 5-10 simple Playwright tests in Python (login, add to cart). The goal is to be able to say "I know the basics".</span><span class="t">Python ile 5-10 basit Playwright testi yaz (login, sepete ekleme). Amaç "temel seviyede biliyorum" diyebilmek.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-10"><span><span class="e">Interview prep: test case vs scenario, severity vs priority, bug life cycle, "how would you test this login page".</span><span class="t">Mülakat hazırlığı: test case ile scenario farkı, severity ile priority farkı, bug life cycle, "bu login sayfasını nasıl test edersin".</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-11"><span><span class="e">Prepare and rehearse a clear answer about the 4-year gap.</span><span class="t">4 yıllık boşluk için net bir cevap hazırla ve prova et.</span></span></label></li>
+      <li><label><input type="checkbox" id="r1-12"><span><span class="e">Send 5-10 applications a day: Test Analyst, QA Analyst, UAT Tester, Junior QA Engineer.</span><span class="t">Günde 5-10 başvuru: Test Analyst, QA Analyst, UAT Tester, Junior QA Engineer.</span></span></label></li>
+    </ul>
+  </div>
+
+  <p class="outcome"><span class="e"><strong>Result:</strong> You fit Test Analyst and UAT ads. You do not yet fit most QA Engineer ads.</span><span class="t"><strong>Sonuç:</strong> Test Analyst ve UAT ilanlarına uygun olursun. QA Engineer ilanlarının çoğuna henüz olmazsın.</span></p>
+</section>
+
+<section class="road" data-road="r2">
+  <span class="eyebrow"><span class="e">Roadmap 2</span><span class="t">Yol haritası 2</span></span>
+  <div class="roadhead"><h2><span class="e">Ready in 2 months</span><span class="t">2 ayda hazır</span></h2><span class="progress" data-progress="r2"></span></div>
+  <p><span class="e">The first three weeks are the same as the plan above, applications included. After that comes automation.</span><span class="t">İlk üç hafta yukarıdaki planın aynısı, başvurular dahil. Sonrası otomasyon.</span></p>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Weeks 1-3</span><span class="t">Hafta 1-3</span></span><h3><span class="e">All of Roadmap 1</span><span class="t">Yol haritası 1'in tamamı</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r2-1"><span><span class="e">Finish the 3-week plan and keep applying.</span><span class="t">3 haftalık planı bitir ve başvurulara devam et.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Weeks 4-5</span><span class="t">Hafta 4-5</span></span><h3>Playwright + pytest</h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r2-2"><span><span class="e">Locators, assertions, fixtures and the Page Object Model.</span><span class="t">Locator'lar, assertion'lar, fixture'lar ve Page Object Model.</span></span></label></li>
+      <li><label><input type="checkbox" id="r2-3"><span><span class="e">Build a clean framework with 25-30 tests for a demo site.</span><span class="t">Bir demo site için 25-30 testlik düzgün bir framework kur.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Week 6</span><span class="t">Hafta 6</span></span><h3><span class="e">API automation and SQL</span><span class="t">API otomasyonu ve SQL</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r2-4"><span><span class="e">Write API tests with Python <code>requests</code> + pytest.</span><span class="t">Python <code>requests</code> + pytest ile API testleri yaz.</span></span></label></li>
+      <li><label><input type="checkbox" id="r2-5"><span><span class="e">Get back to mid-level SQL: several JOINs, basic window functions, queries that check data.</span><span class="t">SQL'de orta seviyeye dön: çoklu JOIN, window function temelleri, veri doğrulama sorguları.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Week 7</span><span class="t">Hafta 7</span></span><h3><span class="e">CI/CD and Git</span><span class="t">CI/CD ve Git</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r2-6"><span><span class="e">Run the tests automatically in GitHub Actions and make an HTML report. 53% of automation ads ask for CI/CD.</span><span class="t">Testleri GitHub Actions'ta otomatik çalıştır ve HTML rapor üret. Otomasyon ilanlarının %53'ü CI/CD istiyor.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk"><span class="e">Week 8</span><span class="t">Hafta 8</span></span><h3><span class="e">Polish and interviews</span><span class="t">Cilalama ve mülakat</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="r2-7"><span><span class="e">Tidy the GitHub READMEs and add the project links to your CV.</span><span class="t">GitHub README'lerini düzelt, CV'ye proje linklerini ekle.</span></span></label></li>
+      <li><label><input type="checkbox" id="r2-8"><span><span class="e">Practise live coding (simple Python questions) and do mock interviews.</span><span class="t">Canlı kodlama pratiği (basit Python soruları) ve mock mülakat.</span></span></label></li>
+    </ul>
+  </div>
+
+  <p class="outcome"><span class="e"><strong>Result:</strong> You can also apply for Junior and Mid QA Engineer ads. Going by the ad numbers, your pool of jobs gets many times bigger.</span><span class="t"><strong>Sonuç:</strong> Junior ve Mid QA Engineer ilanlarına da başvurabilirsin. İlan sayılarına göre iş havuzun kat kat büyür.</span></p>
+</section>
+
+<section>
+  <span class="eyebrow"><span class="e">Advice</span><span class="t">Öneri</span></span>
+  <h2><span class="e">Run both as one plan</span><span class="t">İkisini tek plan olarak yürüt</span></h2>
+  <ul class="plain">
+    <li><span class="e">Do the 3-week plan, start applying, and keep going with the 2-month plan at the same time. Do not wait 2 months to apply.</span><span class="t">3 haftalık planı yap, başvurulara başla ve 2 aylık plana paralelde devam et. Başvurmak için 2 ay bekleme.</span></li>
+    <li><span class="e">Stay with Python and drop Java. Knowing one language well is worth more than knowing two halfway.</span><span class="t">Dil olarak Python'da kal, Java'yı bırak. İki dili yarım bilmektense birini iyi bilmek daha değerli.</span></li>
+    <li><span class="e">Some Playwright ads ask for TypeScript. Learn it after you get a job.</span><span class="t">Playwright ilanlarının bir kısmı TypeScript ister. Onu iş bulduktan sonra öğrenirsin.</span></li>
+    <li><span class="e">The first thing to do is rewrite your CV for a QA role.</span><span class="t">İlk yapılacak iş CV'yi QA rolüne göre yeniden yazmak.</span></li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <span class="eyebrow"><span class="e">Sources</span><span class="t">Kaynaklar</span></span>
+  <ul class="sources">
+    <li><a href="https://www.itjobswatch.co.uk/jobs/uk/manual%20testing.do">ITJobsWatch, Manual Testing</a></li>
+    <li><a href="https://www.itjobswatch.co.uk/jobs/uk/manual%20tester.do?p=6">ITJobsWatch, Manual Tester</a></li>
+    <li><a href="https://www.itjobswatch.co.uk/jobs/uk/test%20automation.do">ITJobsWatch, Test Automation</a></li>
+    <li><a href="https://www.itjobswatch.co.uk/jobs/uk/qa%20engineer.do">ITJobsWatch, QA Engineer</a></li>
+    <li><a href="https://www.itjobswatch.co.uk/jobs/uk/test%20analyst.do">ITJobsWatch, Test Analyst</a></li>
+    <li><a href="https://www.itjobswatch.co.uk/jobs/uk/playwright.do?p=6">ITJobsWatch, Playwright</a></li>
+    <li><a href="https://www.itjobswatch.co.uk/jobs/uk/selenium.do">ITJobsWatch, Selenium</a></li>
+    <li><a href="https://britbrief.co.uk/business/employment/uk-hiring-falls-as-vacancies-hit-five-year-low.html">Brit Brief, UK hiring falls as vacancies hit five-year low (9 Nov 2026)</a></li>
+    <li><a href="https://blog.shakersworks.com/en/uk-tech-market-report-october-2026">Shakers, UK tech market report, October 2026</a></li>
+  </ul>
+</section>
+</div>
+
+<!-- ============ REST BASICS ============ -->
+<div class="page view" data-view="rest-basics" hidden>
+
+<header>
+  <span class="eyebrow">REST API Basics</span>
+  <h1><span class="e">REST APIs in simple words</span><span class="t">Basit anlatımla REST API</span></h1>
+  <p class="lede"><span class="e">Everything a tester needs to know before opening Postman: requests, methods, headers, status codes, login and JWT.</span><span class="t">Bir tester'ın Postman'i açmadan önce bilmesi gereken her şey: istekler, metotlar, header'lar, status code'lar, login ve JWT.</span></p>
+  <ul class="toc">
+    <li><a href="#rest-basics" data-jump="l1"><span class="e">1 What is it</span><span class="t">1 Nedir</span></a></li>
+    <li><a href="#rest-basics" data-jump="l2"><span class="e">2 Request</span><span class="t">2 İstek</span></a></li>
+    <li><a href="#rest-basics" data-jump="l3">3 URL</a></li>
+    <li><a href="#rest-basics" data-jump="l4"><span class="e">4 Methods</span><span class="t">4 Metotlar</span></a></li>
+    <li><a href="#rest-basics" data-jump="l5"><span class="e">5 Headers</span><span class="t">5 Header'lar</span></a></li>
+    <li><a href="#rest-basics" data-jump="l6">6 Body</a></li>
+    <li><a href="#rest-basics" data-jump="l7">7 Status codes</a></li>
+    <li><a href="#rest-basics" data-jump="l8"><span class="e">8 Login</span><span class="t">8 Login</span></a></li>
+    <li><a href="#rest-basics" data-jump="l9">9 JWT</a></li>
+    <li><a href="#rest-basics" data-jump="l10"><span class="e">10 What to test</span><span class="t">10 Ne test edilir</span></a></li>
+  </ul>
+</header>
+
+<section class="lesson" id="l1">
+  <span class="num">01</span>
+  <h2><span class="e">What is a REST API?</span><span class="t">REST API nedir?</span></h2>
+  <p><span class="e">An API is a way for two programs to talk to each other. One program asks, the other answers. The one that asks is the <strong>client</strong> (a website, a mobile app, Postman). The one that answers is the <strong>server</strong>.</span><span class="t">API, iki programın birbiriyle konuşma yoludur. Biri sorar, diğeri cevap verir. Soran taraf <strong>client</strong>'tır (bir web sitesi, mobil uygulama, Postman). Cevap veren taraf <strong>server</strong>'dır.</span></p>
+  <p><span class="e">Think of a restaurant. You are the client. The kitchen is the server. The waiter is the API: you give your order to the waiter, and the waiter brings back the food. You never go into the kitchen.</span><span class="t">Bir restoran düşün. Sen client'sın. Mutfak server'dır. Garson ise API'dir: siparişi garsona verirsin, garson yemeği getirir. Mutfağa hiç girmezsin.</span></p>
+  <p><span class="e">REST is a set of rules for building APIs on top of HTTP, the same protocol your browser uses. The main ideas:</span><span class="t">REST, API'leri HTTP üzerine kurmak için bir kurallar bütünüdür. HTTP, tarayıcının da kullandığı protokoldür. Ana fikirler:</span></p>
+  <ul class="plain">
+    <li><span class="e">Everything is a <strong>resource</strong> with its own address (URL): users, products, orders.</span><span class="t">Her şey kendi adresi (URL) olan bir <strong>resource</strong>'tur: kullanıcılar, ürünler, siparişler.</span></li>
+    <li><span class="e">You use HTTP <strong>methods</strong> (GET, POST, PUT...) to say what you want to do with the resource.</span><span class="t">Resource ile ne yapmak istediğini HTTP <strong>metotlarıyla</strong> (GET, POST, PUT...) söylersin.</span></li>
+    <li><span class="e">Data is usually sent as <strong>JSON</strong>.</span><span class="t">Veri genellikle <strong>JSON</strong> olarak gönderilir.</span></li>
+    <li><span class="e">The server is <strong>stateless</strong>: it does not remember you between requests. Every request must carry everything the server needs. This is why tokens exist (see lesson 8).</span><span class="t">Server <strong>stateless</strong>'tır: istekler arasında seni hatırlamaz. Her istek, server'ın ihtiyaç duyduğu her şeyi taşımalıdır. Token'lar bu yüzden var (bkz. ders 8).</span></li>
+  </ul>
+</section>
+
+<section class="lesson" id="l2">
+  <span class="num">02</span>
+  <h2><span class="e">What is inside a request and a response?</span><span class="t">Bir istek ve cevabın içinde ne var?</span></h2>
+  <p><span class="e">A request has four parts: the method, the URL, the headers and (sometimes) the body.</span><span class="t">Bir isteğin dört parçası vardır: metot, URL, header'lar ve (bazen) body.</span></p>
+<pre><code>POST https://api.shop.com/users/login        ← method + URL
+Content-Type: application/json               ← header
+Accept: application/json                     ← header
+
+{                                            ← body
+  "email": "cihan@test.com",
+  "password": "MyPass123"
+}</code></pre>
+  <p><span class="e">A response has three parts: the status code, the headers and the body.</span><span class="t">Bir cevabın üç parçası vardır: status code, header'lar ve body.</span></p>
+<pre><code>200 OK                                       ← status code
+Content-Type: application/json               ← header
+
+{                                            ← body
+  "token": "eyJhbGciOi..."
+}</code></pre>
+</section>
+
+<section class="lesson" id="l3">
+  <span class="num">03</span>
+  <h2><span class="e">The URL: path variables and query parameters</span><span class="t">URL: path variable ve query parametreleri</span></h2>
+<pre data-nohl><code><span class="m">https://api.shop.com</span><span class="k">/users/42/orders</span><span class="n">?status=paid&amp;limit=10</span>
+<span class="m">└──── base URL ────┘</span><span class="k">└─── path ─────┘</span><span class="n">└──── query ────────┘</span></code></pre>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Part</span><span class="t">Parça</span></th><th><span class="e">Example</span><span class="t">Örnek</span></th><th><span class="e">What it is for</span><span class="t">Ne işe yarar</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">Path variable</td><td><code>/users/42</code></td><td><span class="e">Picks <strong>one specific thing</strong>. Here: the user with id 42. In docs it is written <code>/users/{id}</code> or <code>/users/:id</code>.</span><span class="t"><strong>Tek bir belirli şeyi</strong> seçer. Burada: id'si 42 olan kullanıcı. Dokümanda <code>/users/{id}</code> veya <code>/users/:id</code> diye yazılır.</span></td></tr>
+        <tr><td class="m">Query parameter</td><td><code>?status=paid&amp;limit=10</code></td><td><span class="e"><strong>Filters, sorts or pages</strong> a list. Starts after <code>?</code>. Several are joined with <code>&amp;</code>. Usually optional.</span><span class="t">Bir listeyi <strong>filtreler, sıralar veya sayfalar</strong>. <code>?</code> işaretinden sonra başlar. Birden fazlası <code>&amp;</code> ile bağlanır. Genellikle opsiyoneldir.</span></td></tr>
+        <tr><td class="m">Body</td><td><code>{ "name": "Ali" }</code></td><td><span class="e">The <strong>data you send</strong> to create or change something. Used with POST, PUT, PATCH.</span><span class="t">Bir şey oluşturmak veya değiştirmek için <strong>gönderdiğin veri</strong>. POST, PUT, PATCH ile kullanılır.</span></td></tr>
+        <tr><td class="m">Header</td><td><code>Authorization: Bearer ...</code></td><td><span class="e"><strong>Information about the request</strong> itself: who you are, what format you send.</span><span class="t">İsteğin <strong>kendisi hakkında bilgi</strong>: kim olduğun, hangi formatta gönderdiğin.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tip"><span class="e"><strong>Easy rule:</strong> "which one?" goes in the path. "how do I want the list?" goes in the query. "what data?" goes in the body. "who am I and what format?" goes in the headers.</span><span class="t"><strong>Kolay kural:</strong> "hangisi?" path'e gider. "listeyi nasıl istiyorum?" query'ye gider. "hangi veri?" body'ye gider. "ben kimim ve format ne?" header'lara gider.</span></p>
+</section>
+
+<section class="lesson" id="l4">
+  <span class="num">04</span>
+  <h2><span class="e">Methods: GET, POST, PUT, PATCH, DELETE</span><span class="t">Metotlar: GET, POST, PUT, PATCH, DELETE</span></h2>
+  <p><span class="e">The method tells the server what you want to do. The same URL can do different things with different methods.</span><span class="t">Metot, server'a ne yapmak istediğini söyler. Aynı URL, farklı metotlarla farklı işler yapabilir.</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Method</span><span class="t">Metot</span></th><th><span class="e">What it does</span><span class="t">Ne yapar</span></th><th><span class="e">Example</span><span class="t">Örnek</span></th><th>Body?</th><th><span class="e">Usual success code</span><span class="t">Beklenen başarı kodu</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">GET</td><td><span class="e">Reads data. Changes nothing.</span><span class="t">Veri okur. Hiçbir şeyi değiştirmez.</span></td><td><code>GET /contacts</code><br><code>GET /contacts/7</code></td><td><span class="e">No</span><span class="t">Hayır</span></td><td>200</td></tr>
+        <tr><td class="m">POST</td><td><span class="e">Creates a new thing. Also used for actions like login.</span><span class="t">Yeni bir şey oluşturur. Login gibi işlemler için de kullanılır.</span></td><td><code>POST /contacts</code></td><td><span class="e">Yes</span><span class="t">Evet</span></td><td>201</td></tr>
+        <tr><td class="m">PUT</td><td><span class="e">Replaces the <strong>whole</strong> thing. You send all fields.</span><span class="t">Kaydın <strong>tamamını</strong> değiştirir. Tüm alanları gönderirsin.</span></td><td><code>PUT /contacts/7</code></td><td><span class="e">Yes, all fields</span><span class="t">Evet, tüm alanlar</span></td><td>200</td></tr>
+        <tr><td class="m">PATCH</td><td><span class="e">Changes <strong>part</strong> of the thing. You send only the fields that change.</span><span class="t">Kaydın <strong>bir kısmını</strong> değiştirir. Sadece değişen alanları gönderirsin.</span></td><td><code>PATCH /contacts/7</code></td><td><span class="e">Yes, some fields</span><span class="t">Evet, bazı alanlar</span></td><td>200</td></tr>
+        <tr><td class="m">DELETE</td><td><span class="e">Deletes the thing.</span><span class="t">Kaydı siler.</span></td><td><code>DELETE /contacts/7</code></td><td><span class="e">No</span><span class="t">Hayır</span></td><td>200 / 204</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3><span class="e">PUT or PATCH?</span><span class="t">PUT mu PATCH mi?</span></h3>
+  <p><span class="e">A contact has a name, a phone and an email. You only want to change the phone.</span><span class="t">Bir kişinin adı, telefonu ve e-postası var. Sadece telefonu değiştirmek istiyorsun.</span></p>
+<div class="codepair">
+<pre><code>PATCH /contacts/7
+
+{
+  "phone": "07123456789"
+}</code></pre>
+<pre><code>PUT /contacts/7
+
+{
+  "name": "Ali",
+  "phone": "07123456789",
+  "email": "ali@test.com"
+}</code></pre>
+</div>
+  <p><span class="e">With PUT, if you forget a field, the server may delete it or return an error. This is a good thing to test.</span><span class="t">PUT'ta bir alanı unutursan server onu silebilir veya hata dönebilir. Bu, test etmek için iyi bir konudur.</span></p>
+  <p class="tip"><span class="e"><strong>Interview word: idempotent.</strong> It means "doing it many times gives the same result as doing it once". GET, PUT and DELETE are idempotent. POST is not: send it twice and you get two records.</span><span class="t"><strong>Mülakat kelimesi: idempotent.</strong> "Birçok kez yapmak, bir kez yapmakla aynı sonucu verir" demektir. GET, PUT ve DELETE idempotent'tir. POST değildir: iki kez gönderirsen iki kayıt oluşur.</span></p>
+</section>
+
+<section class="lesson" id="l5">
+  <span class="num">05</span>
+  <h2><span class="e">Headers: what they are and why we need them</span><span class="t">Header'lar: nedir ve neden ihtiyaç duyulur</span></h2>
+  <p><span class="e">A header is a small piece of extra information, written as <code>Name: value</code>. Headers are not the data itself. They describe the request or the response.</span><span class="t">Header, <code>İsim: değer</code> şeklinde yazılan küçük bir ek bilgidir. Header'lar verinin kendisi değildir. İsteği veya cevabı tarif ederler.</span></p>
+  <p><span class="e">Think of a letter. The body is the paper inside. The headers are what is written on the envelope: who sent it, what kind of paper is inside, how to handle it. The post office reads the envelope first.</span><span class="t">Bir mektup düşün. Body, içindeki kâğıttır. Header'lar zarfın üstünde yazanlardır: kim gönderdi, içinde ne tür bir kâğıt var, nasıl işlenmeli. Postane önce zarfı okur.</span></p>
+  <h3><span class="e">Why do we need them?</span><span class="t">Neden ihtiyaç duyulur?</span></h3>
+  <ul class="plain">
+    <li><span class="e">The server must know <strong>who you are</strong> on every request, because it does not remember you.</span><span class="t">Server her istekte <strong>kim olduğunu</strong> bilmelidir, çünkü seni hatırlamaz.</span></li>
+    <li><span class="e">The server must know <strong>what format</strong> the body is in, so it can read it.</span><span class="t">Server body'nin <strong>hangi formatta</strong> olduğunu bilmelidir ki okuyabilsin.</span></li>
+    <li><span class="e">This information is the same kind for every endpoint, so it has one standard place. It does not belong in the URL or the body.</span><span class="t">Bu bilgi her endpoint için aynı türdendir, bu yüzden tek bir standart yeri vardır. URL'e veya body'ye ait değildir.</span></li>
+    <li><span class="e">Secrets like tokens should not be in the URL, because URLs are saved in browser history and server logs.</span><span class="t">Token gibi gizli bilgiler URL'de olmamalıdır, çünkü URL'ler tarayıcı geçmişine ve server loglarına kaydedilir.</span></li>
+  </ul>
+  <h3><span class="e">Headers you send most often</span><span class="t">En sık gönderdiğin header'lar</span></h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Header</th><th><span class="e">Example</span><span class="t">Örnek</span></th><th><span class="e">Meaning</span><span class="t">Anlamı</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">Authorization</td><td><code>Bearer eyJhbGci...</code></td><td><span class="e">"This is who I am." Carries your token or login.</span><span class="t">"Ben buyum." Token'ını veya login bilgini taşır.</span></td></tr>
+        <tr><td class="m">Content-Type</td><td><code>application/json</code></td><td><span class="e">"The body I am sending is JSON."</span><span class="t">"Gönderdiğim body JSON formatında."</span></td></tr>
+        <tr><td class="m">Accept</td><td><code>application/json</code></td><td><span class="e">"Please answer in JSON."</span><span class="t">"Lütfen JSON olarak cevap ver."</span></td></tr>
+        <tr><td class="m">x-api-key</td><td><code>abc123</code></td><td><span class="e">A fixed key that identifies your app. Some APIs use this in place of a login.</span><span class="t">Uygulamanı tanıtan sabit bir anahtar. Bazı API'ler login yerine bunu kullanır.</span></td></tr>
+        <tr><td class="m">Cookie</td><td><code>token=abc123</code></td><td><span class="e">Sends back values the server gave you earlier.</span><span class="t">Server'ın daha önce verdiği değerleri geri gönderir.</span></td></tr>
+        <tr><td class="m">User-Agent</td><td><code>PostmanRuntime/7.x</code></td><td><span class="e">Which program is making the request.</span><span class="t">İsteği hangi programın yaptığı.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3><span class="e">Headers you get back</span><span class="t">Cevapta gelen header'lar</span></h3>
+  <ul class="plain">
+    <li><code>Content-Type</code>: <span class="e">the format of the response body.</span><span class="t">cevap body'sinin formatı.</span></li>
+    <li><code>Set-Cookie</code>: <span class="e">the server asks the client to save a cookie.</span><span class="t">server, client'tan bir cookie kaydetmesini ister.</span></li>
+    <li><code>Location</code>: <span class="e">the address of the thing you just created (often after a 201).</span><span class="t">az önce oluşturduğun kaydın adresi (genellikle 201'den sonra).</span></li>
+    <li><code>Cache-Control</code>: <span class="e">how long the answer may be kept and reused.</span><span class="t">cevabın ne kadar süre saklanıp tekrar kullanılabileceği.</span></li>
+  </ul>
+</section>
+
+<section class="lesson" id="l6">
+  <span class="num">06</span>
+  <h2><span class="e">The body and JSON</span><span class="t">Body ve JSON</span></h2>
+  <p><span class="e">JSON is a simple text format. It has names and values. You already know it from Python: it looks like a dictionary.</span><span class="t">JSON basit bir metin formatıdır. İsimler ve değerlerden oluşur. Python'dan zaten biliyorsun: dictionary'ye benzer.</span></p>
+<pre><code>{
+  "firstName": "Ali",          ← text (string)
+  "age": 31,                   ← number
+  "active": true,              ← true / false (boolean)
+  "middleName": null,          ← empty (null)
+  "phones": [                  ← list (array)
+    "0712",
+    "0798"
+  ],
+  "address": {                 ← object inside an object
+    "city": "London"
+  }
+}</code></pre>
+  <p><span class="e">Rules: names are always in double quotes. Text values are in double quotes. Numbers, true, false and null are not. No comma after the last item.</span><span class="t">Kurallar: isimler her zaman çift tırnak içindedir. Metin değerleri çift tırnak içindedir. Sayılar, true, false ve null değildir. Son elemandan sonra virgül olmaz.</span></p>
+</section>
+
+<section class="lesson" id="l7">
+  <span class="num">07</span>
+  <h2><span class="e">Status codes</span><span class="t">Status code'lar</span></h2>
+  <p><span class="e">Every response has a three-digit number. The first digit tells you the group: <strong>2xx</strong> worked, <strong>4xx</strong> the client made a mistake, <strong>5xx</strong> the server broke.</span><span class="t">Her cevapta üç haneli bir sayı vardır. İlk hane grubu söyler: <strong>2xx</strong> başarılı, <strong>4xx</strong> client hata yaptı, <strong>5xx</strong> server bozuldu.</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Code</span><span class="t">Kod</span></th><th><span class="e">Name</span><span class="t">İsim</span></th><th><span class="e">When you see it</span><span class="t">Ne zaman görürsün</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">200</td><td>OK</td><td><span class="e">It worked. Normal answer for GET, PUT, PATCH.</span><span class="t">Çalıştı. GET, PUT, PATCH için normal cevap.</span></td></tr>
+        <tr><td class="m">201</td><td>Created</td><td><span class="e">A new thing was created. Normal answer for POST.</span><span class="t">Yeni bir kayıt oluşturuldu. POST için normal cevap.</span></td></tr>
+        <tr><td class="m">204</td><td>No Content</td><td><span class="e">It worked and there is no body. Common for DELETE.</span><span class="t">Çalıştı ve body yok. DELETE için yaygın.</span></td></tr>
+        <tr><td class="m">400</td><td>Bad Request</td><td><span class="e">Your request is wrong: a missing field, a bad format.</span><span class="t">İsteğin yanlış: eksik alan, hatalı format.</span></td></tr>
+        <tr><td class="m">401</td><td>Unauthorized</td><td><span class="e">The server does not know who you are. No token, or a bad or expired token.</span><span class="t">Server kim olduğunu bilmiyor. Token yok, hatalı veya süresi dolmuş.</span></td></tr>
+        <tr><td class="m">403</td><td>Forbidden</td><td><span class="e">The server knows who you are, but you are not allowed to do this.</span><span class="t">Server kim olduğunu biliyor, ama bunu yapmaya iznin yok.</span></td></tr>
+        <tr><td class="m">404</td><td>Not Found</td><td><span class="e">This thing does not exist. A wrong URL or a wrong id.</span><span class="t">Bu kayıt yok. Yanlış URL veya yanlış id.</span></td></tr>
+        <tr><td class="m">405</td><td>Method Not Allowed</td><td><span class="e">The URL exists, but not with this method.</span><span class="t">URL var, ama bu metotla değil.</span></td></tr>
+        <tr><td class="m">409</td><td>Conflict</td><td><span class="e">It clashes with existing data, like an email that is already registered.</span><span class="t">Mevcut veriyle çakışıyor, örneğin zaten kayıtlı bir e-posta.</span></td></tr>
+        <tr><td class="m">500</td><td>Internal Server Error</td><td><span class="e">The server crashed. This is almost always a bug to report.</span><span class="t">Server çöktü. Bu neredeyse her zaman raporlanacak bir bug'dır.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tip"><span class="e"><strong>Common interview question: 401 or 403?</strong> 401 = "Who are you?" (not logged in). 403 = "I know you, but no." (logged in, no permission).</span><span class="t"><strong>Sık sorulan mülakat sorusu: 401 mi 403 mü?</strong> 401 = "Sen kimsin?" (giriş yapılmamış). 403 = "Seni tanıyorum, ama hayır." (giriş yapılmış, yetki yok).</span></p>
+</section>
+
+<section class="lesson" id="l8">
+  <span class="num">08</span>
+  <h2><span class="e">Login: how the server knows who you are</span><span class="t">Login: server kim olduğunu nasıl bilir</span></h2>
+  <p><span class="e">The server forgets you after every request. So you must prove who you are each time. Sending your password every time is not safe. The usual way is: log in once, get a <strong>token</strong>, and send the token with every request after that.</span><span class="t">Server her istekten sonra seni unutur. Bu yüzden her seferinde kim olduğunu kanıtlamalısın. Her seferinde şifre göndermek güvenli değildir. Yaygın yol şudur: bir kez login ol, bir <strong>token</strong> al ve sonraki her istekte token'ı gönder.</span></p>
+  <ol class="plain">
+    <li><span class="e">You send your email and password to the login endpoint.</span><span class="t">E-posta ve şifreni login endpoint'ine gönderirsin.</span></li>
+    <li><span class="e">The server checks them and sends back a token.</span><span class="t">Server bunları kontrol eder ve bir token döner.</span></li>
+    <li><span class="e">You save the token (in Postman: in a variable).</span><span class="t">Token'ı kaydedersin (Postman'de: bir variable'a).</span></li>
+    <li><span class="e">You add the token to the <code>Authorization</code> header of every next request.</span><span class="t">Token'ı sonraki her isteğin <code>Authorization</code> header'ına eklersin.</span></li>
+    <li><span class="e">When the token expires you get 401. You log in again or use a refresh token.</span><span class="t">Token'ın süresi dolunca 401 alırsın. Tekrar login olursun veya refresh token kullanırsın.</span></li>
+  </ol>
+<pre><code># Step 1: log in
+POST /users/login
+Content-Type: application/json
+
+{
+  "email": "cihan@test.com",
+  "password": "MyPass123"
+}
+
+# Response
+200 OK
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+
+# Step 2: use the token
+GET /contacts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+
+# Response
+200 OK
+
+[
+  {
+    "_id": "7",
+    "firstName": "Ali"
+  }
+]</code></pre>
+  <h3><span class="e">Four kinds of authentication you will meet</span><span class="t">Karşılaşacağın dört authentication türü</span></h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Type</span><span class="t">Tür</span></th><th><span class="e">How it is sent</span><span class="t">Nasıl gönderilir</span></th><th><span class="e">Notes</span><span class="t">Notlar</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">Bearer token</td><td><code>Authorization: Bearer &lt;token&gt;</code></td><td><span class="e">The most common today. The token is often a JWT.</span><span class="t">Bugün en yaygın olanı. Token çoğunlukla bir JWT'dir.</span></td></tr>
+        <tr><td class="m">API key</td><td><code>x-api-key: &lt;key&gt;</code></td><td><span class="e">A fixed key. It identifies an app, not a person.</span><span class="t">Sabit bir anahtar. Bir kişiyi değil bir uygulamayı tanıtır.</span></td></tr>
+        <tr><td class="m">Basic Auth</td><td><code>Authorization: Basic &lt;base64&gt;</code></td><td><span class="e">Username and password sent on every request. Old and simple.</span><span class="t">Kullanıcı adı ve şifre her istekte gönderilir. Eski ve basit.</span></td></tr>
+        <tr><td class="m">Cookie / session</td><td><code>Cookie: session=&lt;id&gt;</code></td><td><span class="e">The server keeps the session and gives you an id. Browsers send it for you.</span><span class="t">Server oturumu saklar ve sana bir id verir. Tarayıcılar bunu senin yerine gönderir.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><span class="e">"Bearer" just means "the person who carries this token". Whoever has the token gets in, so it must be kept secret.</span><span class="t">"Bearer" sadece "bu token'ı taşıyan kişi" demektir. Token kimdeyse o girer, bu yüzden gizli tutulmalıdır.</span></p>
+</section>
+
+<section class="lesson" id="l9">
+  <span class="num">09</span>
+  <h2><span class="e">JWT: what it is, what is inside, why we use it</span><span class="t">JWT: nedir, içinde ne var, neden kullanılır</span></h2>
+  <p><span class="e">JWT means JSON Web Token (people say "jot"). It is a long piece of text that the server gives you after login. It is like a signed entry ticket: it says who you are and until when it is valid, and the signature shows nobody has changed it.</span><span class="t">JWT, JSON Web Token demektir ("cot" diye okunur). Login'den sonra server'ın verdiği uzun bir metindir. İmzalı bir giriş bileti gibidir: kim olduğunu ve ne zamana kadar geçerli olduğunu söyler, imza da kimsenin onu değiştirmediğini gösterir.</span></p>
+  <h3><span class="e">Three parts, separated by dots</span><span class="t">Nokta ile ayrılmış üç parça</span></h3>
+  <p class="jwt"><span class="h">eyJhbGciOiJIUzI1NiJ9</span>.<span class="p">eyJzdWIiOiI0MiIsInJvbGUiOiJ1c2VyIn0</span>.<span class="s">SflKxwRJSMeKKF2QT4fwpM</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Part</span><span class="t">Parça</span></th><th><span class="e">What is inside</span><span class="t">İçinde ne var</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">1. Header</td><td><span class="e">The type of token and the signing method, for example <code>{ "alg": "HS256", "typ": "JWT" }</code>.</span><span class="t">Token türü ve imzalama yöntemi, örneğin <code>{ "alg": "HS256", "typ": "JWT" }</code>.</span></td></tr>
+        <tr><td class="m">2. Payload</td><td><span class="e">The information about you. These are called "claims".</span><span class="t">Senin hakkındaki bilgiler. Bunlara "claim" denir.</span></td></tr>
+        <tr><td class="m">3. Signature</td><td><span class="e">A code the server makes from parts 1 and 2 plus a secret key that only the server knows.</span><span class="t">Server'ın 1. ve 2. parçadan ve sadece kendisinin bildiği gizli bir anahtardan ürettiği kod.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3><span class="e">A typical payload</span><span class="t">Tipik bir payload</span></h3>
+<pre><code>{
+  "sub": "42",              ← subject: the user id
+  "email": "cihan@test.com",
+  "role": "user",           ← what the user may do
+  "iat": 1794300000,        ← issued at: when it was created
+  "exp": 1794303600         ← expires: when it stops working
+}</code></pre>
+  <p><span class="e"><code>iat</code> and <code>exp</code> are times written as seconds since 1970. In this example the token lives for 3600 seconds, which is 1 hour.</span><span class="t"><code>iat</code> ve <code>exp</code>, 1970'ten bu yana saniye olarak yazılmış zamanlardır. Bu örnekte token 3600 saniye, yani 1 saat yaşar.</span></p>
+  <h3><span class="e">Why do we use it?</span><span class="t">Neden kullanılır?</span></h3>
+  <ul class="plain">
+    <li><span class="e"><strong>The server does not need to store sessions.</strong> Everything it needs is inside the token. It only checks the signature.</span><span class="t"><strong>Server'ın oturum saklamasına gerek kalmaz.</strong> İhtiyacı olan her şey token'ın içindedir. Sadece imzayı kontrol eder.</span></li>
+    <li><span class="e"><strong>It cannot be changed.</strong> If someone edits the payload (for example "role": "admin"), the signature no longer matches and the server rejects it with 401.</span><span class="t"><strong>Değiştirilemez.</strong> Biri payload'ı düzenlerse (örneğin "role": "admin"), imza artık uymaz ve server 401 ile reddeder.</span></li>
+    <li><span class="e"><strong>It works across many servers and services.</strong> Any service that knows the key can check the token.</span><span class="t"><strong>Birçok server ve serviste çalışır.</strong> Anahtarı bilen her servis token'ı kontrol edebilir.</span></li>
+    <li><span class="e"><strong>It expires by itself.</strong> A stolen token is only useful for a short time.</span><span class="t"><strong>Kendi kendine sona erer.</strong> Çalınan bir token sadece kısa bir süre işe yarar.</span></li>
+  </ul>
+  <p class="tip"><span class="e"><strong>Important: a JWT is signed, not hidden.</strong> Anyone can read the header and payload. Paste a token into jwt.io and you will see them. So a JWT must never contain a password or other secret data.</span><span class="t"><strong>Önemli: JWT imzalıdır, gizli değildir.</strong> Header ve payload'ı herkes okuyabilir. Bir token'ı jwt.io'ya yapıştırırsan görürsün. Bu yüzden JWT içinde asla şifre veya başka gizli veri olmamalıdır.</span></p>
+  <h3><span class="e">Access token and refresh token</span><span class="t">Access token ve refresh token</span></h3>
+  <p><span class="e">Many APIs give you two tokens. The <strong>access token</strong> lives a short time (minutes) and is sent with every request. The <strong>refresh token</strong> lives longer (days) and is only used to get a new access token without logging in again.</span><span class="t">Birçok API iki token verir. <strong>Access token</strong> kısa yaşar (dakikalar) ve her istekle gönderilir. <strong>Refresh token</strong> daha uzun yaşar (günler) ve sadece tekrar login olmadan yeni bir access token almak için kullanılır.</span></p>
+</section>
+
+<section class="lesson" id="l10">
+  <span class="num">10</span>
+  <h2><span class="e">What a tester checks in an API</span><span class="t">Bir tester API'de neyi kontrol eder</span></h2>
+  <ul class="plain">
+    <li><span class="e"><strong>Status code:</strong> is it the right one for this case?</span><span class="t"><strong>Status code:</strong> bu durum için doğru kod mu?</span></li>
+    <li><span class="e"><strong>Response body:</strong> are all fields there, with the right values and the right types?</span><span class="t"><strong>Cevap body'si:</strong> tüm alanlar var mı, değerler ve tipler doğru mu?</span></li>
+    <li><span class="e"><strong>Missing or wrong input:</strong> empty field, wrong type, text that is too long. Do you get 400 and a clear message, and never 500?</span><span class="t"><strong>Eksik veya hatalı girdi:</strong> boş alan, yanlış tip, çok uzun metin. 400 ve anlaşılır bir mesaj mı geliyor, asla 500 gelmiyor mu?</span></li>
+    <li><span class="e"><strong>No token, bad token, expired token:</strong> do you get 401?</span><span class="t"><strong>Token yok, hatalı token, süresi dolmuş token:</strong> 401 mi geliyor?</span></li>
+    <li><span class="e"><strong>Another user's data:</strong> can user A read or delete user B's record? It must not be possible.</span><span class="t"><strong>Başka kullanıcının verisi:</strong> A kullanıcısı B'nin kaydını okuyabiliyor veya silebiliyor mu? Mümkün olmamalı.</span></li>
+    <li><span class="e"><strong>An id that does not exist:</strong> do you get 404?</span><span class="t"><strong>Var olmayan bir id:</strong> 404 mü geliyor?</span></li>
+    <li><span class="e"><strong>Data is really saved:</strong> after POST, PUT, PATCH or DELETE, do a GET and check.</span><span class="t"><strong>Veri gerçekten kaydedildi mi:</strong> POST, PUT, PATCH veya DELETE'ten sonra bir GET yap ve kontrol et.</span></li>
+    <li><span class="e"><strong>Response time:</strong> is it fast enough?</span><span class="t"><strong>Cevap süresi:</strong> yeterince hızlı mı?</span></li>
+  </ul>
+  <p><span class="e">Ready to try? Go to <a href="#api-practice">API Practice</a>.</span><span class="t">Denemeye hazır mısın? <a href="#api-practice">API Practice</a> sayfasına geç.</span></p>
+</section>
+</div>
+
+<!-- ============ SQL REFRESHER ============ -->
+<div class="page view" data-view="sql-refresher" hidden>
+
+<header>
+  <span class="eyebrow">SQL Refresher</span>
+  <h1><span class="e">SQL: a quick reminder</span><span class="t">SQL: hızlı hatırlatma</span></h1>
+  <p class="lede"><span class="e">You know this already. This page brings it back fast: one short note and one example for each topic, then the queries a tester writes most.</span><span class="t">Bunları zaten biliyorsun. Bu sayfa hızlıca geri getirir: her konu için kısa bir not ve bir örnek, sonra bir tester'ın en çok yazdığı sorgular.</span></p>
+  <ul class="toc">
+    <li><a href="#sql-refresher" data-jump="s0"><span class="e">Tables</span><span class="t">Tablolar</span></a></li>
+    <li><a href="#sql-refresher" data-jump="s1">1 SELECT</a></li>
+    <li><a href="#sql-refresher" data-jump="s2"><span class="e">2 Filters</span><span class="t">2 Filtreler</span></a></li>
+    <li><a href="#sql-refresher" data-jump="s3">3 GROUP BY</a></li>
+    <li><a href="#sql-refresher" data-jump="s4">4 JOIN</a></li>
+    <li><a href="#sql-refresher" data-jump="s5">5 Subquery</a></li>
+    <li><a href="#sql-refresher" data-jump="s6">6 CASE</a></li>
+    <li><a href="#sql-refresher" data-jump="s7"><span class="e">7 Change data</span><span class="t">7 Veri değiştirme</span></a></li>
+    <li><a href="#sql-refresher" data-jump="s8"><span class="e">8 Order of steps</span><span class="t">8 Çalışma sırası</span></a></li>
+    <li><a href="#sql-refresher" data-jump="s9">9 Window</a></li>
+    <li><a href="#sql-refresher" data-jump="s10"><span class="e">10 Tester queries</span><span class="t">10 Tester sorguları</span></a></li>
+    <li><a href="#sql-refresher" data-jump="s11"><span class="e">11 Interview</span><span class="t">11 Mülakat</span></a></li>
+  </ul>
+</header>
+
+<section class="lesson" id="s0">
+  <span class="num"><span class="e">SAMPLE DATA</span><span class="t">ÖRNEK VERİ</span></span>
+  <h2><span class="e">The two tables used in every example</span><span class="t">Her örnekte kullanılan iki tablo</span></h2>
+  <div class="codepair">
+    <div class="tablewrap"><table style="min-width:0">
+      <thead><tr><th colspan="3">customers</th></tr><tr><th>id</th><th>name</th><th>city</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Ali</td><td>London</td></tr>
+        <tr><td>2</td><td>Ayse</td><td>Leeds</td></tr>
+        <tr><td>3</td><td>John</td><td>London</td></tr>
+        <tr><td>4</td><td>Maria</td><td>Bristol</td></tr>
+      </tbody></table></div>
+    <div class="tablewrap"><table style="min-width:0">
+      <thead><tr><th colspan="4">orders</th></tr><tr><th>id</th><th>customer_id</th><th>amount</th><th>status</th></tr></thead>
+      <tbody>
+        <tr><td>101</td><td>1</td><td>50</td><td>paid</td></tr>
+        <tr><td>102</td><td>1</td><td>120</td><td>paid</td></tr>
+        <tr><td>103</td><td>2</td><td>80</td><td>cancelled</td></tr>
+        <tr><td>104</td><td>3</td><td>200</td><td>paid</td></tr>
+        <tr><td>105</td><td>9</td><td>30</td><td>paid</td></tr>
+      </tbody></table></div>
+  </div>
+  <p class="note"><span class="e">Two things are wrong on purpose: Maria has no orders, and order 105 points to customer 9, who does not exist. A tester's job is to find rows like these.</span><span class="t">İki şey kasıtlı olarak hatalı: Maria'nın siparişi yok ve 105 numaralı sipariş var olmayan 9 numaralı müşteriye bağlı. Bir tester'ın işi böyle satırları bulmaktır.</span></p>
+</section>
+
+<section class="lesson" id="s1">
+  <span class="num">01</span>
+  <h2>SELECT, ORDER BY, LIMIT, DISTINCT</h2>
+  <p><span class="e">SELECT picks columns. ORDER BY sorts. LIMIT cuts the list. DISTINCT removes repeated values.</span><span class="t">SELECT sütunları seçer. ORDER BY sıralar. LIMIT listeyi keser. DISTINCT tekrar eden değerleri kaldırır.</span></p>
+<pre data-sql><code>SELECT name, city
+FROM customers
+ORDER BY name ASC        -- ASC = A to Z, DESC = Z to A
+LIMIT 3;
+
+SELECT DISTINCT city     -- London, Leeds, Bristol (London only once)
+FROM customers;</code></pre>
+</section>
+
+<section class="lesson" id="s2">
+  <span class="num">02</span>
+  <h2><span class="e">WHERE and its filters</span><span class="t">WHERE ve filtreleri</span></h2>
+<pre data-sql><code>SELECT * FROM orders
+WHERE status = 'paid' AND amount >= 100;      -- both must be true
+
+SELECT * FROM customers
+WHERE city IN ('London', 'Leeds');            -- one of a list
+
+SELECT * FROM orders
+WHERE amount BETWEEN 50 AND 120;              -- 50 and 120 are included
+
+SELECT * FROM customers
+WHERE name LIKE 'A%';                         -- starts with A
+
+SELECT * FROM customers
+WHERE city IS NULL;                           -- empty value</code></pre>
+  <p class="tip"><span class="e"><strong>Easy to forget:</strong> NULL is never equal to anything. <code>= NULL</code> finds nothing. Always write <code>IS NULL</code> or <code>IS NOT NULL</code>. In LIKE, <code>%</code> means any text and <code>_</code> means one character.</span><span class="t"><strong>Kolay unutulur:</strong> NULL hiçbir şeye eşit değildir. <code>= NULL</code> hiçbir şey bulmaz. Her zaman <code>IS NULL</code> veya <code>IS NOT NULL</code> yaz. LIKE içinde <code>%</code> herhangi bir metin, <code>_</code> tek bir karakter demektir.</span></p>
+</section>
+
+<section class="lesson" id="s3">
+  <span class="num">03</span>
+  <h2><span class="e">COUNT, SUM, GROUP BY, HAVING</span><span class="t">COUNT, SUM, GROUP BY, HAVING</span></h2>
+  <p><span class="e">COUNT, SUM, AVG, MIN and MAX turn many rows into one number. GROUP BY gives one number for each group. HAVING filters the groups.</span><span class="t">COUNT, SUM, AVG, MIN ve MAX birçok satırı tek bir sayıya çevirir. GROUP BY her grup için bir sayı verir. HAVING grupları filtreler.</span></p>
+<pre data-sql><code>SELECT COUNT(*) FROM orders;                  -- 5
+
+SELECT customer_id,
+       COUNT(*)    AS order_count,
+       SUM(amount) AS total
+FROM orders
+WHERE status = 'paid'            -- filters rows, before grouping
+GROUP BY customer_id
+HAVING SUM(amount) > 100;        -- filters groups, after grouping</code></pre>
+  <p class="tip"><span class="e"><strong>WHERE or HAVING?</strong> WHERE works on rows and cannot use COUNT or SUM. HAVING works on groups and can.</span><span class="t"><strong>WHERE mi HAVING mi?</strong> WHERE satırlar üzerinde çalışır ve COUNT veya SUM kullanamaz. HAVING gruplar üzerinde çalışır ve kullanabilir.</span></p>
+</section>
+
+<section class="lesson" id="s4">
+  <span class="num">04</span>
+  <h2>JOIN</h2>
+  <p><span class="e">A JOIN puts two tables side by side using a shared value. Here: <code>customers.id</code> = <code>orders.customer_id</code>.</span><span class="t">JOIN, iki tabloyu ortak bir değer üzerinden yan yana getirir. Burada: <code>customers.id</code> = <code>orders.customer_id</code>.</span></p>
+<pre data-sql><code>SELECT c.name, o.id, o.amount
+FROM customers c
+INNER JOIN orders o ON o.customer_id = c.id;</code></pre>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>JOIN</th><th><span class="e">What you get</span><span class="t">Ne gelir</span></th><th><span class="e">With our data</span><span class="t">Bizim veriyle</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">INNER JOIN</td><td><span class="e">Only rows that match in both tables.</span><span class="t">Sadece iki tabloda da eşleşen satırlar.</span></td><td><span class="e">4 rows. No Maria, no order 105.</span><span class="t">4 satır. Maria yok, 105 numaralı sipariş yok.</span></td></tr>
+        <tr><td class="m">LEFT JOIN</td><td><span class="e">All rows from the left table. Empty (NULL) where the right has no match.</span><span class="t">Sol tablonun tüm satırları. Sağda eşleşme yoksa boş (NULL).</span></td><td><span class="e">5 rows. Maria is there with NULL order.</span><span class="t">5 satır. Maria NULL siparişle gelir.</span></td></tr>
+        <tr><td class="m">RIGHT JOIN</td><td><span class="e">All rows from the right table. Empty where the left has no match.</span><span class="t">Sağ tablonun tüm satırları. Solda eşleşme yoksa boş.</span></td><td><span class="e">5 rows. Order 105 is there with NULL name.</span><span class="t">5 satır. 105 numaralı sipariş NULL isimle gelir.</span></td></tr>
+        <tr><td class="m">FULL JOIN</td><td><span class="e">All rows from both tables.</span><span class="t">İki tablonun da tüm satırları.</span></td><td><span class="e">6 rows. Maria and order 105 are both there.</span><span class="t">6 satır. Maria da 105 de gelir.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3><span class="e">The most useful trick: find rows with no match</span><span class="t">En işe yarar numara: eşleşmeyen satırları bul</span></h3>
+<pre data-sql><code>-- customers who have no orders  →  Maria
+SELECT c.name
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id
+WHERE o.id IS NULL;</code></pre>
+</section>
+
+<section class="lesson" id="s5">
+  <span class="num">05</span>
+  <h2><span class="e">Subqueries</span><span class="t">Subquery'ler</span></h2>
+  <p><span class="e">A subquery is a query inside another query. The inner one runs first.</span><span class="t">Subquery, başka bir sorgunun içindeki sorgudur. İçteki önce çalışır.</span></p>
+<pre data-sql><code>-- customers who have a paid order
+SELECT name FROM customers
+WHERE id IN (SELECT customer_id FROM orders WHERE status = 'paid');
+
+-- orders bigger than the average order
+SELECT * FROM orders
+WHERE amount > (SELECT AVG(amount) FROM orders);
+
+-- the same idea as IN, written with EXISTS
+SELECT name FROM customers c
+WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id);</code></pre>
+</section>
+
+<section class="lesson" id="s6">
+  <span class="num">06</span>
+  <h2>CASE WHEN</h2>
+  <p><span class="e">CASE is the if / else of SQL. It makes a new column from a rule.</span><span class="t">CASE, SQL'in if / else'idir. Bir kurala göre yeni bir sütun üretir.</span></p>
+<pre data-sql><code>SELECT id, amount,
+       CASE
+         WHEN amount >= 150 THEN 'big'
+         WHEN amount >= 80  THEN 'medium'
+         ELSE 'small'
+       END AS size
+FROM orders;</code></pre>
+</section>
+
+<section class="lesson" id="s7">
+  <span class="num">07</span>
+  <h2>INSERT, UPDATE, DELETE</h2>
+<pre data-sql><code>INSERT INTO customers (id, name, city)
+VALUES (5, 'Sara', 'Leeds');
+
+UPDATE orders
+SET status = 'paid'
+WHERE id = 103;
+
+DELETE FROM orders
+WHERE id = 105;</code></pre>
+  <p class="tip"><span class="e"><strong>Never forget the WHERE.</strong> UPDATE or DELETE without WHERE changes every row in the table. Run a SELECT with the same WHERE first to see which rows you will touch.</span><span class="t"><strong>WHERE'i asla unutma.</strong> WHERE olmadan UPDATE veya DELETE tablodaki her satırı değiştirir. Önce aynı WHERE ile bir SELECT çalıştır ve hangi satırlara dokunacağını gör.</span></p>
+</section>
+
+<section class="lesson" id="s8">
+  <span class="num">08</span>
+  <h2><span class="e">The order SQL really runs in</span><span class="t">SQL'in gerçek çalışma sırası</span></h2>
+  <p><span class="e">You write SELECT first, but the database does not start there. This order explains many errors.</span><span class="t">SELECT'i ilk sen yazarsın, ama veritabanı oradan başlamaz. Bu sıra birçok hatayı açıklar.</span></p>
+<pre data-nohl><code><span class="m">1 FROM / JOIN</span>   <span class="c">get the tables</span>
+<span class="m">2 WHERE</span>         <span class="c">filter rows</span>
+<span class="m">3 GROUP BY</span>      <span class="c">make groups</span>
+<span class="m">4 HAVING</span>        <span class="c">filter groups</span>
+<span class="m">5 SELECT</span>        <span class="c">pick columns, give names (AS)</span>
+<span class="m">6 ORDER BY</span>      <span class="c">sort</span>
+<span class="m">7 LIMIT</span>         <span class="c">cut the list</span></code></pre>
+  <p><span class="e">This is why you cannot use a name made with AS inside WHERE (step 2 comes before step 5), but you can use it in ORDER BY.</span><span class="t">Bu yüzden AS ile verilen bir ismi WHERE içinde kullanamazsın (2. adım 5. adımdan önce gelir), ama ORDER BY içinde kullanabilirsin.</span></p>
+</section>
+
+<section class="lesson" id="s9">
+  <span class="num">09</span>
+  <h2><span class="e">Window functions: the basics</span><span class="t">Window function'lar: temeller</span></h2>
+  <p><span class="e">GROUP BY squeezes rows into one row for each group. A window function keeps every row and adds a number next to it.</span><span class="t">GROUP BY satırları her grup için tek satıra sıkıştırır. Window function her satırı tutar ve yanına bir sayı ekler.</span></p>
+<pre data-sql><code>SELECT id, customer_id, amount,
+       ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY amount DESC) AS rn,
+       SUM(amount)  OVER (PARTITION BY customer_id) AS customer_total
+FROM orders;</code></pre>
+  <p><span class="e"><code>PARTITION BY</code> is the group. <code>ORDER BY</code> inside OVER is the order inside each group. Here <code>rn = 1</code> is each customer's biggest order.</span><span class="t"><code>PARTITION BY</code> gruptur. OVER içindeki <code>ORDER BY</code> her grubun içindeki sıradır. Burada <code>rn = 1</code> her müşterinin en büyük siparişidir.</span></p>
+</section>
+
+<section class="lesson" id="s10">
+  <span class="num">10</span>
+  <h2><span class="e">Queries a tester writes most</span><span class="t">Bir tester'ın en çok yazdığı sorgular</span></h2>
+  <h3><span class="e">Find duplicates</span><span class="t">Tekrar eden kayıtları bul</span></h3>
+<pre data-sql><code>SELECT name, COUNT(*)
+FROM customers
+GROUP BY name
+HAVING COUNT(*) > 1;</code></pre>
+  <h3><span class="e">Find orphan rows (a child with no parent)</span><span class="t">Sahipsiz kayıtları bul (parent'ı olmayan child)</span></h3>
+<pre data-sql><code>-- orders whose customer does not exist  →  order 105
+SELECT o.*
+FROM orders o
+LEFT JOIN customers c ON c.id = o.customer_id
+WHERE c.id IS NULL;</code></pre>
+  <h3><span class="e">Find missing required values</span><span class="t">Eksik zorunlu değerleri bul</span></h3>
+<pre data-sql><code>SELECT * FROM customers
+WHERE name IS NULL OR city IS NULL;</code></pre>
+  <h3><span class="e">Find values that should not be there</span><span class="t">Olmaması gereken değerleri bul</span></h3>
+<pre data-sql><code>SELECT * FROM orders
+WHERE amount <= 0
+   OR status NOT IN ('paid', 'cancelled', 'pending');</code></pre>
+  <h3><span class="e">Check that the screen or API matches the database</span><span class="t">Ekranın veya API'nin veritabanıyla uyuştuğunu kontrol et</span></h3>
+<pre data-sql><code>-- the page says "Ali: 2 orders, total 170". Is it true?
+SELECT COUNT(*), SUM(amount)
+FROM orders
+WHERE customer_id = 1;
+
+-- after POST /contacts in Postman: was the row really saved?
+SELECT * FROM customers
+WHERE name = 'Sara';</code></pre>
+</section>
+
+<section class="lesson" id="s11">
+  <span class="num">11</span>
+  <h2><span class="e">Short interview answers</span><span class="t">Kısa mülakat cevapları</span></h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Question</span><span class="t">Soru</span></th><th><span class="e">Short answer</span><span class="t">Kısa cevap</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">WHERE vs HAVING</td><td><span class="e">WHERE filters rows before grouping. HAVING filters groups after grouping.</span><span class="t">WHERE gruplamadan önce satırları filtreler. HAVING gruplamadan sonra grupları filtreler.</span></td></tr>
+        <tr><td class="m">INNER vs LEFT JOIN</td><td><span class="e">INNER returns only matches. LEFT returns all left rows, with NULL where there is no match.</span><span class="t">INNER sadece eşleşenleri döner. LEFT sol tablonun tüm satırlarını döner, eşleşme yoksa NULL ile.</span></td></tr>
+        <tr><td class="m">UNION vs UNION ALL</td><td><span class="e">Both stack two results. UNION removes duplicates. UNION ALL keeps them and is faster.</span><span class="t">İkisi de iki sonucu alt alta koyar. UNION tekrarları siler. UNION ALL tutar ve daha hızlıdır.</span></td></tr>
+        <tr><td class="m">DELETE vs TRUNCATE vs DROP</td><td><span class="e">DELETE removes chosen rows. TRUNCATE removes all rows and keeps the table. DROP removes the table itself.</span><span class="t">DELETE seçilen satırları siler. TRUNCATE tüm satırları siler, tabloyu tutar. DROP tablonun kendisini siler.</span></td></tr>
+        <tr><td class="m">Primary vs foreign key</td><td><span class="e">A primary key identifies each row in its own table (unique, not NULL). A foreign key points to a primary key in another table.</span><span class="t">Primary key kendi tablosundaki her satırı tanımlar (benzersiz, NULL olamaz). Foreign key başka bir tablodaki primary key'e işaret eder.</span></td></tr>
+        <tr><td class="m">COUNT(*) vs COUNT(col)</td><td><span class="e">COUNT(*) counts all rows. COUNT(col) skips rows where that column is NULL.</span><span class="t">COUNT(*) tüm satırları sayar. COUNT(col) o sütunun NULL olduğu satırları atlar.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note"><span class="e">Small differences exist between databases. For example, SQL Server uses <code>TOP 3</code> where MySQL and PostgreSQL use <code>LIMIT 3</code>, and MySQL has no FULL JOIN.</span><span class="t">Veritabanları arasında küçük farklar vardır. Örneğin MySQL ve PostgreSQL'in <code>LIMIT 3</code> kullandığı yerde SQL Server <code>TOP 3</code> kullanır ve MySQL'de FULL JOIN yoktur.</span></p>
+</section>
+</div>
+
+<!-- ============ API PRACTICE ============ -->
+<div class="page view" data-view="api-practice" hidden>
+
+<header>
+  <span class="eyebrow">API Practice</span>
+  <h1><span class="e">Free APIs to practise with Postman</span><span class="t">Postman'le pratik için ücretsiz API'ler</span></h1>
+  <p class="lede"><span class="e">No single API covers everything, but these three together cover all the topics. All are free.</span><span class="t">Tek bir API her şeyi kapsamıyor, ama bu üçü birlikte tüm konuları karşılıyor. Hepsi ücretsiz.</span></p>
+  <p class="verdict"><span class="e">Start with the Contact List App. It acts like a real app: what you create is saved, and without a token you get 401.</span><span class="t">Contact List App ile başla. Gerçek bir uygulama gibi davranıyor: oluşturduğun kayıt duruyor, token olmadan 401 alıyorsun.</span></p>
+  <p class="note"><span class="e">These APIs were not opened and checked one by one when this page was written. If your first request fails, look at the API's own docs.</span><span class="t">Bu sayfa yazılırken bu API'ler tek tek açılıp doğrulanmadı. İlk istekte hata alırsan API'nin kendi dokümanına bak.</span></p>
+</header>
+
+<section>
+  <span class="eyebrow"><span class="e">The three APIs</span><span class="t">Üç API</span></span>
+  <h2><span class="e">Which API teaches what</span><span class="t">Hangi API ne öğretir</span></h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>API</th><th><span class="e">What you learn</span><span class="t">Ne öğretir</span></th><th><span class="e">Address</span><span class="t">Adres</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">Contact List App</td><td><span class="e">Sign up, login, JWT, Bearer header, PUT vs PATCH, logout. Data is really saved.</span><span class="t">Kayıt, login, JWT, Bearer header, PUT ile PATCH farkı, logout. Veri gerçekten kaydedilir.</span></td><td><code>thinking-tester-contact-list.herokuapp.com</code></td></tr>
+        <tr><td class="m">DummyJSON</td><td><span class="e">JWT login and refresh token, query parameters (limit, skip, sort, search), path variables.</span><span class="t">JWT login ve refresh token, query parametreleri (limit, skip, sort, arama), path variable.</span></td><td><code>dummyjson.com/docs</code></td></tr>
+        <tr><td class="m">Restful-Booker</td><td><span class="e">Other kinds of auth (token inside a Cookie, Basic Auth), and bugs left in on purpose.</span><span class="t">Farklı auth türleri (Cookie içinde token, Basic Auth), kasıtlı bırakılmış bug'lar.</span></td><td><code>restful-booker.herokuapp.com/apidoc</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="road" data-road="p1">
+  <span class="eyebrow"><span class="e">Exercises</span><span class="t">Alıştırmalar</span></span>
+  <div class="roadhead"><h2><span class="e">Nine things to try</span><span class="t">Deneyeceğin dokuz şey</span></h2><span class="progress" data-progress="p1"></span></div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk">Contact List App</span><h3><span class="e">Login, token and CRUD</span><span class="t">Login, token ve CRUD</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="p1-1"><span><span class="e"><strong>Login and JWT.</strong> Create a user with <code>POST /users</code>, then log in with <code>POST /users/login</code>. The response has a <code>token</code>. This is a JWT. Paste it into jwt.io to see the user id and the expiry time.</span><span class="t"><strong>Login ve JWT.</strong> <code>POST /users</code> ile kullanıcı aç, <code>POST /users/login</code> ile giriş yap. Cevapta bir <code>token</code> gelir; bu JWT'dir. jwt.io'ya yapıştırırsan kullanıcı id'sini ve son kullanma zamanını görürsün.</span></span></label></li>
+      <li><label><input type="checkbox" id="p1-2"><span><span class="e"><strong>Headers.</strong> Send <code>Authorization: Bearer &lt;token&gt;</code> with every next request. Remove the header, try again and see the 401. Learn to save the token in a Postman environment variable.</span><span class="t"><strong>Header kullanımı.</strong> Sonraki her istekte <code>Authorization: Bearer &lt;token&gt;</code> gönder. Header'ı silip tekrar dene ve 401'i gör. Token'ı bir Postman environment variable'ına kaydetmeyi öğren.</span></span></label></li>
+      <li><label><input type="checkbox" id="p1-3"><span><span class="e"><strong>Body.</strong> Send a JSON body with <code>POST /contacts</code>. Leave out a required field and see the 400.</span><span class="t"><strong>Body.</strong> <code>POST /contacts</code> ile JSON body gönder. Zorunlu bir alanı eksik bırak ve 400'ü gör.</span></span></label></li>
+      <li><label><input type="checkbox" id="p1-4"><span><span class="e"><strong>Path variable.</strong> <code>GET /contacts/{id}</code> returns one record. Try an id that does not exist and see the 404.</span><span class="t"><strong>Path variable.</strong> <code>GET /contacts/{id}</code> tek bir kaydı getirir. Olmayan bir id ile 404'ü dene.</span></span></label></li>
+      <li><label><input type="checkbox" id="p1-5"><span><span class="e"><strong>PUT vs PATCH.</strong> <code>PUT /contacts/{id}</code> needs the whole record. <code>PATCH /contacts/{id}</code> needs only the field that changes. Try both on the same record.</span><span class="t"><strong>PUT ile PATCH farkı.</strong> <code>PUT /contacts/{id}</code> kaydın tamamını ister, <code>PATCH /contacts/{id}</code> sadece değişen alanı. İkisini aynı kayıtta dene.</span></span></label></li>
+      <li><label><input type="checkbox" id="p1-6"><span><span class="e"><strong>DELETE and check.</strong> Delete the record, then call the same id with <code>GET</code> and expect 404.</span><span class="t"><strong>DELETE ve doğrulama.</strong> Kaydı sil, sonra aynı id'yi <code>GET</code> ile çağır ve 404 bekle.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk">DummyJSON</span><h3><span class="e">Query parameters and refresh token</span><span class="t">Query parametreleri ve refresh token</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="p1-7"><span><span class="e"><strong>Query parameters.</strong> Try <code>GET /products?limit=10&amp;skip=20</code>, <code>GET /products/search?q=phone</code> and <code>GET /products?sortBy=price&amp;order=desc</code>.</span><span class="t"><strong>Query parametreleri.</strong> <code>GET /products?limit=10&amp;skip=20</code>, <code>GET /products/search?q=phone</code> ve <code>GET /products?sortBy=price&amp;order=desc</code> isteklerini dene.</span></span></label></li>
+      <li><label><input type="checkbox" id="p1-8"><span><span class="e"><strong>Refresh token.</strong> <code>POST /auth/login</code> returns an access token and a refresh token. Get a new one with <code>POST /auth/refresh</code>.</span><span class="t"><strong>Refresh token.</strong> <code>POST /auth/login</code> hem access hem refresh token döner. <code>POST /auth/refresh</code> ile yenisini alırsın.</span></span></label></li>
+    </ul>
+  </div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk">Restful-Booker</span><h3><span class="e">Other kinds of auth</span><span class="t">Farklı auth türleri</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="p1-9"><span><span class="e"><strong>Cookie and Basic Auth.</strong> <code>POST /auth</code> gives a token, but this time you send it as <code>Cookie: token=...</code>. The same endpoints also accept Basic Auth.</span><span class="t"><strong>Cookie ve Basic Auth.</strong> <code>POST /auth</code> token verir ama bu sefer <code>Cookie: token=...</code> olarak gönderilir. Aynı endpoint'ler Basic Auth da kabul eder.</span></span></label></li>
+    </ul>
+  </div>
+
+  <p class="outcome"><span class="e"><strong>Portfolio tip:</strong> turn these nine steps into one Postman collection and add checks for the status code and the fields to each request. That finishes the portfolio task for week 2 of the roadmap.</span><span class="t"><strong>Portföy ipucu:</strong> bu dokuz adımı tek bir Postman collection'a çevir ve her isteğe status code ve alan kontrolü ekle. Bu, yol haritasındaki 2. haftanın portföy işini bitirir.</span></p>
+</section>
+
+<section>
+  <span class="eyebrow"><span class="e">Good to know</span><span class="t">Bilmen gerekenler</span></span>
+  <h2><span class="e">Two things to keep in mind</span><span class="t">Aklında tutman gereken iki şey</span></h2>
+  <ul class="plain">
+    <li><span class="e"><strong>DummyJSON only pretends to write.</strong> POST, PUT and DELETE return a success answer, but the data does not change. For "I added it, then I read it back" use the Contact List App.</span><span class="t"><strong>DummyJSON yazma işlemlerini simüle eder.</strong> POST, PUT ve DELETE başarılı cevap döner ama veri değişmez. "Ekledim, sonra getirdim" senaryosu için Contact List App'i kullan.</span></li>
+    <li><span class="e"><strong>Restful-Booker has bugs on purpose.</strong> For example, a successful delete returns 201 where you would expect 204. Good material for bug report practice.</span><span class="t"><strong>Restful-Booker'da kasıtlı bug var.</strong> Örneğin başarılı bir silme 204 yerine 201 döner. Bug report pratiği için iyi malzeme.</span></li>
+  </ul>
+  <h3><span class="e">Two extra tools</span><span class="t">İki ek araç</span></h3>
+  <ul class="plain">
+    <li><span class="e"><strong>Reqres</strong> (<code>reqres.in</code>) now asks for an <code>x-api-key</code> header. Use it to practise API keys.</span><span class="t"><strong>Reqres</strong> (<code>reqres.in</code>) artık <code>x-api-key</code> header'ı istiyor. API key pratiği için kullan.</span></li>
+    <li><span class="e"><strong>Postman Echo</strong> (<code>postman-echo.com/headers</code>) sends your headers back to you, so you can see exactly what you sent.</span><span class="t"><strong>Postman Echo</strong> (<code>postman-echo.com/headers</code>) gönderdiğin header'ları sana geri yollar, böylece tam olarak ne gönderdiğini görürsün.</span></li>
+  </ul>
+  <p><span class="e">Not sure about a word on this page? Read <a href="#rest-basics">REST API Basics</a> first.</span><span class="t">Bu sayfadaki bir terimden emin değil misin? Önce <a href="#rest-basics">REST API Basics</a> sayfasını oku.</span></p>
+</section>
+
+<hr>
+
+<section>
+  <span class="eyebrow"><span class="e">Sources</span><span class="t">Kaynaklar</span></span>
+  <ul class="sources">
+    <li><a href="https://reqres.in/docs">Reqres docs</a></li>
+    <li><a href="https://gsmarenas.netlify.app/host-https-www.linkedin.com/learning/postman-essential-training-21969591/the-contact-list-application">LinkedIn Learning, Postman Essential Training: The Contact List application</a></li>
+  </ul>
+</section>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var VIEWS=['roadmap','rest-basics','api-practice','sql-refresher'];
+  var LKEY='qa-hub-lang', CKEY='qa-roadmap-checks';
+
+  /* language */
+  var lang='en';
+  try{ if(localStorage.getItem(LKEY)==='tr') lang='tr'; }catch(e){}
+  function applyLang(){
+    root.setAttribute('data-lang',lang);
+    root.setAttribute('lang',lang);
+    updateProgress();
+  }
+  document.getElementById('langbtn').addEventListener('click',function(){
+    lang = lang==='tr' ? 'en' : 'tr';
+    try{ localStorage.setItem(LKEY,lang); }catch(e){}
+    applyLang();
+  });
+
+  /* views */
+  var pendingJump=null;
+  function show(){
+    var name=(location.hash||'').replace('#','');
+    if(VIEWS.indexOf(name)===-1) name='roadmap';
+    document.querySelectorAll('.view').forEach(function(v){ v.hidden = v.getAttribute('data-view')!==name; });
+    document.querySelectorAll('[data-tab]').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-tab')===name); });
+    if(pendingJump){
+      var el=document.getElementById(pendingJump); pendingJump=null;
+      if(el){ el.scrollIntoView(); return; }
+    }
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',show);
+  document.querySelectorAll('[data-jump]').forEach(function(a){
+    a.addEventListener('click',function(ev){
+      ev.preventDefault();
+      var el=document.getElementById(a.getAttribute('data-jump'));
+      if(el) el.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  /* checklists */
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(CKEY)||'{}')||{}; }catch(e){ state={}; }
+  function updateProgress(){
+    document.querySelectorAll('[data-road]').forEach(function(sec){
+      var all=sec.querySelectorAll('.tasks input').length;
+      var done=sec.querySelectorAll('.tasks input:checked').length;
+      var out=document.querySelector('[data-progress="'+sec.getAttribute('data-road')+'"]');
+      if(out) out.textContent=done+' / '+all+(lang==='tr'?' tamamlandı':' done');
+    });
+  }
+  document.querySelectorAll('.tasks input[type="checkbox"]').forEach(function(b){
+    if(state[b.id]) b.checked=true;
+    b.addEventListener('change',function(){
+      state[b.id]=b.checked;
+      try{ localStorage.setItem(CKEY,JSON.stringify(state)); }catch(e){}
+      updateProgress();
+    });
+  });
+
+  /* code colouring */
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function sp(c,s){ return '<span class="'+c+'">'+esc(s)+'</span>'; }
+  function json(s){
+    var out='', last=0, m, re=/"(?:[^"\\]|\\.)*"|\b(?:true|false|null)\b|-?\b\d+(?:\.\d+)?\b/g;
+    while((m=re.exec(s))){
+      out+=esc(s.slice(last,m.index));
+      var t=m[0], c;
+      if(t.charAt(0)==='"') c = /^\s*:/.test(s.slice(re.lastIndex)) ? 'k' : 's';
+      else c = /^[tfn]/.test(t) ? 'b' : 'n';
+      out+=sp(c,t); last=re.lastIndex;
+    }
+    return out+esc(s.slice(last));
+  }
+  function colourLine(l){
+    if(/^\s*#/.test(l)) return sp('c',l);
+    var com='', i=l.indexOf('←'), m;
+    if(i>-1){ com=sp('c',l.slice(i)); l=l.slice(0,i); }
+    if((m=/^(GET|POST|PUT|PATCH|DELETE)(\s+)(\S+)(.*)$/.exec(l))) return sp('m',m[1])+m[2]+esc(m[3])+esc(m[4])+com;
+    if((m=/^(\d{3})(\s+[A-Za-z ]+?)(\s*)$/.exec(l))) return sp('n',m[1])+esc(m[2])+m[3]+com;
+    if((m=/^([A-Za-z-]+)(:\s)(.*)$/.exec(l))) return sp('k',m[1])+m[2]+sp('s',m[3])+com;
+    return json(l)+com;
+  }
+  document.querySelectorAll('pre:not([data-nohl]):not([data-sql]) code').forEach(function(c){
+    c.innerHTML=c.textContent.split('\n').map(colourLine).join('\n');
+  });
+
+  var SQLKW=' SELECT FROM WHERE AND OR NOT IN BETWEEN LIKE IS NULL ORDER BY ASC DESC LIMIT DISTINCT GROUP HAVING JOIN INNER LEFT RIGHT FULL OUTER ON AS INSERT INTO VALUES UPDATE SET DELETE CASE WHEN THEN ELSE END EXISTS UNION ALL OVER PARTITION TRUNCATE DROP TABLE ';
+  var SQLFN=' COUNT SUM AVG MIN MAX ROW_NUMBER RANK ';
+  function sqlLine(l){
+    var com='', i=l.indexOf('--');
+    if(i>-1){ com=sp('c',l.slice(i)); l=l.slice(0,i); }
+    var out='', last=0, m, re=/'(?:[^']|'')*'|\b\d+(?:\.\d+)?\b|\b[A-Za-z_]+\b/g;
+    while((m=re.exec(l))){
+      out+=esc(l.slice(last,m.index));
+      var t=m[0], c='';
+      if(t.charAt(0)==="'") c='s';
+      else if(/^\d/.test(t)) c='n';
+      else if(SQLKW.indexOf(' '+t+' ')>-1) c='m';
+      else if(SQLFN.indexOf(' '+t+' ')>-1) c='k';
+      out+= c ? sp(c,t) : esc(t); last=re.lastIndex;
+    }
+    return out+esc(l.slice(last))+com;
+  }
+  document.querySelectorAll('pre[data-sql] code').forEach(function(c){
+    c.innerHTML=c.textContent.split('\n').map(sqlLine).join('\n');
+  });
+
+  applyLang();
+  show();
+})();
+</script>
+</body>
+</html>
