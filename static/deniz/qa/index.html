@@ -1128,6 +1128,26 @@ WHERE name = 'Sara';</code></pre>
   <p class="tip"><span class="e"><strong>Before you put this in CI.</strong> Public sandboxes return 429 when several CI runners share one cloud IP, and your pipeline goes red for no reason at all. The Toolshop's source is open: <code>docker compose up</code> runs it on your machine and on the runner, with a clean database every run. "I run my tests against an environment I bring up in Docker" reads far better in a portfolio than "I send requests to a website".</span><span class="t"><strong>CI'a koymadan önce.</strong> Birden fazla CI runner'ı aynı bulut IP'sini paylaştığında public sandbox'lar 429 döner ve pipeline'ın sebepsiz yere kırmızıya düşer. Toolshop'un kaynak kodu açık: <code>docker compose up</code> ile hem kendi makinende hem runner'da ayağa kalkar, her koşuda temiz veritabanıyla. Portföyde "testleri Docker'da ayağa kaldırdığım bir ortama karşı koşuyorum" demek, "bir siteye istek atıyorum" demekten çok daha ağır basar.</span></p>
 </section>
 
+
+<section>
+  <span class="eyebrow"><span class="e">Your own environment</span><span class="t">Kendi ortamın</span></span>
+  <h2><span class="e">Three apps you can bring up with Docker</span><span class="t">Docker ile kaldırabileceğin üç uygulama</span></h2>
+  <p class="lede"><span class="e">Every public sandbox has a daily limit and data shared with strangers. These are open-source applications you run on your own machine &mdash; and on the CI runner. Each one has a login, and after the login a full set of GET, POST, PUT and DELETE.</span><span class="t">Her public sandbox'ın günlük limiti ve yabancılarla ortak verisi var. Bunlar ise kendi makinende &mdash; ve CI runner'ında &mdash; çalıştırdığın açık kaynak uygulamalar. Her birinde bir login var, login'den sonra da tam bir GET, POST, PUT, DELETE seti.</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Application</span><span class="t">Uygulama</span></th><th><span class="e">Login and what it teaches</span><span class="t">Login ve ne öğretir</span></th><th><span class="e">How to run</span><span class="t">Nasıl çalıştırılır</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">Spring PetClinic REST</td><td><span class="e">HTTP Basic auth with roles: <code>OWNER_ADMIN</code>, <code>VET_ADMIN</code>, <code>ADMIN</code>. Security is off until you set <code>petclinic.security.enable=true</code>. Create your own user with <code>POST /api/users</code>, then call an admin endpoint with it and expect 403. Swagger UI at <code>/petclinic/swagger-ui.html</code>. Full CRUD on owners, pets, vets, visits.</span><span class="t">Rollerle birlikte HTTP Basic auth: <code>OWNER_ADMIN</code>, <code>VET_ADMIN</code>, <code>ADMIN</code>. Güvenlik <code>petclinic.security.enable=true</code> diyene kadar kapalı. <code>POST /api/users</code> ile kendi kullanıcını aç, sonra onunla admin endpoint'ine git ve 403 bekle. Swagger UI <code>/petclinic/swagger-ui.html</code> adresinde. Owners, pets, vets, visits üzerinde tam CRUD.</span></td><td><code>docker run -p 9966:9966 springcommunity/spring-petclinic-rest</code></td></tr>
+        <tr><td class="m">RealWorld (Conduit)</td><td><span class="e">Real JWT: register with <code>POST /users</code>, log in with <code>POST /users/login</code>, get a token back, send it on every later request. Then articles, comments, favourites, following. The whole token lifecycle in one app.</span><span class="t">Gerçek JWT: <code>POST /users</code> ile kayıt, <code>POST /users/login</code> ile giriş, cevapta token, sonraki her istekte o token. Ardından makaleler, yorumlar, favoriler, takip. Token'ın tüm yaşam döngüsü tek uygulamada.</span></td><td><code>./gradlew bootBuildImage --imageName realworld-api</code><br><code>docker run -p 8081:8080 realworld-api</code></td></tr>
+        <tr><td class="m">Restful Booker Platform</td><td><span class="e">A bed-and-breakfast system built as several services that call each other: auth, booking, room, message. Logs in with <code>admin</code> / <code>password</code>. Written to train testers, and closest to what a real job looks like.</span><span class="t">Birbirini çağıran birden fazla servisten kurulu bir pansiyon sistemi: auth, booking, room, message. <code>admin</code> / <code>password</code> ile giriş. Test uzmanı yetiştirmek için yazılmış ve gerçek işe en çok benzeyeni.</span></td><td><code>build_locally.sh</code> &rarr; <code>run_locally.sh</code><br><span class="e">a <code>docker-compose.yml</code> ships with it</span><span class="t">içinde bir <code>docker-compose.yml</code> geliyor</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tip"><span class="e"><strong>The trap in RealWorld.</strong> Its specification asks for <code>Authorization: Token &lt;jwt&gt;</code>, not <code>Bearer</code>. Send Bearer out of habit and you get 401 with no explanation. That is the lesson itself: send what the specification says, not what you are used to.</span><span class="t"><strong>RealWorld'deki tuzak.</strong> Spec'i <code>Bearer</code> değil <code>Authorization: Token &lt;jwt&gt;</code> istiyor. Alışkanlıkla Bearer gönderirsen hiçbir açıklama olmadan 401 alırsın. Ders tam da bu: alıştığını değil, spec'in dediğini gönder.</span></p>
+  <p><span class="e"><strong>Where to start.</strong> PetClinic, because it is one <code>docker run</code> with no build: turn the security on and write the role tests. Move to RealWorld when you want the token flow. Leave the Booker Platform for later &mdash; several services talking to each other is a harder first exercise, and the thing you will meet at work.</span><span class="t"><strong>Nereden başlamalı.</strong> PetClinic'ten, çünkü build gerektirmeyen tek bir <code>docker run</code>: güvenliği aç ve rol testlerini yaz. Token akışını istediğinde RealWorld'e geç. Booker Platform'u sona bırak &mdash; birbiriyle konuşan birden fazla servis ilk alıştırma için ağır, ama işte karşına çıkacak olan o.</span></p>
+  <p><span class="e">Whichever you pick, copy its compose file into your own test repo. A suite that brings its own environment up in GitHub Actions is the thing worth showing.</span><span class="t">Hangisini seçersen seç, compose dosyasını kendi test repona kopyala. GitHub Actions'da kendi ortamını kaldıran bir suite, gösterilmeye değer olan şeydir.</span></p>
+</section>
+
 <hr>
 
 <section>
@@ -1138,6 +1158,10 @@ WHERE name = 'Sara';</code></pre>
     <li><a href="https://apichallenges.com/practice-sites">API Practice Sites &mdash; apichallenges.com</a></li>
     <li><a href="https://api.practicesoftwaretesting.com/api/documentation">Toolshop API documentation</a></li>
     <li><a href="https://totalshiftleft.ai/blog/public-apis-for-testing">Public &amp; dummy APIs for testing (2026)</a></li>
+    <li><a href="https://github.com/spring-petclinic/spring-petclinic-rest">spring-petclinic/spring-petclinic-rest</a></li>
+    <li><a href="https://github.com/gothinkster/spring-boot-realworld-example-app">gothinkster/spring-boot-realworld-example-app</a></li>
+    <li><a href="https://github.com/1chz/realworld-java21-springboot3">1chz/realworld-java21-springboot3 &mdash; Java 21, OpenAPI spec</a></li>
+    <li><a href="https://github.com/mwinteringham/restful-booker-platform">mwinteringham/restful-booker-platform</a></li>
   </ul>
 </section>
 </div>
