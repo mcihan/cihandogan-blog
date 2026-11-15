@@ -149,6 +149,7 @@ pre .m{color:var(--c-method); font-weight:500} pre .c{color:var(--muted); font-s
 a{color:var(--accent)}
 a:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 hr{border:0; border-top:1px solid var(--line); margin:0}
+ul.plain a, ul.plain code, p > a[href^="http"]{overflow-wrap:anywhere}
 </style>
 <meta name="robots" content="noindex,nofollow">
 <style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
@@ -1021,9 +1022,9 @@ WHERE name = 'Sara';</code></pre>
     <table>
       <thead><tr><th>API</th><th><span class="e">What you learn</span><span class="t">Ne öğretir</span></th><th><span class="e">Address</span><span class="t">Adres</span></th></tr></thead>
       <tbody>
-        <tr><td class="m">Contact List App</td><td><span class="e">Sign up, login, JWT, Bearer header, PUT vs PATCH, logout. Data is really saved.</span><span class="t">Kayıt, login, JWT, Bearer header, PUT ile PATCH farkı, logout. Veri gerçekten kaydedilir.</span></td><td><code>thinking-tester-contact-list.herokuapp.com</code></td></tr>
-        <tr><td class="m">DummyJSON</td><td><span class="e">JWT login and refresh token, query parameters (limit, skip, sort, search), path variables.</span><span class="t">JWT login ve refresh token, query parametreleri (limit, skip, sort, arama), path variable.</span></td><td><code>dummyjson.com/docs</code></td></tr>
-        <tr><td class="m">Restful-Booker</td><td><span class="e">Other kinds of auth (token inside a Cookie, Basic Auth), and bugs left in on purpose.</span><span class="t">Farklı auth türleri (Cookie içinde token, Basic Auth), kasıtlı bırakılmış bug'lar.</span></td><td><code>restful-booker.herokuapp.com/apidoc</code></td></tr>
+        <tr><td class="m">Contact List App</td><td><span class="e">Sign up, login, JWT, Bearer header, PUT vs PATCH, logout. Data is really saved.</span><span class="t">Kayıt, login, JWT, Bearer header, PUT ile PATCH farkı, logout. Veri gerçekten kaydedilir.</span></td><td><a href="https://thinking-tester-contact-list.herokuapp.com"><code>thinking-tester-contact-list.herokuapp.com</code></a></td></tr>
+        <tr><td class="m">DummyJSON</td><td><span class="e">JWT login and refresh token, query parameters (limit, skip, sort, search), path variables.</span><span class="t">JWT login ve refresh token, query parametreleri (limit, skip, sort, arama), path variable.</span></td><td><a href="https://dummyjson.com/docs"><code>dummyjson.com/docs</code></a></td></tr>
+        <tr><td class="m">Restful-Booker</td><td><span class="e">Other kinds of auth (token inside a Cookie, Basic Auth), and bugs left in on purpose.</span><span class="t">Farklı auth türleri (Cookie içinde token, Basic Auth), kasıtlı bırakılmış bug'lar.</span></td><td><a href="https://restful-booker.herokuapp.com/apidoc/index.html"><code>restful-booker.herokuapp.com/apidoc</code></a></td></tr>
       </tbody>
     </table>
   </div>
@@ -1079,42 +1080,229 @@ WHERE name = 'Sara';</code></pre>
 </section>
 
 
+
+
+
+
+
+
+
+
+
 <section>
   <span class="eyebrow"><span class="e">Real environments</span><span class="t">Gerçek ortamlar</span></span>
-  <h2><span class="e">Where the data really persists</span><span class="t">Verinin gerçekten kaydedildiği yerler</span></h2>
-  <p class="lede"><span class="e">The three APIs above cover the basics. When you move from learning to writing a portfolio suite, you need an API with a token, with roles, and with a database that keeps what you write.</span><span class="t">Yukarıdaki üç API temelleri kapsıyor. Öğrenmekten portföy suite'i yazmaya geçtiğinde ise token'ı, rolleri ve yazdığını gerçekten saklayan bir veritabanı olan bir API gerekiyor.</span></p>
+  <h2><span class="e">Toolshop: the API where what you write is kept</span><span class="t">Toolshop: yazdığının kaldığı API</span></h2>
+  <p class="lede"><span class="e">The three APIs above teach the basics, but two of them only pretend to write. Toolshop is a real shop application: a login that returns a token, an admin role, and a database that keeps your record. Use it online, or run the whole thing on your own machine.</span><span class="t">Yukarıdaki üç API temelleri öğretiyor ama ikisi yazar gibi yapıyor. Toolshop ise gerçek bir mağaza uygulaması: token dönen bir login, bir admin rolü ve kaydını saklayan bir veritabanı. Ya internetten kullan, ya da tamamını kendi makinende çalıştır.</span></p>
+  <ul class="plain">
+    <li><span class="e">API, online:</span><span class="t">API, internetten:</span> <code>https://api.practicesoftwaretesting.com</code></li>
+    <li>Swagger: <a href="https://api.practicesoftwaretesting.com/api/documentation">api.practicesoftwaretesting.com/api/documentation</a> &mdash; <span class="e">import this into Postman</span><span class="t">bunu Postman'e import et</span></li>
+    <li><span class="e">Source code:</span><span class="t">Kaynak kodu:</span> <a href="https://github.com/testsmith-io/practice-software-testing">github.com/testsmith-io/practice-software-testing</a></li>
+  </ul>
+
+  <h3><span class="e">Run it yourself (recommended)</span><span class="t">Kendin çalıştır (önerilen)</span></h3>
+  <p><span class="e">The online one is shared with everybody and rate-limited. Four commands give you your own copy, with its own clean database:</span><span class="t">İnternettekini herkes kullanıyor ve limitli. Dört komutla kendi kopyan, kendi temiz veritabanınla birlikte senin olur:</span></p>
+<pre data-nohl><code>git clone https://github.com/testsmith-io/practice-software-testing.git
+cd practice-software-testing
+docker compose -f docker-compose.prod.yml up --pull missing -d
+
+# API   -> http://localhost:8091
+# UI    -> http://localhost:4200
+# docs  -> http://localhost:8091/api/documentation</code></pre>
+  <p><span class="e">The UI on port 4200 is the same shop as a web application, so the same project can hold your API tests and your Playwright tests later.</span><span class="t">4200'deki arayüz aynı mağazanın web uygulaması hali, yani ileride aynı proje hem API testlerini hem Playwright testlerini taşıyabilir.</span></p>
+
+  <h3><span class="e">The accounts</span><span class="t">Hesaplar</span></h3>
   <div class="tablewrap">
     <table>
-      <thead><tr><th>API</th><th><span class="e">What it gives you</span><span class="t">Ne veriyor</span></th><th><span class="e">Address</span><span class="t">Adres</span></th></tr></thead>
+      <thead><tr><th>E-mail</th><th><span class="e">Password</span><span class="t">Şifre</span></th><th><span class="e">Role</span><span class="t">Rol</span></th></tr></thead>
       <tbody>
-        <tr><td class="m">Toolshop API</td><td><span class="e">Swagger docs, login that returns a Bearer token, DELETE only for admins, a real database &mdash; and the same app has a web UI, so you can test one system from two layers. A deliberately buggy version exists too.</span><span class="t">Swagger dokümanı, Bearer token dönen login, sadece admin'e açık DELETE, gerçek bir veritabanı &mdash; ve aynı uygulamanın bir de web arayüzü var, yani tek sistemi iki katmandan test edebilirsin. Bilerek hatalı bir sürümü de mevcut.</span></td><td><code>api.practicesoftwaretesting.com/api/documentation</code></td></tr>
-        <tr><td class="m">API Challenges</td><td><span class="e">50+ guided challenges. <code>POST /challenger</code> gives you an <code>X-CHALLENGER</code> header and your own isolated TODO data. Drills HEAD, OPTIONS, content negotiation, wrong Content-Type, 405.</span><span class="t">50'den fazla rehberli alıştırma. <code>POST /challenger</code> sana bir <code>X-CHALLENGER</code> header'ı ve kendine ait izole TODO verisi verir. HEAD, OPTIONS, content negotiation, yanlış Content-Type, 405 &mdash; hepsini sırayla çalıştırır.</span></td><td><code>apichallenges.com</code></td></tr>
-        <tr><td class="m">GoRest</td><td><span class="e">Log in with GitHub to get a Bearer token. Real CRUD, clean 401 and 422 responses. The data is shared with everyone, so never put personal information in it.</span><span class="t">GitHub ile giriş yapıp Bearer token alıyorsun. Gerçek CRUD, düzgün 401 ve 422 cevapları. Veri herkesle ortak, o yüzden kişisel bilgi yazma.</span></td><td><code>gorest.co.in</code></td></tr>
-        <tr><td class="m">Expand Testing Notes</td><td><span class="e">Register, log in, then send <code>X-AUTH-TOKEN</code>. The data belongs to your user alone, so your tests never collide with a stranger's. The safest of these for CI.</span><span class="t">Kayıt ol, giriş yap, <code>X-AUTH-TOKEN</code> gönder. Veri sadece senin kullanıcına ait, yani testlerin başkasınınkiyle çakışmaz. CI için bunların en güvenlisi.</span></td><td><code>practice.expandtesting.com/notes/api/api-docs</code></td></tr>
-        <tr><td class="m">restful-api.dev</td><td><span class="e">No auth at all, the simplest real create&ndash;read&ndash;update&ndash;delete round trip. Limited to 50 requests a day.</span><span class="t">Hiç auth yok, en basit gerçek oluştur&ndash;oku&ndash;güncelle&ndash;sil turu. Günde 50 istekle sınırlı.</span></td><td><code>api.restful-api.dev/objects</code></td></tr>
+        <tr><td class="m">admin@practicesoftwaretesting.com</td><td class="m">welcome01</td><td class="m">admin</td></tr>
+        <tr><td class="m">customer@practicesoftwaretesting.com</td><td class="m">welcome01</td><td class="m">user</td></tr>
+        <tr><td class="m">customer2@practicesoftwaretesting.com</td><td class="m">welcome01</td><td class="m">user</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="verdict"><span class="e">For the portfolio suite take the Toolshop API. To drill HTTP itself, take API Challenges.</span><span class="t">Portföy suite'i için Toolshop API'yi al. HTTP'nin kendisini çalışmak için API Challenges'ı al.</span></p>
+
+  <h3><span class="e">The five requests, in order</span><span class="t">Beş istek, sırasıyla</span></h3>
+  <p><span class="e">Replace <code>localhost:8091</code> with <code>api.practicesoftwaretesting.com</code> if you use the online one.</span><span class="t">İnternettekini kullanıyorsan <code>localhost:8091</code> yerine <code>api.practicesoftwaretesting.com</code> yaz.</span></p>
+<pre><code># 1. log in -> the response carries access_token
+POST http://localhost:8091/users/login
+Content-Type: application/json
+
+{ "email": "admin@practicesoftwaretesting.com", "password": "welcome01" }
+
+200 OK
+{ "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOi...", "token_type": "bearer", "expires_in": 300 }
+
+# 2. create a product with that token
+POST http://localhost:8091/products
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOi...
+Content-Type: application/json
+
+{ "name": "Test hammer", "description": "created by my test", "price": 9.99,
+  "category_id": "...", "brand_id": "...", "product_image_id": "..." }
+
+201 Created
+{ "id": "01J...", "name": "Test hammer", ... }
+
+# 3. read it back -> this is the test a fake API cannot give you
+GET http://localhost:8091/products/01J...
+
+# 4. delete it as a NORMAL user -> 403, not 200
+POST http://localhost:8091/users/login
+{ "email": "customer@practicesoftwaretesting.com", "password": "welcome01" }
+
+DELETE http://localhost:8091/products/01J...
+Authorization: Bearer &lt;the customer token&gt;
+
+403 Forbidden
+
+# 5. delete it as admin, then GET it again -> 404</code></pre>
+  <p class="tip"><span class="e"><strong>Where the ids come from.</strong> A product needs an existing <code>category_id</code>, <code>brand_id</code> and <code>product_image_id</code>. Fetch them first with <code>GET /categories</code>, <code>GET /brands</code> and <code>GET /images</code>, and take one id from each. In a test, do this in the setup step rather than pasting fixed ids, or your suite breaks the day the data changes.</span><span class="t"><strong>Id'ler nereden geliyor.</strong> Bir ürün var olan bir <code>category_id</code>, <code>brand_id</code> ve <code>product_image_id</code> ister. Önce <code>GET /categories</code>, <code>GET /brands</code> ve <code>GET /images</code> ile çek, her birinden bir id al. Testte bunu sabit id yapıştırarak değil setup adımında yap; yoksa veri değiştiği gün suite'in kırılır.</span></p>
+  <p><span class="e"><strong>What else is in there.</strong> <code>/products</code>, <code>/categories</code>, <code>/brands</code>, <code>/carts</code>, <code>/invoices</code>, <code>/payment</code>, <code>/messages</code>, <code>/images</code>, <code>/reports</code>, <code>/users</code>. Most GET, POST and PUT calls work without a token; DELETE generally wants the admin. The Swagger file is the list that is actually true &mdash; read it, do not guess.</span><span class="t"><strong>İçinde başka ne var.</strong> <code>/products</code>, <code>/categories</code>, <code>/brands</code>, <code>/carts</code>, <code>/invoices</code>, <code>/payment</code>, <code>/messages</code>, <code>/images</code>, <code>/reports</code>, <code>/users</code>. GET, POST ve PUT çağrılarının çoğu token istemiyor; DELETE genelde admin istiyor. Gerçekten doğru olan liste Swagger dosyası &mdash; tahmin etme, onu oku.</span></p>
 </section>
 
-<section class="road" data-road="p2">
-  <span class="eyebrow"><span class="e">Portfolio suite</span><span class="t">Portföy suite'i</span></span>
-  <div class="roadhead"><h2><span class="e">Six tests on the Toolshop API</span><span class="t">Toolshop API üzerinde altı test</span></h2><span class="progress" data-progress="p2"></span></div>
+<section>
+  <span class="eyebrow"><span class="e">Drills</span><span class="t">Alıştırma</span></span>
+  <h2><span class="e">API Challenges: 50+ exercises that mark themselves</span><span class="t">API Challenges: kendi kendini puanlayan 50+ alıştırma</span></h2>
+  <p class="lede"><span class="e">Separate from the portfolio work, this is where you drill HTTP itself. You get your own isolated data, and the site ticks off each challenge as you complete it.</span><span class="t">Portföy işinden ayrı olarak, HTTP'nin kendisini çalıştığın yer burası. Kendine ait izole veri alıyorsun ve site her alıştırmayı tamamladıkça işaretliyor.</span></p>
+<pre><code># 1. open a session -> the X-CHALLENGER response header holds your GUID
+POST https://apichallenges.com/api/challenger
 
-  <div class="sprint">
-    <div class="top"><span class="wk">Toolshop</span><h3><span class="e">From the token to the role check</span><span class="t">Token'dan rol kontrolüne</span></h3></div>
-    <ul class="tasks">
-      <li><label><input type="checkbox" id="p2-1"><span><span class="e"><strong>Read the Swagger first.</strong> Open <code>/api/documentation</code> and find the login endpoint, the product endpoints and which ones say they need an admin. Write your test list from the documentation, not from guessing.</span><span class="t"><strong>Önce Swagger'ı oku.</strong> <code>/api/documentation</code>'ı aç; login endpoint'ini, ürün endpoint'lerini ve hangilerinin admin istediğini bul. Test listeni tahminden değil, dokümandan çıkar.</span></span></label></li>
-      <li><label><input type="checkbox" id="p2-2"><span><span class="e"><strong>Token in one place.</strong> Log in once, keep the token in a RestAssured <code>RequestSpecification</code> (or a Postman environment variable) and reuse it. Do not copy the token into every test.</span><span class="t"><strong>Token tek yerde.</strong> Bir kere login ol, token'ı bir RestAssured <code>RequestSpecification</code>'ında (ya da Postman environment variable'ında) tut ve tekrar kullan. Token'ı her teste tek tek yapıştırma.</span></span></label></li>
-      <li><label><input type="checkbox" id="p2-3"><span><span class="e"><strong>Create, then read it back.</strong> Create a product, keep the id from the response, then <code>GET</code> that id and check that the fields you sent came back. This is the test a fake API cannot give you.</span><span class="t"><strong>Oluştur, sonra geri oku.</strong> Bir ürün oluştur, cevaptaki id'yi sakla, sonra o id'yi <code>GET</code> ile çağır ve gönderdiğin alanların geri geldiğini doğrula. Sahte API'nin sana veremeyeceği test tam da bu.</span></span></label></li>
-      <li><label><input type="checkbox" id="p2-4"><span><span class="e"><strong>Update and delete.</strong> Change one field, read it back, then delete the record and expect 404 on the next <code>GET</code>. Clean up what your test created, every time.</span><span class="t"><strong>Güncelle ve sil.</strong> Bir alanı değiştir, geri oku, sonra kaydı sil ve bir sonraki <code>GET</code>'te 404 bekle. Testinin oluşturduğunu her seferinde temizle.</span></span></label></li>
-      <li><label><input type="checkbox" id="p2-5"><span><span class="e"><strong>Role check.</strong> Try the admin-only DELETE with an ordinary user's token and expect 403. Authorisation bugs are what API testing catches that UI testing does not.</span><span class="t"><strong>Rol kontrolü.</strong> Sadece admin'e açık DELETE'i normal kullanıcının token'ıyla dene ve 403 bekle. Yetkilendirme hataları, API testinin UI testinden farklı olarak yakaladığı şeydir.</span></span></label></li>
-      <li><label><input type="checkbox" id="p2-6"><span><span class="e"><strong>Negative cases.</strong> Missing required field, invalid token, id that does not exist. Three tests, three different status codes. A suite with only happy paths does not look like a tester's work.</span><span class="t"><strong>Negatif senaryolar.</strong> Eksik zorunlu alan, geçersiz token, olmayan id. Üç test, üç farklı status code. Sadece mutlu yolu olan bir suite test uzmanı işine benzemez.</span></span></label></li>
-    </ul>
+201 Created
+X-CHALLENGER: 8b1f3a0e-...
+
+# 2. send that header on every later request
+GET https://apichallenges.com/api/challenges
+X-CHALLENGER: 8b1f3a0e-...
+
+# 3. the todos you will be working on
+GET https://apichallenges.com/api/todos
+X-CHALLENGER: 8b1f3a0e-...</code></pre>
+  <ul class="plain">
+    <li><span class="e">Challenge list and progress:</span><span class="t">Alıştırma listesi ve ilerlemen:</span> <a href="https://apichallenges.com/gui/challenges">apichallenges.com/gui/challenges</a></li>
+    <li>Swagger: <a href="https://apichallenges.com/api/docs/swagger-ui">apichallenges.com/api/docs/swagger-ui</a></li>
+    <li><span class="e">Run it on your own machine:</span><span class="t">Kendi makinende çalıştır:</span> <a href="https://github.com/eviltester/apichallenges">github.com/eviltester/apichallenges</a></li>
+  </ul>
+  <p><span class="e">The challenges walk you through the things nobody teaches on purpose: <code>GET /todo</code> that must return 404, <code>HEAD</code> and <code>OPTIONS</code>, asking for XML with <code>Accept</code>, sending XML and getting JSON back, a <code>DELETE</code> on a collection that must return 405. This is the fastest way to stop guessing status codes.</span><span class="t">Alıştırmalar kimsenin bilerek öğretmediği şeyleri sırayla gezdiriyor: 404 dönmesi gereken <code>GET /todo</code>, <code>HEAD</code> ve <code>OPTIONS</code>, <code>Accept</code> ile XML istemek, XML gönderip JSON geri almak, koleksiyon üzerinde 405 dönmesi gereken bir <code>DELETE</code>. Status code tahmin etmeyi bırakmanın en hızlı yolu bu.</span></p>
+</section>
+
+<section>
+  <span class="eyebrow"><span class="e">The rest</span><span class="t">Diğerleri</span></span>
+  <h2><span class="e">Three more that really save your data</span><span class="t">Veriyi gerçekten saklayan üç tane daha</span></h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>API</th><th><span class="e">Login</span><span class="t">Login</span></th><th><span class="e">Good for</span><span class="t">Ne için iyi</span></th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://gorest.co.in">gorest.co.in</a></td><td><span class="e">Sign in with GitHub on the site, copy the token, then send <code>Authorization: Bearer &lt;token&gt;</code></span><span class="t">Sitede GitHub ile giriş yap, token'ı kopyala, sonra <code>Authorization: Bearer &lt;token&gt;</code> gönder</span></td><td><span class="e">Clean 401 and 422 responses. Data is shared with everyone, so no personal information.</span><span class="t">Düzgün 401 ve 422 cevapları. Veri herkesle ortak, kişisel bilgi yazma.</span></td></tr>
+        <tr><td><a href="https://practice.expandtesting.com/notes/api/api-docs/">practice.expandtesting.com/notes</a></td><td><span class="e">Register and log in on the API, then send <code>X-AUTH-TOKEN</code></span><span class="t">API üzerinden kayıt ol ve giriş yap, sonra <code>X-AUTH-TOKEN</code> gönder</span></td><td><span class="e">The data belongs to your user alone, so nobody else can break your test. The safest public one for CI.</span><span class="t">Veri sadece senin kullanıcına ait, kimse testini bozamaz. CI için public olanların en güvenlisi.</span></td></tr>
+        <tr><td><a href="https://restful-api.dev">restful-api.dev</a></td><td><span class="e">None</span><span class="t">Yok</span></td><td><span class="e">The shortest real create&ndash;read&ndash;update&ndash;delete round trip there is. 50 requests a day.</span><span class="t">En kısa gerçek oluştur&ndash;oku&ndash;güncelle&ndash;sil turu. Günde 50 istek.</span></td></tr>
+      </tbody>
+    </table>
   </div>
+</section>
 
-  <p class="outcome"><span class="e"><strong>These six are week 2 of the roadmap.</strong> Written in RestAssured with JUnit 5 and pushed to GitHub, they are the first real thing in your portfolio.</span><span class="t"><strong>Bu altısı yol haritasının 2. haftası.</strong> RestAssured ve JUnit 5 ile yazılıp GitHub'a atıldığında portföyündeki ilk gerçek iş bunlar olur.</span></p>
+<section>
+  <span class="eyebrow"><span class="e">Your own environment</span><span class="t">Kendi ortamın</span></span>
+  <h2><span class="e">Two Spring Boot apps you can run with Docker</span><span class="t">Docker ile çalıştırabileceğin iki Spring Boot uygulaması</span></h2>
+  <p class="lede"><span class="e">A public sandbox has a daily limit and data shared with strangers. These two are open source, they run on your machine and on the CI runner, and both give you a login followed by a full set of GET, POST, PUT and DELETE.</span><span class="t">Public sandbox'ın günlük limiti ve yabancılarla ortak verisi var. Bu ikisi açık kaynak, hem kendi makinende hem CI runner'ında çalışıyor ve ikisinde de bir login, ardından tam bir GET, POST, PUT, DELETE seti var.</span></p>
+
+  <h3>1 &middot; Spring PetClinic REST</h3>
+  <p><a href="https://github.com/spring-petclinic/spring-petclinic-rest">github.com/spring-petclinic/spring-petclinic-rest</a> &middot; <a href="https://hub.docker.com/r/springcommunity/spring-petclinic-rest">hub.docker.com/r/springcommunity/spring-petclinic-rest</a></p>
+  <p><span class="e">Spring's own sample application, REST version. There is a ready-made image, so there is nothing to clone and nothing to build.</span><span class="t">Spring'in kendi örnek uygulamasının REST sürümü. Hazır imajı var, yani klonlanacak ve build edilecek bir şey yok.</span></p>
+<pre data-nohl><code>docker run -p 9966:9966 springcommunity/spring-petclinic-rest</code></pre>
+  <ul class="plain">
+    <li><span class="e">API base:</span><span class="t">API adresi:</span> <code>http://localhost:9966/petclinic/api</code></li>
+    <li>Swagger UI: <code>http://localhost:9966/petclinic/swagger-ui.html</code></li>
+    <li><span class="e">OpenAPI spec (import this into Postman):</span><span class="t">OpenAPI spec'i (bunu Postman'e import et):</span> <code>http://localhost:9966/petclinic/v3/api-docs</code></li>
+  </ul>
+  <p><span class="e"><strong>Security is off by default.</strong> Start it again with the property on, and the whole API asks for HTTP Basic auth:</span><span class="t"><strong>Güvenlik varsayılan olarak kapalı.</strong> Özelliği açık şekilde yeniden başlat; tüm API HTTP Basic auth istemeye başlar:</span></p>
+<pre data-nohl><code>docker run -p 9966:9966 -e PETCLINIC_SECURITY_ENABLE=true \
+  springcommunity/spring-petclinic-rest
+
+# without credentials  -> 401
+curl -i http://localhost:9966/petclinic/api/owners
+
+# with the default admin  -> 200
+curl -u admin:admin http://localhost:9966/petclinic/api/owners</code></pre>
+  <p><span class="e">The environment variable is Spring Boot's own spelling of the property <code>petclinic.security.enable</code>. If your Docker version does not pass it through, clone the repo, set <code>petclinic.security.enable=true</code> in <code>src/main/resources/application.properties</code> and build the image yourself with <code>./mvnw spring-boot:build-image</code>.</span><span class="t">Bu environment variable, <code>petclinic.security.enable</code> özelliğinin Spring Boot'taki yazılışı. Docker sürümün bunu geçirmezse repoyu klonla, <code>src/main/resources/application.properties</code> içinde <code>petclinic.security.enable=true</code> yap ve imajı <code>./mvnw spring-boot:build-image</code> ile kendin build et.</span></p>
+  <p><span class="e"><strong>What is inside.</strong> Default admin account: <code>admin</code> / <code>admin</code>. Three roles: <code>OWNER_ADMIN</code>, <code>VET_ADMIN</code>, <code>ADMIN</code>. You open your own user, with the roles you choose, through <code>POST /api/users</code> &mdash; which is how you get to write the 403 test.</span><span class="t"><strong>İçinde ne var.</strong> Hazır admin hesabı: <code>admin</code> / <code>admin</code>. Üç rol: <code>OWNER_ADMIN</code>, <code>VET_ADMIN</code>, <code>ADMIN</code>. Kendi kullanıcını istediğin rollerle <code>POST /api/users</code> ile açıyorsun &mdash; 403 testini yazma imkânı da buradan geliyor.</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Resource</span><span class="t">Kaynak</span></th><th>Endpoints</th><th><span class="e">Role</span><span class="t">Rol</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">owners</td><td><code>GET POST /api/owners</code> &middot; <code>GET PUT DELETE /api/owners/{id}</code> &middot; <code>POST /api/owners/{id}/pets</code> &middot; <code>POST /api/owners/{id}/pets/{petId}/visits</code></td><td class="m">OWNER_ADMIN</td></tr>
+        <tr><td class="m">pets</td><td><code>GET /api/pets</code> &middot; <code>GET PUT DELETE /api/pets/{id}</code></td><td class="m">OWNER_ADMIN</td></tr>
+        <tr><td class="m">visits</td><td><code>GET POST /api/visits</code> &middot; <code>GET PUT DELETE /api/visits/{id}</code></td><td class="m">OWNER_ADMIN</td></tr>
+        <tr><td class="m">vets</td><td><code>GET POST /api/vets</code> &middot; <code>GET PUT DELETE /api/vets/{id}</code></td><td class="m">VET_ADMIN</td></tr>
+        <tr><td class="m">pettypes</td><td><code>GET POST /api/pettypes</code> &middot; <code>GET PUT DELETE /api/pettypes/{id}</code></td><td class="m">VET_ADMIN</td></tr>
+        <tr><td class="m">specialties</td><td><code>GET POST /api/specialties</code> &middot; <code>GET PUT DELETE /api/specialties/{id}</code></td><td class="m">VET_ADMIN</td></tr>
+        <tr><td class="m">users</td><td><code>POST /api/users</code></td><td class="m">ADMIN</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><span class="e">It runs on an in-memory database, so every restart gives you a clean dataset. If you want a real database instead, the repo ships a compose file:</span><span class="t">Bellek içi bir veritabanıyla çalışıyor, yani her yeniden başlatma sana temiz veri verir. Gerçek bir veritabanı istersen repoda bir compose dosyası var:</span></p>
+<pre data-nohl><code>git clone https://github.com/spring-petclinic/spring-petclinic-rest.git
+cd spring-petclinic-rest
+docker compose --profile mysql up      # or: --profile postgres</code></pre>
+
+  <h3>2 &middot; RealWorld (Conduit)</h3>
+  <p><a href="https://github.com/gothinkster/spring-boot-realworld-example-app">github.com/gothinkster/spring-boot-realworld-example-app</a> &middot; <span class="e">spec:</span><span class="t">spec'i:</span> <a href="https://realworld-docs.netlify.app/specifications/backend/endpoints/">realworld-docs.netlify.app</a></p>
+  <p><span class="e">A Medium-style blog API. This is the one with a real JWT: you register, you log in, you get a token, and you send that token on every later request. There is no ready image, so you build one &mdash; the Gradle command below produces it, no Dockerfile needed.</span><span class="t">Medium benzeri bir blog API'si. Gerçek JWT olan bu: kayıt oluyorsun, giriş yapıyorsun, token alıyorsun ve sonraki her istekte o token'ı gönderiyorsun. Hazır imajı yok, kendin üretiyorsun &mdash; aşağıdaki Gradle komutu imajı oluşturuyor, Dockerfile yazmana gerek yok.</span></p>
+<pre data-nohl><code>git clone https://github.com/gothinkster/spring-boot-realworld-example-app.git
+cd spring-boot-realworld-example-app
+./gradlew bootBuildImage --imageName realworld-api
+docker run -p 8081:8080 realworld-api</code></pre>
+  <p><span class="e">The three requests that matter, end to end:</span><span class="t">Baştan sona, önemli olan üç istek:</span></p>
+<pre><code># 1. register
+POST http://localhost:8081/api/users
+Content-Type: application/json
+
+{ "user": { "username": "cihan", "email": "cihan@test.com", "password": "MyPass123" } }
+
+# 2. log in -> the response carries the token
+POST http://localhost:8081/api/users/login
+
+{ "user": { "email": "cihan@test.com", "password": "MyPass123" } }
+
+200 OK
+{ "user": { "email": "cihan@test.com", "token": "eyJhbGciOiJIUzI1NiIs...", "username": "cihan" } }
+
+# 3. create an article with that token
+POST http://localhost:8081/api/articles
+Authorization: Token eyJhbGciOiJIUzI1NiIs...
+Content-Type: application/json
+
+{ "article": { "title": "My first article", "description": "short", "body": "text", "tagList": ["qa"] } }</code></pre>
+  <p class="tip"><span class="e"><strong>Two things that cost people an hour.</strong> The header is <code>Authorization: Token &lt;jwt&gt;</code>, not <code>Bearer</code> &mdash; send Bearer out of habit and you get a 401 with no explanation. And every body is wrapped in an object: <code>{"user": {...}}</code>, <code>{"article": {...}}</code>. Send the fields at the top level and you get a 422.</span><span class="t"><strong>İnsanın bir saatini yiyen iki şey.</strong> Header <code>Bearer</code> değil <code>Authorization: Token &lt;jwt&gt;</code> &mdash; alışkanlıkla Bearer gönderirsen hiçbir açıklama olmadan 401 alırsın. Ve her body bir nesnenin içine sarılı: <code>{"user": {...}}</code>, <code>{"article": {...}}</code>. Alanları en üst seviyede gönderirsen 422 alırsın.</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Endpoint</th><th><span class="e">What it does</span><span class="t">Ne yapar</span></th><th>Token</th></tr></thead>
+      <tbody>
+        <tr><td class="m">POST /api/users</td><td><span class="e">Register</span><span class="t">Kayıt ol</span></td><td><span class="e">no</span><span class="t">gerekmez</span></td></tr>
+        <tr><td class="m">POST /api/users/login</td><td><span class="e">Log in, returns the token</span><span class="t">Giriş yap, token döner</span></td><td><span class="e">no</span><span class="t">gerekmez</span></td></tr>
+        <tr><td class="m">GET PUT /api/user</td><td><span class="e">Read and update your own account</span><span class="t">Kendi hesabını oku ve güncelle</span></td><td><span class="e">yes</span><span class="t">gerekir</span></td></tr>
+        <tr><td class="m">GET /api/articles</td><td><span class="e">List, with filters and paging</span><span class="t">Listele, filtre ve sayfalama ile</span></td><td><span class="e">optional</span><span class="t">isteğe bağlı</span></td></tr>
+        <tr><td class="m">POST /api/articles</td><td><span class="e">Create an article</span><span class="t">Makale oluştur</span></td><td><span class="e">yes</span><span class="t">gerekir</span></td></tr>
+        <tr><td class="m">GET PUT DELETE /api/articles/{slug}</td><td><span class="e">Read, update, delete one article</span><span class="t">Tek makaleyi oku, güncelle, sil</span></td><td><span class="e">GET no, the rest yes</span><span class="t">GET hayır, diğerleri evet</span></td></tr>
+        <tr><td class="m">GET POST /api/articles/{slug}/comments</td><td><span class="e">Comments; delete with <code>/comments/{id}</code></span><span class="t">Yorumlar; silme <code>/comments/{id}</code> ile</span></td><td><span class="e">POST and DELETE yes</span><span class="t">POST ve DELETE evet</span></td></tr>
+        <tr><td class="m">POST DELETE /api/articles/{slug}/favorite</td><td><span class="e">Favourite and unfavourite</span><span class="t">Favorile ve favoriden çıkar</span></td><td><span class="e">yes</span><span class="t">gerekir</span></td></tr>
+        <tr><td class="m">GET /api/profiles/{username}</td><td><span class="e">Profile; follow with <code>/follow</code></span><span class="t">Profil; takip <code>/follow</code> ile</span></td><td><span class="e">follow yes</span><span class="t">takip için evet</span></td></tr>
+        <tr><td class="m">GET /api/tags</td><td><span class="e">Tag list</span><span class="t">Etiket listesi</span></td><td><span class="e">no</span><span class="t">gerekmez</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><span class="e">A Java 21 version of the same API, with a ready OpenAPI file you can import straight into Postman, is at <a href="https://github.com/1chz/realworld-java21-springboot3">1chz/realworld-java21-springboot3</a> (<code>api-docs/openapi.yaml</code>). It has no Docker image; it runs with <code>./gradlew realworld:bootRun</code>.</span><span class="t">Aynı API'nin Java 21 sürümü, doğrudan Postman'e import edebileceğin hazır bir OpenAPI dosyasıyla birlikte <a href="https://github.com/1chz/realworld-java21-springboot3">1chz/realworld-java21-springboot3</a> adresinde (<code>api-docs/openapi.yaml</code>). Docker imajı yok; <code>./gradlew realworld:bootRun</code> ile çalışıyor.</span></p>
+
+  <h3><span class="e">And one for later: Restful Booker Platform</span><span class="t">Sonraya bırakılacak olan: Restful Booker Platform</span></h3>
+  <p><a href="https://github.com/mwinteringham/restful-booker-platform">github.com/mwinteringham/restful-booker-platform</a></p>
+  <p><span class="e">A bed-and-breakfast system written to train testers, built as several services that call each other: <code>auth</code>, <code>booking</code>, <code>room</code>, <code>message</code>, <code>report</code>, <code>branding</code>. Each service folder has its own README with its endpoints. The UI is at <code>localhost:3003</code> and logs in with <code>admin</code> / <code>password</code>.</span><span class="t">Test uzmanı yetiştirmek için yazılmış bir pansiyon sistemi; birbirini çağıran birden fazla servisten kurulu: <code>auth</code>, <code>booking</code>, <code>room</code>, <code>message</code>, <code>report</code>, <code>branding</code>. Her servis klasöründe endpoint'lerini anlatan kendi README'si var. Arayüz <code>localhost:3003</code> adresinde, giriş <code>admin</code> / <code>password</code> ile.</span></p>
+<pre data-nohl><code>git clone https://github.com/mwinteringham/restful-booker-platform.git
+cd restful-booker-platform
+bash build_locally.sh     # needs JDK 26+, Maven 3.9, Node 24 -- the first build is slow
+bash run_locally.sh</code></pre>
+  <p><span class="e">Be warned: this one is not a single <code>docker run</code>. There is a <code>docker-compose.yml</code> in the repo, but the documented path is the two scripts above, and they need the whole Java and Node toolchain installed first. Worth it later, when you want to test several services talking to each other &mdash; which is what you will meet at work. Not worth it as your first one.</span><span class="t">Şunu baştan bil: bu, tek bir <code>docker run</code> değil. Repoda bir <code>docker-compose.yml</code> var ama dokümante edilmiş yol yukarıdaki iki script ve bunlar önce Java ile Node araç zincirinin kurulu olmasını istiyor. Birbiriyle konuşan birden fazla servisi test etmek istediğinde &mdash; ki işte karşına çıkacak olan o &mdash; değer. İlk uygulaman olarak değmez.</span></p>
+
+  <p class="outcome"><span class="e"><strong>Start with PetClinic.</strong> One <code>docker run</code>, a Swagger file you import into Postman, and a role system that lets you write the test public APIs cannot give you: call an admin endpoint with an ordinary user and expect 403. Move to RealWorld when you want the token flow. Then copy whichever compose file into your own test repo, so GitHub Actions brings the environment up before the suite runs.</span><span class="t"><strong>PetClinic ile başla.</strong> Tek bir <code>docker run</code>, Postman'e import edeceğin bir Swagger dosyası ve public API'lerin sana veremeyeceği testi yazdıran bir rol sistemi: admin endpoint'ini normal kullanıcıyla çağır ve 403 bekle. Token akışını istediğinde RealWorld'e geç. Sonra hangisinin compose dosyasıysa onu kendi test repona kopyala ki GitHub Actions suite koşmadan önce ortamı ayağa kaldırsın.</span></p>
 </section>
 
 <section>
@@ -1123,29 +1311,9 @@ WHERE name = 'Sara';</code></pre>
   <ul class="plain">
     <li><span class="e"><strong>APIs that only pretend to write.</strong> JSONPlaceholder, FakeStoreAPI and the free Reqres endpoints answer 201 to a POST and save nothing, so "I created it, then I read it back" cannot be tested at all. Fine for your first request, useless for a test scenario.</span><span class="t"><strong>Yazar gibi yapan API'ler.</strong> JSONPlaceholder, FakeStoreAPI ve ücretsiz Reqres endpoint'leri POST'a 201 döner ama hiçbir şey kaydetmez; yani "oluşturdum, sonra geri okudum" senaryosu hiç test edilemez. İlk isteğin için iyi, test senaryosu için işe yaramaz.</span></li>
     <li><span class="e"><strong>Shared data.</strong> Swagger Petstore and Restful-Booker hold one dataset for everybody, so your test can go red because of a stranger. Keep Restful-Booker for bug report practice, not for your suite.</span><span class="t"><strong>Ortak veri.</strong> Swagger Petstore ve Restful-Booker tek bir veri setini herkesle paylaşır, yani testin bir yabancı yüzünden kırmızıya düşebilir. Restful-Booker'ı suite'in için değil, bug report pratiği için sakla.</span></li>
-    <li><span class="e"><strong>Daily limits.</strong> Reqres and restful-api.dev count your requests. A suite you run twenty times while developing will hit the limit before lunch.</span><span class="t"><strong>Günlük limitler.</strong> Reqres ve restful-api.dev isteklerini sayıyor. Geliştirirken yirmi kez koşturduğun bir suite limiti öğleden önce doldurur.</span></li>
+    <li><span class="e"><strong>Daily limits in CI.</strong> Public sandboxes return 429 when several CI runners share one cloud IP, and your pipeline goes red for no reason at all. This is the whole argument for the Docker section above: a suite that brings its own environment up is a suite that stays green for honest reasons.</span><span class="t"><strong>CI'da günlük limitler.</strong> Birden fazla CI runner'ı aynı bulut IP'sini paylaştığında public sandbox'lar 429 döner ve pipeline'ın sebepsiz yere kırmızıya düşer. Yukarıdaki Docker bölümünün bütün gerekçesi bu: kendi ortamını ayağa kaldıran bir suite, yeşil kaldığında dürüst sebeplerle yeşil kalır.</span></li>
   </ul>
-  <p class="tip"><span class="e"><strong>Before you put this in CI.</strong> Public sandboxes return 429 when several CI runners share one cloud IP, and your pipeline goes red for no reason at all. The Toolshop's source is open: <code>docker compose up</code> runs it on your machine and on the runner, with a clean database every run. "I run my tests against an environment I bring up in Docker" reads far better in a portfolio than "I send requests to a website".</span><span class="t"><strong>CI'a koymadan önce.</strong> Birden fazla CI runner'ı aynı bulut IP'sini paylaştığında public sandbox'lar 429 döner ve pipeline'ın sebepsiz yere kırmızıya düşer. Toolshop'un kaynak kodu açık: <code>docker compose up</code> ile hem kendi makinende hem runner'da ayağa kalkar, her koşuda temiz veritabanıyla. Portföyde "testleri Docker'da ayağa kaldırdığım bir ortama karşı koşuyorum" demek, "bir siteye istek atıyorum" demekten çok daha ağır basar.</span></p>
-</section>
-
-
-<section>
-  <span class="eyebrow"><span class="e">Your own environment</span><span class="t">Kendi ortamın</span></span>
-  <h2><span class="e">Three apps you can bring up with Docker</span><span class="t">Docker ile kaldırabileceğin üç uygulama</span></h2>
-  <p class="lede"><span class="e">Every public sandbox has a daily limit and data shared with strangers. These are open-source applications you run on your own machine &mdash; and on the CI runner. Each one has a login, and after the login a full set of GET, POST, PUT and DELETE.</span><span class="t">Her public sandbox'ın günlük limiti ve yabancılarla ortak verisi var. Bunlar ise kendi makinende &mdash; ve CI runner'ında &mdash; çalıştırdığın açık kaynak uygulamalar. Her birinde bir login var, login'den sonra da tam bir GET, POST, PUT, DELETE seti.</span></p>
-  <div class="tablewrap">
-    <table>
-      <thead><tr><th><span class="e">Application</span><span class="t">Uygulama</span></th><th><span class="e">Login and what it teaches</span><span class="t">Login ve ne öğretir</span></th><th><span class="e">How to run</span><span class="t">Nasıl çalıştırılır</span></th></tr></thead>
-      <tbody>
-        <tr><td class="m">Spring PetClinic REST</td><td><span class="e">HTTP Basic auth with roles: <code>OWNER_ADMIN</code>, <code>VET_ADMIN</code>, <code>ADMIN</code>. Security is off until you set <code>petclinic.security.enable=true</code>. Create your own user with <code>POST /api/users</code>, then call an admin endpoint with it and expect 403. Swagger UI at <code>/petclinic/swagger-ui.html</code>. Full CRUD on owners, pets, vets, visits.</span><span class="t">Rollerle birlikte HTTP Basic auth: <code>OWNER_ADMIN</code>, <code>VET_ADMIN</code>, <code>ADMIN</code>. Güvenlik <code>petclinic.security.enable=true</code> diyene kadar kapalı. <code>POST /api/users</code> ile kendi kullanıcını aç, sonra onunla admin endpoint'ine git ve 403 bekle. Swagger UI <code>/petclinic/swagger-ui.html</code> adresinde. Owners, pets, vets, visits üzerinde tam CRUD.</span></td><td><code>docker run -p 9966:9966 springcommunity/spring-petclinic-rest</code></td></tr>
-        <tr><td class="m">RealWorld (Conduit)</td><td><span class="e">Real JWT: register with <code>POST /users</code>, log in with <code>POST /users/login</code>, get a token back, send it on every later request. Then articles, comments, favourites, following. The whole token lifecycle in one app.</span><span class="t">Gerçek JWT: <code>POST /users</code> ile kayıt, <code>POST /users/login</code> ile giriş, cevapta token, sonraki her istekte o token. Ardından makaleler, yorumlar, favoriler, takip. Token'ın tüm yaşam döngüsü tek uygulamada.</span></td><td><code>./gradlew bootBuildImage --imageName realworld-api</code><br><code>docker run -p 8081:8080 realworld-api</code></td></tr>
-        <tr><td class="m">Restful Booker Platform</td><td><span class="e">A bed-and-breakfast system built as several services that call each other: auth, booking, room, message. Logs in with <code>admin</code> / <code>password</code>. Written to train testers, and closest to what a real job looks like.</span><span class="t">Birbirini çağıran birden fazla servisten kurulu bir pansiyon sistemi: auth, booking, room, message. <code>admin</code> / <code>password</code> ile giriş. Test uzmanı yetiştirmek için yazılmış ve gerçek işe en çok benzeyeni.</span></td><td><code>build_locally.sh</code> &rarr; <code>run_locally.sh</code><br><span class="e">a <code>docker-compose.yml</code> ships with it</span><span class="t">içinde bir <code>docker-compose.yml</code> geliyor</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="tip"><span class="e"><strong>The trap in RealWorld.</strong> Its specification asks for <code>Authorization: Token &lt;jwt&gt;</code>, not <code>Bearer</code>. Send Bearer out of habit and you get 401 with no explanation. That is the lesson itself: send what the specification says, not what you are used to.</span><span class="t"><strong>RealWorld'deki tuzak.</strong> Spec'i <code>Bearer</code> değil <code>Authorization: Token &lt;jwt&gt;</code> istiyor. Alışkanlıkla Bearer gönderirsen hiçbir açıklama olmadan 401 alırsın. Ders tam da bu: alıştığını değil, spec'in dediğini gönder.</span></p>
-  <p><span class="e"><strong>Where to start.</strong> PetClinic, because it is one <code>docker run</code> with no build: turn the security on and write the role tests. Move to RealWorld when you want the token flow. Leave the Booker Platform for later &mdash; several services talking to each other is a harder first exercise, and the thing you will meet at work.</span><span class="t"><strong>Nereden başlamalı.</strong> PetClinic'ten, çünkü build gerektirmeyen tek bir <code>docker run</code>: güvenliği aç ve rol testlerini yaz. Token akışını istediğinde RealWorld'e geç. Booker Platform'u sona bırak &mdash; birbiriyle konuşan birden fazla servis ilk alıştırma için ağır, ama işte karşına çıkacak olan o.</span></p>
-  <p><span class="e">Whichever you pick, copy its compose file into your own test repo. A suite that brings its own environment up in GitHub Actions is the thing worth showing.</span><span class="t">Hangisini seçersen seç, compose dosyasını kendi test repona kopyala. GitHub Actions'da kendi ortamını kaldıran bir suite, gösterilmeye değer olan şeydir.</span></p>
+  <p class="outcome"><span class="e"><strong>Week 2 of the roadmap, concretely:</strong> bring Toolshop up with <code>docker compose</code>, import its Swagger into Postman, and write six RestAssured tests &mdash; log in, create, read back, update, delete as admin, delete as a customer and expect 403. Put the compose file in your test repo and let GitHub Actions start it before the suite runs.</span><span class="t"><strong>Yol haritasının 2. haftası, somut olarak:</strong> Toolshop'u <code>docker compose</code> ile kaldır, Swagger'ını Postman'e import et ve altı RestAssured testi yaz &mdash; login, oluştur, geri oku, güncelle, admin ile sil, müşteri ile sil ve 403 bekle. Compose dosyasını test repona koy, GitHub Actions suite koşmadan önce onu başlatsın.</span></p>
 </section>
 
 <hr>
@@ -1158,6 +1326,9 @@ WHERE name = 'Sara';</code></pre>
     <li><a href="https://apichallenges.com/practice-sites">API Practice Sites &mdash; apichallenges.com</a></li>
     <li><a href="https://api.practicesoftwaretesting.com/api/documentation">Toolshop API documentation</a></li>
     <li><a href="https://totalshiftleft.ai/blog/public-apis-for-testing">Public &amp; dummy APIs for testing (2026)</a></li>
+    <li><a href="https://github.com/testsmith-io/practice-software-testing">testsmith-io/practice-software-testing &mdash; Toolshop source</a></li>
+    <li><a href="https://apichallenges.com/gui/challenges">apichallenges.com &mdash; the challenge list</a></li>
+    <li><a href="https://realworld-docs.netlify.app/specifications/backend/endpoints/">RealWorld API specification</a></li>
     <li><a href="https://github.com/spring-petclinic/spring-petclinic-rest">spring-petclinic/spring-petclinic-rest</a></li>
     <li><a href="https://github.com/gothinkster/spring-boot-realworld-example-app">gothinkster/spring-boot-realworld-example-app</a></li>
     <li><a href="https://github.com/1chz/realworld-java21-springboot3">1chz/realworld-java21-springboot3 &mdash; Java 21, OpenAPI spec</a></li>
