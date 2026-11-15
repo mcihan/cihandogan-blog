@@ -1078,6 +1078,56 @@ WHERE name = 'Sara';</code></pre>
   <p><span class="e">Not sure about a word on this page? Read <a href="#rest-basics">REST API Basics</a> first.</span><span class="t">Bu sayfadaki bir terimden emin değil misin? Önce <a href="#rest-basics">REST API Basics</a> sayfasını oku.</span></p>
 </section>
 
+
+<section>
+  <span class="eyebrow"><span class="e">Real environments</span><span class="t">Gerçek ortamlar</span></span>
+  <h2><span class="e">Where the data really persists</span><span class="t">Verinin gerçekten kaydedildiği yerler</span></h2>
+  <p class="lede"><span class="e">The three APIs above cover the basics. When you move from learning to writing a portfolio suite, you need an API with a token, with roles, and with a database that keeps what you write.</span><span class="t">Yukarıdaki üç API temelleri kapsıyor. Öğrenmekten portföy suite'i yazmaya geçtiğinde ise token'ı, rolleri ve yazdığını gerçekten saklayan bir veritabanı olan bir API gerekiyor.</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>API</th><th><span class="e">What it gives you</span><span class="t">Ne veriyor</span></th><th><span class="e">Address</span><span class="t">Adres</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">Toolshop API</td><td><span class="e">Swagger docs, login that returns a Bearer token, DELETE only for admins, a real database &mdash; and the same app has a web UI, so you can test one system from two layers. A deliberately buggy version exists too.</span><span class="t">Swagger dokümanı, Bearer token dönen login, sadece admin'e açık DELETE, gerçek bir veritabanı &mdash; ve aynı uygulamanın bir de web arayüzü var, yani tek sistemi iki katmandan test edebilirsin. Bilerek hatalı bir sürümü de mevcut.</span></td><td><code>api.practicesoftwaretesting.com/api/documentation</code></td></tr>
+        <tr><td class="m">API Challenges</td><td><span class="e">50+ guided challenges. <code>POST /challenger</code> gives you an <code>X-CHALLENGER</code> header and your own isolated TODO data. Drills HEAD, OPTIONS, content negotiation, wrong Content-Type, 405.</span><span class="t">50'den fazla rehberli alıştırma. <code>POST /challenger</code> sana bir <code>X-CHALLENGER</code> header'ı ve kendine ait izole TODO verisi verir. HEAD, OPTIONS, content negotiation, yanlış Content-Type, 405 &mdash; hepsini sırayla çalıştırır.</span></td><td><code>apichallenges.com</code></td></tr>
+        <tr><td class="m">GoRest</td><td><span class="e">Log in with GitHub to get a Bearer token. Real CRUD, clean 401 and 422 responses. The data is shared with everyone, so never put personal information in it.</span><span class="t">GitHub ile giriş yapıp Bearer token alıyorsun. Gerçek CRUD, düzgün 401 ve 422 cevapları. Veri herkesle ortak, o yüzden kişisel bilgi yazma.</span></td><td><code>gorest.co.in</code></td></tr>
+        <tr><td class="m">Expand Testing Notes</td><td><span class="e">Register, log in, then send <code>X-AUTH-TOKEN</code>. The data belongs to your user alone, so your tests never collide with a stranger's. The safest of these for CI.</span><span class="t">Kayıt ol, giriş yap, <code>X-AUTH-TOKEN</code> gönder. Veri sadece senin kullanıcına ait, yani testlerin başkasınınkiyle çakışmaz. CI için bunların en güvenlisi.</span></td><td><code>practice.expandtesting.com/notes/api/api-docs</code></td></tr>
+        <tr><td class="m">restful-api.dev</td><td><span class="e">No auth at all, the simplest real create&ndash;read&ndash;update&ndash;delete round trip. Limited to 50 requests a day.</span><span class="t">Hiç auth yok, en basit gerçek oluştur&ndash;oku&ndash;güncelle&ndash;sil turu. Günde 50 istekle sınırlı.</span></td><td><code>api.restful-api.dev/objects</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="verdict"><span class="e">For the portfolio suite take the Toolshop API. To drill HTTP itself, take API Challenges.</span><span class="t">Portföy suite'i için Toolshop API'yi al. HTTP'nin kendisini çalışmak için API Challenges'ı al.</span></p>
+</section>
+
+<section class="road" data-road="p2">
+  <span class="eyebrow"><span class="e">Portfolio suite</span><span class="t">Portföy suite'i</span></span>
+  <div class="roadhead"><h2><span class="e">Six tests on the Toolshop API</span><span class="t">Toolshop API üzerinde altı test</span></h2><span class="progress" data-progress="p2"></span></div>
+
+  <div class="sprint">
+    <div class="top"><span class="wk">Toolshop</span><h3><span class="e">From the token to the role check</span><span class="t">Token'dan rol kontrolüne</span></h3></div>
+    <ul class="tasks">
+      <li><label><input type="checkbox" id="p2-1"><span><span class="e"><strong>Read the Swagger first.</strong> Open <code>/api/documentation</code> and find the login endpoint, the product endpoints and which ones say they need an admin. Write your test list from the documentation, not from guessing.</span><span class="t"><strong>Önce Swagger'ı oku.</strong> <code>/api/documentation</code>'ı aç; login endpoint'ini, ürün endpoint'lerini ve hangilerinin admin istediğini bul. Test listeni tahminden değil, dokümandan çıkar.</span></span></label></li>
+      <li><label><input type="checkbox" id="p2-2"><span><span class="e"><strong>Token in one place.</strong> Log in once, keep the token in a RestAssured <code>RequestSpecification</code> (or a Postman environment variable) and reuse it. Do not copy the token into every test.</span><span class="t"><strong>Token tek yerde.</strong> Bir kere login ol, token'ı bir RestAssured <code>RequestSpecification</code>'ında (ya da Postman environment variable'ında) tut ve tekrar kullan. Token'ı her teste tek tek yapıştırma.</span></span></label></li>
+      <li><label><input type="checkbox" id="p2-3"><span><span class="e"><strong>Create, then read it back.</strong> Create a product, keep the id from the response, then <code>GET</code> that id and check that the fields you sent came back. This is the test a fake API cannot give you.</span><span class="t"><strong>Oluştur, sonra geri oku.</strong> Bir ürün oluştur, cevaptaki id'yi sakla, sonra o id'yi <code>GET</code> ile çağır ve gönderdiğin alanların geri geldiğini doğrula. Sahte API'nin sana veremeyeceği test tam da bu.</span></span></label></li>
+      <li><label><input type="checkbox" id="p2-4"><span><span class="e"><strong>Update and delete.</strong> Change one field, read it back, then delete the record and expect 404 on the next <code>GET</code>. Clean up what your test created, every time.</span><span class="t"><strong>Güncelle ve sil.</strong> Bir alanı değiştir, geri oku, sonra kaydı sil ve bir sonraki <code>GET</code>'te 404 bekle. Testinin oluşturduğunu her seferinde temizle.</span></span></label></li>
+      <li><label><input type="checkbox" id="p2-5"><span><span class="e"><strong>Role check.</strong> Try the admin-only DELETE with an ordinary user's token and expect 403. Authorisation bugs are what API testing catches that UI testing does not.</span><span class="t"><strong>Rol kontrolü.</strong> Sadece admin'e açık DELETE'i normal kullanıcının token'ıyla dene ve 403 bekle. Yetkilendirme hataları, API testinin UI testinden farklı olarak yakaladığı şeydir.</span></span></label></li>
+      <li><label><input type="checkbox" id="p2-6"><span><span class="e"><strong>Negative cases.</strong> Missing required field, invalid token, id that does not exist. Three tests, three different status codes. A suite with only happy paths does not look like a tester's work.</span><span class="t"><strong>Negatif senaryolar.</strong> Eksik zorunlu alan, geçersiz token, olmayan id. Üç test, üç farklı status code. Sadece mutlu yolu olan bir suite test uzmanı işine benzemez.</span></span></label></li>
+    </ul>
+  </div>
+
+  <p class="outcome"><span class="e"><strong>These six are week 2 of the roadmap.</strong> Written in RestAssured with JUnit 5 and pushed to GitHub, they are the first real thing in your portfolio.</span><span class="t"><strong>Bu altısı yol haritasının 2. haftası.</strong> RestAssured ve JUnit 5 ile yazılıp GitHub'a atıldığında portföyündeki ilk gerçek iş bunlar olur.</span></p>
+</section>
+
+<section>
+  <span class="eyebrow"><span class="e">Traps</span><span class="t">Tuzaklar</span></span>
+  <h2><span class="e">Three things that waste your time</span><span class="t">Vaktini yiyen üç şey</span></h2>
+  <ul class="plain">
+    <li><span class="e"><strong>APIs that only pretend to write.</strong> JSONPlaceholder, FakeStoreAPI and the free Reqres endpoints answer 201 to a POST and save nothing, so "I created it, then I read it back" cannot be tested at all. Fine for your first request, useless for a test scenario.</span><span class="t"><strong>Yazar gibi yapan API'ler.</strong> JSONPlaceholder, FakeStoreAPI ve ücretsiz Reqres endpoint'leri POST'a 201 döner ama hiçbir şey kaydetmez; yani "oluşturdum, sonra geri okudum" senaryosu hiç test edilemez. İlk isteğin için iyi, test senaryosu için işe yaramaz.</span></li>
+    <li><span class="e"><strong>Shared data.</strong> Swagger Petstore and Restful-Booker hold one dataset for everybody, so your test can go red because of a stranger. Keep Restful-Booker for bug report practice, not for your suite.</span><span class="t"><strong>Ortak veri.</strong> Swagger Petstore ve Restful-Booker tek bir veri setini herkesle paylaşır, yani testin bir yabancı yüzünden kırmızıya düşebilir. Restful-Booker'ı suite'in için değil, bug report pratiği için sakla.</span></li>
+    <li><span class="e"><strong>Daily limits.</strong> Reqres and restful-api.dev count your requests. A suite you run twenty times while developing will hit the limit before lunch.</span><span class="t"><strong>Günlük limitler.</strong> Reqres ve restful-api.dev isteklerini sayıyor. Geliştirirken yirmi kez koşturduğun bir suite limiti öğleden önce doldurur.</span></li>
+  </ul>
+  <p class="tip"><span class="e"><strong>Before you put this in CI.</strong> Public sandboxes return 429 when several CI runners share one cloud IP, and your pipeline goes red for no reason at all. The Toolshop's source is open: <code>docker compose up</code> runs it on your machine and on the runner, with a clean database every run. "I run my tests against an environment I bring up in Docker" reads far better in a portfolio than "I send requests to a website".</span><span class="t"><strong>CI'a koymadan önce.</strong> Birden fazla CI runner'ı aynı bulut IP'sini paylaştığında public sandbox'lar 429 döner ve pipeline'ın sebepsiz yere kırmızıya düşer. Toolshop'un kaynak kodu açık: <code>docker compose up</code> ile hem kendi makinende hem runner'da ayağa kalkar, her koşuda temiz veritabanıyla. Portföyde "testleri Docker'da ayağa kaldırdığım bir ortama karşı koşuyorum" demek, "bir siteye istek atıyorum" demekten çok daha ağır basar.</span></p>
+</section>
+
 <hr>
 
 <section>
@@ -1085,6 +1135,9 @@ WHERE name = 'Sara';</code></pre>
   <ul class="sources">
     <li><a href="https://reqres.in/docs">Reqres docs</a></li>
     <li><a href="https://gsmarenas.netlify.app/host-https-www.linkedin.com/learning/postman-essential-training-21969591/the-contact-list-application">LinkedIn Learning, Postman Essential Training: The Contact List application</a></li>
+    <li><a href="https://apichallenges.com/practice-sites">API Practice Sites &mdash; apichallenges.com</a></li>
+    <li><a href="https://api.practicesoftwaretesting.com/api/documentation">Toolshop API documentation</a></li>
+    <li><a href="https://totalshiftleft.ai/blog/public-apis-for-testing">Public &amp; dummy APIs for testing (2026)</a></li>
   </ul>
 </section>
 </div>
