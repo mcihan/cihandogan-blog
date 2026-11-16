@@ -265,6 +265,7 @@ ul.plain a, ul.plain code, p > a[href^="http"]{overflow-wrap:anywhere}
   <li><a href="#roadmap" data-tab="roadmap">QA Job Roadmap</a></li>
   <li><a href="#rest-basics" data-tab="rest-basics">REST API Basics</a></li>
   <li><a href="#api-practice" data-tab="api-practice">API Practice</a></li>
+  <li><a href="#postman" data-tab="postman">Postman</a></li>
   <li><a href="#sql-refresher" data-tab="sql-refresher">SQL Refresher</a></li>
 </ul>
 
@@ -1339,10 +1340,288 @@ bash run_locally.sh</code></pre>
 
 </div>
 
+<!-- ============ POSTMAN ============ -->
+<div class="page view" data-view="postman" hidden>
+
+<header>
+  <span class="eyebrow">Postman</span>
+  <h1><span class="e">Postman, in the order you should learn it</span><span class="t">Postman, öğrenmen gereken sırayla</span></h1>
+  <p class="lede"><span class="e">Ten steps. The first five are two days of work, the next four are three days, and the last one is the day that separates "I have used Postman" from "I run an API suite". Do them in order, against the Toolshop API from the <a href="#api-practice">API Practice</a> page.</span><span class="t">On adım. İlk beşi iki gün, sonraki dördü üç gün, sonuncusu ise "Postman kullandım" ile "API suite'i koşturuyorum" arasındaki farkı yaratan gün. Sırayla yap, <a href="#api-practice">API Practice</a> sayfasındaki Toolshop API'si üzerinde.</span></p>
+  <ul class="toc">
+    <li><a href="#postman" data-jump="pm1"><span class="e">1 First request</span><span class="t">1 İlk istek</span></a></li>
+    <li><a href="#postman" data-jump="pm2"><span class="e">2 Variables</span><span class="t">2 Değişkenler</span></a></li>
+    <li><a href="#postman" data-jump="pm3"><span class="e">3 Login</span><span class="t">3 Login</span></a></li>
+    <li><a href="#postman" data-jump="pm4"><span class="e">4 Chaining the token</span><span class="t">4 Token zinciri</span></a></li>
+    <li><a href="#postman" data-jump="pm5"><span class="e">5 Tests tab</span><span class="t">5 Tests sekmesi</span></a></li>
+    <li><a href="#postman" data-jump="pm6"><span class="e">6 Full CRUD</span><span class="t">6 Tam CRUD</span></a></li>
+    <li><a href="#postman" data-jump="pm7"><span class="e">7 Pre-request</span><span class="t">7 Pre-request</span></a></li>
+    <li><a href="#postman" data-jump="pm8"><span class="e">8 Runner and data</span><span class="t">8 Runner ve veri</span></a></li>
+    <li><a href="#postman" data-jump="pm9"><span class="e">9 Schema</span><span class="t">9 Şema</span></a></li>
+    <li><a href="#postman" data-jump="pm10"><span class="e">10 Newman in CI</span><span class="t">10 CI'da Newman</span></a></li>
+  </ul>
+  <p class="verdict"><span class="e">Postman is a two-week tool, not a six-month one. Learn these ten, then put your effort into RestAssured &mdash; that is what makes a Java background worth something in a QA interview.</span><span class="t">Postman iki haftalık bir araç, altı aylık değil. Bu onu öğren, sonra emeğini RestAssured'a ver &mdash; QA mülakatında Java geçmişini değerli kılan şey o.</span></p>
+</header>
+
+<section class="lesson" id="pm1">
+  <span class="num">01</span>
+  <h2><span class="e">Install it and send one request</span><span class="t">Kur ve tek bir istek at</span></h2>
+  <p><span class="e">Download Postman from <a href="https://www.postman.com/downloads/">postman.com/downloads</a>. You can skip the account at first, but sign up anyway: without it your collections live only on that computer.</span><span class="t">Postman'i <a href="https://www.postman.com/downloads/">postman.com/downloads</a> adresinden indir. Başta hesap açmadan da kullanabilirsin ama yine de aç: hesapsız collection'ların sadece o bilgisayarda kalır.</span></p>
+  <p><span class="e">Create a collection called <code>Toolshop</code> (left panel, <strong>New &rarr; Collection</strong>), add a request inside it, and send this:</span><span class="t">Sol panelden <strong>New &rarr; Collection</strong> ile <code>Toolshop</code> adında bir collection oluştur, içine bir istek ekle ve bunu gönder:</span></p>
+<pre><code>GET https://api.practicesoftwaretesting.com/products</code></pre>
+  <p><span class="e">You should get 200 and a list of products. Look at the three tabs under the response: <strong>Body</strong>, <strong>Headers</strong>, and the status code with the response time at the top right. Those three are what you will be asserting on for the rest of your career.</span><span class="t">200 ve bir ürün listesi gelmeli. Cevabın altındaki üç sekmeye bak: <strong>Body</strong>, <strong>Headers</strong>, ve sağ üstte status code ile cevap süresi. Kariyerin boyunca doğrulayacağın şeyler bu üçü.</span></p>
+  <p class="tip"><span class="e"><strong>Save every request.</strong> Ctrl/Cmd+S. An unsaved request lives in the tab only and is gone when Postman restarts &mdash; this is the single most common beginner frustration.</span><span class="t"><strong>Her isteği kaydet.</strong> Ctrl/Cmd+S. Kaydedilmemiş istek sadece sekmede yaşar ve Postman kapanınca gider &mdash; yeni başlayanların en sık yaşadığı sinir bozukluğu bu.</span></p>
+</section>
+
+<section class="lesson" id="pm2">
+  <span class="num">02</span>
+  <h2><span class="e">Variables, so you never paste a URL twice</span><span class="t">Değişkenler, bir URL'i iki kere yapıştırmamak için</span></h2>
+  <p><span class="e">Hard-coded URLs are the reason people cannot switch a collection from the online API to their local one. Fix that now, on day one.</span><span class="t">Sabit yazılmış URL'ler, insanların bir collection'ı internetteki API'den kendi local'ine geçirememesinin sebebi. Bunu daha ilk gün çöz.</span></p>
+  <p><span class="e">Open the collection, go to the <strong>Variables</strong> tab and add:</span><span class="t">Collection'ı aç, <strong>Variables</strong> sekmesine gidip şunu ekle:</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Variable</th><th>Initial value</th></tr></thead>
+      <tbody>
+        <tr><td class="m">base_url</td><td class="m">https://api.practicesoftwaretesting.com</td></tr>
+        <tr><td class="m">email</td><td class="m">admin@practicesoftwaretesting.com</td></tr>
+        <tr><td class="m">password</td><td class="m">welcome01</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><span class="e">Now rewrite the request from step 1 as <code>{{base_url}}/products</code>. To run the same collection against the copy you brought up with Docker, you change one value: <code>http://localhost:8091</code>.</span><span class="t">Şimdi 1. adımdaki isteği <code>{{base_url}}/products</code> olarak yaz. Aynı collection'ı Docker ile kaldırdığın kopyaya karşı koşturmak için tek bir değeri değiştiriyorsun: <code>http://localhost:8091</code>.</span></p>
+  <p><span class="e"><strong>Three scopes, and the difference gets asked in interviews.</strong></span><span class="t"><strong>Üç kapsam var ve farkı mülakatta sorulur.</strong></span></p>
+  <ul class="plain">
+    <li><span class="e"><strong>Collection variable</strong> &mdash; belongs to the collection, travels with it when you export. Use this for <code>base_url</code> and for the token.</span><span class="t"><strong>Collection variable</strong> &mdash; collection'a ait, export ettiğinde onunla birlikte gider. <code>base_url</code> ve token için bunu kullan.</span></li>
+    <li><span class="e"><strong>Environment variable</strong> &mdash; a separate set you switch from the top right: dev, test, local. Same collection, different environment.</span><span class="t"><strong>Environment variable</strong> &mdash; sağ üstten değiştirdiğin ayrı bir set: dev, test, local. Aynı collection, farklı environment.</span></li>
+    <li><span class="e"><strong>Global</strong> &mdash; applies everywhere. Avoid it; it is the variable nobody can find later.</span><span class="t"><strong>Global</strong> &mdash; her yerde geçerli. Kullanma; sonradan kimsenin bulamadığı değişken odur.</span></li>
+  </ul>
+  <p class="tip"><span class="e"><strong>Initial value vs current value.</strong> Only the <em>initial</em> value is exported and shared. The <em>current</em> value stays on your machine. This is deliberate: put a real password in the current value, leave the initial one empty, and you will not commit a secret by accident.</span><span class="t"><strong>Initial value ile current value.</strong> Sadece <em>initial</em> değeri export edilir ve paylaşılır. <em>Current</em> değer senin makinende kalır. Bu bilinçli bir tasarım: gerçek şifreyi current value'ya yaz, initial'ı boş bırak; böylece yanlışlıkla bir sırrı commit'lemezsin.</span></p>
+</section>
+
+<section class="lesson" id="pm3">
+  <span class="num">03</span>
+  <h2><span class="e">Log in and carry the token by hand &mdash; once</span><span class="t">Giriş yap ve token'ı elle taşı &mdash; bir kez</span></h2>
+  <p><span class="e">Add a second request. This one is a POST with a JSON body:</span><span class="t">İkinci bir istek ekle. Bu bir POST ve JSON body'si var:</span></p>
+<pre><code>POST {{base_url}}/users/login
+Body -> raw -> JSON
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}</code></pre>
+  <p><span class="e">The response carries an <code>access_token</code>. Copy it, open the <code>GET /products</code> request, go to the <strong>Authorization</strong> tab, pick <strong>Bearer Token</strong> and paste it.</span><span class="t">Cevapta bir <code>access_token</code> geliyor. Onu kopyala, <code>GET /products</code> isteğini aç, <strong>Authorization</strong> sekmesinden <strong>Bearer Token</strong> seç ve yapıştır.</span></p>
+  <p><span class="e">Do this by hand exactly once, so you see what the Authorization tab actually does: it adds one header. Open <strong>Headers</strong> &rarr; <em>hidden</em> and you will see it:</span><span class="t">Bunu tam olarak bir kez elle yap ki Authorization sekmesinin gerçekte ne yaptığını gör: tek bir header ekliyor. <strong>Headers</strong> &rarr; <em>hidden</em> kısmını aç, orada duruyor:</span></p>
+<pre><code>Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOi...</code></pre>
+  <p><span class="e">There is no magic in Postman's auth tab. Everything it offers &mdash; Basic, Bearer, API key &mdash; is a header or a query parameter it writes for you.</span><span class="t">Postman'in auth sekmesinde sihir yok. Sunduğu her şey &mdash; Basic, Bearer, API key &mdash; senin yerine yazdığı bir header veya query parametresi.</span></p>
+</section>
+
+<section class="lesson" id="pm4">
+  <span class="num">04</span>
+  <h2><span class="e">Chain the token &mdash; the line that separates people</span><span class="t">Token'ı zincirle &mdash; insanları ayıran satır</span></h2>
+  <p><span class="e">Most people keep copying the token by hand for years. Do not be one of them. Open the login request, go to the <strong>Scripts &rarr; Post-response</strong> tab (older versions call it <strong>Tests</strong>) and write:</span><span class="t">İnsanların çoğu token'ı yıllarca elle kopyalamaya devam ediyor. Onlardan olma. Login isteğini aç, <strong>Scripts &rarr; Post-response</strong> sekmesine git (eski sürümlerde adı <strong>Tests</strong>) ve şunu yaz:</span></p>
+<pre><code>const body = pm.response.json();
+
+pm.collectionVariables.set("token", body.access_token);
+
+pm.test("login basarili", function () {
+    pm.response.to.have.status(200);
+    pm.expect(body.access_token).to.be.a("string").and.not.empty;
+});</code></pre>
+  <p><span class="e">Now go to the collection &rarr; <strong>Authorization</strong> tab, set it to <strong>Bearer Token</strong> with the value <code>{{token}}</code>, and set every request inside to <strong>Inherit auth from parent</strong>.</span><span class="t">Şimdi collection &rarr; <strong>Authorization</strong> sekmesine git, <strong>Bearer Token</strong> seç ve değer olarak <code>{{token}}</code> yaz; içindeki her isteği de <strong>Inherit auth from parent</strong> yap.</span></p>
+  <p class="outcome"><span class="e">From here on: run the login once and every other request in the collection is authenticated. When the token expires, you run login again and nothing else changes. This one script is what an interviewer means when they ask whether you can "handle auth in Postman".</span><span class="t">Bundan sonrası şöyle: login'i bir kez koştur, collection'daki diğer bütün istekler yetkili hale gelsin. Token'ın süresi dolunca tekrar login koştur, başka hiçbir şey değişmesin. Mülakatçı "Postman'de auth'u yönetebiliyor musun" diye sorduğunda kastettiği şey bu tek script.</span></p>
+  <p class="tip"><span class="e">Toolshop's token expires fast (the response tells you: <code>expires_in</code> is in seconds). That is not a bug to work around, it is the thing to test: wait for it to expire, send a request, and expect 401.</span><span class="t">Toolshop'un token'ı hızlı doluyor (cevap bunu söylüyor: <code>expires_in</code> saniye cinsinden). Bu, etrafından dolaşılacak bir sorun değil, test edilecek şeyin kendisi: süresinin dolmasını bekle, istek at ve 401 bekle.</span></p>
+</section>
+
+<section class="lesson" id="pm5">
+  <span class="num">05</span>
+  <h2><span class="e">The Tests tab: stop looking, start asserting</span><span class="t">Tests sekmesi: bakmayı bırak, doğrulamaya başla</span></h2>
+  <p><span class="e">Reading a response with your eyes is not testing. Put these on <code>GET {{base_url}}/products</code>:</span><span class="t">Cevaba gözle bakmak test etmek değildir. Şunları <code>GET {{base_url}}/products</code> isteğine koy:</span></p>
+<pre><code>pm.test("status 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("cevap JSON", function () {
+    pm.response.to.be.json;
+});
+
+pm.test("1 saniyeden hizli", function () {
+    pm.expect(pm.response.responseTime).to.be.below(1000);
+});
+
+const body = pm.response.json();
+
+pm.test("urun listesi bos degil", function () {
+    pm.expect(body.data).to.be.an("array").that.is.not.empty;
+});
+
+pm.test("ilk urunun zorunlu alanlari var", function () {
+    pm.expect(body.data[0]).to.include.all.keys("id", "name", "price");
+});</code></pre>
+  <p><span class="e">Run it and look at the <strong>Test Results</strong> tab under the response: five green lines. The syntax is Chai &mdash; <code>pm.expect(x).to.equal(y)</code>, <code>.to.be.above(n)</code>, <code>.to.include(...)</code>. You do not need to learn JavaScript for this; you need these six or seven shapes.</span><span class="t">Koştur ve cevabın altındaki <strong>Test Results</strong> sekmesine bak: beş yeşil satır. Söz dizimi Chai &mdash; <code>pm.expect(x).to.equal(y)</code>, <code>.to.be.above(n)</code>, <code>.to.include(...)</code>. Bunun için JavaScript öğrenmene gerek yok; bu altı yedi kalıbı bilmen yeterli.</span></p>
+  <p class="tip"><span class="e"><strong>Check the field names against the response.</strong> Toolshop returns its product list wrapped in a paged object, so the array is under <code>data</code>. Another API will return the array at the top level. Open the response once and write what you actually see &mdash; this is exactly the habit that separates a tester from someone copying a tutorial.</span><span class="t"><strong>Alan adlarını cevaba bakarak yaz.</strong> Toolshop ürün listesini sayfalanmış bir nesnenin içinde döndürüyor, yani dizi <code>data</code> altında. Başka bir API diziyi en üst seviyede döndürür. Cevabı bir kez aç ve gerçekte ne görüyorsan onu yaz &mdash; test uzmanını tutorial kopyalayandan ayıran alışkanlık tam olarak bu.</span></p>
+</section>
+
+<section class="lesson" id="pm6">
+  <span class="num">06</span>
+  <h2><span class="e">A full CRUD chain in one collection</span><span class="t">Tek collection'da tam CRUD zinciri</span></h2>
+  <p><span class="e">Four requests that depend on each other. This is the shape of every API suite you will ever write.</span><span class="t">Birbirine bağlı dört istek. Yazacağın her API suite'inin şekli bu.</span></p>
+  <p><span class="e"><strong>a.</strong> A product needs real ids, so fetch them first. On <code>GET {{base_url}}/categories</code> and <code>GET {{base_url}}/brands</code>, save one of each:</span><span class="t"><strong>a.</strong> Ürün gerçek id'ler ister, önce onları çek. <code>GET {{base_url}}/categories</code> ve <code>GET {{base_url}}/brands</code> isteklerinde birer tane sakla:</span></p>
+<pre><code>// GET /categories -> Post-response
+pm.collectionVariables.set("category_id", pm.response.json().data[0].id);
+
+// GET /brands -> Post-response
+pm.collectionVariables.set("brand_id", pm.response.json().data[0].id);</code></pre>
+  <p><span class="e"><strong>b.</strong> Create the product and keep its id:</span><span class="t"><strong>b.</strong> Ürünü oluştur ve id'sini sakla:</span></p>
+<pre><code>POST {{base_url}}/products
+
+{
+  "name": "Test hammer",
+  "description": "created by my test",
+  "price": 9.99,
+  "category_id": "{{category_id}}",
+  "brand_id": "{{brand_id}}",
+  "product_image_id": "{{image_id}}"
+}
+
+// Post-response
+pm.test("201 olusturuldu", function () {
+    pm.response.to.have.status(201);
+});
+pm.collectionVariables.set("product_id", pm.response.json().id);</code></pre>
+  <p><span class="e"><strong>c.</strong> Read it back &mdash; the assertion that a fake API can never give you:</span><span class="t"><strong>c.</strong> Geri oku &mdash; sahte bir API'nin sana asla veremeyeceği doğrulama:</span></p>
+<pre><code>GET {{base_url}}/products/{{product_id}}
+
+pm.test("kaydettigim isim geri geldi", function () {
+    pm.expect(pm.response.json().name).to.eql("Test hammer");
+});</code></pre>
+  <p><span class="e"><strong>d.</strong> Delete it, then ask for it again:</span><span class="t"><strong>d.</strong> Sil, sonra tekrar iste:</span></p>
+<pre><code>DELETE {{base_url}}/products/{{product_id}}      -> 204
+GET    {{base_url}}/products/{{product_id}}      -> 404
+
+pm.test("silinen kayit 404", function () {
+    pm.response.to.have.status(404);
+});</code></pre>
+  <p class="outcome"><span class="e"><strong>Then the one that matters most.</strong> Log in as <code>customer@practicesoftwaretesting.com</code> instead of the admin, and send the same DELETE. Expect <strong>403</strong>. An authorisation hole is the kind of bug API testing finds and clicking through the UI does not &mdash; put this test in your portfolio collection and say so in the interview.</span><span class="t"><strong>Sonra en önemlisi.</strong> Admin yerine <code>customer@practicesoftwaretesting.com</code> ile giriş yap ve aynı DELETE'i gönder. <strong>403</strong> bekle. Yetkilendirme açığı, API testinin bulduğu ama arayüzde tıklayarak bulunamayan türden bir hatadır &mdash; bu testi portföy collection'ına koy ve mülakatta bunu söyle.</span></p>
+</section>
+
+<section class="lesson" id="pm7">
+  <span class="num">07</span>
+  <h2><span class="e">Pre-request scripts: data that does not collide</span><span class="t">Pre-request script: çakışmayan veri</span></h2>
+  <p><span class="e">Run the collection twice and the second run creates a second "Test hammer". Run it on a shared API and someone else's data is in your way. Generate something unique before the request goes out &mdash; <strong>Scripts &rarr; Pre-request</strong>:</span><span class="t">Collection'ı iki kez koştur, ikinci koşum ikinci bir "Test hammer" oluşturur. Ortak bir API'de koştur, başkasının verisi ayağına dolanır. İstek gitmeden önce benzersiz bir şey üret &mdash; <strong>Scripts &rarr; Pre-request</strong>:</span></p>
+<pre><code>pm.collectionVariables.set("run_id", Date.now());</code></pre>
+  <p><span class="e">Then use it in the body: <code>"name": "Test hammer {{run_id}}"</code>. Postman also has built-in random data, which needs no script at all:</span><span class="t">Sonra body'de kullan: <code>"name": "Test hammer {{run_id}}"</code>. Postman'in hazır rastgele verileri de var, bunlar için script bile gerekmiyor:</span></p>
+<pre><code>{{$randomEmail}}     {{$randomFirstName}}     {{$randomInt}}
+{{$guid}}            {{$timestamp}}           {{$randomProductName}}</code></pre>
+  <p><span class="e">A suite that only passes on a clean database is not a suite. Unique data on the way in, and the delete from step 6 on the way out, is how you keep it green on the tenth run.</span><span class="t">Sadece temiz veritabanında geçen bir suite, suite değildir. Girişte benzersiz veri, çıkışta 6. adımdaki silme &mdash; onuncu koşumda da yeşil kalmasının yolu bu.</span></p>
+</section>
+
+<section class="lesson" id="pm8">
+  <span class="num">08</span>
+  <h2><span class="e">The Runner, and the same test with twenty inputs</span><span class="t">Runner ve aynı testin yirmi veriyle koşumu</span></h2>
+  <p><span class="e">Right-click the collection &rarr; <strong>Run collection</strong>. It sends every request in order and gives you a pass/fail summary. This is the moment your requests become a test suite.</span><span class="t">Collection'a sağ tıkla &rarr; <strong>Run collection</strong>. Bütün istekleri sırayla gönderir ve geçti/kaldı özeti verir. İsteklerinin test suite'ine dönüştüğü an bu.</span></p>
+  <p><span class="e">Order matters: login must be first, delete last. Drag the requests into the right order in the sidebar; the Runner follows that order.</span><span class="t">Sıra önemli: login en başta, silme en sonda olmalı. İstekleri kenar çubuğunda doğru sıraya sürükle; Runner o sırayı izler.</span></p>
+  <p><span class="e"><strong>Now the same request with many inputs.</strong> Save this as <code>products.csv</code>:</span><span class="t"><strong>Şimdi aynı isteği çok sayıda veriyle.</strong> Bunu <code>products.csv</code> olarak kaydet:</span></p>
+<pre data-nohl><code>name,price,expected_status
+Valid hammer,9.99,201
+Negative price,-5,422
+Empty name,,422</code></pre>
+  <p><span class="e">In the request body use <code>"name": "{{name}}"</code> and <code>"price": {{price}}</code>, and in the test read the expected value from the row:</span><span class="t">İstek body'sinde <code>"name": "{{name}}"</code> ve <code>"price": {{price}}</code> kullan, testte de beklenen değeri satırdan oku:</span></p>
+<pre><code>pm.test("beklenen status", function () {
+    pm.response.to.have.status(Number(pm.iterationData.get("expected_status")));
+});</code></pre>
+  <p><span class="e">In the Runner, pick the CSV under <strong>Data</strong> and run. Three iterations, three different expected results, one request. This is how you cover a validation rule without writing the same request three times &mdash; and the answer to "how would you test the boundaries of this field?" in an interview.</span><span class="t">Runner'da <strong>Data</strong> altından CSV'yi seç ve koştur. Üç iterasyon, üç farklı beklenen sonuç, tek istek. Bir doğrulama kuralını aynı isteği üç kez yazmadan kapsamanın yolu bu &mdash; ve mülakattaki "bu alanın sınırlarını nasıl test edersin?" sorusunun cevabı.</span></p>
+</section>
+
+<section class="lesson" id="pm9">
+  <span class="num">09</span>
+  <h2><span class="e">Schema validation: check the shape, not just the values</span><span class="t">Şema doğrulama: sadece değerleri değil, şekli kontrol et</span></h2>
+  <p><span class="e">Checking <code>name === "Test hammer"</code> passes even if the developer renamed <code>price</code> to <code>cost</code> and broke every client. Assert the shape instead:</span><span class="t"><code>name === "Test hammer"</code> kontrolü, geliştirici <code>price</code> alanını <code>cost</code> yapıp bütün istemcileri bozsa bile geçer. Onun yerine şekli doğrula:</span></p>
+<pre><code>const schema = {
+    type: "object",
+    required: ["id", "name", "price"],
+    properties: {
+        id:          { type: "string" },
+        name:        { type: "string" },
+        price:       { type: "number" },
+        description: { type: "string" },
+        is_location_offer: { type: "boolean" }
+    }
+};
+
+pm.test("urun semasi dogru", function () {
+    pm.response.to.have.jsonSchema(schema);
+});</code></pre>
+  <p><span class="e">Now a renamed field, a number that turned into a string, or a missing <code>id</code> fails the test immediately. Few candidates know this, and it is the quickest way to sound like someone who has done the job.</span><span class="t">Artık adı değişen bir alan, string'e dönüşmüş bir sayı veya eksik bir <code>id</code> testi anında düşürür. Bunu bilen aday az ve bu işi gerçekten yapmış gibi görünmenin en hızlı yolu.</span></p>
+  <p class="tip"><span class="e">You do not have to write schemas by hand. The Swagger file at <code>{{base_url}}/api/documentation</code> already contains them &mdash; open the endpoint, copy the response schema, paste it in.</span><span class="t">Şemaları elle yazmak zorunda değilsin. <code>{{base_url}}/api/documentation</code> adresindeki Swagger dosyası zaten içeriyor &mdash; endpoint'i aç, cevap şemasını kopyala, yapıştır.</span></p>
+</section>
+
+<section class="lesson" id="pm10">
+  <span class="num">10</span>
+  <h2><span class="e">Newman: run it where nobody is watching</span><span class="t">Newman: kimsenin bakmadığı yerde koştur</span></h2>
+  <p><span class="e">This is the step most people never take, and the one that changes what you can say about yourself. Export the collection and the environment (<strong>&hellip; &rarr; Export</strong>), put both files in your repo under <code>postman/</code>, then:</span><span class="t">İnsanların çoğunun hiç atmadığı adım bu ve kendin hakkında söyleyebileceklerini değiştiren de bu. Collection'ı ve environment'ı export et (<strong>&hellip; &rarr; Export</strong>), iki dosyayı da repoda <code>postman/</code> altına koy, sonra:</span></p>
+<pre data-nohl><code>npm install -g newman
+
+newman run postman/Toolshop.postman_collection.json \
+  -e postman/local.postman_environment.json \
+  --reporters cli,junit \
+  --reporter-junit-export results.xml</code></pre>
+  <p><span class="e">Same collection, no interface, an exit code of 1 when a test fails. That exit code is the whole point: it is what makes a pipeline go red.</span><span class="t">Aynı collection, arayüz yok, bir test düştüğünde çıkış kodu 1. Bütün mesele o çıkış kodu: pipeline'ı kırmızıya düşüren şey o.</span></p>
+  <p><span class="e">Put this in <code>.github/workflows/api.yml</code> and your tests run on every push:</span><span class="t">Bunu <code>.github/workflows/api.yml</code> dosyasına koy, testlerin her push'ta koşsun:</span></p>
+<pre data-nohl><code>name: API tests
+on: [push]
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g newman
+      - run: |
+          newman run postman/Toolshop.postman_collection.json \
+            -e postman/ci.postman_environment.json \
+            --reporters cli,junit --reporter-junit-export results.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newman-results
+          path: results.xml</code></pre>
+  <p><span class="e"><strong>Newman or the Postman CLI?</strong> Postman now ships its own runner, and the CI snippets inside the app are written for it. But the Postman CLI makes you log in from the command line and ties the run to your account; Newman takes an exported file and needs nothing. Postman says in their own comparison that there are no plans to deprecate Newman. For your own repo and for a corporate pipeline, <strong>use Newman</strong>.</span><span class="t"><strong>Newman mı, Postman CLI mı?</strong> Postman'in artık kendi koşturucusu var ve uygulama içindeki CI örnekleri ona göre yazılmış. Ama Postman CLI komut satırından login olmanı istiyor ve koşumu hesabına bağlıyor; Newman ise export edilmiş dosyayı alıyor ve hiçbir şey istemiyor. Postman kendi karşılaştırmasında Newman'ı kaldırma planları olmadığını söylüyor. Kendi repon ve kurumsal bir pipeline için <strong>Newman kullan</strong>.</span></p>
+  <p class="outcome"><span class="e"><strong>After this step you can say, truthfully:</strong> "I keep the API collection in the repo and GitHub Actions runs it with Newman on every push; failures show up as a JUnit report." That sentence is worth more than any number of Postman features you could list.</span><span class="t"><strong>Bu adımdan sonra şunu dürüstçe söyleyebilirsin:</strong> "API collection'ını repoda tutuyorum, GitHub Actions her push'ta Newman ile koşturuyor; düşen testler JUnit raporunda görünüyor." Bu cümle, sayabileceğin her Postman özelliğinden daha değerli.</span></p>
+</section>
+
+<section>
+  <span class="eyebrow"><span class="e">Stop here</span><span class="t">Burada dur</span></span>
+  <h2><span class="e">What you can safely skip</span><span class="t">Gönül rahatlığıyla atlayabileceklerin</span></h2>
+  <p><span class="e">Postman has far more in it than a tester needs. None of the following is asked in interviews, and you learn them only if the team you join already uses them:</span><span class="t">Postman'in içinde bir testçinin ihtiyacından çok daha fazlası var. Aşağıdakilerin hiçbiri mülakatta sorulmuyor; bunları ancak gireceğin takım zaten kullanıyorsa öğrenirsin:</span></p>
+  <ul class="plain">
+    <li><strong>Flows</strong> &mdash; <span class="e">visual request chaining. You already did chaining with three lines of script.</span><span class="t">görsel istek zincirleme. Zincirlemeyi zaten üç satır script ile yaptın.</span></li>
+    <li><strong>Mock Servers</strong> &mdash; <span class="e">useful when the API does not exist yet. That is a problem you do not have.</span><span class="t">API henüz yokken işe yarar. Senin böyle bir sorunun yok.</span></li>
+    <li><strong>API Builder / Spec Hub</strong> &mdash; <span class="e">for designing APIs, which is the developer's job.</span><span class="t">API tasarlamak için, o da geliştiricinin işi.</span></li>
+    <li><strong>Monitors</strong> &mdash; <span class="e">scheduled cloud runs, a paid feature doing what your CI already does for free.</span><span class="t">zamanlanmış bulut koşumları; CI'ının zaten ücretsiz yaptığı şeyi yapan ücretli bir özellik.</span></li>
+    <li><strong>Postbot</strong> &mdash; <span class="e">writes assertions for you. Learn to write them first, or you cannot tell when it is wrong.</span><span class="t">senin yerine assertion yazıyor. Önce yazmayı öğren, yoksa yanlış yazdığını anlayamazsın.</span></li>
+  </ul>
+  <p class="verdict"><span class="e"><strong>Where Postman stops.</strong> Use it to explore an API, to reproduce a bug, to show a developer "send this, get that". Keep the permanent regression suite in code &mdash; RestAssured with JUnit 5 &mdash; because that goes through code review, gives a readable diff in version control, and can set up and check things a collection cannot. Your Java background is the reason you can do the second one, and it is the reason you get hired over someone who only knows the first.</span><span class="t"><strong>Postman nerede biter.</strong> Onu bir API'yi keşfetmek, bir hatayı tekrar üretmek, geliştiriciye "şunu gönder, bu geliyor" demek için kullan. Kalıcı regresyon suite'ini kodda tut &mdash; RestAssured ve JUnit 5 ile &mdash; çünkü o code review'a girer, versiyon kontrolünde okunur bir diff verir ve bir collection'ın yapamayacağı hazırlık ve kontrolleri yapar. İkincisini yapabilmenin sebebi Java geçmişin; sadece birincisini bilen adayın önüne geçmenin sebebi de o.</span></p>
+</section>
+
+<hr>
+
+<section>
+  <span class="eyebrow"><span class="e">Sources</span><span class="t">Kaynaklar</span></span>
+  <ul class="sources">
+    <li><a href="https://learning.postman.com/docs/tests-and-scripts/write-scripts/test-examples/">Postman test script examples</a></li>
+    <li><a href="https://blog.postman.com/postman-cli-vs-newman/">Postman CLI vs. Newman &mdash; Postman Blog</a></li>
+    <li><a href="https://learning.postman.com/docs/collections/using-newman-cli/command-line-integration-with-newman/">Newman command-line integration</a></li>
+    <li><a href="https://api.practicesoftwaretesting.com/api/documentation">Toolshop API &mdash; Swagger</a></li>
+  </ul>
+</section>
+</div>
+
 <script>
 (function(){
   var root=document.documentElement;
-  var VIEWS=['roadmap','rest-basics','api-practice','sql-refresher'];
+  var VIEWS=['roadmap','rest-basics','api-practice','postman','sql-refresher'];
   var LKEY='qa-hub-lang', CKEY='qa-roadmap-checks';
 
   /* language */
