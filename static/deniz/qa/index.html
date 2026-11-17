@@ -150,6 +150,14 @@ a{color:var(--accent)}
 a:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 hr{border:0; border-top:1px solid var(--line); margin:0}
 ul.plain a, ul.plain code, p > a[href^="http"]{overflow-wrap:anywhere}
+details.answers{margin-top:18px; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden}
+details.answers > summary{cursor:pointer; padding:14px 16px; font-weight:600; color:var(--accent); list-style:none}
+details.answers > summary::-webkit-details-marker{display:none}
+details.answers > summary::before{content:"\25B8 "; display:inline-block; transition:transform .15s}
+details.answers[open] > summary::before{transform:rotate(90deg)}
+details.answers[open] > summary{border-bottom:1px solid var(--line)}
+details.answers > pre{margin:16px; border-radius:8px}
+details.answers > p{margin:0 16px 16px; color:var(--muted); font-size:.92rem}
 </style>
 <meta name="robots" content="noindex,nofollow">
 <style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
@@ -266,6 +274,7 @@ ul.plain a, ul.plain code, p > a[href^="http"]{overflow-wrap:anywhere}
   <li><a href="#rest-basics" data-tab="rest-basics">REST API Basics</a></li>
   <li><a href="#api-practice" data-tab="api-practice">API Practice</a></li>
   <li><a href="#postman" data-tab="postman">Postman</a></li>
+  <li><a href="#json-js" data-tab="json-js">JSON &amp; JS</a></li>
   <li><a href="#sql-refresher" data-tab="sql-refresher">SQL Refresher</a></li>
 </ul>
 
@@ -1429,6 +1438,34 @@ pm.test("login basarili", function () {
   <p><span class="e">Now go to the collection &rarr; <strong>Authorization</strong> tab, set it to <strong>Bearer Token</strong> with the value <code>{{token}}</code>, and set every request inside to <strong>Inherit auth from parent</strong>.</span><span class="t">Şimdi collection &rarr; <strong>Authorization</strong> sekmesine git, <strong>Bearer Token</strong> seç ve değer olarak <code>{{token}}</code> yaz; içindeki her isteği de <strong>Inherit auth from parent</strong> yap.</span></p>
   <p class="outcome"><span class="e">From here on: run the login once and every other request in the collection is authenticated. When the token expires, you run login again and nothing else changes. This one script is what an interviewer means when they ask whether you can "handle auth in Postman".</span><span class="t">Bundan sonrası şöyle: login'i bir kez koştur, collection'daki diğer bütün istekler yetkili hale gelsin. Token'ın süresi dolunca tekrar login koştur, başka hiçbir şey değişmesin. Mülakatçı "Postman'de auth'u yönetebiliyor musun" diye sorduğunda kastettiği şey bu tek script.</span></p>
   <p class="tip"><span class="e">Toolshop's token expires fast (the response tells you: <code>expires_in</code> is in seconds). That is not a bug to work around, it is the thing to test: wait for it to expire, send a request, and expect 401.</span><span class="t">Toolshop'un token'ı hızlı doluyor (cevap bunu söylüyor: <code>expires_in</code> saniye cinsinden). Bu, etrafından dolaşılacak bir sorun değil, test edilecek şeyin kendisi: süresinin dolmasını bekle, istek at ve 401 bekle.</span></p>
+  <h3><span class="e">Environment variable, not just a collection one</span><span class="t">Collection değil, environment variable</span></h3>
+  <p><span class="e">The script above saved the token on the collection. The other place to put it is the <strong>environment</strong> &mdash; the set you switch from the dropdown at the top right. Same two functions, different scope:</span><span class="t">Yukarıdaki script token'ı collection'a kaydetti. Onu koyabileceğin diğer yer <strong>environment</strong> &mdash; sağ üstteki açılır listeden değiştirdiğin set. Aynı iki fonksiyon, farklı kapsam:</span></p>
+<pre><code>// write
+pm.environment.set("jwt_token", pm.response.json().access_token);
+
+// read it back, in any later request
+const token = pm.environment.get("jwt_token");
+console.log(token);
+
+// remove it -- useful in a logout test
+pm.environment.unset("jwt_token");</code></pre>
+  <p><span class="e">Either way you use it in the request as <code>{{jwt_token}}</code>. The choice is about where it belongs:</span><span class="t">İkisinde de istekte <code>{{jwt_token}}</code> olarak kullanıyorsun. Seçim, onun nereye ait olduğuyla ilgili:</span></p>
+  <ul class="plain">
+    <li><span class="e"><strong>Collection variable</strong> &mdash; the value belongs to the collection no matter where it runs. The token is like this: you get a new one on every run anyway.</span><span class="t"><strong>Collection variable</strong> &mdash; değer, nerede koşarsa koşsun collection'a ait. Token böyledir: zaten her koşumda yenisini alıyorsun.</span></li>
+    <li><span class="e"><strong>Environment variable</strong> &mdash; the value changes with the environment. <code>base_url</code>, the user you log in as, the API key: dev and test hold different ones, and you switch them together.</span><span class="t"><strong>Environment variable</strong> &mdash; değer environment'a göre değişir. <code>base_url</code>, giriş yaptığın kullanıcı, API key: dev ile test'te farklıdır ve hepsini birlikte değiştirirsin.</span></li>
+  </ul>
+  <p><span class="e">There is also <code>pm.variables.get("x")</code>, which looks through every scope in order and hands you whichever it finds first. Use it when reading; be explicit about the scope when writing.</span><span class="t">Bir de <code>pm.variables.get("x")</code> var; bütün kapsamlara sırayla bakar ve ilk bulduğunu verir. Okurken onu kullan; yazarken kapsamı açıkça belirt.</span></p>
+  <p><span class="e"><strong>When the token arrives as a cookie.</strong> Some APIs do not put it in the body at all &mdash; they set it with <code>Set-Cookie</code>. Then you read it from the cookie jar and save it the same way:</span><span class="t"><strong>Token cookie olarak geldiğinde.</strong> Bazı API'ler onu body'ye hiç koymaz &mdash; <code>Set-Cookie</code> ile gönderir. O zaman cookie kavanozundan okuyup aynı şekilde kaydedersin:</span></p>
+<pre><code>// Scripts -> Post-response, on the login request
+let jwt = pm.cookies.get("jwt");
+
+pm.test("cookie geldi", function () {
+    pm.expect(jwt).to.be.a("string").and.not.empty;
+});
+
+pm.environment.set("jwt_token", jwt);</code></pre>
+  <p class="tip"><span class="e"><code>pm.cookies</code> only sees cookies for the domain of that request, and it returns <code>undefined</code> when the name is not there &mdash; so assert on it, as above, instead of letting an empty token travel silently into the next request and come back as a confusing 401.</span><span class="t"><code>pm.cookies</code> yalnızca o isteğin alan adına ait cookie'leri görür ve isim yoksa <code>undefined</code> döner &mdash; bu yüzden yukarıdaki gibi doğrula; yoksa boş bir token sessizce bir sonraki isteğe gider ve karşına anlaşılmaz bir 401 olarak çıkar.</span></p>
+  <p class="tip"><span class="e"><strong>Do not export a real token.</strong> A variable written by a script becomes a <em>current</em> value, which stays on your machine &mdash; but if you ever type a token into the <em>initial</em> value box, it goes into the exported file and into your repository. Keep initial values empty for anything secret.</span><span class="t"><strong>Gerçek token'ı export etme.</strong> Script'in yazdığı değişken <em>current</em> değer olur ve senin makinende kalır &mdash; ama token'ı bir kez <em>initial</em> value kutusuna yazarsan export edilen dosyaya, oradan da reponuna gider. Gizli olan her şeyde initial value'yu boş bırak.</span></p>
 </section>
 
 <section class="lesson" id="pm5">
@@ -1618,10 +1655,588 @@ jobs:
 </section>
 </div>
 
+<!-- ============ JSON & JS ============ -->
+<div class="page view" data-view="json-js" hidden>
+
+<header>
+  <span class="eyebrow">JSON &amp; JavaScript</span>
+  <h1><span class="e">Reading a response, in plain JavaScript</span><span class="t">Bir cevabı okumak, düz JavaScript ile</span></h1>
+  <p class="lede"><span class="e">No Postman on this page. One API returns flat fields, the next buries the id under <code>user.info.id</code>, a third returns a list, a fourth returns an error envelope. Getting the right value out of each is not an API skill, it is a JavaScript skill &mdash; so learn it on its own, in a file you run yourself.</span><span class="t">Bu sayfada Postman yok. Bir API düz alanlar döner, diğeri id'yi <code>user.info.id</code> altına gömer, üçüncüsü liste döner, dördüncüsü hata nesnesi döner. Her birinden doğru değeri çıkarmak bir API becerisi değil, JavaScript becerisidir &mdash; o yüzden onu tek başına, kendi çalıştırdığın bir dosyada öğren.</span></p>
+  <p class="verdict"><span class="e">Everything here is done with <code>for</code> loops and <code>if</code>. No <code>map</code>, no <code>filter</code>, no <code>reduce</code> &mdash; if you can write a loop, you can read any response on this page.</span><span class="t">Buradaki her şey <code>for</code> döngüsü ve <code>if</code> ile yapılıyor. <code>map</code> yok, <code>filter</code> yok, <code>reduce</code> yok &mdash; döngü yazabiliyorsan bu sayfadaki her cevabı okuyabilirsin.</span></p>
+  <ul class="toc">
+    <li><a href="#json-js" data-jump="j0"><span class="e">0 Setup</span><span class="t">0 Kurulum</span></a></li>
+    <li><a href="#json-js" data-jump="j1"><span class="e">1 Flat fields</span><span class="t">1 Düz alanlar</span></a></li>
+    <li><a href="#json-js" data-jump="j2"><span class="e">2 Nesting</span><span class="t">2 İç içe</span></a></li>
+    <li><a href="#json-js" data-jump="j3"><span class="e">3 Lists</span><span class="t">3 Listeler</span></a></li>
+    <li><a href="#json-js" data-jump="j4"><span class="e">4 Searching a list</span><span class="t">4 Listede arama</span></a></li>
+    <li><a href="#json-js" data-jump="j5"><span class="e">5 Missing fields</span><span class="t">5 Olmayan alanlar</span></a></li>
+    <li><a href="#json-js" data-jump="j6"><span class="e">6 null, 0, empty</span><span class="t">6 null, 0, boş</span></a></li>
+    <li><a href="#json-js" data-jump="j7"><span class="e">7 Loop inside a loop</span><span class="t">7 Döngü içinde döngü</span></a></li>
+    <li><a href="#json-js" data-jump="j8"><span class="e">8 Unknown keys</span><span class="t">8 Bilinmeyen anahtarlar</span></a></li>
+    <li><a href="#json-js" data-jump="j9"><span class="e">9 String or object</span><span class="t">9 String mi nesne mi</span></a></li>
+    <li><a href="#json-js" data-jump="j10"><span class="e">10 Different shapes</span><span class="t">10 Farklı şekiller</span></a></li>
+    <li><a href="#json-js" data-jump="jx"><span class="e">&rarr; 15 exercises</span><span class="t">&rarr; 15 alıştırma</span></a></li>
+  </ul>
+</header>
+
+<section class="lesson" id="j0">
+  <span class="num">00</span>
+  <h2><span class="e">How to run this</span><span class="t">Bunu nasıl çalıştıracaksın</span></h2>
+  <p><span class="e">Make a file called <code>parse.js</code>, paste a response into a variable, and print what you want out of it. Nothing else is needed &mdash; no project, no npm install.</span><span class="t">Bir <code>parse.js</code> dosyası aç, cevabı bir değişkene yapıştır ve içinden istediğini yazdır. Başka hiçbir şey gerekmiyor &mdash; proje yok, npm install yok.</span></p>
+<pre data-nohl><code>node parse.js</code></pre>
+<pre><code>var response = {
+  "id": 42,
+  "name": "Ali"
+};
+
+console.log(response.name);     // Ali</code></pre>
+  <p><span class="e">If you have no Node installed, open any browser, press F12, go to the <strong>Console</strong> tab and paste the same lines there. It behaves identically.</span><span class="t">Node kurulu değilse herhangi bir tarayıcıyı aç, F12'ye bas, <strong>Console</strong> sekmesine geç ve aynı satırları oraya yapıştır. Birebir aynı davranır.</span></p>
+  <p class="tip"><span class="e">Everything on this page works the same inside Postman. There, the object comes from <code>pm.response.json()</code> instead of being typed by hand &mdash; from that point on, it is the same JavaScript.</span><span class="t">Bu sayfadaki her şey Postman'in içinde de aynı çalışır. Orada nesne elle yazılmak yerine <code>pm.response.json()</code>'dan gelir &mdash; o noktadan sonrası aynı JavaScript.</span></p>
+</section>
+
+<section class="lesson" id="j1">
+  <span class="num">01</span>
+  <h2><span class="e">Flat fields: dot and bracket</span><span class="t">Düz alanlar: nokta ve köşeli parantez</span></h2>
+<pre><code>var response = {
+  "id": 42,
+  "firstName": "Ali",
+  "email": "ali@test.com",
+  "active": true
+};
+
+console.log(response.id);          // 42
+console.log(response.firstName);   // Ali
+console.log(response["email"]);    // ali@test.com  -- same thing</code></pre>
+  <p><span class="e">Dot notation is what you will write 95% of the time. But it breaks on keys that are not plain words, and those appear in real APIs more often than you would like:</span><span class="t">Zamanın %95'inde nokta yazacaksın. Ama düz kelime olmayan anahtarlarda nokta çalışmaz ve gerçek API'lerde böyleleri istediğinden sık çıkar:</span></p>
+<pre><code>var response = {
+  "user-name": "ali",
+  "full name": "Ali Yilmaz",
+  "2fa": true
+};
+
+// response.user-name   -> syntax error, JS reads it as a subtraction
+console.log(response["user-name"]);   // ali
+console.log(response["full name"]);   // Ali Yilmaz
+console.log(response["2fa"]);         // true</code></pre>
+  <p><span class="e">Brackets also take a variable, which dot notation cannot do. Remember this one; it is how lesson 8 works.</span><span class="t">Köşeli parantez bir değişken de alabilir, nokta alamaz. Bunu aklında tut; 8. ders bununla çalışıyor.</span></p>
+<pre><code>var key = "email";
+console.log(response[key]);      // reads the field whose name is in `key`</code></pre>
+</section>
+
+<section class="lesson" id="j2">
+  <span class="num">02</span>
+  <h2><span class="e">Nesting: user.info.id</span><span class="t">İç içe: user.info.id</span></h2>
+  <p><span class="e">A nested response is just an object whose field is another object. You walk down one level at a time.</span><span class="t">İç içe bir cevap, sadece bir alanı yine nesne olan bir nesnedir. Seviye seviye aşağı iniyorsun.</span></p>
+<pre><code>var response = {
+  "user": {
+    "info": { "id": "u-77", "name": "Deniz" },
+    "role": "admin"
+  },
+  "status": "ok"
+};
+
+console.log(response.user);            // { info: {...}, role: 'admin' }
+console.log(response.user.info);       // { id: 'u-77', name: 'Deniz' }
+console.log(response.user.info.id);    // u-77
+console.log(response.user.role);       // admin</code></pre>
+  <p class="tip"><span class="e"><strong>When you get lost, print the level above.</strong> If <code>response.user.info.id</code> gives you something unexpected, print <code>response.user.info</code>, then <code>response.user</code>. One of those lines will show you that the field is not where you assumed. This is the whole debugging technique, and it never fails.</span><span class="t"><strong>Kaybolduğunda bir üst seviyeyi yazdır.</strong> <code>response.user.info.id</code> beklenmedik bir şey veriyorsa <code>response.user.info</code>, sonra <code>response.user</code> yazdır. O satırlardan biri sana alanın sandığın yerde olmadığını gösterir. Bütün hata ayıklama tekniği bu ve hiç şaşmaz.</span></p>
+</section>
+
+<section class="lesson" id="j3">
+  <span class="num">03</span>
+  <h2><span class="e">Lists: index, length, loop</span><span class="t">Listeler: index, length, döngü</span></h2>
+<pre><code>var response = {
+  "data": [
+    { "id": 1, "name": "Hammer", "price": 9.99 },
+    { "id": 2, "name": "Wrench", "price": 14.5 },
+    { "id": 3, "name": "Saw",    "price": 22.0 }
+  ],
+  "total": 3
+};
+
+console.log(response.data.length);       // 3
+console.log(response.data[0]);           // the whole first object
+console.log(response.data[0].name);      // Hammer
+console.log(response.data[2].price);     // 22
+console.log(response.data[response.data.length - 1].name);   // Saw (last)</code></pre>
+  <p><span class="e">Counting starts at 0, so the third item is <code>[2]</code> and the last one is <code>[length - 1]</code>. To walk the whole list:</span><span class="t">Sayma 0'dan başlar, yani üçüncü eleman <code>[2]</code>, sonuncusu da <code>[length - 1]</code>. Tüm listeyi gezmek için:</span></p>
+<pre><code>for (var i = 0; i &lt; response.data.length; i++) {
+  console.log(response.data[i].name + " -> " + response.data[i].price);
+}
+
+// Hammer -> 9.99
+// Wrench -> 14.5
+// Saw -> 22</code></pre>
+  <p><span class="e">Pulling the item into its own variable first makes the body much easier to read, and you will want that as soon as the fields get longer:</span><span class="t">Elemanı önce kendi değişkenine almak gövdeyi çok daha okunur yapar; alanlar uzadığı anda bunu isteyeceksin:</span></p>
+<pre><code>for (var i = 0; i &lt; response.data.length; i++) {
+  var product = response.data[i];
+  console.log(product.name + " -> " + product.price);
+}</code></pre>
+  <p class="tip"><span class="e"><strong>Never trust <code>[0]</code> in a test.</strong> Writing <code>data[0].name === "Hammer"</code> passes today and fails the day someone adds a product or changes the sort order. Find the item you mean by a condition instead &mdash; that is the next lesson.</span><span class="t"><strong>Testte <code>[0]</code>'a asla güvenme.</strong> <code>data[0].name === "Hammer"</code> bugün geçer, biri ürün eklediği veya sıralamayı değiştirdiği gün düşer. Onun yerine kastettiğin elemanı bir koşulla bul &mdash; bir sonraki ders bu.</span></p>
+</section>
+
+<section class="lesson" id="j4">
+  <span class="num">04</span>
+  <h2><span class="e">Searching a list with a loop</span><span class="t">Döngüyle listede arama</span></h2>
+  <p><span class="e">Same list as above. Four jobs cover almost everything a tester does with a response, and all four are the same loop with a different body.</span><span class="t">Yukarıdakiyle aynı liste. Bir testçinin cevapla yaptığı neredeyse her şeyi dört iş karşılıyor ve dördü de gövdesi değişen aynı döngü.</span></p>
+  <p><span class="e"><strong>1. Find one item.</strong> Start with an empty box, fill it when the condition matches, and stop:</span><span class="t"><strong>1. Tek bir eleman bul.</strong> Boş bir kutuyla başla, koşul tuttuğunda doldur ve dur:</span></p>
+<pre><code>var saw = null;
+
+for (var i = 0; i &lt; response.data.length; i++) {
+  if (response.data[i].name === "Saw") {
+    saw = response.data[i];
+    break;                      // found it, no reason to keep looking
+  }
+}
+
+if (saw === null) {
+  console.log("Saw diye bir urun yok");
+} else {
+  console.log(saw.price);       // 22
+}</code></pre>
+  <p><span class="e"><strong>2. Collect the ones that match</strong> into a new list:</span><span class="t"><strong>2. Eşleşenleri topla</strong>, yeni bir listeye:</span></p>
+<pre><code>var cheap = [];
+
+for (var i = 0; i &lt; response.data.length; i++) {
+  if (response.data[i].price &lt; 15) {
+    cheap.push(response.data[i]);
+  }
+}
+
+console.log(cheap.length);      // 2</code></pre>
+  <p><span class="e"><strong>3. Collect one field</strong> out of every item:</span><span class="t"><strong>3. Her elemandan tek bir alanı</strong> topla:</span></p>
+<pre><code>var names = [];
+
+for (var i = 0; i &lt; response.data.length; i++) {
+  names.push(response.data[i].name);
+}
+
+console.log(names);             // [ 'Hammer', 'Wrench', 'Saw' ]</code></pre>
+  <p><span class="e"><strong>4. Add them up.</strong> Keep a running total outside the loop:</span><span class="t"><strong>4. Topla.</strong> Toplamı döngünün dışında tut:</span></p>
+<pre><code>var total = 0;
+
+for (var i = 0; i &lt; response.data.length; i++) {
+  total = total + response.data[i].price;
+}
+
+console.log(total);             // 46.49</code></pre>
+  <p><span class="e">And one more shape worth knowing, because assertions are full of it &mdash; a yes/no answer:</span><span class="t">Ve bilmeye değer bir kalıp daha, çünkü assertion'lar bununla dolu &mdash; evet/hayır cevabı:</span></p>
+<pre><code>// is there at least one product over 20?
+var expensiveExists = false;
+for (var i = 0; i &lt; response.data.length; i++) {
+  if (response.data[i].price > 20) { expensiveExists = true; break; }
+}
+console.log(expensiveExists);   // true
+
+// is EVERY price above zero?  -- start from true, one failure is enough
+var allPositive = true;
+for (var i = 0; i &lt; response.data.length; i++) {
+  if (response.data[i].price &lt;= 0) { allPositive = false; break; }
+}
+console.log(allPositive);       // true</code></pre>
+  <p class="tip"><span class="e"><strong>Start value matters.</strong> "Is there one?" starts at <code>false</code> and one match flips it to true. "Are they all?" starts at <code>true</code> and one failure flips it to false. Getting these the wrong way round gives you a test that passes on an empty list &mdash; the classic false green.</span><span class="t"><strong>Başlangıç değeri önemli.</strong> "Bir tane var mı?" <code>false</code> ile başlar, tek eşleşme onu true yapar. "Hepsi öyle mi?" <code>true</code> ile başlar, tek bir aykırı onu false yapar. Bunları ters kurarsan boş listede geçen bir test elde edersin &mdash; klasik sahte yeşil.</span></p>
+  <p><span class="e">There are shorter forms of all of these &mdash; <code>find</code>, <code>filter</code>, <code>map</code>, <code>reduce</code>, <code>some</code>, <code>every</code> &mdash; and you will meet them in other people's code. They do nothing a loop cannot. Learn them when the loops feel slow to write, not before.</span><span class="t">Bunların hepsinin kısa yazımları var &mdash; <code>find</code>, <code>filter</code>, <code>map</code>, <code>reduce</code>, <code>some</code>, <code>every</code> &mdash; ve başkalarının kodunda karşına çıkacaklar. Döngünün yapamayacağı hiçbir şeyi yapmıyorlar. Döngü yazmak sana yavaş gelmeye başladığında öğren, öncesinde değil.</span></p>
+</section>
+
+<section class="lesson" id="j5">
+  <span class="num">05</span>
+  <h2><span class="e">The field that is not there</span><span class="t">Olmayan alan</span></h2>
+  <p><span class="e">This is where most people lose an afternoon. There are two different situations and they behave differently.</span><span class="t">İnsanların çoğunun yarım gününü kaybettiği yer burası. İki farklı durum var ve farklı davranıyorlar.</span></p>
+<pre><code>var response = { "user": { "name": "Deniz" } };
+
+// 1. asking for a missing field -> you get undefined, no error
+console.log(response.user.age);          // undefined
+
+// 2. going THROUGH a missing field -> it throws
+console.log(response.account.id);
+// TypeError: Cannot read properties of undefined (reading 'id')</code></pre>
+  <p><span class="e">Read that error once, properly, because you will see it for the rest of your life. It does not say <code>id</code> is missing. It says <strong>the thing in front of <code>id</code> was undefined</strong> &mdash; so <code>account</code> is what does not exist. The name in the brackets is the field you asked for; the problem is always the step before it.</span><span class="t">O hatayı bir kez doğru dürüst oku, çünkü ömrün boyunca göreceksin. <code>id</code> yok demiyor. <strong><code>id</code>'nin önündeki şey undefined'dı</strong> diyor &mdash; yani olmayan şey <code>account</code>. Parantez içindeki isim senin istediğin alan; sorun her zaman ondan bir önceki adımda.</span></p>
+  <p><span class="e">The way down a path that may not exist is to check each step with <code>if</code>:</span><span class="t">Olmayabilecek bir yoldan inmenin yolu, her adımı <code>if</code> ile kontrol etmek:</span></p>
+<pre><code>var city = "bilinmiyor";
+
+if (response.user && response.user.address && response.user.address.city) {
+  city = response.user.address.city;
+}
+
+console.log(city);                       // bilinmiyor</code></pre>
+  <p><span class="e">JavaScript stops at the first <code>&amp;&amp;</code> that is false, so it never reaches <code>.city</code> when <code>address</code> is missing. There is a shorter spelling of exactly this, which you will see everywhere:</span><span class="t">JavaScript ilk false olan <code>&amp;&amp;</code>'de durur, yani <code>address</code> yokken <code>.city</code>'ye hiç ulaşmaz. Bunun tam olarak aynısının kısa yazımı da var ve her yerde karşına çıkacak:</span></p>
+<pre><code>console.log(response.account?.id);            // undefined, no crash
+console.log(response.user?.address?.city);    // undefined, no crash</code></pre>
+</section>
+
+<section class="lesson" id="j6">
+  <span class="num">06</span>
+  <h2><span class="e">null is not missing, and 0 is not nothing</span><span class="t">null yok demek değil, 0 hiç demek değil</span></h2>
+  <p><span class="e">An API that sends <code>"discount": null</code> is telling you something different from an API that leaves the field out. And a <code>0</code> is a real value that most shortcuts quietly throw away.</span><span class="t">Sana <code>"discount": null</code> gönderen bir API ile alanı hiç göndermeyen bir API aynı şeyi söylemiyor. Ve <code>0</code> gerçek bir değerdir; kestirme yolların çoğu onu sessizce çöpe atar.</span></p>
+<pre><code>var response = { "id": 9, "discount": null, "stock": 0, "note": "" };
+
+console.log(response.discount === null);        // true   -- sent, and empty on purpose
+console.log(response.coupon === undefined);     // true   -- never sent at all
+
+// the classic bug:
+console.log(response.stock || "stokta yok");    // "stokta yok"  <- WRONG, there are 0 items</code></pre>
+  <p><span class="e"><code>||</code> replaces anything <em>falsy</em>: <code>0</code>, <code>""</code>, <code>false</code>, <code>null</code>, <code>undefined</code>. When the value is a number, or a text that is allowed to be empty, say what you mean instead:</span><span class="t"><code>||</code> <em>falsy</em> olan her şeyi değiştirir: <code>0</code>, <code>""</code>, <code>false</code>, <code>null</code>, <code>undefined</code>. Değer bir sayıysa veya boş olabilen bir metinse, ne demek istediğini açıkça yaz:</span></p>
+<pre><code>var stockText;
+
+if (response.stock === null || response.stock === undefined) {
+  stockText = "stokta yok";
+} else {
+  stockText = response.stock;
+}
+
+console.log(stockText);                         // 0   <- correct
+
+// the short spelling of the same four lines:
+console.log(response.stock ?? "stokta yok");    // 0</code></pre>
+  <p class="tip"><span class="e"><strong>This is a bug you can report.</strong> If a price of 0 shows up in the interface as "price not set", you have just found the <code>||</code> above in someone's code. Checking how a system handles 0, empty string and null is boundary testing, in JavaScript form.</span><span class="t"><strong>Bu, rapor edebileceğin bir hatadır.</strong> 0 olan bir fiyat arayüzde "fiyat girilmemiş" diye görünüyorsa, birinin kodundaki yukarıdaki <code>||</code>'ı bulmuşsun demektir. Bir sistemin 0, boş string ve null'ı nasıl ele aldığını kontrol etmek, JavaScript biçiminde sınır değer analizidir.</span></p>
+</section>
+
+<section class="lesson" id="j7">
+  <span class="num">07</span>
+  <h2><span class="e">A loop inside a loop</span><span class="t">Döngü içinde döngü</span></h2>
+  <p><span class="e">An order has items; each item has its own fields. This shape is everywhere.</span><span class="t">Bir siparişin kalemleri vardır, her kalemin kendi alanları vardır. Bu şekil her yerde karşına çıkar.</span></p>
+<pre><code>var response = {
+  "id": "o-1",
+  "customer": { "name": "Ayse" },
+  "items": [
+    { "sku": "A1", "qty": 2, "price": 10 },
+    { "sku": "B2", "qty": 1, "price": 25 },
+    { "sku": "C3", "qty": 3, "price": 5  }
+  ]
+};
+
+console.log(response.items.length);           // 3
+console.log(response.items[1].sku);           // B2
+
+// the order total: quantity times price, added up
+var total = 0;
+
+for (var i = 0; i &lt; response.items.length; i++) {
+  var item = response.items[i];
+  total = total + item.qty * item.price;
+}
+
+console.log(total);                           // 60</code></pre>
+  <p><span class="e">When the inner thing is itself a list, you need a second loop inside the first. Note the second counter is <code>j</code>, not <code>i</code> &mdash; reusing <code>i</code> is the mistake that makes the outer loop go haywire.</span><span class="t">İçteki şeyin kendisi de listeyse, birincinin içinde ikinci bir döngü gerekiyor. İkinci sayacın <code>j</code> olduğuna dikkat et, <code>i</code> değil &mdash; <code>i</code>'yi tekrar kullanmak dıştaki döngüyü çıldırtan hatadır.</span></p>
+<pre><code>var response = {
+  "data": [
+    { "id": 3, "name": "Saw",   "tags": ["cutting", "hand"] },
+    { "id": 4, "name": "Drill", "tags": ["power"] }
+  ]
+};
+
+for (var i = 0; i &lt; response.data.length; i++) {
+  var product = response.data[i];
+
+  for (var j = 0; j &lt; product.tags.length; j++) {
+    console.log(product.name + " : " + product.tags[j]);
+  }
+}
+
+// Saw : cutting
+// Saw : hand
+// Drill : power</code></pre>
+  <p><span class="e">And to collect all the tags of all the products into one flat list:</span><span class="t">Bütün ürünlerin bütün etiketlerini tek düz listede toplamak için de:</span></p>
+<pre><code>var tags = [];
+
+for (var i = 0; i &lt; response.data.length; i++) {
+  var product = response.data[i];
+
+  for (var j = 0; j &lt; product.tags.length; j++) {
+    tags.push(product.tags[j]);
+  }
+}
+
+console.log(tags);            // [ 'cutting', 'hand', 'power' ]</code></pre>
+</section>
+
+<section class="lesson" id="j8">
+  <span class="num">08</span>
+  <h2><span class="e">When you do not know the keys</span><span class="t">Anahtarları bilmediğinde</span></h2>
+  <p><span class="e">Some APIs use the data as the key: one entry per date, per currency, per country. You cannot write <code>response.results["2026-11-02"]</code> in a test, because tomorrow it is a different date.</span><span class="t">Bazı API'ler veriyi anahtar olarak kullanır: her tarih, her para birimi, her ülke için bir giriş. Testte <code>response.results["2026-11-02"]</code> yazamazsın, çünkü yarın tarih başka.</span></p>
+  <p><span class="e"><code>Object.keys()</code> hands you the key names as an ordinary array &mdash; and once it is an array, it is the same loop as everywhere else on this page:</span><span class="t"><code>Object.keys()</code> sana anahtar isimlerini sıradan bir dizi olarak verir &mdash; dizi olduktan sonra da bu sayfadaki diğer her yerdeki döngünün aynısı:</span></p>
+<pre><code>var response = {
+  "results": {
+    "2026-11-01": { "orders": 3, "revenue": 120 },
+    "2026-11-02": { "orders": 5, "revenue": 300 },
+    "2026-11-03": { "orders": 1, "revenue": 45  }
+  }
+};
+
+var dates = Object.keys(response.results);
+console.log(dates);           // [ '2026-11-01', '2026-11-02', '2026-11-03' ]
+
+for (var i = 0; i &lt; dates.length; i++) {
+  var date = dates[i];
+  var day = response.results[date];        // bracket, because the name is in a variable
+
+  console.log(date + " -> " + day.orders);
+}
+
+// 2026-11-01 -> 3
+// 2026-11-02 -> 5
+// 2026-11-03 -> 1</code></pre>
+  <p><span class="e">This is why lesson 1 insisted on brackets: <code>response.results.date</code> would look for a field literally called "date". <code>response.results[date]</code> uses what is inside the variable.</span><span class="t">1. dersin köşeli parantezde ısrar etmesinin sebebi bu: <code>response.results.date</code> harfiyen "date" adlı bir alanı arardı. <code>response.results[date]</code> ise değişkenin içindekini kullanır.</span></p>
+  <p><span class="e">Adding up and finding the biggest are the same two loops as before:</span><span class="t">Toplamak ve en büyüğü bulmak, önceki iki döngünün aynısı:</span></p>
+<pre><code>// total revenue across all days
+var revenue = 0;
+
+for (var i = 0; i &lt; dates.length; i++) {
+  revenue = revenue + response.results[dates[i]].revenue;
+}
+
+console.log(revenue);                      // 465
+
+// the busiest day: hold on to the best one so far
+var busiest = dates[0];
+
+for (var i = 1; i &lt; dates.length; i++) {
+  if (response.results[dates[i]].orders > response.results[busiest].orders) {
+    busiest = dates[i];
+  }
+}
+
+console.log(busiest);                      // 2026-11-02</code></pre>
+  <p class="tip"><span class="e">"Hold on to the best so far" starts from the first item and the loop starts at <code>1</code>, not <code>0</code> &mdash; there is no point comparing the first one with itself. On an empty object <code>dates[0]</code> is <code>undefined</code>, so check <code>dates.length > 0</code> first if the list can be empty.</span><span class="t">"Şimdiye kadarki en iyiyi tut" ilk elemandan başlar ve döngü <code>0</code>'dan değil <code>1</code>'den başlar &mdash; ilkini kendisiyle karşılaştırmanın anlamı yok. Boş bir nesnede <code>dates[0]</code> <code>undefined</code> olur; liste boş olabiliyorsa önce <code>dates.length > 0</code> kontrolü koy.</span></p>
+</section>
+
+<section class="lesson" id="j9">
+  <span class="num">09</span>
+  <h2><span class="e">Is it a string or an object?</span><span class="t">String mi, nesne mi?</span></h2>
+  <p><span class="e">JSON is text. An object is a thing in memory. They look identical when printed and behave nothing alike.</span><span class="t">JSON metindir. Nesne ise bellekteki bir şeydir. Yazdırıldığında aynı görünürler, davranışları hiç benzemez.</span></p>
+<pre><code>var text = '{"token":"abc.def.ghi","expires_in":300}';   // quotes around it -> a STRING
+
+console.log(typeof text);        // string
+console.log(text.token);         // undefined   <- a string has no field called token
+
+var response = JSON.parse(text); // now it is an object
+console.log(typeof response);    // object
+console.log(response.token);     // abc.def.ghi</code></pre>
+  <p><span class="e">The other direction, which you use for printing and for sending a body:</span><span class="t">Diğer yön; yazdırmak ve body göndermek için kullanıyorsun:</span></p>
+<pre><code>console.log(JSON.stringify(response));              // one line
+console.log(JSON.stringify(response, null, 2));     // indented, readable</code></pre>
+  <p class="tip"><span class="e"><strong>Why you need this even though Postman parses for you.</strong> <code>pm.response.json()</code> hands you an object already, so you rarely call <code>JSON.parse</code> there. But some APIs put JSON <em>inside</em> a field as text &mdash; <code>{"payload": "{\"id\":5}"}</code> &mdash; and then you must parse that field yourself. And <code>JSON.stringify(x, null, 2)</code> is the fastest way to see the shape of something you do not recognise.</span><span class="t"><strong>Postman senin yerine parse ediyorken bu neden lazım.</strong> <code>pm.response.json()</code> sana zaten nesne verir, orada <code>JSON.parse</code>'ı nadiren çağırırsın. Ama bazı API'ler JSON'u bir alanın <em>içine</em> metin olarak koyar &mdash; <code>{"payload": "{\"id\":5}"}</code> &mdash; o zaman o alanı kendin parse etmen gerekir. Ve tanımadığın bir şeyin şeklini görmenin en hızlı yolu <code>JSON.stringify(x, null, 2)</code>.</span></p>
+</section>
+
+<section class="lesson" id="j10">
+  <span class="num">10</span>
+  <h2><span class="e">Writing code that survives a different shape</span><span class="t">Farklı şekle dayanan kod yazmak</span></h2>
+  <p><span class="e">The same endpoint can answer in two shapes: the list on its own, or the list wrapped in a paging object. And when it fails, it answers in a third shape entirely.</span><span class="t">Aynı endpoint iki şekilde cevap verebilir: listenin kendisi, ya da sayfalama nesnesine sarılmış liste. Hata verdiğinde ise bambaşka üçüncü bir şekilde cevap verir.</span></p>
+<pre><code>var a = [ {"id":1}, {"id":2} ];                        // the list itself
+var b = { "data": [ {"id":1}, {"id":2} ], "total": 2 }; // wrapped
+
+var list;
+
+if (Array.isArray(a)) {
+  list = a;
+} else {
+  list = a.data;
+}
+
+console.log(list.length);                               // 2</code></pre>
+  <p><span class="e">And the error envelope, which carries no <code>data</code> at all:</span><span class="t">Ve içinde hiç <code>data</code> olmayan hata nesnesi:</span></p>
+<pre><code>var response = {
+  "error": {
+    "code": "VALIDATION_FAILED",
+    "message": "Price must be positive",
+    "fields": ["price"]
+  }
+};
+
+if (response.error) {
+  console.log(response.error.code);        // VALIDATION_FAILED
+  console.log(response.error.fields[0]);   // price
+} else {
+  console.log(response.data.length);
+}</code></pre>
+  <p class="outcome"><span class="e"><strong>The habit to take away.</strong> Before writing the path, print the response once and look at the top level: is it an object or an array? If it is an object, does it hold the data directly or under a wrapper? Is there an <code>error</code> field? Thirty seconds of looking saves an hour of guessing &mdash; and guessing is what produces tests that pass for the wrong reason.</span><span class="t"><strong>Alınacak alışkanlık.</strong> Yolu yazmadan önce cevabı bir kez yazdır ve en üst seviyeye bak: nesne mi, dizi mi? Nesneyse veriyi doğrudan mı tutuyor, yoksa bir sarmalayıcının altında mı? Bir <code>error</code> alanı var mı? Otuz saniyelik bakış, bir saatlik tahmini kurtarır &mdash; ve yanlış sebepten geçen testleri üreten şey tahmindir.</span></p>
+</section>
+
+<section class="lesson" id="jx">
+  <span class="num">&rarr;</span>
+  <h2><span class="e">15 exercises</span><span class="t">15 alıştırma</span></h2>
+  <p><span class="e">Copy the whole block below into <code>parse.js</code>. Each response is a variable. Write the lines that produce the asked value, run the file, and check it with your eyes. Loops and <code>if</code> are enough for all fifteen. Do them all before you open the answers at the bottom &mdash; the point is the fifteen minutes you spend being stuck, not the answer.</span><span class="t">Aşağıdaki bloğun tamamını <code>parse.js</code> dosyasına kopyala. Her cevap bir değişken. İstenen değeri üreten satırları yaz, dosyayı çalıştır ve gözünle kontrol et. On beşi için de döngü ve <code>if</code> yeterli. En alttaki cevapları açmadan önce hepsini yap &mdash; mesele takılı kaldığın on beş dakika, cevap değil.</span></p>
+<pre><code>var r1 = { "id": 42, "firstName": "Ali", "lastName": "Yilmaz", "email": "ali@test.com", "active": true };
+
+var r2 = { "user": { "info": { "id": "u-77", "name": "Deniz" }, "role": "admin" }, "status": "ok" };
+
+var r3 = { "data": [ { "id": 1, "name": "Hammer", "price": 9.99 },
+                     { "id": 2, "name": "Wrench", "price": 14.5 },
+                     { "id": 3, "name": "Saw",    "price": 22.0 } ], "total": 3 };
+
+var r4 = { "error": { "code": "VALIDATION_FAILED", "message": "Price must be positive",
+                      "fields": ["price"] } };
+
+var r5 = { "id": "o-1", "customer": { "name": "Ayse" },
+           "items": [ { "sku": "A1", "qty": 2, "price": 10 },
+                      { "sku": "B2", "qty": 1, "price": 25 },
+                      { "sku": "C3", "qty": 3, "price": 5  } ] };
+
+var r6 = { "page": 2, "per_page": 2, "total": 7,
+           "data": [ { "id": 3, "name": "Saw",   "tags": ["cutting", "hand"] },
+                     { "id": 4, "name": "Drill", "tags": ["power"] } ] };
+
+var r7 = { "id": 9, "name": "Drill", "discount": null, "stock": 0,
+           "meta": { "warehouse": { "code": "W-1" } } };
+
+var r8 = { "results": { "2026-11-01": { "orders": 3, "revenue": 120 },
+                        "2026-11-02": { "orders": 5, "revenue": 300 },
+                        "2026-11-03": { "orders": 1, "revenue": 45  } } };
+
+var r9 = '{"token":"abc.def.ghi","expires_in":300}';
+
+var r10 = { "users": [ { "name": "Ali",   "roles": ["user"] },
+                       { "name": "Deniz", "roles": ["user", "admin"] },
+                       { "name": "Can",   "roles": [] } ] };</code></pre>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>#</th><th><span class="e">From</span><span class="t">Hangisinden</span></th><th><span class="e">Get this</span><span class="t">Şunu al</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">1</td><td class="m">r1</td><td><span class="e">The e-mail address.</span><span class="t">E-posta adresini.</span></td></tr>
+        <tr><td class="m">2</td><td class="m">r2</td><td><span class="e">The user id (<code>u-77</code>).</span><span class="t">Kullanıcı id'sini (<code>u-77</code>).</span></td></tr>
+        <tr><td class="m">3</td><td class="m">r3</td><td><span class="e">The name of the <strong>second</strong> product.</span><span class="t"><strong>İkinci</strong> ürünün adını.</span></td></tr>
+        <tr><td class="m">4</td><td class="m">r3</td><td><span class="e">The price of the product called "Saw" &mdash; found with a loop, not by writing an index number.</span><span class="t">Adı "Saw" olan ürünün fiyatını &mdash; index numarası yazarak değil, döngüyle bularak.</span></td></tr>
+        <tr><td class="m">5</td><td class="m">r4</td><td><span class="e">The name of the first failing field.</span><span class="t">Hata veren ilk alanın adını.</span></td></tr>
+        <tr><td class="m">6</td><td class="m">r5</td><td><span class="e">The order total: quantity &times; price, added up.</span><span class="t">Sipariş toplamını: adet &times; fiyat, hepsinin toplamı.</span></td></tr>
+        <tr><td class="m">7</td><td class="m">r3</td><td><span class="e">All product names, collected into one array.</span><span class="t">Bütün ürün adlarını, tek bir dizide toplayarak.</span></td></tr>
+        <tr><td class="m">8</td><td class="m">r6</td><td><span class="e">All tags of all products in one flat array.</span><span class="t">Bütün ürünlerin bütün etiketlerini tek düz dizide.</span></td></tr>
+        <tr><td class="m">9</td><td class="m">r7</td><td><span class="e">The supplier code under <code>meta</code> &mdash; which does not exist. Print the text <code>yok</code> instead of crashing.</span><span class="t"><code>meta</code> altındaki tedarikçi kodunu &mdash; ki yok. Patlamak yerine <code>yok</code> metnini yazdır.</span></td></tr>
+        <tr><td class="m">10</td><td class="m">r7</td><td><span class="e">Three true/false values: is <code>discount</code> null, is <code>stock</code> zero, and would <code>||</code> treat both as empty?</span><span class="t">Üç doğru/yanlış değeri: <code>discount</code> null mı, <code>stock</code> sıfır mı, ve <code>||</code> ikisini de boş sayar mıydı?</span></td></tr>
+        <tr><td class="m">11</td><td class="m">r8</td><td><span class="e">The date with the most orders &mdash; without writing any date by hand.</span><span class="t">En çok siparişin olduğu tarihi &mdash; elle hiç tarih yazmadan.</span></td></tr>
+        <tr><td class="m">12</td><td class="m">r8</td><td><span class="e">Total revenue across all days.</span><span class="t">Bütün günlerin toplam cirosunu.</span></td></tr>
+        <tr><td class="m">13</td><td class="m">r9</td><td><span class="e">The token. Careful &mdash; look at what r9 actually is.</span><span class="t">Token'ı. Dikkat &mdash; r9'un gerçekte ne olduğuna bak.</span></td></tr>
+        <tr><td class="m">14</td><td class="m">r10</td><td><span class="e">The names of everyone who has the <code>admin</code> role.</span><span class="t"><code>admin</code> rolü olan herkesin adını.</span></td></tr>
+        <tr><td class="m">15</td><td class="m">r3</td><td><span class="e">The number of items &mdash; in a way that also works if the response is the bare array with no wrapper.</span><span class="t">Eleman sayısını &mdash; cevap sarmalayıcısız çıplak dizi olsa da çalışacak şekilde.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details class="answers">
+    <summary><span class="e">Answers &mdash; open after you have tried all fifteen</span><span class="t">Cevaplar &mdash; on beşini de denedikten sonra aç</span></summary>
+<pre><code>// 1
+console.log(r1.email);                                   // ali@test.com
+
+// 2
+console.log(r2.user.info.id);                            // u-77
+
+// 3  counting starts at 0, so the second one is [1]
+console.log(r3.data[1].name);                            // Wrench
+
+// 4  empty box, fill it when the name matches, then stop
+var saw = null;
+for (var i = 0; i &lt; r3.data.length; i++) {
+  if (r3.data[i].name === "Saw") { saw = r3.data[i]; break; }
+}
+console.log(saw.price);                                  // 22
+
+// 5
+console.log(r4.error.fields[0]);                         // price
+
+// 6  running total outside the loop
+var total = 0;
+for (var i = 0; i &lt; r5.items.length; i++) {
+  total = total + r5.items[i].qty * r5.items[i].price;
+}
+console.log(total);                                      // 60
+
+// 7  push one field of each item into a new array
+var names = [];
+for (var i = 0; i &lt; r3.data.length; i++) {
+  names.push(r3.data[i].name);
+}
+console.log(names);                                      // [ 'Hammer', 'Wrench', 'Saw' ]
+
+// 8  a loop inside a loop -- note the second counter is j
+var tags = [];
+for (var i = 0; i &lt; r6.data.length; i++) {
+  for (var j = 0; j &lt; r6.data[i].tags.length; j++) {
+    tags.push(r6.data[i].tags[j]);
+  }
+}
+console.log(tags);                                       // [ 'cutting', 'hand', 'power' ]
+
+// 9  check every step before going through it
+var code = "yok";
+if (r7.meta &amp;&amp; r7.meta.supplier &amp;&amp; r7.meta.supplier.code) {
+  code = r7.meta.supplier.code;
+}
+console.log(code);                                       // yok
+
+// 10
+console.log(r7.discount === null);                       // true
+console.log(r7.stock === 0);                             // true
+console.log(!r7.discount &amp;&amp; !r7.stock);                  // true  <- why || is dangerous here
+
+// 11  hold on to the best so far; start the loop at 1
+var dates = Object.keys(r8.results);
+var busiest = dates[0];
+for (var i = 1; i &lt; dates.length; i++) {
+  if (r8.results[dates[i]].orders > r8.results[busiest].orders) {
+    busiest = dates[i];
+  }
+}
+console.log(busiest);                                    // 2026-11-02
+
+// 12  same keys, a running total again
+var revenue = 0;
+for (var i = 0; i &lt; dates.length; i++) {
+  revenue = revenue + r8.results[dates[i]].revenue;
+}
+console.log(revenue);                                    // 465
+
+// 13  r9 is a STRING -- r9.token would be undefined
+console.log(JSON.parse(r9).token);                       // abc.def.ghi
+
+// 14  outer loop over users, inner loop over that user's roles
+var admins = [];
+for (var i = 0; i &lt; r10.users.length; i++) {
+  var user = r10.users[i];
+  for (var j = 0; j &lt; user.roles.length; j++) {
+    if (user.roles[j] === "admin") { admins.push(user.name); break; }
+  }
+}
+console.log(admins);                                     // [ 'Deniz' ]
+
+// 15
+var list;
+if (Array.isArray(r3)) { list = r3; } else { list = r3.data; }
+console.log(list.length);                                // 3</code></pre>
+    <p><span class="e">If one of yours is written differently but prints the same value, it is right. There is more than one correct way for most of these.</span><span class="t">Seninki farklı yazılmış ama aynı değeri yazdırıyorsa doğrudur. Bunların çoğu için birden fazla doğru yol var.</span></p>
+  </details>
+</section>
+
+<hr>
+
+<section>
+  <span class="eyebrow"><span class="e">Where this is used</span><span class="t">Bu nerede kullanılıyor</span></span>
+  <p><span class="e">Everything here works unchanged inside a Postman test &mdash; the only difference is where the object comes from:</span><span class="t">Buradaki her şey bir Postman testinin içinde aynen çalışır &mdash; tek fark nesnenin nereden geldiği:</span></p>
+<pre><code>// in parse.js
+var response = { ... };
+
+// in Postman, Scripts -> Post-response
+var response = pm.response.json();
+
+// from here on, identical
+var admins = [];
+for (var i = 0; i &lt; response.users.length; i++) {
+  for (var j = 0; j &lt; response.users[i].roles.length; j++) {
+    if (response.users[i].roles[j] === "admin") {
+      admins.push(response.users[i].name);
+      break;
+    }
+  }
+}
+
+pm.test("tek admin var", function () {
+    pm.expect(admins.length).to.eql(1);
+});</code></pre>
+  <p><span class="e">Next: <a href="#postman">Postman</a> &middot; <a href="#api-practice">API Practice</a></span><span class="t">Sonraki: <a href="#postman">Postman</a> &middot; <a href="#api-practice">API Practice</a></span></p>
+</section>
+</div>
 <script>
 (function(){
   var root=document.documentElement;
-  var VIEWS=['roadmap','rest-basics','api-practice','postman','sql-refresher'];
+  var VIEWS=['roadmap','rest-basics','api-practice','postman','json-js','sql-refresher'];
   var LKEY='qa-hub-lang', CKEY='qa-roadmap-checks';
 
   /* language */
