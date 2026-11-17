@@ -1665,16 +1665,17 @@ jobs:
   <p class="verdict"><span class="e">Everything here is done with <code>for</code> loops and <code>if</code>. No <code>map</code>, no <code>filter</code>, no <code>reduce</code> &mdash; if you can write a loop, you can read any response on this page.</span><span class="t">Buradaki her şey <code>for</code> döngüsü ve <code>if</code> ile yapılıyor. <code>map</code> yok, <code>filter</code> yok, <code>reduce</code> yok &mdash; döngü yazabiliyorsan bu sayfadaki her cevabı okuyabilirsin.</span></p>
   <ul class="toc">
     <li><a href="#json-js" data-jump="j0"><span class="e">0 Setup</span><span class="t">0 Kurulum</span></a></li>
-    <li><a href="#json-js" data-jump="j1"><span class="e">1 Flat fields</span><span class="t">1 Düz alanlar</span></a></li>
-    <li><a href="#json-js" data-jump="j2"><span class="e">2 Nesting</span><span class="t">2 İç içe</span></a></li>
-    <li><a href="#json-js" data-jump="j3"><span class="e">3 Lists</span><span class="t">3 Listeler</span></a></li>
-    <li><a href="#json-js" data-jump="j4"><span class="e">4 Searching a list</span><span class="t">4 Listede arama</span></a></li>
-    <li><a href="#json-js" data-jump="j5"><span class="e">5 Missing fields</span><span class="t">5 Olmayan alanlar</span></a></li>
-    <li><a href="#json-js" data-jump="j6"><span class="e">6 null, 0, empty</span><span class="t">6 null, 0, boş</span></a></li>
-    <li><a href="#json-js" data-jump="j7"><span class="e">7 Loop inside a loop</span><span class="t">7 Döngü içinde döngü</span></a></li>
-    <li><a href="#json-js" data-jump="j8"><span class="e">8 Unknown keys</span><span class="t">8 Bilinmeyen anahtarlar</span></a></li>
-    <li><a href="#json-js" data-jump="j9"><span class="e">9 String or object</span><span class="t">9 String mi nesne mi</span></a></li>
-    <li><a href="#json-js" data-jump="j10"><span class="e">10 Different shapes</span><span class="t">10 Farklı şekiller</span></a></li>
+    <li><a href="#json-js" data-jump="j1"><span class="e">1 The skeleton</span><span class="t">1 İskelet</span></a></li>
+    <li><a href="#json-js" data-jump="j2"><span class="e">2 Flat fields</span><span class="t">2 Düz alanlar</span></a></li>
+    <li><a href="#json-js" data-jump="j3"><span class="e">3 Nesting</span><span class="t">3 İç içe</span></a></li>
+    <li><a href="#json-js" data-jump="j4"><span class="e">4 Lists</span><span class="t">4 Listeler</span></a></li>
+    <li><a href="#json-js" data-jump="j5"><span class="e">5 Searching a list</span><span class="t">5 Listede arama</span></a></li>
+    <li><a href="#json-js" data-jump="j6"><span class="e">6 Missing fields</span><span class="t">6 Olmayan alanlar</span></a></li>
+    <li><a href="#json-js" data-jump="j7"><span class="e">7 null, 0, empty</span><span class="t">7 null, 0, boş</span></a></li>
+    <li><a href="#json-js" data-jump="j8"><span class="e">8 Loop inside a loop</span><span class="t">8 Döngü içinde döngü</span></a></li>
+    <li><a href="#json-js" data-jump="j9"><span class="e">9 Unknown keys</span><span class="t">9 Bilinmeyen anahtarlar</span></a></li>
+    <li><a href="#json-js" data-jump="j10"><span class="e">10 String or object</span><span class="t">10 String mi nesne mi</span></a></li>
+    <li><a href="#json-js" data-jump="j11"><span class="e">11 Different shapes</span><span class="t">11 Farklı şekiller</span></a></li>
     <li><a href="#json-js" data-jump="jx"><span class="e">&rarr; 15 exercises</span><span class="t">&rarr; 15 alıştırma</span></a></li>
   </ul>
 </header>
@@ -1696,6 +1697,110 @@ console.log(response.name);     // Ali</code></pre>
 
 <section class="lesson" id="j1">
   <span class="num">01</span>
+  <h2><span class="e">Read the skeleton first: is it <code>{</code> or <code>[</code>?</span><span class="t">Önce iskeleti oku: <code>{</code> mi <code>[</code> mi?</span></h2>
+  <p><span class="e">Before you write a single path, look at the first character of the response. It decides everything that follows.</span><span class="t">Tek bir yol yazmadan önce cevabın ilk karakterine bak. Sonraki her şeyi o belirliyor.</span></p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Starts with</span><span class="t">Şununla başlıyorsa</span></th><th><span class="e">It is</span><span class="t">Bu bir</span></th><th><span class="e">You go in with</span><span class="t">İçine şununla girersin</span></th><th><span class="e">Has <code>.length</code>?</span><span class="t"><code>.length</code> var mı?</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">{</td><td><span class="e">object &mdash; <strong>named</strong> fields</span><span class="t">nesne &mdash; <strong>isimli</strong> alanlar</span></td><td class="m">.name</td><td><span class="e">no</span><span class="t">yok</span></td></tr>
+        <tr><td class="m">[</td><td><span class="e">array &mdash; <strong>numbered</strong> items</span><span class="t">dizi &mdash; <strong>numaralı</strong> elemanlar</span></td><td class="m">[0]</td><td><span class="e">yes</span><span class="t">var</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><span class="e">That is the whole rule. Everything below is the same two symbols in different arrangements. The values are stripped out so you can see the shape &mdash; this is what you should be looking at when a response first appears.</span><span class="t">Kuralın tamamı bu. Aşağıdakilerin hepsi aynı iki sembolün farklı dizilişi. Şekli görebilesin diye değerler çıkarıldı &mdash; bir cevap ilk geldiğinde bakman gereken şey bu.</span></p>
+
+  <h3><span class="e">The six skeletons you will meet</span><span class="t">Karşına çıkacak altı iskelet</span></h3>
+
+  <p><span class="e"><strong>1. Flat object.</strong> One level, named fields.</span><span class="t"><strong>1. Düz nesne.</strong> Tek seviye, isimli alanlar.</span></p>
+<pre data-nohl><code>{
+  "id":    ...,
+  "name":  ...,
+  "email": ...
+}
+
+response.name</code></pre>
+
+  <p><span class="e"><strong>2. Nested object.</strong> A field whose value is another <code>{</code>.</span><span class="t"><strong>2. İç içe nesne.</strong> Değeri yine bir <code>{</code> olan bir alan.</span></p>
+<pre data-nohl><code>{
+  "status": ...,
+  "user": {
+    "info": {
+      "id": ...
+    }
+  }
+}
+
+response.user.info.id</code></pre>
+
+  <p><span class="e"><strong>3. Bare list.</strong> The response <em>is</em> the array &mdash; there is no wrapper and no field name to use.</span><span class="t"><strong>3. Çıplak liste.</strong> Cevabın kendisi dizi &mdash; sarmalayıcı yok, kullanacağın bir alan adı da yok.</span></p>
+<pre data-nohl><code>[
+  { "id": ..., "name": ... },
+  { "id": ..., "name": ... }
+]
+
+response.length        response[0].name        for (var i = 0; i &lt; response.length; i++)</code></pre>
+
+  <p><span class="e"><strong>4. Wrapped list.</strong> The most common one by far: the array sits in a field, next to paging information.</span><span class="t"><strong>4. Sarmalanmış liste.</strong> Açık ara en yaygını: dizi bir alanın içinde, yanında sayfalama bilgileriyle.</span></p>
+<pre data-nohl><code>{
+  "page":  ...,
+  "total": ...,
+  "data": [
+    { "id": ..., "name": ... },
+    { "id": ..., "name": ... }
+  ]
+}
+
+response.data.length        response.data[0].name</code></pre>
+  <p class="tip"><span class="e">Shapes 3 and 4 are the single most common mix-up. <code>response.length</code> on shape 4 gives <code>undefined</code> and <code>response[0]</code> gives <code>undefined</code> &mdash; no error, no clue, your loop simply never runs. The field is often called <code>data</code>, but it can be <code>items</code>, <code>results</code>, <code>content</code> or the name of the thing itself. Print the top level and read it.</span><span class="t">3 ile 4 en sık karıştırılan ikili. 4. şekilde <code>response.length</code> sana <code>undefined</code> verir, <code>response[0]</code> da <code>undefined</code> verir &mdash; hata yok, ipucu yok, döngün hiç dönmez. Alanın adı çoğu zaman <code>data</code>'dır ama <code>items</code>, <code>results</code>, <code>content</code> ya da şeyin kendi adı da olabilir. En üst seviyeyi yazdır ve oku.</span></p>
+
+  <p><span class="e"><strong>5. List inside the list.</strong> An item that itself holds an array &mdash; this is what forces a loop inside a loop.</span><span class="t"><strong>5. Listenin içinde liste.</strong> Kendisi de dizi tutan bir eleman &mdash; döngü içinde döngüyü zorunlu kılan şey bu.</span></p>
+<pre data-nohl><code>{
+  "data": [
+    { "name": ..., "tags": [ ..., ... ] },
+    { "name": ..., "tags": [ ... ] }
+  ]
+}
+
+response.data[0].tags[1]</code></pre>
+  <p><span class="e">Read that path left to right, one symbol at a time: <code>data</code> is a name, so a dot. <code>[0]</code> is a position, so a number. <code>tags</code> is a name again, so a dot. <code>[1]</code> is a position again. The path is nothing more than the brackets you just looked at, written out in order.</span><span class="t">Bu yolu soldan sağa, sembol sembol oku: <code>data</code> bir isim, o yüzden nokta. <code>[0]</code> bir sıra, o yüzden sayı. <code>tags</code> yine isim, yine nokta. <code>[1]</code> yine sıra. Yol, az önce baktığın parantezlerin sırayla yazılmış halinden başka bir şey değil.</span></p>
+
+  <p><span class="e"><strong>6. Object used as a map.</strong> It looks nested, but the keys are <em>data</em> &mdash; a date, a currency, an id. You cannot write them by hand.</span><span class="t"><strong>6. Harita gibi kullanılan nesne.</strong> İç içe gibi duruyor ama anahtarlar <em>veri</em> &mdash; bir tarih, bir para birimi, bir id. Onları elle yazamazsın.</span></p>
+<pre data-nohl><code>{
+  "results": {
+    "2026-11-01": { "orders": ... },
+    "2026-11-02": { "orders": ... }
+  }
+}
+
+Object.keys(response.results)   ->  the dates, as an ordinary array</code></pre>
+  <p><span class="e">The tell: the key names look like values, and they would change tomorrow. Lesson 9 is about this one.</span><span class="t">Belirtisi şu: anahtar isimleri değer gibi duruyor ve yarın değişecekler. 9. ders bunu anlatıyor.</span></p>
+
+  <p><span class="e"><strong>Bonus: the error envelope.</strong> The same endpoint answers in this shape when it fails, and it has no <code>data</code> at all.</span><span class="t"><strong>Ekstra: hata zarfı.</strong> Aynı endpoint başarısız olduğunda bu şekilde cevap verir ve içinde hiç <code>data</code> olmaz.</span></p>
+<pre data-nohl><code>{
+  "error": {
+    "code":    ...,
+    "message": ...,
+    "fields": [ ... ]
+  }
+}
+
+response.error.fields[0]</code></pre>
+
+  <h3><span class="e">When you cannot tell, ask the code</span><span class="t">Anlayamadığında koda sor</span></h3>
+  <p><span class="e">Three lines that tell you the shape of anything, without guessing:</span><span class="t">Tahmin etmeden, her şeyin şeklini sana söyleyen üç satır:</span></p>
+<pre><code>console.log(JSON.stringify(response, null, 2));   // the skeleton, indented
+console.log(Array.isArray(response));             // true -> it is a list
+console.log(Object.keys(response));               // the field names at the top level</code></pre>
+  <p><span class="e">On the wrapped list from shape 4 those print:</span><span class="t">4. şekildeki sarmalanmış listede bunlar şunu yazdırır:</span></p>
+<pre data-nohl><code>false
+[ 'page', 'total', 'data' ]        &lt;- so the list is under one of these, and it is "data"</code></pre>
+  <p class="tip"><span class="e"><strong>Do not use <code>typeof</code> for this.</strong> <code>typeof</code> says <code>"object"</code> for an array as well, so it can never tell the two apart. <code>Array.isArray()</code> is the one that answers the question. The other quick tell is <code>.length</code>: an array has it, a plain object gives you <code>undefined</code>.</span><span class="t"><strong>Bunun için <code>typeof</code> kullanma.</strong> <code>typeof</code> dizi için de <code>"object"</code> der, yani ikisini asla ayırt edemez. Soruyu cevaplayan <code>Array.isArray()</code>. Diğer hızlı belirti de <code>.length</code>: dizide vardır, düz nesnede <code>undefined</code> gelir.</span></p>
+  <p class="outcome"><span class="e"><strong>Thirty seconds, every time.</strong> Print the skeleton, find the list, note whether it is wrapped, check for an <code>error</code> field. Only then write the path. Almost every wasted hour in this work starts with writing a path against a shape that was imagined rather than looked at.</span><span class="t"><strong>Her seferinde otuz saniye.</strong> İskeleti yazdır, listeyi bul, sarmalı mı değil mi not et, <code>error</code> alanı var mı bak. Yolu ancak ondan sonra yaz. Bu işte boşa giden her saatin neredeyse hepsi, bakılmadan hayal edilmiş bir şekle göre yol yazmakla başlar.</span></p>
+</section>
+
+<section class="lesson" id="j2">
+  <span class="num">02</span>
   <h2><span class="e">Flat fields: dot and bracket</span><span class="t">Düz alanlar: nokta ve köşeli parantez</span></h2>
 <pre><code>var response = {
   "id": 42,
@@ -1718,13 +1823,13 @@ console.log(response["email"]);    // ali@test.com  -- same thing</code></pre>
 console.log(response["user-name"]);   // ali
 console.log(response["full name"]);   // Ali Yilmaz
 console.log(response["2fa"]);         // true</code></pre>
-  <p><span class="e">Brackets also take a variable, which dot notation cannot do. Remember this one; it is how lesson 8 works.</span><span class="t">Köşeli parantez bir değişken de alabilir, nokta alamaz. Bunu aklında tut; 8. ders bununla çalışıyor.</span></p>
+  <p><span class="e">Brackets also take a variable, which dot notation cannot do. Remember this one; it is how lesson 9 works.</span><span class="t">Köşeli parantez bir değişken de alabilir, nokta alamaz. Bunu aklında tut; 9. ders bununla çalışıyor.</span></p>
 <pre><code>var key = "email";
 console.log(response[key]);      // reads the field whose name is in `key`</code></pre>
 </section>
 
-<section class="lesson" id="j2">
-  <span class="num">02</span>
+<section class="lesson" id="j3">
+  <span class="num">03</span>
   <h2><span class="e">Nesting: user.info.id</span><span class="t">İç içe: user.info.id</span></h2>
   <p><span class="e">A nested response is just an object whose field is another object. You walk down one level at a time.</span><span class="t">İç içe bir cevap, sadece bir alanı yine nesne olan bir nesnedir. Seviye seviye aşağı iniyorsun.</span></p>
 <pre><code>var response = {
@@ -1742,8 +1847,8 @@ console.log(response.user.role);       // admin</code></pre>
   <p class="tip"><span class="e"><strong>When you get lost, print the level above.</strong> If <code>response.user.info.id</code> gives you something unexpected, print <code>response.user.info</code>, then <code>response.user</code>. One of those lines will show you that the field is not where you assumed. This is the whole debugging technique, and it never fails.</span><span class="t"><strong>Kaybolduğunda bir üst seviyeyi yazdır.</strong> <code>response.user.info.id</code> beklenmedik bir şey veriyorsa <code>response.user.info</code>, sonra <code>response.user</code> yazdır. O satırlardan biri sana alanın sandığın yerde olmadığını gösterir. Bütün hata ayıklama tekniği bu ve hiç şaşmaz.</span></p>
 </section>
 
-<section class="lesson" id="j3">
-  <span class="num">03</span>
+<section class="lesson" id="j4">
+  <span class="num">04</span>
   <h2><span class="e">Lists: index, length, loop</span><span class="t">Listeler: index, length, döngü</span></h2>
 <pre><code>var response = {
   "data": [
@@ -1775,8 +1880,8 @@ console.log(response.data[response.data.length - 1].name);   // Saw (last)</code
   <p class="tip"><span class="e"><strong>Never trust <code>[0]</code> in a test.</strong> Writing <code>data[0].name === "Hammer"</code> passes today and fails the day someone adds a product or changes the sort order. Find the item you mean by a condition instead &mdash; that is the next lesson.</span><span class="t"><strong>Testte <code>[0]</code>'a asla güvenme.</strong> <code>data[0].name === "Hammer"</code> bugün geçer, biri ürün eklediği veya sıralamayı değiştirdiği gün düşer. Onun yerine kastettiğin elemanı bir koşulla bul &mdash; bir sonraki ders bu.</span></p>
 </section>
 
-<section class="lesson" id="j4">
-  <span class="num">04</span>
+<section class="lesson" id="j5">
+  <span class="num">05</span>
   <h2><span class="e">Searching a list with a loop</span><span class="t">Döngüyle listede arama</span></h2>
   <p><span class="e">Same list as above. Four jobs cover almost everything a tester does with a response, and all four are the same loop with a different body.</span><span class="t">Yukarıdakiyle aynı liste. Bir testçinin cevapla yaptığı neredeyse her şeyi dört iş karşılıyor ve dördü de gövdesi değişen aynı döngü.</span></p>
   <p><span class="e"><strong>1. Find one item.</strong> Start with an empty box, fill it when the condition matches, and stop:</span><span class="t"><strong>1. Tek bir eleman bul.</strong> Boş bir kutuyla başla, koşul tuttuğunda doldur ve dur:</span></p>
@@ -1838,8 +1943,8 @@ console.log(allPositive);       // true</code></pre>
   <p><span class="e">There are shorter forms of all of these &mdash; <code>find</code>, <code>filter</code>, <code>map</code>, <code>reduce</code>, <code>some</code>, <code>every</code> &mdash; and you will meet them in other people's code. They do nothing a loop cannot. Learn them when the loops feel slow to write, not before.</span><span class="t">Bunların hepsinin kısa yazımları var &mdash; <code>find</code>, <code>filter</code>, <code>map</code>, <code>reduce</code>, <code>some</code>, <code>every</code> &mdash; ve başkalarının kodunda karşına çıkacaklar. Döngünün yapamayacağı hiçbir şeyi yapmıyorlar. Döngü yazmak sana yavaş gelmeye başladığında öğren, öncesinde değil.</span></p>
 </section>
 
-<section class="lesson" id="j5">
-  <span class="num">05</span>
+<section class="lesson" id="j6">
+  <span class="num">06</span>
   <h2><span class="e">The field that is not there</span><span class="t">Olmayan alan</span></h2>
   <p><span class="e">This is where most people lose an afternoon. There are two different situations and they behave differently.</span><span class="t">İnsanların çoğunun yarım gününü kaybettiği yer burası. İki farklı durum var ve farklı davranıyorlar.</span></p>
 <pre><code>var response = { "user": { "name": "Deniz" } };
@@ -1864,8 +1969,8 @@ console.log(city);                       // bilinmiyor</code></pre>
 console.log(response.user?.address?.city);    // undefined, no crash</code></pre>
 </section>
 
-<section class="lesson" id="j6">
-  <span class="num">06</span>
+<section class="lesson" id="j7">
+  <span class="num">07</span>
   <h2><span class="e">null is not missing, and 0 is not nothing</span><span class="t">null yok demek değil, 0 hiç demek değil</span></h2>
   <p><span class="e">An API that sends <code>"discount": null</code> is telling you something different from an API that leaves the field out. And a <code>0</code> is a real value that most shortcuts quietly throw away.</span><span class="t">Sana <code>"discount": null</code> gönderen bir API ile alanı hiç göndermeyen bir API aynı şeyi söylemiyor. Ve <code>0</code> gerçek bir değerdir; kestirme yolların çoğu onu sessizce çöpe atar.</span></p>
 <pre><code>var response = { "id": 9, "discount": null, "stock": 0, "note": "" };
@@ -1891,8 +1996,8 @@ console.log(response.stock ?? "stokta yok");    // 0</code></pre>
   <p class="tip"><span class="e"><strong>This is a bug you can report.</strong> If a price of 0 shows up in the interface as "price not set", you have just found the <code>||</code> above in someone's code. Checking how a system handles 0, empty string and null is boundary testing, in JavaScript form.</span><span class="t"><strong>Bu, rapor edebileceğin bir hatadır.</strong> 0 olan bir fiyat arayüzde "fiyat girilmemiş" diye görünüyorsa, birinin kodundaki yukarıdaki <code>||</code>'ı bulmuşsun demektir. Bir sistemin 0, boş string ve null'ı nasıl ele aldığını kontrol etmek, JavaScript biçiminde sınır değer analizidir.</span></p>
 </section>
 
-<section class="lesson" id="j7">
-  <span class="num">07</span>
+<section class="lesson" id="j8">
+  <span class="num">08</span>
   <h2><span class="e">A loop inside a loop</span><span class="t">Döngü içinde döngü</span></h2>
   <p><span class="e">An order has items; each item has its own fields. This shape is everywhere.</span><span class="t">Bir siparişin kalemleri vardır, her kalemin kendi alanları vardır. Bu şekil her yerde karşına çıkar.</span></p>
 <pre><code>var response = {
@@ -1950,8 +2055,8 @@ for (var i = 0; i &lt; response.data.length; i++) {
 console.log(tags);            // [ 'cutting', 'hand', 'power' ]</code></pre>
 </section>
 
-<section class="lesson" id="j8">
-  <span class="num">08</span>
+<section class="lesson" id="j9">
+  <span class="num">09</span>
   <h2><span class="e">When you do not know the keys</span><span class="t">Anahtarları bilmediğinde</span></h2>
   <p><span class="e">Some APIs use the data as the key: one entry per date, per currency, per country. You cannot write <code>response.results["2026-11-02"]</code> in a test, because tomorrow it is a different date.</span><span class="t">Bazı API'ler veriyi anahtar olarak kullanır: her tarih, her para birimi, her ülke için bir giriş. Testte <code>response.results["2026-11-02"]</code> yazamazsın, çünkü yarın tarih başka.</span></p>
   <p><span class="e"><code>Object.keys()</code> hands you the key names as an ordinary array &mdash; and once it is an array, it is the same loop as everywhere else on this page:</span><span class="t"><code>Object.keys()</code> sana anahtar isimlerini sıradan bir dizi olarak verir &mdash; dizi olduktan sonra da bu sayfadaki diğer her yerdeki döngünün aynısı:</span></p>
@@ -1976,7 +2081,7 @@ for (var i = 0; i &lt; dates.length; i++) {
 // 2026-11-01 -> 3
 // 2026-11-02 -> 5
 // 2026-11-03 -> 1</code></pre>
-  <p><span class="e">This is why lesson 1 insisted on brackets: <code>response.results.date</code> would look for a field literally called "date". <code>response.results[date]</code> uses what is inside the variable.</span><span class="t">1. dersin köşeli parantezde ısrar etmesinin sebebi bu: <code>response.results.date</code> harfiyen "date" adlı bir alanı arardı. <code>response.results[date]</code> ise değişkenin içindekini kullanır.</span></p>
+  <p><span class="e">This is why lesson 2 insisted on brackets: <code>response.results.date</code> would look for a field literally called "date". <code>response.results[date]</code> uses what is inside the variable.</span><span class="t">2. dersin köşeli parantezde ısrar etmesinin sebebi bu: <code>response.results.date</code> harfiyen "date" adlı bir alanı arardı. <code>response.results[date]</code> ise değişkenin içindekini kullanır.</span></p>
   <p><span class="e">Adding up and finding the biggest are the same two loops as before:</span><span class="t">Toplamak ve en büyüğü bulmak, önceki iki döngünün aynısı:</span></p>
 <pre><code>// total revenue across all days
 var revenue = 0;
@@ -2000,8 +2105,8 @@ console.log(busiest);                      // 2026-11-02</code></pre>
   <p class="tip"><span class="e">"Hold on to the best so far" starts from the first item and the loop starts at <code>1</code>, not <code>0</code> &mdash; there is no point comparing the first one with itself. On an empty object <code>dates[0]</code> is <code>undefined</code>, so check <code>dates.length > 0</code> first if the list can be empty.</span><span class="t">"Şimdiye kadarki en iyiyi tut" ilk elemandan başlar ve döngü <code>0</code>'dan değil <code>1</code>'den başlar &mdash; ilkini kendisiyle karşılaştırmanın anlamı yok. Boş bir nesnede <code>dates[0]</code> <code>undefined</code> olur; liste boş olabiliyorsa önce <code>dates.length > 0</code> kontrolü koy.</span></p>
 </section>
 
-<section class="lesson" id="j9">
-  <span class="num">09</span>
+<section class="lesson" id="j10">
+  <span class="num">10</span>
   <h2><span class="e">Is it a string or an object?</span><span class="t">String mi, nesne mi?</span></h2>
   <p><span class="e">JSON is text. An object is a thing in memory. They look identical when printed and behave nothing alike.</span><span class="t">JSON metindir. Nesne ise bellekteki bir şeydir. Yazdırıldığında aynı görünürler, davranışları hiç benzemez.</span></p>
 <pre><code>var text = '{"token":"abc.def.ghi","expires_in":300}';   // quotes around it -> a STRING
@@ -2018,8 +2123,8 @@ console.log(JSON.stringify(response, null, 2));     // indented, readable</code>
   <p class="tip"><span class="e"><strong>Why you need this even though Postman parses for you.</strong> <code>pm.response.json()</code> hands you an object already, so you rarely call <code>JSON.parse</code> there. But some APIs put JSON <em>inside</em> a field as text &mdash; <code>{"payload": "{\"id\":5}"}</code> &mdash; and then you must parse that field yourself. And <code>JSON.stringify(x, null, 2)</code> is the fastest way to see the shape of something you do not recognise.</span><span class="t"><strong>Postman senin yerine parse ediyorken bu neden lazım.</strong> <code>pm.response.json()</code> sana zaten nesne verir, orada <code>JSON.parse</code>'ı nadiren çağırırsın. Ama bazı API'ler JSON'u bir alanın <em>içine</em> metin olarak koyar &mdash; <code>{"payload": "{\"id\":5}"}</code> &mdash; o zaman o alanı kendin parse etmen gerekir. Ve tanımadığın bir şeyin şeklini görmenin en hızlı yolu <code>JSON.stringify(x, null, 2)</code>.</span></p>
 </section>
 
-<section class="lesson" id="j10">
-  <span class="num">10</span>
+<section class="lesson" id="j11">
+  <span class="num">11</span>
   <h2><span class="e">Writing code that survives a different shape</span><span class="t">Farklı şekle dayanan kod yazmak</span></h2>
   <p><span class="e">The same endpoint can answer in two shapes: the list on its own, or the list wrapped in a paging object. And when it fails, it answers in a third shape entirely.</span><span class="t">Aynı endpoint iki şekilde cevap verebilir: listenin kendisi, ya da sayfalama nesnesine sarılmış liste. Hata verdiğinde ise bambaşka üçüncü bir şekilde cevap verir.</span></p>
 <pre><code>var a = [ {"id":1}, {"id":2} ];                        // the list itself
