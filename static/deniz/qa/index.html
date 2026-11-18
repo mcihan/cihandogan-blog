@@ -153,11 +153,92 @@ ul.plain a, ul.plain code, p > a[href^="http"]{overflow-wrap:anywhere}
 details.answers{margin-top:18px; background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden}
 details.answers > summary{cursor:pointer; padding:14px 16px; font-weight:600; color:var(--accent); list-style:none}
 details.answers > summary::-webkit-details-marker{display:none}
-details.answers > summary::before{content:"\25B8 "; display:inline-block; transition:transform .15s}
+details.answers > summary::before{content:"\25B8"; display:inline-block; width:1.1em; transition:transform .15s}
 details.answers[open] > summary::before{transform:rotate(90deg)}
 details.answers[open] > summary{border-bottom:1px solid var(--line)}
 details.answers > pre{margin:16px; border-radius:8px}
 details.answers > p{margin:0 16px 16px; color:var(--muted); font-size:.92rem}
+/* ---------- JSON & JS: lesson layout ---------- */
+[data-view="json-js"] .lesson{
+  background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  padding:26px 30px 30px; margin-bottom:22px; position:relative}
+[data-view="json-js"] .lesson > .num{display:none}
+[data-view="json-js"] .lhead{display:flex; align-items:center; gap:14px; margin-bottom:18px;
+  padding-bottom:16px; border-bottom:1px solid var(--line)}
+[data-view="json-js"] .lhead .chip{flex:none; width:40px; height:40px; border-radius:11px;
+  background:var(--accent); color:var(--surface); font-family:var(--mono); font-size:.95rem;
+  font-weight:700; display:flex; align-items:center; justify-content:center; letter-spacing:-.02em}
+[data-view="json-js"] .lhead h2{margin:0; font-size:1.3rem; line-height:1.25}
+[data-view="json-js"] .lesson p,
+[data-view="json-js"] .lesson ul.plain{max-width:72ch}
+[data-view="json-js"] .lesson h3{margin:26px 0 12px; font-size:1.02rem; color:var(--accent);
+  letter-spacing:.01em}
+
+/* ---------- code blocks with a label strip ---------- */
+[data-view="json-js"] pre{position:relative; padding-top:34px; margin:14px 0}
+[data-view="json-js"] pre::before{
+  content:attr(data-label); position:absolute; top:0; left:0; right:0; height:24px;
+  padding:4px 14px 0; font-family:var(--mono); font-size:.68rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line)}
+[data-view="json-js"] pre:not([data-label])::before{content:"parse.js"}
+[data-view="json-js"] pre[data-label="terminal"]::before,
+[data-view="json-js"] pre[data-label="cikti"]::before{color:var(--accent)}
+[data-view="json-js"] pre[data-label="cikti"]{background:var(--accent-soft)}
+[data-view="json-js"] pre[data-label="cikti"]::before{content:"çıktı"}
+[data-view="json-js"] pre[data-label="iskelet"]::before{content:"iskelet"}
+
+/* ---------- the two big rule cards: { vs [ ---------- */
+.rule2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0 6px}
+@media(max-width:700px){.rule2{grid-template-columns:1fr}}
+.rulecard{border:1px solid var(--line); border-radius:12px; padding:20px 22px; background:var(--bg)}
+.rulecard.obj{border-top:3px solid var(--accent)}
+.rulecard.arr{border-top:3px solid var(--warn)}
+.rulecard .sym{font-family:var(--mono); font-size:2.4rem; line-height:1; font-weight:700; display:block; margin-bottom:6px}
+.rulecard.obj .sym{color:var(--accent)}
+.rulecard.arr .sym{color:var(--warn)}
+.rulecard b{display:block; font-size:1.02rem; margin-bottom:10px}
+.rulecard dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:6px 12px; font-size:.9rem}
+.rulecard dt{color:var(--muted)}
+.rulecard dd{margin:0; font-family:var(--mono); font-size:.86rem}
+
+/* ---------- skeleton gallery ---------- */
+.skels{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0; align-items:start}
+@media(max-width:860px){.skels{grid-template-columns:1fr}}
+.skel{border:1px solid var(--line); border-radius:12px; background:var(--bg); overflow:hidden;
+  display:flex; flex-direction:column}
+.skel.wide{grid-column:1 / -1}
+.skel > .top{display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line)}
+.skel > .top .n{font-family:var(--mono); font-size:.72rem; font-weight:700; color:var(--surface);
+  background:var(--accent); border-radius:5px; padding:2px 7px}
+.skel.isarr > .top .n{background:var(--warn)}
+.skel > .top b{font-size:.96rem}
+.skel > .body{padding:14px 16px; font-family:var(--mono); font-size:.84rem; line-height:1.6;
+  white-space:pre; overflow-x:auto}
+.skel .ob{color:var(--accent); font-weight:700}
+.skel .ar{color:var(--warn); font-weight:700}
+.skel .dim{color:var(--prev)}
+.skel > .path{border-top:1px dashed var(--line); padding:11px 16px; background:var(--surface);
+  font-family:var(--mono); font-size:.85rem; overflow-x:auto; white-space:nowrap}
+.skel > .path .lb{font-family:var(--body); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); display:block; margin-bottom:3px; white-space:normal}
+
+/* ---------- callouts with a label ---------- */
+[data-view="json-js"] p.tip, [data-view="json-js"] p.outcome{
+  position:relative; padding:14px 18px 14px 18px; border-radius:10px; max-width:none}
+[data-view="json-js"] p.tip::before, [data-view="json-js"] p.outcome::before{
+  content:attr(data-k); display:block; font-family:var(--mono); font-size:.68rem; letter-spacing:.1em;
+  text-transform:uppercase; margin-bottom:6px; opacity:.75}
+[data-view="json-js"] p.tip::before{content:"dikkat"}
+[data-view="json-js"] p.outcome::before{content:"özet"}
+
+/* ---------- exercise cards ---------- */
+.exs{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; margin:18px 0}
+.ex{border:1px solid var(--line); border-radius:12px; background:var(--bg); padding:16px 18px;
+  display:flex; gap:14px; align-items:flex-start}
+.ex .no{flex:none; width:30px; height:30px; border-radius:8px; background:var(--accent); color:var(--surface);
+  font-family:var(--mono); font-size:.82rem; font-weight:700; display:flex; align-items:center; justify-content:center}
+.ex .q{min-width:0; font-size:.93rem; line-height:1.55}
+.ex .src{font-family:var(--mono); font-size:.74rem; color:var(--muted); display:block; margin-bottom:3px}
 </style>
 <meta name="robots" content="noindex,nofollow">
 <style id="pw-hide">body > *:not(#pw-gate){display:none!important}</style>
@@ -1681,10 +1762,9 @@ jobs:
 </header>
 
 <section class="lesson" id="j0">
-  <span class="num">00</span>
-  <h2><span class="e">How to run this</span><span class="t">Bunu nasıl çalıştıracaksın</span></h2>
+  <div class="lhead"><span class="chip">00</span><h2><span class="e">How to run this</span><span class="t">Bunu nasıl çalıştıracaksın</span></h2></div>
   <p><span class="e">Make a file called <code>parse.js</code>, paste a response into a variable, and print what you want out of it. Nothing else is needed &mdash; no project, no npm install.</span><span class="t">Bir <code>parse.js</code> dosyası aç, cevabı bir değişkene yapıştır ve içinden istediğini yazdır. Başka hiçbir şey gerekmiyor &mdash; proje yok, npm install yok.</span></p>
-<pre data-nohl><code>node parse.js</code></pre>
+<pre data-nohl data-label="terminal"><code>node parse.js</code></pre>
 <pre><code>var response = {
   "id": 42,
   "name": "Ali"
@@ -1696,112 +1776,139 @@ console.log(response.name);     // Ali</code></pre>
 </section>
 
 <section class="lesson" id="j1">
-  <span class="num">01</span>
-  <h2><span class="e">Read the skeleton first: is it <code>{</code> or <code>[</code>?</span><span class="t">Önce iskeleti oku: <code>{</code> mi <code>[</code> mi?</span></h2>
+  <div class="lhead"><span class="chip">01</span><h2><span class="e">Read the skeleton first: is it <code>{</code> or <code>[</code>?</span><span class="t">Önce iskeleti oku: <code>{</code> mi <code>[</code> mi?</span></h2></div>
   <p><span class="e">Before you write a single path, look at the first character of the response. It decides everything that follows.</span><span class="t">Tek bir yol yazmadan önce cevabın ilk karakterine bak. Sonraki her şeyi o belirliyor.</span></p>
-  <div class="tablewrap">
-    <table>
-      <thead><tr><th><span class="e">Starts with</span><span class="t">Şununla başlıyorsa</span></th><th><span class="e">It is</span><span class="t">Bu bir</span></th><th><span class="e">You go in with</span><span class="t">İçine şununla girersin</span></th><th><span class="e">Has <code>.length</code>?</span><span class="t"><code>.length</code> var mı?</span></th></tr></thead>
-      <tbody>
-        <tr><td class="m">{</td><td><span class="e">object &mdash; <strong>named</strong> fields</span><span class="t">nesne &mdash; <strong>isimli</strong> alanlar</span></td><td class="m">.name</td><td><span class="e">no</span><span class="t">yok</span></td></tr>
-        <tr><td class="m">[</td><td><span class="e">array &mdash; <strong>numbered</strong> items</span><span class="t">dizi &mdash; <strong>numaralı</strong> elemanlar</span></td><td class="m">[0]</td><td><span class="e">yes</span><span class="t">var</span></td></tr>
-      </tbody>
-    </table>
+
+  <div class="rule2">
+    <div class="rulecard obj">
+      <span class="sym">{</span>
+      <b><span class="e">Object &mdash; named fields</span><span class="t">Nesne &mdash; isimli alanlar</span></b>
+      <dl>
+        <dt><span class="e">you go in with</span><span class="t">içine girersin</span></dt><dd>.name</dd>
+        <dt><span class="e">loop over it</span><span class="t">döngü</span></dt><dd><span class="e">only via Object.keys()</span><span class="t">sadece Object.keys() ile</span></dd>
+        <dt>.length</dt><dd><span class="e">undefined</span><span class="t">undefined</span></dd>
+      </dl>
+    </div>
+    <div class="rulecard arr">
+      <span class="sym">[</span>
+      <b><span class="e">Array &mdash; numbered items</span><span class="t">Dizi &mdash; numaralı elemanlar</span></b>
+      <dl>
+        <dt><span class="e">you go in with</span><span class="t">içine girersin</span></dt><dd>[0]</dd>
+        <dt><span class="e">loop over it</span><span class="t">döngü</span></dt><dd>for (var i = 0; ...)</dd>
+        <dt>.length</dt><dd><span class="e">the count</span><span class="t">eleman sayısı</span></dd>
+      </dl>
+    </div>
   </div>
-  <p><span class="e">That is the whole rule. Everything below is the same two symbols in different arrangements. The values are stripped out so you can see the shape &mdash; this is what you should be looking at when a response first appears.</span><span class="t">Kuralın tamamı bu. Aşağıdakilerin hepsi aynı iki sembolün farklı dizilişi. Şekli görebilesin diye değerler çıkarıldı &mdash; bir cevap ilk geldiğinde bakman gereken şey bu.</span></p>
+  <p><span class="e">That is the whole rule. Everything below is those two symbols in different arrangements. The values are stripped out so you can see only the shape &mdash; this is what you should be looking at when a response first appears.</span><span class="t">Kuralın tamamı bu. Aşağıdakilerin hepsi bu iki sembolün farklı dizilişi. Sadece şekli göresin diye değerler çıkarıldı &mdash; bir cevap ilk geldiğinde bakman gereken şey bu.</span></p>
 
   <h3><span class="e">The six skeletons you will meet</span><span class="t">Karşına çıkacak altı iskelet</span></h3>
 
-  <p><span class="e"><strong>1. Flat object.</strong> One level, named fields.</span><span class="t"><strong>1. Düz nesne.</strong> Tek seviye, isimli alanlar.</span></p>
-<pre data-nohl><code>{
-  "id":    ...,
-  "name":  ...,
-  "email": ...
-}
+  <div class="skels">
+    <div class="skel">
+      <div class="top"><span class="n">1</span><b><span class="e">Flat object</span><span class="t">Düz nesne</span></b></div>
+      <div class="body"><span class="ob">{</span>
+  "id":    <span class="dim">...</span>,
+  "name":  <span class="dim">...</span>,
+  "email": <span class="dim">...</span>
+<span class="ob">}</span></div>
+      <div class="path"><span class="lb"><span class="e">the path</span><span class="t">yolu</span></span>response.name</div>
+    </div>
 
-response.name</code></pre>
+    <div class="skel">
+      <div class="top"><span class="n">2</span><b><span class="e">Nested object</span><span class="t">İç içe nesne</span></b></div>
+      <div class="body"><span class="ob">{</span>
+  "status": <span class="dim">...</span>,
+  "user": <span class="ob">{</span>
+    "info": <span class="ob">{</span>
+      "id": <span class="dim">...</span>
+    <span class="ob">}</span>
+  <span class="ob">}</span>
+<span class="ob">}</span></div>
+      <div class="path"><span class="lb"><span class="e">the path</span><span class="t">yolu</span></span>response.user.info.id</div>
+    </div>
 
-  <p><span class="e"><strong>2. Nested object.</strong> A field whose value is another <code>{</code>.</span><span class="t"><strong>2. İç içe nesne.</strong> Değeri yine bir <code>{</code> olan bir alan.</span></p>
-<pre data-nohl><code>{
-  "status": ...,
-  "user": {
-    "info": {
-      "id": ...
-    }
-  }
-}
+    <div class="skel isarr">
+      <div class="top"><span class="n">3</span><b><span class="e">Bare list &mdash; no wrapper</span><span class="t">Çıplak liste &mdash; sarmalayıcı yok</span></b></div>
+      <div class="body"><span class="ar">[</span>
+  <span class="ob">{</span> "id": <span class="dim">...</span>, "name": <span class="dim">...</span> <span class="ob">}</span>,
+  <span class="ob">{</span> "id": <span class="dim">...</span>, "name": <span class="dim">...</span> <span class="ob">}</span>
+<span class="ar">]</span></div>
+      <div class="path"><span class="lb"><span class="e">the path</span><span class="t">yolu</span></span>response.length &nbsp;&middot;&nbsp; response[0].name</div>
+    </div>
 
-response.user.info.id</code></pre>
+    <div class="skel isarr">
+      <div class="top"><span class="n">4</span><b><span class="e">Wrapped list &mdash; the common one</span><span class="t">Sarmalanmış liste &mdash; en yaygını</span></b></div>
+      <div class="body"><span class="ob">{</span>
+  "page":  <span class="dim">...</span>,
+  "total": <span class="dim">...</span>,
+  "data": <span class="ar">[</span>
+    <span class="ob">{</span> "id": <span class="dim">...</span>, "name": <span class="dim">...</span> <span class="ob">}</span>,
+    <span class="ob">{</span> "id": <span class="dim">...</span>, "name": <span class="dim">...</span> <span class="ob">}</span>
+  <span class="ar">]</span>
+<span class="ob">}</span></div>
+      <div class="path"><span class="lb"><span class="e">the path</span><span class="t">yolu</span></span>response.data.length &nbsp;&middot;&nbsp; response.data[0].name</div>
+    </div>
 
-  <p><span class="e"><strong>3. Bare list.</strong> The response <em>is</em> the array &mdash; there is no wrapper and no field name to use.</span><span class="t"><strong>3. Çıplak liste.</strong> Cevabın kendisi dizi &mdash; sarmalayıcı yok, kullanacağın bir alan adı da yok.</span></p>
-<pre data-nohl><code>[
-  { "id": ..., "name": ... },
-  { "id": ..., "name": ... }
-]
+    <div class="skel isarr">
+      <div class="top"><span class="n">5</span><b><span class="e">List inside the list</span><span class="t">Listenin içinde liste</span></b></div>
+      <div class="body"><span class="ob">{</span>
+  "data": <span class="ar">[</span>
+    <span class="ob">{</span> "name": <span class="dim">...</span>, "tags": <span class="ar">[</span> <span class="dim">...</span>, <span class="dim">...</span> <span class="ar">]</span> <span class="ob">}</span>,
+    <span class="ob">{</span> "name": <span class="dim">...</span>, "tags": <span class="ar">[</span> <span class="dim">...</span> <span class="ar">]</span> <span class="ob">}</span>
+  <span class="ar">]</span>
+<span class="ob">}</span></div>
+      <div class="path"><span class="lb"><span class="e">the path</span><span class="t">yolu</span></span>response.data[0].tags[1]</div>
+    </div>
 
-response.length        response[0].name        for (var i = 0; i &lt; response.length; i++)</code></pre>
+    <div class="skel">
+      <div class="top"><span class="n">6</span><b><span class="e">Object used as a map</span><span class="t">Harita gibi kullanılan nesne</span></b></div>
+      <div class="body"><span class="ob">{</span>
+  "results": <span class="ob">{</span>
+    "2026-11-01": <span class="ob">{</span> "orders": <span class="dim">...</span> <span class="ob">}</span>,
+    "2026-11-02": <span class="ob">{</span> "orders": <span class="dim">...</span> <span class="ob">}</span>
+  <span class="ob">}</span>
+<span class="ob">}</span></div>
+      <div class="path"><span class="lb"><span class="e">the keys are data &mdash; read them</span><span class="t">anahtarlar veri &mdash; onları oku</span></span>Object.keys(response.results)</div>
+    </div>
 
-  <p><span class="e"><strong>4. Wrapped list.</strong> The most common one by far: the array sits in a field, next to paging information.</span><span class="t"><strong>4. Sarmalanmış liste.</strong> Açık ara en yaygını: dizi bir alanın içinde, yanında sayfalama bilgileriyle.</span></p>
-<pre data-nohl><code>{
-  "page":  ...,
-  "total": ...,
-  "data": [
-    { "id": ..., "name": ... },
-    { "id": ..., "name": ... }
-  ]
-}
+    <div class="skel wide">
+      <div class="top"><span class="n">+</span><b><span class="e">The error envelope &mdash; the same endpoint, when it fails</span><span class="t">Hata zarfı &mdash; aynı endpoint, başarısız olduğunda</span></b></div>
+      <div class="body"><span class="ob">{</span>
+  "error": <span class="ob">{</span>
+    "code":    <span class="dim">...</span>,
+    "message": <span class="dim">...</span>,
+    "fields": <span class="ar">[</span> <span class="dim">...</span> <span class="ar">]</span>
+  <span class="ob">}</span>
+<span class="ob">}</span></div>
+      <div class="path"><span class="lb"><span class="e">no data field at all</span><span class="t">içinde hiç data yok</span></span>response.error.fields[0]</div>
+    </div>
+  </div>
 
-response.data.length        response.data[0].name</code></pre>
-  <p class="tip"><span class="e">Shapes 3 and 4 are the single most common mix-up. <code>response.length</code> on shape 4 gives <code>undefined</code> and <code>response[0]</code> gives <code>undefined</code> &mdash; no error, no clue, your loop simply never runs. The field is often called <code>data</code>, but it can be <code>items</code>, <code>results</code>, <code>content</code> or the name of the thing itself. Print the top level and read it.</span><span class="t">3 ile 4 en sık karıştırılan ikili. 4. şekilde <code>response.length</code> sana <code>undefined</code> verir, <code>response[0]</code> da <code>undefined</code> verir &mdash; hata yok, ipucu yok, döngün hiç dönmez. Alanın adı çoğu zaman <code>data</code>'dır ama <code>items</code>, <code>results</code>, <code>content</code> ya da şeyin kendi adı da olabilir. En üst seviyeyi yazdır ve oku.</span></p>
+  <p class="tip"><span class="e"><strong>3 and 4 are the mix-up that costs the most time.</strong> On shape 4, <code>response.length</code> gives <code>undefined</code> and <code>response[0]</code> gives <code>undefined</code> &mdash; no error, no clue, your loop simply never runs. The field is often called <code>data</code>, but it can be <code>items</code>, <code>results</code>, <code>content</code> or the name of the thing itself.</span><span class="t"><strong>En çok vakit kaybettiren karışıklık 3 ile 4.</strong> 4. şekilde <code>response.length</code> sana <code>undefined</code> verir, <code>response[0]</code> da <code>undefined</code> verir &mdash; hata yok, ipucu yok, döngün hiç dönmez. Alanın adı çoğu zaman <code>data</code>'dır ama <code>items</code>, <code>results</code>, <code>content</code> ya da şeyin kendi adı da olabilir.</span></p>
 
-  <p><span class="e"><strong>5. List inside the list.</strong> An item that itself holds an array &mdash; this is what forces a loop inside a loop.</span><span class="t"><strong>5. Listenin içinde liste.</strong> Kendisi de dizi tutan bir eleman &mdash; döngü içinde döngüyü zorunlu kılan şey bu.</span></p>
-<pre data-nohl><code>{
-  "data": [
-    { "name": ..., "tags": [ ..., ... ] },
-    { "name": ..., "tags": [ ... ] }
-  ]
-}
-
-response.data[0].tags[1]</code></pre>
-  <p><span class="e">Read that path left to right, one symbol at a time: <code>data</code> is a name, so a dot. <code>[0]</code> is a position, so a number. <code>tags</code> is a name again, so a dot. <code>[1]</code> is a position again. The path is nothing more than the brackets you just looked at, written out in order.</span><span class="t">Bu yolu soldan sağa, sembol sembol oku: <code>data</code> bir isim, o yüzden nokta. <code>[0]</code> bir sıra, o yüzden sayı. <code>tags</code> yine isim, yine nokta. <code>[1]</code> yine sıra. Yol, az önce baktığın parantezlerin sırayla yazılmış halinden başka bir şey değil.</span></p>
-
-  <p><span class="e"><strong>6. Object used as a map.</strong> It looks nested, but the keys are <em>data</em> &mdash; a date, a currency, an id. You cannot write them by hand.</span><span class="t"><strong>6. Harita gibi kullanılan nesne.</strong> İç içe gibi duruyor ama anahtarlar <em>veri</em> &mdash; bir tarih, bir para birimi, bir id. Onları elle yazamazsın.</span></p>
-<pre data-nohl><code>{
-  "results": {
-    "2026-11-01": { "orders": ... },
-    "2026-11-02": { "orders": ... }
-  }
-}
-
-Object.keys(response.results)   ->  the dates, as an ordinary array</code></pre>
-  <p><span class="e">The tell: the key names look like values, and they would change tomorrow. Lesson 9 is about this one.</span><span class="t">Belirtisi şu: anahtar isimleri değer gibi duruyor ve yarın değişecekler. 9. ders bunu anlatıyor.</span></p>
-
-  <p><span class="e"><strong>Bonus: the error envelope.</strong> The same endpoint answers in this shape when it fails, and it has no <code>data</code> at all.</span><span class="t"><strong>Ekstra: hata zarfı.</strong> Aynı endpoint başarısız olduğunda bu şekilde cevap verir ve içinde hiç <code>data</code> olmaz.</span></p>
-<pre data-nohl><code>{
-  "error": {
-    "code":    ...,
-    "message": ...,
-    "fields": [ ... ]
-  }
-}
-
-response.error.fields[0]</code></pre>
+  <h3><span class="e">Reading a path, symbol by symbol</span><span class="t">Yolu sembol sembol okumak</span></h3>
+  <p><span class="e">Take the path from skeleton 5 and read it left to right. Every step is one of the two symbols you just looked at:</span><span class="t">5. iskeletteki yolu al ve soldan sağa oku. Her adım, az önce baktığın iki sembolden biri:</span></p>
+<pre data-label="iskelet"><code>response . data [0] . tags [1]
+           |     |     |     |
+           |     |     |     +--  <span class="e">a position inside tags</span><span class="t">tags icinde bir sira</span>
+           |     |     +--------  <span class="e">a name, so a dot</span><span class="t">bir isim, o yuzden nokta</span>
+           |     +--------------  <span class="e">a position inside data</span><span class="t">data icinde bir sira</span>
+           +--------------------  <span class="e">a name, so a dot</span><span class="t">bir isim, o yuzden nokta</span></code></pre>
+  <p><span class="e">The path is nothing more than the brackets you just looked at, written out in order. A name gets a dot, a position gets a number.</span><span class="t">Yol, az önce baktığın parantezlerin sırayla yazılmış halinden başka bir şey değil. İsim gelince nokta, sıra gelince sayı.</span></p>
 
   <h3><span class="e">When you cannot tell, ask the code</span><span class="t">Anlayamadığında koda sor</span></h3>
-  <p><span class="e">Three lines that tell you the shape of anything, without guessing:</span><span class="t">Tahmin etmeden, her şeyin şeklini sana söyleyen üç satır:</span></p>
 <pre><code>console.log(JSON.stringify(response, null, 2));   // the skeleton, indented
 console.log(Array.isArray(response));             // true -> it is a list
-console.log(Object.keys(response));               // the field names at the top level</code></pre>
-  <p><span class="e">On the wrapped list from shape 4 those print:</span><span class="t">4. şekildeki sarmalanmış listede bunlar şunu yazdırır:</span></p>
-<pre data-nohl><code>false
-[ 'page', 'total', 'data' ]        &lt;- so the list is under one of these, and it is "data"</code></pre>
-  <p class="tip"><span class="e"><strong>Do not use <code>typeof</code> for this.</strong> <code>typeof</code> says <code>"object"</code> for an array as well, so it can never tell the two apart. <code>Array.isArray()</code> is the one that answers the question. The other quick tell is <code>.length</code>: an array has it, a plain object gives you <code>undefined</code>.</span><span class="t"><strong>Bunun için <code>typeof</code> kullanma.</strong> <code>typeof</code> dizi için de <code>"object"</code> der, yani ikisini asla ayırt edemez. Soruyu cevaplayan <code>Array.isArray()</code>. Diğer hızlı belirti de <code>.length</code>: dizide vardır, düz nesnede <code>undefined</code> gelir.</span></p>
-  <p class="outcome"><span class="e"><strong>Thirty seconds, every time.</strong> Print the skeleton, find the list, note whether it is wrapped, check for an <code>error</code> field. Only then write the path. Almost every wasted hour in this work starts with writing a path against a shape that was imagined rather than looked at.</span><span class="t"><strong>Her seferinde otuz saniye.</strong> İskeleti yazdır, listeyi bul, sarmalı mı değil mi not et, <code>error</code> alanı var mı bak. Yolu ancak ondan sonra yaz. Bu işte boşa giden her saatin neredeyse hepsi, bakılmadan hayal edilmiş bir şekle göre yol yazmakla başlar.</span></p>
+console.log(Object.keys(response));               // the field names at the top</code></pre>
+<pre data-label="cikti"><code>false
+[ 'page', 'total', 'data' ]</code></pre>
+  <p><span class="e">So this one is shape 4, and the list is under <code>data</code>. Three lines, no guessing.</span><span class="t">Demek ki bu 4. şekil ve liste <code>data</code> altında. Üç satır, tahmin yok.</span></p>
+  <p class="tip"><span class="e"><strong>Do not use <code>typeof</code> for this.</strong> It says <code>"object"</code> for an array as well, so it can never tell the two apart. <code>Array.isArray()</code> is the one that answers. The other quick tell is <code>.length</code>: an array has it, a plain object gives <code>undefined</code>.</span><span class="t"><strong>Bunun için <code>typeof</code> kullanma.</strong> Dizi için de <code>"object"</code> der, yani ikisini asla ayırt edemez. Soruyu cevaplayan <code>Array.isArray()</code>. Diğer hızlı belirti de <code>.length</code>: dizide vardır, düz nesnede <code>undefined</code> gelir.</span></p>
+  <p class="outcome"><span class="e"><strong>Thirty seconds, every time.</strong> Print the skeleton &rarr; find the list &rarr; note whether it is wrapped &rarr; check for an <code>error</code> field. Only then write the path. Almost every wasted hour in this work starts with a path written against a shape that was imagined rather than looked at.</span><span class="t"><strong>Her seferinde otuz saniye.</strong> İskeleti yazdır &rarr; listeyi bul &rarr; sarmalı mı değil mi not et &rarr; <code>error</code> alanı var mı bak. Yolu ancak ondan sonra yaz. Bu işte boşa giden her saatin neredeyse hepsi, bakılmadan hayal edilmiş bir şekle göre yazılmış bir yolla başlar.</span></p>
 </section>
 
 <section class="lesson" id="j2">
-  <span class="num">02</span>
-  <h2><span class="e">Flat fields: dot and bracket</span><span class="t">Düz alanlar: nokta ve köşeli parantez</span></h2>
+  <div class="lhead"><span class="chip">02</span><h2><span class="e">Flat fields: dot and bracket</span><span class="t">Düz alanlar: nokta ve köşeli parantez</span></h2></div>
 <pre><code>var response = {
   "id": 42,
   "firstName": "Ali",
@@ -1829,8 +1936,7 @@ console.log(response[key]);      // reads the field whose name is in `key`</code
 </section>
 
 <section class="lesson" id="j3">
-  <span class="num">03</span>
-  <h2><span class="e">Nesting: user.info.id</span><span class="t">İç içe: user.info.id</span></h2>
+  <div class="lhead"><span class="chip">03</span><h2><span class="e">Nesting: user.info.id</span><span class="t">İç içe: user.info.id</span></h2></div>
   <p><span class="e">A nested response is just an object whose field is another object. You walk down one level at a time.</span><span class="t">İç içe bir cevap, sadece bir alanı yine nesne olan bir nesnedir. Seviye seviye aşağı iniyorsun.</span></p>
 <pre><code>var response = {
   "user": {
@@ -1848,8 +1954,7 @@ console.log(response.user.role);       // admin</code></pre>
 </section>
 
 <section class="lesson" id="j4">
-  <span class="num">04</span>
-  <h2><span class="e">Lists: index, length, loop</span><span class="t">Listeler: index, length, döngü</span></h2>
+  <div class="lhead"><span class="chip">04</span><h2><span class="e">Lists: index, length, loop</span><span class="t">Listeler: index, length, döngü</span></h2></div>
 <pre><code>var response = {
   "data": [
     { "id": 1, "name": "Hammer", "price": 9.99 },
@@ -1881,8 +1986,7 @@ console.log(response.data[response.data.length - 1].name);   // Saw (last)</code
 </section>
 
 <section class="lesson" id="j5">
-  <span class="num">05</span>
-  <h2><span class="e">Searching a list with a loop</span><span class="t">Döngüyle listede arama</span></h2>
+  <div class="lhead"><span class="chip">05</span><h2><span class="e">Searching a list with a loop</span><span class="t">Döngüyle listede arama</span></h2></div>
   <p><span class="e">Same list as above. Four jobs cover almost everything a tester does with a response, and all four are the same loop with a different body.</span><span class="t">Yukarıdakiyle aynı liste. Bir testçinin cevapla yaptığı neredeyse her şeyi dört iş karşılıyor ve dördü de gövdesi değişen aynı döngü.</span></p>
   <p><span class="e"><strong>1. Find one item.</strong> Start with an empty box, fill it when the condition matches, and stop:</span><span class="t"><strong>1. Tek bir eleman bul.</strong> Boş bir kutuyla başla, koşul tuttuğunda doldur ve dur:</span></p>
 <pre><code>var saw = null;
@@ -1944,8 +2048,7 @@ console.log(allPositive);       // true</code></pre>
 </section>
 
 <section class="lesson" id="j6">
-  <span class="num">06</span>
-  <h2><span class="e">The field that is not there</span><span class="t">Olmayan alan</span></h2>
+  <div class="lhead"><span class="chip">06</span><h2><span class="e">The field that is not there</span><span class="t">Olmayan alan</span></h2></div>
   <p><span class="e">This is where most people lose an afternoon. There are two different situations and they behave differently.</span><span class="t">İnsanların çoğunun yarım gününü kaybettiği yer burası. İki farklı durum var ve farklı davranıyorlar.</span></p>
 <pre><code>var response = { "user": { "name": "Deniz" } };
 
@@ -1970,8 +2073,7 @@ console.log(response.user?.address?.city);    // undefined, no crash</code></pre
 </section>
 
 <section class="lesson" id="j7">
-  <span class="num">07</span>
-  <h2><span class="e">null is not missing, and 0 is not nothing</span><span class="t">null yok demek değil, 0 hiç demek değil</span></h2>
+  <div class="lhead"><span class="chip">07</span><h2><span class="e">null is not missing, and 0 is not nothing</span><span class="t">null yok demek değil, 0 hiç demek değil</span></h2></div>
   <p><span class="e">An API that sends <code>"discount": null</code> is telling you something different from an API that leaves the field out. And a <code>0</code> is a real value that most shortcuts quietly throw away.</span><span class="t">Sana <code>"discount": null</code> gönderen bir API ile alanı hiç göndermeyen bir API aynı şeyi söylemiyor. Ve <code>0</code> gerçek bir değerdir; kestirme yolların çoğu onu sessizce çöpe atar.</span></p>
 <pre><code>var response = { "id": 9, "discount": null, "stock": 0, "note": "" };
 
@@ -1997,8 +2099,7 @@ console.log(response.stock ?? "stokta yok");    // 0</code></pre>
 </section>
 
 <section class="lesson" id="j8">
-  <span class="num">08</span>
-  <h2><span class="e">A loop inside a loop</span><span class="t">Döngü içinde döngü</span></h2>
+  <div class="lhead"><span class="chip">08</span><h2><span class="e">A loop inside a loop</span><span class="t">Döngü içinde döngü</span></h2></div>
   <p><span class="e">An order has items; each item has its own fields. This shape is everywhere.</span><span class="t">Bir siparişin kalemleri vardır, her kalemin kendi alanları vardır. Bu şekil her yerde karşına çıkar.</span></p>
 <pre><code>var response = {
   "id": "o-1",
@@ -2056,8 +2157,7 @@ console.log(tags);            // [ 'cutting', 'hand', 'power' ]</code></pre>
 </section>
 
 <section class="lesson" id="j9">
-  <span class="num">09</span>
-  <h2><span class="e">When you do not know the keys</span><span class="t">Anahtarları bilmediğinde</span></h2>
+  <div class="lhead"><span class="chip">09</span><h2><span class="e">When you do not know the keys</span><span class="t">Anahtarları bilmediğinde</span></h2></div>
   <p><span class="e">Some APIs use the data as the key: one entry per date, per currency, per country. You cannot write <code>response.results["2026-11-02"]</code> in a test, because tomorrow it is a different date.</span><span class="t">Bazı API'ler veriyi anahtar olarak kullanır: her tarih, her para birimi, her ülke için bir giriş. Testte <code>response.results["2026-11-02"]</code> yazamazsın, çünkü yarın tarih başka.</span></p>
   <p><span class="e"><code>Object.keys()</code> hands you the key names as an ordinary array &mdash; and once it is an array, it is the same loop as everywhere else on this page:</span><span class="t"><code>Object.keys()</code> sana anahtar isimlerini sıradan bir dizi olarak verir &mdash; dizi olduktan sonra da bu sayfadaki diğer her yerdeki döngünün aynısı:</span></p>
 <pre><code>var response = {
@@ -2106,8 +2206,7 @@ console.log(busiest);                      // 2026-11-02</code></pre>
 </section>
 
 <section class="lesson" id="j10">
-  <span class="num">10</span>
-  <h2><span class="e">Is it a string or an object?</span><span class="t">String mi, nesne mi?</span></h2>
+  <div class="lhead"><span class="chip">10</span><h2><span class="e">Is it a string or an object?</span><span class="t">String mi, nesne mi?</span></h2></div>
   <p><span class="e">JSON is text. An object is a thing in memory. They look identical when printed and behave nothing alike.</span><span class="t">JSON metindir. Nesne ise bellekteki bir şeydir. Yazdırıldığında aynı görünürler, davranışları hiç benzemez.</span></p>
 <pre><code>var text = '{"token":"abc.def.ghi","expires_in":300}';   // quotes around it -> a STRING
 
@@ -2124,8 +2223,7 @@ console.log(JSON.stringify(response, null, 2));     // indented, readable</code>
 </section>
 
 <section class="lesson" id="j11">
-  <span class="num">11</span>
-  <h2><span class="e">Writing code that survives a different shape</span><span class="t">Farklı şekle dayanan kod yazmak</span></h2>
+  <div class="lhead"><span class="chip">11</span><h2><span class="e">Writing code that survives a different shape</span><span class="t">Farklı şekle dayanan kod yazmak</span></h2></div>
   <p><span class="e">The same endpoint can answer in two shapes: the list on its own, or the list wrapped in a paging object. And when it fails, it answers in a third shape entirely.</span><span class="t">Aynı endpoint iki şekilde cevap verebilir: listenin kendisi, ya da sayfalama nesnesine sarılmış liste. Hata verdiğinde ise bambaşka üçüncü bir şekilde cevap verir.</span></p>
 <pre><code>var a = [ {"id":1}, {"id":2} ];                        // the list itself
 var b = { "data": [ {"id":1}, {"id":2} ], "total": 2 }; // wrapped
@@ -2158,8 +2256,7 @@ if (response.error) {
 </section>
 
 <section class="lesson" id="jx">
-  <span class="num">&rarr;</span>
-  <h2><span class="e">15 exercises</span><span class="t">15 alıştırma</span></h2>
+  <div class="lhead"><span class="chip">&rarr;</span><h2><span class="e">15 exercises</span><span class="t">15 alıştırma</span></h2></div>
   <p><span class="e">Copy the whole block below into <code>parse.js</code>. Each response is a variable. Write the lines that produce the asked value, run the file, and check it with your eyes. Loops and <code>if</code> are enough for all fifteen. Do them all before you open the answers at the bottom &mdash; the point is the fifteen minutes you spend being stuck, not the answer.</span><span class="t">Aşağıdaki bloğun tamamını <code>parse.js</code> dosyasına kopyala. Her cevap bir değişken. İstenen değeri üreten satırları yaz, dosyayı çalıştır ve gözünle kontrol et. On beşi için de döngü ve <code>if</code> yeterli. En alttaki cevapları açmadan önce hepsini yap &mdash; mesele takılı kaldığın on beş dakika, cevap değil.</span></p>
 <pre><code>var r1 = { "id": 42, "firstName": "Ali", "lastName": "Yilmaz", "email": "ali@test.com", "active": true };
 
@@ -2193,28 +2290,23 @@ var r9 = '{"token":"abc.def.ghi","expires_in":300}';
 var r10 = { "users": [ { "name": "Ali",   "roles": ["user"] },
                        { "name": "Deniz", "roles": ["user", "admin"] },
                        { "name": "Can",   "roles": [] } ] };</code></pre>
-  <div class="tablewrap">
-    <table>
-      <thead><tr><th>#</th><th><span class="e">From</span><span class="t">Hangisinden</span></th><th><span class="e">Get this</span><span class="t">Şunu al</span></th></tr></thead>
-      <tbody>
-        <tr><td class="m">1</td><td class="m">r1</td><td><span class="e">The e-mail address.</span><span class="t">E-posta adresini.</span></td></tr>
-        <tr><td class="m">2</td><td class="m">r2</td><td><span class="e">The user id (<code>u-77</code>).</span><span class="t">Kullanıcı id'sini (<code>u-77</code>).</span></td></tr>
-        <tr><td class="m">3</td><td class="m">r3</td><td><span class="e">The name of the <strong>second</strong> product.</span><span class="t"><strong>İkinci</strong> ürünün adını.</span></td></tr>
-        <tr><td class="m">4</td><td class="m">r3</td><td><span class="e">The price of the product called "Saw" &mdash; found with a loop, not by writing an index number.</span><span class="t">Adı "Saw" olan ürünün fiyatını &mdash; index numarası yazarak değil, döngüyle bularak.</span></td></tr>
-        <tr><td class="m">5</td><td class="m">r4</td><td><span class="e">The name of the first failing field.</span><span class="t">Hata veren ilk alanın adını.</span></td></tr>
-        <tr><td class="m">6</td><td class="m">r5</td><td><span class="e">The order total: quantity &times; price, added up.</span><span class="t">Sipariş toplamını: adet &times; fiyat, hepsinin toplamı.</span></td></tr>
-        <tr><td class="m">7</td><td class="m">r3</td><td><span class="e">All product names, collected into one array.</span><span class="t">Bütün ürün adlarını, tek bir dizide toplayarak.</span></td></tr>
-        <tr><td class="m">8</td><td class="m">r6</td><td><span class="e">All tags of all products in one flat array.</span><span class="t">Bütün ürünlerin bütün etiketlerini tek düz dizide.</span></td></tr>
-        <tr><td class="m">9</td><td class="m">r7</td><td><span class="e">The supplier code under <code>meta</code> &mdash; which does not exist. Print the text <code>yok</code> instead of crashing.</span><span class="t"><code>meta</code> altındaki tedarikçi kodunu &mdash; ki yok. Patlamak yerine <code>yok</code> metnini yazdır.</span></td></tr>
-        <tr><td class="m">10</td><td class="m">r7</td><td><span class="e">Three true/false values: is <code>discount</code> null, is <code>stock</code> zero, and would <code>||</code> treat both as empty?</span><span class="t">Üç doğru/yanlış değeri: <code>discount</code> null mı, <code>stock</code> sıfır mı, ve <code>||</code> ikisini de boş sayar mıydı?</span></td></tr>
-        <tr><td class="m">11</td><td class="m">r8</td><td><span class="e">The date with the most orders &mdash; without writing any date by hand.</span><span class="t">En çok siparişin olduğu tarihi &mdash; elle hiç tarih yazmadan.</span></td></tr>
-        <tr><td class="m">12</td><td class="m">r8</td><td><span class="e">Total revenue across all days.</span><span class="t">Bütün günlerin toplam cirosunu.</span></td></tr>
-        <tr><td class="m">13</td><td class="m">r9</td><td><span class="e">The token. Careful &mdash; look at what r9 actually is.</span><span class="t">Token'ı. Dikkat &mdash; r9'un gerçekte ne olduğuna bak.</span></td></tr>
-        <tr><td class="m">14</td><td class="m">r10</td><td><span class="e">The names of everyone who has the <code>admin</code> role.</span><span class="t"><code>admin</code> rolü olan herkesin adını.</span></td></tr>
-        <tr><td class="m">15</td><td class="m">r3</td><td><span class="e">The number of items &mdash; in a way that also works if the response is the bare array with no wrapper.</span><span class="t">Eleman sayısını &mdash; cevap sarmalayıcısız çıplak dizi olsa da çalışacak şekilde.</span></td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="exs">
+  <div class="ex"><span class="no">1</span><span class="q"><span class="src">r1</span><span class="e">The e-mail address.</span><span class="t">E-posta adresini.</span></span></div>
+  <div class="ex"><span class="no">2</span><span class="q"><span class="src">r2</span><span class="e">The user id (<code>u-77</code>).</span><span class="t">Kullanıcı id'sini (<code>u-77</code>).</span></span></div>
+  <div class="ex"><span class="no">3</span><span class="q"><span class="src">r3</span><span class="e">The name of the <strong>second</strong> product.</span><span class="t"><strong>İkinci</strong> ürünün adını.</span></span></div>
+  <div class="ex"><span class="no">4</span><span class="q"><span class="src">r3</span><span class="e">The price of the product called "Saw" &mdash; found with a loop, not by writing an index number.</span><span class="t">Adı "Saw" olan ürünün fiyatını &mdash; index numarası yazarak değil, döngüyle bularak.</span></span></div>
+  <div class="ex"><span class="no">5</span><span class="q"><span class="src">r4</span><span class="e">The name of the first failing field.</span><span class="t">Hata veren ilk alanın adını.</span></span></div>
+  <div class="ex"><span class="no">6</span><span class="q"><span class="src">r5</span><span class="e">The order total: quantity &times; price, added up.</span><span class="t">Sipariş toplamını: adet &times; fiyat, hepsinin toplamı.</span></span></div>
+  <div class="ex"><span class="no">7</span><span class="q"><span class="src">r3</span><span class="e">All product names, collected into one array.</span><span class="t">Bütün ürün adlarını, tek bir dizide toplayarak.</span></span></div>
+  <div class="ex"><span class="no">8</span><span class="q"><span class="src">r6</span><span class="e">All tags of all products in one flat array.</span><span class="t">Bütün ürünlerin bütün etiketlerini tek düz dizide.</span></span></div>
+  <div class="ex"><span class="no">9</span><span class="q"><span class="src">r7</span><span class="e">The supplier code under <code>meta</code> &mdash; which does not exist. Print <code>yok</code> instead of crashing.</span><span class="t"><code>meta</code> altındaki tedarikçi kodunu &mdash; ki yok. Patlamak yerine <code>yok</code> yazdır.</span></span></div>
+  <div class="ex"><span class="no">10</span><span class="q"><span class="src">r7</span><span class="e">Three true/false values: is <code>discount</code> null, is <code>stock</code> zero, and would <code>||</code> treat both as empty?</span><span class="t">Üç doğru/yanlış değeri: <code>discount</code> null mı, <code>stock</code> sıfır mı, ve <code>||</code> ikisini de boş sayar mıydı?</span></span></div>
+  <div class="ex"><span class="no">11</span><span class="q"><span class="src">r8</span><span class="e">The date with the most orders &mdash; without writing any date by hand.</span><span class="t">En çok siparişin olduğu tarihi &mdash; elle hiç tarih yazmadan.</span></span></div>
+  <div class="ex"><span class="no">12</span><span class="q"><span class="src">r8</span><span class="e">Total revenue across all days.</span><span class="t">Bütün günlerin toplam cirosunu.</span></span></div>
+  <div class="ex"><span class="no">13</span><span class="q"><span class="src">r9</span><span class="e">The token. Careful &mdash; look at what r9 actually is.</span><span class="t">Token'ı. Dikkat &mdash; r9'un gerçekte ne olduğuna bak.</span></span></div>
+  <div class="ex"><span class="no">14</span><span class="q"><span class="src">r10</span><span class="e">The names of everyone who has the <code>admin</code> role.</span><span class="t"><code>admin</code> rolü olan herkesin adını.</span></span></div>
+  <div class="ex"><span class="no">15</span><span class="q"><span class="src">r3</span><span class="e">The number of items &mdash; in a way that also works if the response is the bare array.</span><span class="t">Eleman sayısını &mdash; cevap çıplak dizi olsa da çalışacak şekilde.</span></span></div>
+</div>
 
   <details class="answers">
     <summary><span class="e">Answers &mdash; open after you have tried all fifteen</span><span class="t">Cevaplar &mdash; on beşini de denedikten sonra aç</span></summary>
