@@ -159,33 +159,34 @@ details.answers[open] > summary{border-bottom:1px solid var(--line)}
 details.answers > pre{margin:16px; border-radius:8px}
 details.answers > p{margin:0 16px 16px; color:var(--muted); font-size:.92rem}
 /* ---------- JSON & JS: lesson layout ---------- */
-[data-view="json-js"] .lesson{
+.doc .lesson{
   background:var(--surface); border:1px solid var(--line); border-radius:14px;
   padding:26px 30px 30px; margin-bottom:22px; position:relative}
-[data-view="json-js"] .lesson > .num{display:none}
-[data-view="json-js"] .lhead{display:flex; align-items:center; gap:14px; margin-bottom:18px;
+.doc .lesson > .num{display:none}
+.doc .lhead{display:flex; align-items:center; gap:14px; margin-bottom:18px;
   padding-bottom:16px; border-bottom:1px solid var(--line)}
-[data-view="json-js"] .lhead .chip{flex:none; width:40px; height:40px; border-radius:11px;
+.doc .lhead .chip{flex:none; width:40px; height:40px; border-radius:11px;
   background:var(--accent); color:var(--surface); font-family:var(--mono); font-size:.95rem;
   font-weight:700; display:flex; align-items:center; justify-content:center; letter-spacing:-.02em}
-[data-view="json-js"] .lhead h2{margin:0; font-size:1.3rem; line-height:1.25}
-[data-view="json-js"] .lesson p,
-[data-view="json-js"] .lesson ul.plain{max-width:72ch}
-[data-view="json-js"] .lesson h3{margin:26px 0 12px; font-size:1.02rem; color:var(--accent);
+.doc .lhead h2{margin:0; font-size:1.3rem; line-height:1.25}
+.doc .lesson p,
+.doc .lesson ul.plain{max-width:72ch}
+.doc .lesson h3{margin:26px 0 12px; font-size:1.02rem; color:var(--accent);
   letter-spacing:.01em}
 
 /* ---------- code blocks with a label strip ---------- */
-[data-view="json-js"] pre{position:relative; padding-top:34px; margin:14px 0}
-[data-view="json-js"] pre::before{
+.doc pre{position:relative; padding-top:34px; margin:14px 0}
+.doc pre::before{
   content:attr(data-label); position:absolute; top:0; left:0; right:0; height:24px;
   padding:4px 14px 0; font-family:var(--mono); font-size:.68rem; letter-spacing:.09em;
   text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line)}
-[data-view="json-js"] pre:not([data-label])::before{content:"parse.js"}
-[data-view="json-js"] pre[data-label="terminal"]::before,
-[data-view="json-js"] pre[data-label="cikti"]::before{color:var(--accent)}
-[data-view="json-js"] pre[data-label="cikti"]{background:var(--accent-soft)}
-[data-view="json-js"] pre[data-label="cikti"]::before{content:"çıktı"}
-[data-view="json-js"] pre[data-label="iskelet"]::before{content:"iskelet"}
+.doc pre:not([data-label])::before{content:"parse.js"}
+.doc pre[data-label="terminal"]::before,
+.doc pre[data-label="cikti"]::before{color:var(--accent)}
+.doc pre[data-label="cikti"]{background:var(--accent-soft)}
+.doc pre[data-label="cikti"]::before{content:"çıktı"}
+.doc pre[data-label="iskelet"]::before{content:"iskelet"}
+.doc pre[data-label="sql"]::before{content:"SQL"}
 
 /* ---------- the two big rule cards: { vs [ ---------- */
 .rule2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:18px 0 6px}
@@ -223,13 +224,13 @@ details.answers > p{margin:0 16px 16px; color:var(--muted); font-size:.92rem}
   color:var(--muted); display:block; margin-bottom:3px; white-space:normal}
 
 /* ---------- callouts with a label ---------- */
-[data-view="json-js"] p.tip, [data-view="json-js"] p.outcome{
+.doc p.tip, .doc p.outcome{
   position:relative; padding:14px 18px 14px 18px; border-radius:10px; max-width:none}
-[data-view="json-js"] p.tip::before, [data-view="json-js"] p.outcome::before{
+.doc p.tip::before, .doc p.outcome::before{
   content:attr(data-k); display:block; font-family:var(--mono); font-size:.68rem; letter-spacing:.1em;
   text-transform:uppercase; margin-bottom:6px; opacity:.75}
-[data-view="json-js"] p.tip::before{content:"dikkat"}
-[data-view="json-js"] p.outcome::before{content:"özet"}
+.doc p.tip::before{content:"dikkat"}
+.doc p.outcome::before{content:"özet"}
 
 /* ---------- exercise cards ---------- */
 .exs{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; margin:18px 0}
@@ -356,6 +357,7 @@ details.answers > p{margin:0 16px 16px; color:var(--muted); font-size:.92rem}
   <li><a href="#api-practice" data-tab="api-practice">API Practice</a></li>
   <li><a href="#postman" data-tab="postman">Postman</a></li>
   <li><a href="#json-js" data-tab="json-js">JSON &amp; JS</a></li>
+  <li><a href="#sql-create" data-tab="sql-create">SQL Create</a></li>
   <li><a href="#sql-refresher" data-tab="sql-refresher">SQL Refresher</a></li>
 </ul>
 
@@ -1737,7 +1739,7 @@ jobs:
 </div>
 
 <!-- ============ JSON & JS ============ -->
-<div class="page view" data-view="json-js" hidden>
+<div class="page view doc" data-view="json-js" hidden>
 
 <header>
   <span class="eyebrow">JSON &amp; JavaScript</span>
@@ -2477,10 +2479,194 @@ pm.test("tek admin var", function () {
   <p><span class="e">Next: <a href="#postman">Postman</a> &middot; <a href="#api-practice">API Practice</a></span><span class="t">Sonraki: <a href="#postman">Postman</a> &middot; <a href="#api-practice">API Practice</a></span></p>
 </section>
 </div>
+<!-- ============ SQL CREATE ============ -->
+<div class="page view doc" data-view="sql-create" hidden>
+
+<header>
+  <span class="eyebrow">SQL &middot; CREATE TABLE</span>
+  <h1><span class="e">Building the tables</span><span class="t">Tabloları kurmak</span></h1>
+  <p class="lede"><span class="e">PostgreSQL. Short version: what a table is made of, the two kinds of key, and the three ways two tables can be related. Then the practice questions &mdash; without answers, so write them yourself.</span><span class="t">PostgreSQL. Kısa hâli: bir tablo nelerden oluşur, iki çeşit anahtar, ve iki tablonun birbirine bağlanmasının üç yolu. Sonra pratik soruları &mdash; cevapsız, ki kendin yazasın.</span></p>
+  <ul class="toc">
+    <li><a href="#sql-create" data-jump="s1"><span class="e">1 A table</span><span class="t">1 Tablo</span></a></li>
+    <li><a href="#sql-create" data-jump="s2"><span class="e">2 Data types</span><span class="t">2 Veri tipleri</span></a></li>
+    <li><a href="#sql-create" data-jump="s3"><span class="e">3 Primary key</span><span class="t">3 Primary key</span></a></li>
+    <li><a href="#sql-create" data-jump="s4"><span class="e">4 Foreign key</span><span class="t">4 Foreign key</span></a></li>
+    <li><a href="#sql-create" data-jump="s5">5 &nbsp;1 &ndash; 1</a></li>
+    <li><a href="#sql-create" data-jump="s6">6 &nbsp;1 &ndash; N</a></li>
+    <li><a href="#sql-create" data-jump="s7">7 &nbsp;N &ndash; N</a></li>
+    <li><a href="#sql-create" data-jump="s8"><span class="e">8 Common mistakes</span><span class="t">8 Sık hatalar</span></a></li>
+    <li><a href="#sql-create" data-jump="sx"><span class="e">&rarr; 13 questions</span><span class="t">&rarr; 13 soru</span></a></li>
+  </ul>
+</header>
+
+<section class="lesson" id="s1">
+  <div class="lhead"><span class="chip">01</span><h2><span class="e">A table is columns with types</span><span class="t">Tablo, tipleri olan kolonlardır</span></h2></div>
+  <p><span class="e">You name the table, then list the columns. Each column gets a name and a type, separated by commas.</span><span class="t">Tabloya isim verirsin, sonra kolonları sıralarsın. Her kolonun bir adı ve bir tipi olur, aralarında virgül.</span></p>
+<pre data-label="sql"><code>CREATE TABLE HAYVANLAR (
+  hayvan_no    INT PRIMARY KEY,
+  hayvan_ismi  VARCHAR(20),
+  hayvan_turu  VARCHAR(20),
+  hayvan_yasi  INT
+);</code></pre>
+  <p><span class="e">That is the whole form. Everything else on this page is choosing the right type and adding the two keywords that connect tables to each other.</span><span class="t">Kalıbın tamamı bu. Bu sayfadaki diğer her şey, doğru tipi seçmek ve tabloları birbirine bağlayan iki kelimeyi eklemekten ibaret.</span></p>
+  <p class="tip"><span class="e">Two more you will use constantly: <code>DROP TABLE hayvanlar;</code> deletes the table and everything in it, and <code>ALTER TABLE hayvanlar ADD yeni_kolon INT;</code> adds a column to a table that already exists.</span><span class="t">Sürekli kullanacağın iki tane daha: <code>DROP TABLE hayvanlar;</code> tabloyu ve içindeki her şeyi siler, <code>ALTER TABLE hayvanlar ADD yeni_kolon INT;</code> ise var olan tabloya kolon ekler.</span></p>
+</section>
+
+<section class="lesson" id="s2">
+  <div class="lhead"><span class="chip">02</span><h2><span class="e">The five types you need</span><span class="t">İhtiyacın olan beş tip</span></h2></div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th><span class="e">Type</span><span class="t">Tip</span></th><th><span class="e">Holds</span><span class="t">Ne tutar</span></th><th><span class="e">Example</span><span class="t">Örnek</span></th></tr></thead>
+      <tbody>
+        <tr><td class="m">INT</td><td><span class="e">a whole number</span><span class="t">tam sayı</span></td><td class="m">6 &nbsp; 1001 &nbsp; 2024</td></tr>
+        <tr><td class="m">VARCHAR(20)</td><td><span class="e">text, at most 20 characters</span><span class="t">metin, en fazla 20 karakter</span></td><td class="m">'KARABAS'</td></tr>
+        <tr><td class="m">DECIMAL(10,2)</td><td><span class="e">a number with decimals &mdash; 10 digits in total, 2 of them after the point</span><span class="t">ondalıklı sayı &mdash; toplam 10 basamak, 2'si virgülden sonra</span></td><td class="m">12.99</td></tr>
+        <tr><td class="m">DATE</td><td><span class="e">a date, without a time</span><span class="t">tarih, saat olmadan</span></td><td class="m">'2024-02-27'</td></tr>
+        <tr><td class="m">SERIAL</td><td><span class="e">a whole number the database fills in itself, 1, 2, 3&hellip; &mdash; used for ids you do not want to type</span><span class="t">veritabanının kendi doldurduğu tam sayı, 1, 2, 3&hellip; &mdash; elle yazmak istemediğin id'ler için</span></td><td class="m">&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><span class="e">Pick the type from what you will do with the value. A price you will add up is <code>DECIMAL</code>; a phone number you will never add up is <code>VARCHAR</code>, even though it looks like a number.</span><span class="t">Tipi, o değerle ne yapacağına göre seç. Toplayacağın bir fiyat <code>DECIMAL</code>'dir; asla toplamayacağın bir telefon numarası sayıya benzese de <code>VARCHAR</code>'dır.</span></p>
+<pre data-label="sql"><code>CREATE TABLE CATEGORY (
+  CategoryId  SERIAL PRIMARY KEY,     <span class="e">-- fills itself: 1, 2, 3...</span><span class="t">-- kendi dolar: 1, 2, 3...</span>
+  name        VARCHAR(50),
+  description VARCHAR(200)
+);</code></pre>
+</section>
+
+<section class="lesson" id="s3">
+  <div class="lhead"><span class="chip">03</span><h2><span class="e">Primary key &mdash; which row is this?</span><span class="t">Primary key &mdash; bu hangi satır?</span></h2></div>
+  <p><span class="e">One column that is different for every row, so a row can always be pointed at. Two rows can both be a dog called Cici, but they cannot both be <code>hayvan_no = 9</code>.</span><span class="t">Her satırda farklı olan bir kolon; böylece bir satır her zaman işaret edilebilir. İki satır da Cici adlı köpek olabilir ama ikisi birden <code>hayvan_no = 9</code> olamaz.</span></p>
+<pre data-label="sql"><code>CREATE TABLE OWNER (
+  owner_id    INT PRIMARY KEY,
+  owner_name  VARCHAR(20),
+  owner_age   INT
+);</code></pre>
+  <p><span class="e">The database enforces two things for you: the value can never repeat, and it can never be empty. Insert a second row with <code>owner_id = 1</code> and the insert is rejected.</span><span class="t">Veritabanı senin yerine iki şeyi zorlar: değer asla tekrar edemez ve asla boş kalamaz. <code>owner_id = 1</code> ile ikinci bir satır eklemeye kalkarsan ekleme reddedilir.</span></p>
+</section>
+
+<section class="lesson" id="s4">
+  <div class="lhead"><span class="chip">04</span><h2><span class="e">Foreign key &mdash; pointing at another table</span><span class="t">Foreign key &mdash; başka bir tabloyu işaret etmek</span></h2></div>
+  <p><span class="e">A column that holds the primary key of a row in another table. That is the whole mechanism; the three relationship types below are only different placements of this one column.</span><span class="t">Başka bir tablodaki bir satırın primary key'ini tutan kolon. Mekanizmanın tamamı bu; aşağıdaki üç ilişki tipi, bu tek kolonun farklı yerlere konmasından ibaret.</span></p>
+<pre data-label="sql"><code>CREATE TABLE BOOK (
+  book_id    INT PRIMARY KEY,
+  book_name  VARCHAR(20),
+  author_id  INT REFERENCES AUTHOR(author_id)
+);</code></pre>
+  <p><span class="e">Now <code>author_id</code> in BOOK can only hold a value that actually exists in AUTHOR. Write 99 when there is no author 99 and the database refuses the row. That refusal is the point &mdash; it is what keeps a book from having an author who does not exist.</span><span class="t">Artık BOOK'taki <code>author_id</code> yalnızca AUTHOR'da gerçekten var olan bir değeri tutabilir. 99 numaralı yazar yokken 99 yazarsan veritabanı satırı reddeder. O ret işin özü &mdash; bir kitabın var olmayan bir yazarı olmasını engelleyen şey o.</span></p>
+  <p class="tip"><span class="e"><strong>Order matters.</strong> The table being pointed at has to exist first. Create AUTHOR, then BOOK &mdash; the other way round fails with "relation AUTHOR does not exist".</span><span class="t"><strong>Sıra önemli.</strong> İşaret edilen tablonun önce var olması gerekir. Önce AUTHOR, sonra BOOK &mdash; tersi "relation AUTHOR does not exist" hatasıyla düşer.</span></p>
+</section>
+
+<section class="lesson" id="s5">
+  <div class="lhead"><span class="chip">05</span><h2><span class="e">1 &ndash; 1 &nbsp;&middot;&nbsp; one each, both ways</span><span class="t">1 &ndash; 1 &nbsp;&middot;&nbsp; her ikisinden birer tane</span></h2></div>
+  <p><span class="e">One owner has one passport, and one passport belongs to one owner. Put the foreign key on either side &mdash; usually on the one that cannot exist alone.</span><span class="t">Bir sahibin bir pasaportu vardır, bir pasaport da tek bir sahibe aittir. Foreign key'i iki taraftan birine koy &mdash; genelde tek başına var olamayana.</span></p>
+<pre data-label="sql"><code>CREATE TABLE PASSPORT (
+  passport_id          INT PRIMARY KEY,
+  passport_name        VARCHAR(20),
+  passport_expire_date DATE
+);
+
+CREATE TABLE OWNER (
+  owner_id     INT PRIMARY KEY,
+  owner_name   VARCHAR(20),
+  passport_id  INT REFERENCES PASSPORT(passport_id)
+);</code></pre>
+  <p><span class="e">The relationship lives in one column on one side. Nothing stops two owners pointing at the same passport yet &mdash; for that you would add <code>UNIQUE</code>, which is where 1&ndash;1 differs from 1&ndash;N in practice.</span><span class="t">İlişki, tek taraftaki tek bir kolonda yaşıyor. Şu hâliyle iki sahibin aynı pasaportu işaret etmesini engelleyen bir şey yok &mdash; onun için <code>UNIQUE</code> eklersin; pratikte 1&ndash;1'i 1&ndash;N'den ayıran yer burasıdır.</span></p>
+</section>
+
+<section class="lesson" id="s6">
+  <div class="lhead"><span class="chip">06</span><h2><span class="e">1 &ndash; N &nbsp;&middot;&nbsp; one side has many</span><span class="t">1 &ndash; N &nbsp;&middot;&nbsp; bir tarafta çok sayıda</span></h2></div>
+  <p><span class="e">One department has many employees, but an employee is in one department. This is the common one &mdash; most of your tables will be this.</span><span class="t">Bir departmanda çok çalışan vardır ama bir çalışan tek departmandadır. Yaygın olan bu &mdash; tablolarının çoğu böyle olacak.</span></p>
+<pre data-label="sql"><code>CREATE TABLE DEPARTMENT (
+  department_id       INT PRIMARY KEY,
+  department_name     VARCHAR(20),
+  department_address  VARCHAR(20)
+);
+
+CREATE TABLE EMPLOYEE (
+  employee_id    INT PRIMARY KEY,
+  employee_name  VARCHAR(20),
+  department_id  INT REFERENCES DEPARTMENT(department_id)
+);</code></pre>
+  <p class="outcome"><span class="e"><strong>The rule to remember:</strong> the foreign key always goes on the <em>many</em> side. The employee carries the department's id, never the other way round &mdash; a department cannot hold ten employee ids in one column.</span><span class="t"><strong>Akılda kalacak kural:</strong> foreign key her zaman <em>çok</em> olan tarafa konur. Departmanın id'sini çalışan taşır, tersi olmaz &mdash; bir departman tek kolonda on çalışan id'si tutamaz.</span></p>
+</section>
+
+<section class="lesson" id="s7">
+  <div class="lhead"><span class="chip">07</span><h2><span class="e">N &ndash; N &nbsp;&middot;&nbsp; many on both sides</span><span class="t">N &ndash; N &nbsp;&middot;&nbsp; iki tarafta da çok sayıda</span></h2></div>
+  <p><span class="e">A student has several teachers, and a teacher has several students. Neither side can hold the other's id, so the relationship gets a table of its own &mdash; two foreign keys and nothing else.</span><span class="t">Bir öğrencinin birden fazla hocası, bir hocanın birden fazla öğrencisi vardır. Hiçbir taraf diğerinin id'sini tutamaz, o yüzden ilişkinin kendi tablosu olur &mdash; iki foreign key, başka bir şey yok.</span></p>
+<pre data-label="sql"><code>CREATE TABLE CAMBLY_TEACHER (
+  teacher_id    INT PRIMARY KEY,
+  teacher_name  VARCHAR(20)
+);
+
+CREATE TABLE CAMBLY_STUDENT (
+  student_id    INT PRIMARY KEY,
+  student_name  VARCHAR(20)
+);
+
+CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table</span><span class="t">-- ara tablo</span>
+  teacher_id  INT REFERENCES CAMBLY_TEACHER(teacher_id),
+  student_id  INT REFERENCES CAMBLY_STUDENT(student_id)
+);</code></pre>
+  <p><span class="e">Every row in the middle table is one pairing: "this teacher teaches this student". Deniz with three teachers is three rows.</span><span class="t">Ortadaki tablonun her satırı bir eşleşme: "bu hoca bu öğrenciye ders veriyor". Üç hocası olan Deniz, üç satır demek.</span></p>
+  <p class="tip"><span class="e">Spotting which one you have: say the sentence in both directions. "A department has many employees / an employee has one department" &rarr; 1&ndash;N. "A teacher has many students / a student has many teachers" &rarr; N&ndash;N, so build the third table.</span><span class="t">Hangisi olduğunu anlamak: cümleyi iki yönde de kur. "Bir departmanda çok çalışan var / bir çalışan tek departmanda" &rarr; 1&ndash;N. "Bir hocanın çok öğrencisi var / bir öğrencinin çok hocası var" &rarr; N&ndash;N, yani üçüncü tabloyu kur.</span></p>
+</section>
+
+<section class="lesson" id="s8">
+  <div class="lhead"><span class="chip">08</span><h2><span class="e">Four mistakes from your own file</span><span class="t">Kendi dosyandan dört hata</span></h2></div>
+  <ul class="plain">
+    <li><span class="e"><code>reference</code> instead of <code>REFERENCES</code>. The keyword is plural. <code>userId INT reference USERS(userId)</code> never runs.</span><span class="t"><code>REFERENCES</code> yerine <code>reference</code>. Kelime çoğul. <code>userId INT reference USERS(userId)</code> asla çalışmaz.</span></li>
+    <li><span class="e"><strong>A missing comma between columns.</strong> <code>userId INT REFERENCES USERS(userId)</code> followed by <code>created DATE</code> on the next line with no comma &mdash; the error message points at <code>created</code>, but the fault is the line above it.</span><span class="t"><strong>Kolonlar arasında eksik virgül.</strong> <code>userId INT REFERENCES USERS(userId)</code> satırından sonra virgülsüz <code>created DATE</code> &mdash; hata mesajı <code>created</code>'ı gösterir ama suç bir üst satırda.</span></li>
+    <li><span class="e"><strong>A comma after the last column.</strong> <code>created DATE,</code> and then <code>)</code> &mdash; the same trailing-comma habit that breaks JSON breaks SQL too.</span><span class="t"><strong>Son kolondan sonra virgül.</strong> <code>created DATE,</code> ve hemen ardından <code>)</code> &mdash; JSON'u bozan aynı fazla virgül alışkanlığı SQL'i de bozuyor.</span></li>
+    <li><span class="e"><strong>Creating a table before the one it points at.</strong> <code>BOOK2</code> references <code>AUTHOR2</code> but is written above it, so it fails on the first run.</span><span class="t"><strong>İşaret ettiği tablodan önce tablo oluşturmak.</strong> <code>BOOK2</code>, <code>AUTHOR2</code>'yi referans alıyor ama ondan önce yazılmış; ilk çalıştırmada düşer.</span></li>
+  </ul>
+</section>
+
+<section class="lesson" id="sx">
+  <div class="lhead"><span class="chip">&rarr;</span><h2><span class="e">13 questions</span><span class="t">13 soru</span></h2></div>
+  <p><span class="e">Write the <code>CREATE TABLE</code> statements for each one. Decide the types yourself, give every table a primary key, and put the foreign key where it belongs. No answers on this page on purpose &mdash; run them in pgAdmin and let the database tell you whether you were right.</span><span class="t">Her biri için <code>CREATE TABLE</code> ifadelerini yaz. Tipleri kendin seç, her tabloya bir primary key ver ve foreign key'i ait olduğu yere koy. Bu sayfada bilerek cevap yok &mdash; pgAdmin'de çalıştır, doğru yapıp yapmadığını sana veritabanı söylesin.</span></p>
+
+  <h3><span class="e">Single table</span><span class="t">Tek tablo</span></h3>
+  <div class="exs">
+    <div class="ex"><span class="no">1</span><span class="q"><span class="src">HAYVANLAR</span><span class="e">Animal number, name, species, breed, age.</span><span class="t">Hayvan numarası, ismi, türü, cinsi, yaşı.</span></span></div>
+    <div class="ex"><span class="no">2</span><span class="q"><span class="src">EMPLOYEER</span><span class="e">Employee id, first name, surname, gender, department, age.</span><span class="t">Çalışan id'si, adı, soyadı, cinsiyeti, departmanı, yaşı.</span></span></div>
+    <div class="ex"><span class="no">3</span><span class="q"><span class="src">PRODUCT</span><span class="e">Product id, name, type, colour, price. The price has pennies.</span><span class="t">Ürün id'si, adı, tipi, rengi, fiyatı. Fiyatın kuruşu var.</span></span></div>
+  </div>
+
+  <h3>1 &ndash; 1</h3>
+  <div class="exs">
+    <div class="ex"><span class="no">4</span><span class="q"><span class="src">PASSPORT &middot; OWNER</span><span class="e">A passport has a number, a name, an issue date and an expiry date. An owner has a name and an age, and exactly one passport.</span><span class="t">Pasaportun numarası, adı, veriliş ve bitiş tarihi var. Sahibin adı ve yaşı var, ve tam olarak bir pasaportu.</span></span></div>
+  </div>
+
+  <h3>1 &ndash; N</h3>
+  <div class="exs">
+    <div class="ex"><span class="no">5</span><span class="q"><span class="src">DEPARTMENT &middot; EMPLOYEE</span><span class="e">A department has a name and an address. An employee has a name and a gender, and works in one department.</span><span class="t">Departmanın adı ve adresi var. Çalışanın adı ve cinsiyeti var, ve tek bir departmanda çalışıyor.</span></span></div>
+    <div class="ex"><span class="no">6</span><span class="q"><span class="src">BANK &middot; BRANCH</span><span class="e">A bank has a name and an address. A branch has a name and an address, and belongs to one bank.</span><span class="t">Bankanın adı ve adresi var. Şubenin adı ve adresi var, ve tek bir bankaya ait.</span></span></div>
+    <div class="ex"><span class="no">7</span><span class="q"><span class="src">APARTMENT &middot; TENANT</span><span class="e">A flat has a name and a location. A tenant has a name, an age and a salary, and lives in one flat.</span><span class="t">Dairenin adı ve konumu var. Kiracının adı, yaşı ve maaşı var, ve tek bir dairede oturuyor.</span></span></div>
+    <div class="ex"><span class="no">8</span><span class="q"><span class="src">AUTHOR &middot; BOOK</span><span class="e">An author has a name, an age and a hometown. A book has a name, a type, a price and one author.</span><span class="t">Yazarın adı, yaşı ve memleketi var. Kitabın adı, türü, fiyatı ve bir yazarı var.</span></span></div>
+    <div class="ex"><span class="no">9</span><span class="q"><span class="src">SINGER &middot; SONG</span><span class="e">A singer has a name, an age and an album count. A song has a name, a type, a language and one singer.</span><span class="t">Şarkıcının adı, yaşı ve albüm sayısı var. Şarkının adı, türü, dili ve bir şarkıcısı var.</span></span></div>
+    <div class="ex"><span class="no">10</span><span class="q"><span class="src">CATEGORY &middot; PRODUCT</span><span class="e">A category has a name, a description and a regulation flag, and its id fills itself. A product has a name, a price with pennies, a stock quantity, a created date, an updated date and one category.</span><span class="t">Kategorinin adı, açıklaması ve regülasyon bilgisi var; id'si kendi doluyor. Ürünün adı, kuruşlu fiyatı, stok adedi, oluşturulma tarihi, güncellenme tarihi ve bir kategorisi var.</span></span></div>
+    <div class="ex"><span class="no">11</span><span class="q"><span class="src">MARRIAGE &middot; SPOUSE</span><span class="e">A marriage has a date and a location. A spouse has a name, a surname and an age, and belongs to one marriage.</span><span class="t">Nikâhın tarihi ve yeri var. Eşin adı, soyadı ve yaşı var, ve tek bir nikâha ait.</span></span></div>
+  </div>
+
+  <h3>N &ndash; N</h3>
+  <div class="exs">
+    <div class="ex"><span class="no">12</span><span class="q"><span class="src">TEACHER &middot; STUDENT</span><span class="e">A teacher has a name and a gender. A student has a name and a gender. A student takes lessons from several teachers, and a teacher has several students.</span><span class="t">Hocanın adı ve cinsiyeti var. Öğrencinin adı ve cinsiyeti var. Bir öğrenci birden fazla hocadan ders alıyor, bir hocanın da birden fazla öğrencisi var.</span></span></div>
+  </div>
+
+  <h3><span class="e">All together</span><span class="t">Hepsi bir arada</span></h3>
+  <div class="exs">
+    <div class="ex"><span class="no">13</span><span class="q"><span class="src">USERS &middot; PRODUCT &middot; FAVOURITES &middot; ADDRESSES</span><span class="e">A user has a name, an e-mail, a password and a registration date. A user can have several addresses. A user can add several products to favourites, and the same product can be in many people's favourites. Build the four tables and decide for yourself which relationship each pair is.</span><span class="t">Kullanıcının adı, e-postası, şifresi ve kayıt tarihi var. Bir kullanıcının birden fazla adresi olabilir. Bir kullanıcı birden fazla ürünü favorilerine ekleyebilir, aynı ürün de birçok kişinin favorisinde olabilir. Dört tabloyu kur ve her ikilinin hangi ilişki olduğuna kendin karar ver.</span></span></div>
+  </div>
+
+  <p class="tip"><span class="e">Question 13 is the one worth taking seriously. Two of those pairs are 1&ndash;N and one is N&ndash;N; working out which is which is the actual skill this page is for.</span><span class="t">Ciddiye alınmaya değer olan 13. soru. O ikililerin ikisi 1&ndash;N, biri N&ndash;N; hangisinin hangisi olduğunu çıkarmak, bu sayfanın asıl öğrettiği şey.</span></p>
+</section>
+</div>
+
 <script>
 (function(){
   var root=document.documentElement;
-  var VIEWS=['roadmap','rest-basics','api-practice','postman','json-js','sql-refresher'];
+  var VIEWS=['roadmap','rest-basics','api-practice','postman','json-js','sql-create','sql-refresher'];
   var LKEY='qa-hub-lang', CKEY='qa-roadmap-checks';
 
   /* language */
