@@ -2579,9 +2579,8 @@ pm.test("tek admin var", function () {
     <li><a href="#sql-create" data-jump="c5">5 &nbsp;1 &ndash; 1</a></li>
     <li><a href="#sql-create" data-jump="c6">6 &nbsp;1 &ndash; N</a></li>
     <li><a href="#sql-create" data-jump="c7">7 &nbsp;N &ndash; N</a></li>
-    <li><a href="#sql-create" data-jump="c8"><span class="e">8 Tables with data</span><span class="t">8 Veriyle tablolar</span></a></li>
-    <li><a href="#sql-create" data-jump="c9"><span class="e">9 Joined up</span><span class="t">9 Bağlantılar</span></a></li>
-    <li><a href="#sql-create" data-jump="c10"><span class="e">10 Find the relationship</span><span class="t">10 İlişkiyi bul</span></a></li>
+    <li><a href="#sql-create" data-jump="c8"><span class="e">8 Joined up</span><span class="t">8 Bağlantılar</span></a></li>
+    <li><a href="#sql-create" data-jump="c9"><span class="e">9 Find the relationship</span><span class="t">9 İlişkiyi bul</span></a></li>
     <li><a href="#sql-create" data-jump="cx"><span class="e">&rarr; 13 questions</span><span class="t">&rarr; 13 soru</span></a></li>
   </ul>
 </header>
@@ -2700,273 +2699,60 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 </section>
 
 <details class="lesson acc" id="c8" open>
-  <summary><span class="chip">08</span><span class="ttl"><span class="e">The tables, with data in them</span><span class="t">Tablolar, içinde veriyle</span></span><span class="cnt">3 <span class="e">tables</span><span class="t">tablo</span> &middot; 30 <span class="e">rows</span><span class="t">satır</span></span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+  <summary><span class="chip">08</span><span class="ttl"><span class="e">Joining the tables together</span><span class="t">Tabloları birbirine bağlamak</span></span><span class="cnt">1&ndash;1 &middot; 1&ndash;N &middot; N&ndash;N</span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
   <div class="accbody">
-  <p><span class="e">This is what the types and the primary key look like once a table has rows in it &mdash; your own <code>INSERT</code> statements. The green column is each table's primary key: it never repeats. There is no foreign key here; these three tables are connected to nothing.</span><span class="t">Yukarıdaki tipler ve primary key bir tabloda böyle görünüyor &mdash; senin kendi <code>INSERT</code> satırların. Yeşil kolon her tablonun primary key'i: hiçbir satırda tekrar etmiyor. Burada foreign key yok, bu üç tablo kimseye bağlı değil.</span></p>
-  <div class="dts">
-<div class="dt ">
-<div class="dtname">HAYVANLAR</div>
-<div class="dtwrap"><table>
-<thead><tr>
-<th class="pk">id<span class="kb pk">PK</span></th>
-<th class="">ismi</th>
-<th class="">turu</th>
-<th class="">cinsi</th>
-<th class="">yasi</th>
-</tr></thead><tbody>
-<tr>
-<td class="pk">1</td>
-<td class="">KARABAS</td>
-<td class="">KOPEK</td>
-<td class="">KANGAL</td>
-<td class="">6</td>
-</tr>
-<tr>
-<td class="pk">2</td>
-<td class="">SARIKIZ</td>
-<td class="">INEK</td>
-<td class="">HOLLANDA INEGI</td>
-<td class="">3</td>
-</tr>
-<tr>
-<td class="pk">3</td>
-<td class="">YESIL GOZ</td>
-<td class="">KEDI</td>
-<td class="">SCOTTISH</td>
-<td class="">1</td>
-</tr>
-<tr>
-<td class="pk">4</td>
-<td class="">KIRMIZI IBIK</td>
-<td class="">HOROZ</td>
-<td class="">ISTANBUL HOROZU</td>
-<td class="">2</td>
-</tr>
-<tr>
-<td class="pk">5</td>
-<td class="">MOMO</td>
-<td class="">MAYMUN</td>
-<td class="">TAYLAND</td>
-<td class="">10</td>
-</tr>
-<tr>
-<td class="pk">6</td>
-<td class="">APA</td>
-<td class="">BIZON</td>
-<td class="">UCAN BIZON</td>
-<td class="">14</td>
-</tr>
-<tr>
-<td class="pk">7</td>
-<td class="">VIZI</td>
-<td class="">SINEK</td>
-<td class="">KARA SINEK</td>
-<td class="">19</td>
-</tr>
-<tr>
-<td class="pk">8</td>
-<td class="">INCI</td>
-<td class="">KARGA</td>
-<td class="">COL KARGASI</td>
-<td class="">100</td>
-</tr>
-<tr>
-<td class="pk">9</td>
-<td class="">CICI</td>
-<td class="">KOPEK</td>
-<td class="">SOKAK KOPEGI</td>
-<td class="">3</td>
-</tr>
-<tr>
-<td class="pk">10</td>
-<td class="">PORTLEK DIL</td>
-<td class="">KEDI</td>
-<td class="">SOKAK KEDISI</td>
-<td class="">12</td>
-</tr>
-</tbody></table></div></div>
-<div class="dt ">
-<div class="dtname">EMPLOYEER</div>
+  <p><span class="e">Three pairs of tables, each with its foreign key in place. The orange column holds another table's green column; the line shows which points at which, and the numbers at the ends say how many rows can match.</span><span class="t">Üç tablo çifti, her birinin foreign key'i yerinde. Turuncu kolon başka bir tablonun yeşil kolonunu tutuyor; çizgi hangi kolonun hangisini işaret ettiğini, uçlardaki sayılar da kaç satırın eşleşebileceğini gösteriyor.</span></p>
+<div class="rel">
+<div class="relhead"><span class="badge n1">1 &ndash; 1</span><b>OWNER &rarr; PASSPORT</b><span class="rd"><span class="e">One owner has one passport, one passport belongs to one owner.</span><span class="t">Bir sahibin bir pasaportu var, bir pasaport tek sahibe ait.</span></span></div>
+<div class="relgrid two">
+<div class="dt">
+<div class="dtname">OWNER</div>
 <div class="dtwrap"><table>
 <thead><tr>
 <th class="pk">id<span class="kb pk">PK</span></th>
 <th class="">name</th>
-<th class="">surname</th>
-<th class="">gender</th>
-<th class="">department</th>
-<th class="">age</th>
 </tr></thead><tbody>
 <tr>
-<td class="pk">1001</td>
+<td class="pk">1</td>
 <td class="">Deniz</td>
-<td class="">Dogan</td>
-<td class="">Female</td>
-<td class="">CSL</td>
-<td class="">27</td>
-</tr>
-<tr>
-<td class="pk">1002</td>
-<td class="">Cihan</td>
-<td class="">Dogan</td>
-<td class="">Male</td>
-<td class="">Engineer</td>
-<td class="">29</td>
-</tr>
-<tr>
-<td class="pk">1003</td>
-<td class="">Metin</td>
-<td class="">Cetinkaya</td>
-<td class="">Male</td>
-<td class="">Engineer</td>
-<td class="">19</td>
-</tr>
-<tr>
-<td class="pk">1004</td>
-<td class="">Gamze</td>
-<td class="">Dogan</td>
-<td class="">Female</td>
-<td class="">Student</td>
-<td class="">19</td>
-</tr>
-<tr>
-<td class="pk">1005</td>
-<td class="">Erkan</td>
-<td class="">Derdelen</td>
-<td class="">Male</td>
-<td class="">Emekli</td>
-<td class="">60</td>
-</tr>
-<tr>
-<td class="pk">1006</td>
-<td class="">Lutfiye</td>
-<td class="">Derdelen</td>
-<td class="">Female</td>
-<td class="">Emekli</td>
-<td class="">52</td>
-</tr>
-<tr>
-<td class="pk">1007</td>
-<td class="">Hanife</td>
-<td class="">Celebi</td>
-<td class="">Female</td>
-<td class="">Sales</td>
-<td class="">40</td>
-</tr>
-<tr>
-<td class="pk">1008</td>
-<td class="">Bekir</td>
-<td class="">Celebi</td>
-<td class="">Male</td>
-<td class="">Doctor</td>
-<td class="">42</td>
-</tr>
-<tr>
-<td class="pk">1009</td>
-<td class="">Sema</td>
-<td class="">Duran</td>
-<td class="">Female</td>
-<td class="">Nurse</td>
-<td class="">25</td>
-</tr>
-<tr>
-<td class="pk">1010</td>
-<td class="">Bulent</td>
-<td class="">Ersoy</td>
-<td class="">Non-binary</td>
-<td class="">Singer</td>
-<td class="">70</td>
-</tr>
-</tbody></table></div></div>
-<div class="dt ">
-<div class="dtname">BILGISAYARDENIZZ</div>
-<div class="dtwrap"><table>
-<thead><tr>
-<th class="pk">id<span class="kb pk">PK</span></th>
-<th class="">name</th>
-<th class="">type</th>
-<th class="">color</th>
-<th class="">price</th>
-</tr></thead><tbody>
-<tr>
-<td class="pk">1</td>
-<td class="">asusvivobook</td>
-<td class="">computer</td>
-<td class="">gray</td>
-<td class="">7000</td>
 </tr>
 <tr>
 <td class="pk">2</td>
-<td class="">lg4432tv</td>
-<td class="">television</td>
-<td class="">black</td>
-<td class="">5000</td>
+<td class="">Cihan</td>
 </tr>
 <tr>
 <td class="pk">3</td>
-<td class="">playstation</td>
-<td class="">game</td>
-<td class="">black</td>
-<td class="">3000</td>
-</tr>
-<tr>
-<td class="pk">4</td>
-<td class="">toshiba64</td>
-<td class="">usb</td>
-<td class="">white</td>
-<td class="">200</td>
-</tr>
-<tr>
-<td class="pk">5</td>
-<td class="">samsungs9</td>
-<td class="">phone</td>
-<td class="">black</td>
-<td class="">2000</td>
-</tr>
-<tr>
-<td class="pk">6</td>
-<td class="">JBL</td>
-<td class="">speaker</td>
-<td class="">black</td>
-<td class="">300</td>
-</tr>
-<tr>
-<td class="pk">7</td>
-<td class="">bassv12</td>
-<td class="">headphone</td>
-<td class="">green</td>
-<td class="">120</td>
-</tr>
-<tr>
-<td class="pk">8</td>
-<td class="">miband4</td>
-<td class="">watch</td>
-<td class="">black</td>
-<td class="">170</td>
-</tr>
-<tr>
-<td class="pk">9</td>
-<td class="">logitechm1</td>
-<td class="">mouse</td>
-<td class="">gray</td>
-<td class="">60</td>
-</tr>
-<tr>
-<td class="pk">10</td>
-<td class="">dellvostro</td>
-<td class="">computer</td>
-<td class="">gold</td>
-<td class="">4500</td>
+<td class="">Tugce</td>
 </tr>
 </tbody></table></div></div>
-  </div>
-  <p class="tip"><span class="e">This is where you see why a primary key cannot repeat: HAYVANLAR has two rows of <code>KOPEK</code> (Karabas and Cici) but no two rows with <code>id = 1</code>. When you want to point at one row, this column is what you have.</span><span class="t">Primary key'in neden tekrar edemediğini burada gör: HAYVANLAR'da iki tane <code>KOPEK</code> var (Karabas ve Cici) ama iki tane <code>id = 1</code> yok. Bir satırı işaret etmek istediğinde elinde bu kolon var.</span></p>
-  </div>
-</details>
-
-<details class="lesson acc" id="c9" open>
-  <summary><span class="chip">09</span><span class="ttl"><span class="e">Joining the tables together</span><span class="t">Tabloları birbirine bağlamak</span></span><span class="cnt">1&ndash;N &middot; N&ndash;N</span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-  <div class="accbody">
-  <p><span class="e">The same tables, this time with their foreign keys. The orange column holds another table's green column; the line shows which points at which.</span><span class="t">Aynı tablolar, bu sefer foreign key'leriyle. Turuncu kolon başka bir tablonun yeşil kolonunu tutuyor; çizgi hangi kolonun hangisini işaret ettiğini gösteriyor.</span></p>
+<div class="conn"><span class="card">1</span><span class="line"></span><span class="card">1</span></div>
+<div class="dt">
+<div class="dtname">PASSPORT</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">number</th>
+<th class="fk">owner_id<span class="kb fk">FK</span></th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">U1234567</td>
+<td class="fk"><b>2</b></td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">U7654321</td>
+<td class="fk"><b>1</b></td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">U1112223</td>
+<td class="fk"><b>3</b></td>
+</tr>
+</tbody></table></div></div>
+</div>
+<p class="relnote"><span class="e">The same shape as 1&ndash;N: one orange column pointing at one green column. The only difference is that <code>owner_id</code> is declared <code>UNIQUE</code>, so no value can appear twice &mdash; nobody gets a second passport.</span><span class="t">Şekil 1&ndash;N ile aynı: tek turuncu kolon, tek yeşil kolonu gösteriyor. Tek fark <code>owner_id</code>'nin <code>UNIQUE</code> olması; aynı değer iki satırda geçemiyor &mdash; kimse ikinci pasaport alamıyor.</span></p>
+</div>
 <div class="rel">
 <div class="relhead"><span class="badge n1">1 &ndash; N</span><b>SINGER &rarr; SONG</b><span class="rd"><span class="e">One singer has many songs, one song has one singer.</span><span class="t">Bir şarkıcının çok şarkısı olur, bir şarkının tek şarkıcısı.</span></span></div>
 <div class="relgrid two">
@@ -3117,7 +2903,7 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 </div>
 <div class="rel">
 <div class="relhead"><span class="badge nn">N &ndash; N</span><b>CAMBLY_TEACHER &harr; CAMBLY_STUDENT</b><span class="rd"><span class="e">A student has many teachers, a teacher has many students.</span><span class="t">Bir öğrencinin çok hocası, bir hocanın çok öğrencisi var.</span></span></div>
-<div class="relgrid two">
+<div class="relgrid three">
 <div class="dt">
 <div class="dtname">CAMBLY_TEACHER</div>
 <div class="dtwrap"><table>
@@ -3179,44 +2965,6 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <td class="fk"><b>3</b></td>
 </tr>
 </tbody></table></div></div>
-</div>
-<div class="relgrid two second">
-<div class="dt">
-<div class="dtname">CAMBLY_TEACHER_STUDENT</div>
-<div class="dtwrap"><table>
-<thead><tr>
-<th class="fk">teacher_id<span class="kb fk">FK</span></th>
-<th class="fk">student_id<span class="kb fk">FK</span></th>
-</tr></thead><tbody>
-<tr>
-<td class="fk"><b>1</b></td>
-<td class="fk"><b>1</b></td>
-</tr>
-<tr>
-<td class="fk"><b>2</b></td>
-<td class="fk"><b>1</b></td>
-</tr>
-<tr>
-<td class="fk"><b>4</b></td>
-<td class="fk"><b>1</b></td>
-</tr>
-<tr>
-<td class="fk"><b>2</b></td>
-<td class="fk"><b>2</b></td>
-</tr>
-<tr>
-<td class="fk"><b>3</b></td>
-<td class="fk"><b>2</b></td>
-</tr>
-<tr>
-<td class="fk"><b>4</b></td>
-<td class="fk"><b>2</b></td>
-</tr>
-<tr>
-<td class="fk"><b>2</b></td>
-<td class="fk"><b>3</b></td>
-</tr>
-</tbody></table></div></div>
 <div class="conn"><span class="card">N</span><span class="line"></span><span class="card">1</span></div>
 <div class="dt">
 <div class="dtname">CAMBLY_STUDENT</div>
@@ -3239,14 +2987,14 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 </tr>
 </tbody></table></div></div>
 </div>
-<p class="relnote"><span class="e">The middle table has no data of its own, only two foreign keys. Each row is one pairing: "this teacher teaches this student". Deniz (student_id 1) appears in three rows because she has three teachers; Karen (teacher_id 2) appears in four.</span><span class="t">Ortadaki tabloda kendi verisi yok, sadece iki foreign key var. Her satır bir eşleşme: "bu hoca bu öğrenciye ders veriyor". Deniz (student_id 1) üç satırda geçiyor, çünkü üç hocası var; Karen (teacher_id 2) dört satırda geçiyor, çünkü üç öğrencisi var.</span></p>
+<p class="relnote"><span class="e">The middle table has no data of its own, only two foreign keys, and it sits between the other two. Each row is one pairing: "this teacher teaches this student". Deniz (student_id 1) appears in three rows because she has three teachers; Karen (teacher_id 2) appears in three rows because she teaches three students. That is the thing neither of the outer tables could store on its own.</span><span class="t">Ortadaki tablonun kendi verisi yok, sadece iki foreign key var ve diğer ikisinin arasında duruyor. Her satır bir eşleşme: "bu hoca bu öğrenciye ders veriyor". Deniz (student_id 1) üç satırda geçiyor, çünkü üç hocası var; Karen (teacher_id 2) üç satırda geçiyor, çünkü üç öğrenciye ders veriyor. Bunu dıştaki iki tablonun hiçbiri tek başına tutamazdı.</span></p>
 </div>
   <p class="outcome"><span class="e"><strong>The difference is one question asked twice:</strong> "can a singer have many songs?" yes, "can a song have many singers?" no &rarr; 1&ndash;N, the foreign key goes on the song. "Can a teacher have many students?" yes, "can a student have many teachers?" yes &rarr; N&ndash;N, a third table is needed. A 1&ndash;1 is the same picture with the foreign key on one side only, plus <code>UNIQUE</code> on that column so two rows cannot point at the same thing.</span><span class="t"><strong>Aradaki fark tek bir soruda:</strong> "bir şarkıcının çok şarkısı olabilir mi?" evet, "bir şarkının çok şarkıcısı olabilir mi?" hayır &rarr; 1&ndash;N, foreign key şarkıda. "Bir hocanın çok öğrencisi olabilir mi?" evet, "bir öğrencinin çok hocası olabilir mi?" evet &rarr; N&ndash;N, üçüncü bir tablo gerekiyor. 1&ndash;1 de aynı resim: foreign key tek tarafta, ama o kolona <code>UNIQUE</code> konur ki iki satır aynı şeyi işaret edemesin.</span></p>
   </div>
 </details>
 
-<details class="lesson acc" id="c10" open>
-  <summary><span class="chip">10</span><span class="ttl"><span class="e">Find the relationship</span><span class="t">İlişkiyi bul</span></span><span class="cnt">10 <span class="e">exercises</span><span class="t">alıştırma</span></span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<details class="lesson acc" id="c9" open>
+  <summary><span class="chip">09</span><span class="ttl"><span class="e">Find the relationship</span><span class="t">İlişkiyi bul</span></span><span class="cnt">10 <span class="e">exercises</span><span class="t">alıştırma</span></span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
   <div class="accbody">
   <p><span class="e">Two tables, and the foreign key is deliberately missing. For each pair answer two things: is it <b>1&ndash;1</b>, <b>1&ndash;N</b> or <b>N&ndash;N</b>, and <b>which table gets the extra column</b> &mdash; or whether a third table is needed instead. Write your answer down first, then open it.</span><span class="t">İki tablo var, foreign key bilerek konmadı. Her çift için iki şeye cevap ver: ilişki <b>1&ndash;1</b> mi, <b>1&ndash;N</b> mi, <b>N&ndash;N</b> mi, ve <b>fazladan kolon hangi tabloya</b> gidecek &mdash; ya da yerine üçüncü bir tablo mu gerekiyor. Önce kendi cevabını yaz, sonra aç.</span></p>
 <div class="rel">
@@ -3873,7 +3621,7 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
   </div>
 </details>
 
-<details class="lesson acc" id="cx" open>
+<details class="lesson acc" id="cx">
   <summary><span class="chip">&rarr;</span><span class="ttl"><span class="e">13 questions</span><span class="t">13 soru</span></span><span class="cnt">13</span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
   <div class="accbody">
   <p><span class="e">Write the <code>CREATE TABLE</code> statements for each one. Decide the types yourself, give every table a primary key, and put the foreign key where it belongs. No answers on this page on purpose &mdash; run them in pgAdmin and let the database tell you whether you were right.</span><span class="t">Her biri için <code>CREATE TABLE</code> ifadelerini yaz. Tipleri kendin seç, her tabloya bir primary key ver ve foreign key'i ait olduğu yere koy. Bu sayfada bilerek cevap yok &mdash; pgAdmin'de çalıştır, doğru yapıp yapmadığını sana veritabanı söylesin.</span></p>
