@@ -305,8 +305,21 @@ details.answers > p{margin:0 16px 16px; color:var(--muted); font-size:.92rem}
 .conn .card:first-child{margin-right:auto}
 .conn .card:last-child{margin-left:auto}
 .relnote{margin:16px 0 0; color:var(--muted); font-size:.9rem; max-width:none}
+.relgrid.eq{grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr)}
+.badge.qn{background:var(--muted)}
+.conn .card.qq{background:var(--muted); width:22px; height:22px; margin:0 !important}
+details.ans{margin-top:16px; border-top:1px dashed var(--line); padding-top:12px}
+details.ans > summary{cursor:pointer; list-style:none; font-size:.8rem; font-family:var(--mono);
+  color:var(--muted); display:inline-flex; align-items:center; gap:7px}
+details.ans > summary::-webkit-details-marker{display:none}
+details.ans > summary::before{content:"+"; font-weight:700; color:var(--accent)}
+details.ans[open] > summary::before{content:"\2212"}
+details.ans[open] > summary{color:var(--accent); margin-bottom:12px}
+.ansbox{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:10px}
+.ansbox code{font-size:.8rem; overflow-wrap:anywhere}
+details.ans p{margin:0; color:var(--muted); font-size:.88rem; max-width:none}
 @media(max-width:860px){
-  .relgrid.two, .relgrid.two.second, .relgrid.three{grid-template-columns:1fr}
+  .relgrid.two, .relgrid.two.second, .relgrid.three, .relgrid.eq{grid-template-columns:1fr}
   .conn{height:46px; flex-direction:column}
   .conn .line{left:50%; right:auto; top:0; bottom:0; height:auto; width:2px; transform:translateX(-1px)}
   .conn .card:first-child{margin:0 0 auto}
@@ -2566,9 +2579,9 @@ pm.test("tek admin var", function () {
     <li><a href="#sql-create" data-jump="c5">5 &nbsp;1 &ndash; 1</a></li>
     <li><a href="#sql-create" data-jump="c6">6 &nbsp;1 &ndash; N</a></li>
     <li><a href="#sql-create" data-jump="c7">7 &nbsp;N &ndash; N</a></li>
-    <li><a href="#sql-create" data-jump="c8"><span class="e">8 Common mistakes</span><span class="t">8 Sık hatalar</span></a></li>
-    <li><a href="#sql-create" data-jump="c9"><span class="e">9 Tables with data</span><span class="t">9 Veriyle tablolar</span></a></li>
-    <li><a href="#sql-create" data-jump="c10"><span class="e">10 Joined up</span><span class="t">10 Bağlantılar</span></a></li>
+    <li><a href="#sql-create" data-jump="c8"><span class="e">8 Tables with data</span><span class="t">8 Veriyle tablolar</span></a></li>
+    <li><a href="#sql-create" data-jump="c9"><span class="e">9 Joined up</span><span class="t">9 Bağlantılar</span></a></li>
+    <li><a href="#sql-create" data-jump="c10"><span class="e">10 Find the relationship</span><span class="t">10 İlişkiyi bul</span></a></li>
     <li><a href="#sql-create" data-jump="cx"><span class="e">&rarr; 13 questions</span><span class="t">&rarr; 13 soru</span></a></li>
   </ul>
 </header>
@@ -2686,18 +2699,8 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
   <p class="tip"><span class="e">Spotting which one you have: say the sentence in both directions. "A department has many employees / an employee has one department" &rarr; 1&ndash;N. "A teacher has many students / a student has many teachers" &rarr; N&ndash;N, so build the third table.</span><span class="t">Hangisi olduğunu anlamak: cümleyi iki yönde de kur. "Bir departmanda çok çalışan var / bir çalışan tek departmanda" &rarr; 1&ndash;N. "Bir hocanın çok öğrencisi var / bir öğrencinin çok hocası var" &rarr; N&ndash;N, yani üçüncü tabloyu kur.</span></p>
 </section>
 
-<section class="lesson" id="c8">
-  <div class="lhead"><span class="chip">08</span><h2><span class="e">Four mistakes from your own file</span><span class="t">Kendi dosyandan dört hata</span></h2></div>
-  <ul class="plain">
-    <li><span class="e"><code>reference</code> instead of <code>REFERENCES</code>. The keyword is plural. <code>userId INT reference USERS(userId)</code> never runs.</span><span class="t"><code>REFERENCES</code> yerine <code>reference</code>. Kelime çoğul. <code>userId INT reference USERS(userId)</code> asla çalışmaz.</span></li>
-    <li><span class="e"><strong>A missing comma between columns.</strong> <code>userId INT REFERENCES USERS(userId)</code> followed by <code>created DATE</code> on the next line with no comma &mdash; the error message points at <code>created</code>, but the fault is the line above it.</span><span class="t"><strong>Kolonlar arasında eksik virgül.</strong> <code>userId INT REFERENCES USERS(userId)</code> satırından sonra virgülsüz <code>created DATE</code> &mdash; hata mesajı <code>created</code>'ı gösterir ama suç bir üst satırda.</span></li>
-    <li><span class="e"><strong>A comma after the last column.</strong> <code>created DATE,</code> and then <code>)</code> &mdash; the same trailing-comma habit that breaks JSON breaks SQL too.</span><span class="t"><strong>Son kolondan sonra virgül.</strong> <code>created DATE,</code> ve hemen ardından <code>)</code> &mdash; JSON'u bozan aynı fazla virgül alışkanlığı SQL'i de bozuyor.</span></li>
-    <li><span class="e"><strong>Creating a table before the one it points at.</strong> <code>BOOK2</code> references <code>AUTHOR2</code> but is written above it, so it fails on the first run.</span><span class="t"><strong>İşaret ettiği tablodan önce tablo oluşturmak.</strong> <code>BOOK2</code>, <code>AUTHOR2</code>'yi referans alıyor ama ondan önce yazılmış; ilk çalıştırmada düşer.</span></li>
-  </ul>
-</section>
-
-<details class="lesson acc" id="c9" open>
-  <summary><span class="chip">09</span><span class="ttl"><span class="e">The tables, with data in them</span><span class="t">Tablolar, içinde veriyle</span></span><span class="cnt">3 <span class="e">tables</span><span class="t">tablo</span> &middot; 30 <span class="e">rows</span><span class="t">satır</span></span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<details class="lesson acc" id="c8" open>
+  <summary><span class="chip">08</span><span class="ttl"><span class="e">The tables, with data in them</span><span class="t">Tablolar, içinde veriyle</span></span><span class="cnt">3 <span class="e">tables</span><span class="t">tablo</span> &middot; 30 <span class="e">rows</span><span class="t">satır</span></span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
   <div class="accbody">
   <p><span class="e">This is what the types and the primary key look like once a table has rows in it &mdash; your own <code>INSERT</code> statements. The green column is each table's primary key: it never repeats. There is no foreign key here; these three tables are connected to nothing.</span><span class="t">Yukarıdaki tipler ve primary key bir tabloda böyle görünüyor &mdash; senin kendi <code>INSERT</code> satırların. Yeşil kolon her tablonun primary key'i: hiçbir satırda tekrar etmiyor. Burada foreign key yok, bu üç tablo kimseye bağlı değil.</span></p>
   <div class="dts">
@@ -2960,8 +2963,8 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
   </div>
 </details>
 
-<details class="lesson acc" id="c10" open>
-  <summary><span class="chip">10</span><span class="ttl"><span class="e">Joining the tables together</span><span class="t">Tabloları birbirine bağlamak</span></span><span class="cnt">1&ndash;N &middot; N&ndash;N</span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<details class="lesson acc" id="c9" open>
+  <summary><span class="chip">09</span><span class="ttl"><span class="e">Joining the tables together</span><span class="t">Tabloları birbirine bağlamak</span></span><span class="cnt">1&ndash;N &middot; N&ndash;N</span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
   <div class="accbody">
   <p><span class="e">The same tables, this time with their foreign keys. The orange column holds another table's green column; the line shows which points at which.</span><span class="t">Aynı tablolar, bu sefer foreign key'leriyle. Turuncu kolon başka bir tablonun yeşil kolonunu tutuyor; çizgi hangi kolonun hangisini işaret ettiğini gösteriyor.</span></p>
 <div class="rel">
@@ -3239,6 +3242,634 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <p class="relnote"><span class="e">The middle table has no data of its own, only two foreign keys. Each row is one pairing: "this teacher teaches this student". Deniz (student_id 1) appears in three rows because she has three teachers; Karen (teacher_id 2) appears in four.</span><span class="t">Ortadaki tabloda kendi verisi yok, sadece iki foreign key var. Her satır bir eşleşme: "bu hoca bu öğrenciye ders veriyor". Deniz (student_id 1) üç satırda geçiyor, çünkü üç hocası var; Karen (teacher_id 2) dört satırda geçiyor, çünkü üç öğrencisi var.</span></p>
 </div>
   <p class="outcome"><span class="e"><strong>The difference is one question asked twice:</strong> "can a singer have many songs?" yes, "can a song have many singers?" no &rarr; 1&ndash;N, the foreign key goes on the song. "Can a teacher have many students?" yes, "can a student have many teachers?" yes &rarr; N&ndash;N, a third table is needed. A 1&ndash;1 is the same picture with the foreign key on one side only, plus <code>UNIQUE</code> on that column so two rows cannot point at the same thing.</span><span class="t"><strong>Aradaki fark tek bir soruda:</strong> "bir şarkıcının çok şarkısı olabilir mi?" evet, "bir şarkının çok şarkıcısı olabilir mi?" hayır &rarr; 1&ndash;N, foreign key şarkıda. "Bir hocanın çok öğrencisi olabilir mi?" evet, "bir öğrencinin çok hocası olabilir mi?" evet &rarr; N&ndash;N, üçüncü bir tablo gerekiyor. 1&ndash;1 de aynı resim: foreign key tek tarafta, ama o kolona <code>UNIQUE</code> konur ki iki satır aynı şeyi işaret edemesin.</span></p>
+  </div>
+</details>
+
+<details class="lesson acc" id="c10" open>
+  <summary><span class="chip">10</span><span class="ttl"><span class="e">Find the relationship</span><span class="t">İlişkiyi bul</span></span><span class="cnt">10 <span class="e">exercises</span><span class="t">alıştırma</span></span><svg class="arw" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+  <div class="accbody">
+  <p><span class="e">Two tables, and the foreign key is deliberately missing. For each pair answer two things: is it <b>1&ndash;1</b>, <b>1&ndash;N</b> or <b>N&ndash;N</b>, and <b>which table gets the extra column</b> &mdash; or whether a third table is needed instead. Write your answer down first, then open it.</span><span class="t">İki tablo var, foreign key bilerek konmadı. Her çift için iki şeye cevap ver: ilişki <b>1&ndash;1</b> mi, <b>1&ndash;N</b> mi, <b>N&ndash;N</b> mi, ve <b>fazladan kolon hangi tabloya</b> gidecek &mdash; ya da yerine üçüncü bir tablo mu gerekiyor. Önce kendi cevabını yaz, sonra aç.</span></p>
+<div class="rel">
+<div class="relhead"><span class="badge qn">01</span><b>COUNTRY &middot; CITY</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">COUNTRY</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">code</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Turkiye</td>
+<td class="">TR</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Italy</td>
+<td class="">IT</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Spain</td>
+<td class="">ES</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">CITY</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">population</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Istanbul</td>
+<td class="">15.8M</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Ankara</td>
+<td class="">5.8M</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Milano</td>
+<td class="">1.4M</td>
+</tr>
+<tr>
+<td class="pk">4</td>
+<td class="">Madrid</td>
+<td class="">3.3M</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge n1">1 &ndash; N</span><code>CITY.country_id &rarr; COUNTRY(id)</code></div>
+<p><span class="e">A country has many cities, a city sits in one country. The extra column goes on the many side.</span><span class="t">Bir ülkenin çok şehri olur, bir şehir tek ülkede. Fazladan kolon çok olan tarafa gider.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">02</span><b>USERS &middot; PASSPORT</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">USERS</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">email</th>
+<th class="">name</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">deniz@mail.com</td>
+<td class="">Deniz</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">cihan@mail.com</td>
+<td class="">Cihan</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">metin@mail.com</td>
+<td class="">Metin</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">PASSPORT</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">number</th>
+<th class="">expires</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">U1234567</td>
+<td class="">2030-01-14</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">U7654321</td>
+<td class="">2028-06-02</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">U1112223</td>
+<td class="">2031-11-20</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge n1">1 &ndash; 1</span><code>PASSPORT.user_id &rarr; USERS(id) &nbsp;UNIQUE</code></div>
+<p><span class="e">One person, one passport. The column can go either side, but it needs <code>UNIQUE</code> &mdash; that is what stops a second passport from pointing at the same person.</span><span class="t">Bir kişi, bir pasaport. Kolon iki tarafa da konabilir ama <code>UNIQUE</code> şart &mdash; aynı kişiye ikinci bir pasaportun bağlanmasını o engelliyor.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">03</span><b>STUDENT &middot; COURSE</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">STUDENT</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">year</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Deniz</td>
+<td class="">2</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Gamze</td>
+<td class="">1</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Metin</td>
+<td class="">3</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">COURSE</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">credit</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Matematik</td>
+<td class="">5</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Fizik</td>
+<td class="">4</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">SQL</td>
+<td class="">3</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge nn">N &ndash; N</span><code>STUDENT_COURSE(student_id, course_id)</code></div>
+<p><span class="e">A student takes many courses and a course has many students. Neither table gets the column &mdash; you build a third table that holds the two ids.</span><span class="t">Bir öğrenci çok ders alır, bir dersi çok öğrenci alır. Kolon iki tabloya da konmaz &mdash; iki id’yi tutan üçüncü bir tablo kurulur.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">04</span><b>AUTHOR &middot; BOOK</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">AUTHOR</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">country</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Orhan Pamuk</td>
+<td class="">TR</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Italo Calvino</td>
+<td class="">IT</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Jane Austen</td>
+<td class="">UK</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">BOOK</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">title</th>
+<th class="">year</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Kar</td>
+<td class="">2002</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Masumiyet Muzesi</td>
+<td class="">2008</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Palomar</td>
+<td class="">1983</td>
+</tr>
+<tr>
+<td class="pk">4</td>
+<td class="">Emma</td>
+<td class="">1815</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge n1">1 &ndash; N</span><code>BOOK.author_id &rarr; AUTHOR(id)</code></div>
+<p><span class="e">One author writes many books; here each book has a single author. The column goes on the book.</span><span class="t">Bir yazar çok kitap yazar; burada her kitabın tek yazarı var. Kolon kitabın üstüne gider.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">05</span><b>CUSTOMER &middot; ORDERS</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">CUSTOMER</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">city</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Deniz</td>
+<td class="">London</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Cihan</td>
+<td class="">London</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Erkan</td>
+<td class="">Izmir</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">ORDERS</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">date</th>
+<th class="">total</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">5001</td>
+<td class="">2026-01-04</td>
+<td class="">240.00</td>
+</tr>
+<tr>
+<td class="pk">5002</td>
+<td class="">2026-01-09</td>
+<td class="">75.50</td>
+</tr>
+<tr>
+<td class="pk">5003</td>
+<td class="">2026-02-11</td>
+<td class="">980.00</td>
+</tr>
+<tr>
+<td class="pk">5004</td>
+<td class="">2026-02-20</td>
+<td class="">32.00</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge n1">1 &ndash; N</span><code>ORDERS.customer_id &rarr; CUSTOMER(id)</code></div>
+<p><span class="e">A customer places many orders, an order belongs to one customer. The order carries the column &mdash; the customer never carries a list.</span><span class="t">Bir müşteri çok sipariş verir, bir sipariş tek müşteriye ait. Kolonu sipariş taşır &mdash; müşteri asla liste taşımaz.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">06</span><b>ACTOR &middot; MOVIE</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">ACTOR</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">age</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Al Pacino</td>
+<td class="">85</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Keanu Reeves</td>
+<td class="">61</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Cem Yilmaz</td>
+<td class="">53</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">MOVIE</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">title</th>
+<th class="">year</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Heat</td>
+<td class="">1995</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">The Matrix</td>
+<td class="">1999</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">GORA</td>
+<td class="">2004</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge nn">N &ndash; N</span><code>ACTOR_MOVIE(actor_id, movie_id)</code></div>
+<p><span class="e">A film has many actors and an actor plays in many films. Two ids, a third table.</span><span class="t">Bir filmde çok oyuncu var, bir oyuncu çok filmde oynar. İki id, üçüncü bir tablo.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">07</span><b>EMPLOYEE &middot; DESK</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">EMPLOYEE</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">department</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1001</td>
+<td class="">Deniz</td>
+<td class="">CSL</td>
+</tr>
+<tr>
+<td class="pk">1002</td>
+<td class="">Cihan</td>
+<td class="">Engineer</td>
+</tr>
+<tr>
+<td class="pk">1003</td>
+<td class="">Metin</td>
+<td class="">Engineer</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">DESK</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">floor</th>
+<th class="">code</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">3</td>
+<td class="">3A-12</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">3</td>
+<td class="">3A-13</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">1</td>
+<td class="">1B-04</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge n1">1 &ndash; 1</span><code>DESK.employee_id &rarr; EMPLOYEE(id) &nbsp;UNIQUE</code></div>
+<p><span class="e">Every desk is assigned to at most one person and nobody sits at two desks. Without <code>UNIQUE</code> this quietly turns into 1&ndash;N.</span><span class="t">Her masa en fazla bir kişiye verilir, kimse iki masada oturmaz. <code>UNIQUE</code> olmazsa bu sessizce 1&ndash;N’e döner.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">08</span><b>TEAM &middot; PLAYER</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">TEAM</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">city</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Besiktas</td>
+<td class="">Istanbul</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Inter</td>
+<td class="">Milano</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Arsenal</td>
+<td class="">London</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">PLAYER</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">position</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Rafa</td>
+<td class="">GK</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Lautaro</td>
+<td class="">FW</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Saka</td>
+<td class="">FW</td>
+</tr>
+<tr>
+<td class="pk">4</td>
+<td class="">Calhanoglu</td>
+<td class="">MF</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge n1">1 &ndash; N</span><code>PLAYER.team_id &rarr; TEAM(id)</code></div>
+<p><span class="e">A team has many players, a player is in one team at a time. The player gets the column.</span><span class="t">Bir takımın çok oyuncusu olur, bir oyuncu aynı anda tek takımda. Kolon oyuncuya gider.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">09</span><b>PRODUCT &middot; TAG</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">PRODUCT</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">price</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Laptop</td>
+<td class="">1200.00</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Mouse</td>
+<td class="">25.00</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Monitor</td>
+<td class="">300.00</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">TAG</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">color</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">sale</td>
+<td class="">red</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">new</td>
+<td class="">green</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">refurbished</td>
+<td class="">orange</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge nn">N &ndash; N</span><code>PRODUCT_TAG(product_id, tag_id)</code></div>
+<p><span class="e">One product can be both <em>sale</em> and <em>new</em>, and <em>sale</em> sits on many products. Third table.</span><span class="t">Bir ürün hem <em>sale</em> hem <em>new</em> olabilir, <em>sale</em> de birçok üründe. Üçüncü tablo.</span></p>
+</details>
+</div>
+<div class="rel">
+<div class="relhead"><span class="badge qn">10</span><b>SPRINT &middot; RETRO</b></div>
+<div class="relgrid eq">
+<div class="dt">
+<div class="dtname">SPRINT</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">ends</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">Sprint-41</td>
+<td class="">2026-01-16</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">Sprint-42</td>
+<td class="">2026-01-30</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">Sprint-43</td>
+<td class="">2026-02-13</td>
+</tr>
+</tbody></table></div>
+</div>
+<div class="conn"><span class="line"></span><span class="card qq">?</span></div>
+<div class="dt">
+<div class="dtname">RETRO</div>
+<div class="dtwrap"><table>
+<thead><tr>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">date</th>
+<th class="">mood</th>
+</tr></thead><tbody>
+<tr>
+<td class="pk">1</td>
+<td class="">2026-01-17</td>
+<td class="">good</td>
+</tr>
+<tr>
+<td class="pk">2</td>
+<td class="">2026-01-31</td>
+<td class="">ok</td>
+</tr>
+<tr>
+<td class="pk">3</td>
+<td class="">2026-02-14</td>
+<td class="">good</td>
+</tr>
+</tbody></table></div>
+</div>
+</div>
+<details class="ans"><summary><span class="e">Answer</span><span class="t">Cevap</span></summary>
+<div class="ansbox"><span class="badge n1">1 &ndash; 1</span><code>RETRO.sprint_id &rarr; SPRINT(id) &nbsp;UNIQUE</code></div>
+<p><span class="e">Each sprint closes with exactly one retro. Same shape as 1&ndash;N, the <code>UNIQUE</code> is the whole difference.</span><span class="t">Her sprint tam bir retro ile kapanır. Şekil 1&ndash;N ile aynı, tek fark <code>UNIQUE</code>.</span></p>
+</details>
+</div>
+  <p class="outcome"><span class="e">The question to ask is always the same, in both directions: <em>can one row on this side match many rows on the other?</em> Many on one side only &rarr; 1&ndash;N, and the column goes on the many side. Many on both sides &rarr; N&ndash;N, build the third table. One on both sides &rarr; 1&ndash;1, and do not forget the <code>UNIQUE</code>.</span><span class="t">Soru hep aynı ve iki yönlü sorulur: <em>bu taraftaki bir satır, karşı taraftan birden fazla satırla eşleşebilir mi?</em> Sadece bir tarafta çok &rarr; 1&ndash;N, kolon çok olan tarafa. İki tarafta da çok &rarr; N&ndash;N, üçüncü tabloyu kur. İki tarafta da tek &rarr; 1&ndash;1, <code>UNIQUE</code>’ı unutma.</span></p>
   </div>
 </details>
 
