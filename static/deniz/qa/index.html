@@ -2705,11 +2705,11 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <div class="dtname">HAYVANLAR</div>
 <div class="dtwrap"><table>
 <thead><tr>
-<th class="pk">hayvan_no<span class="kb pk">PK</span></th>
-<th class="">hayvan_ismi</th>
-<th class="">hayvan_turu</th>
-<th class="">hayvan_cinsi</th>
-<th class="">hayvan_yasi</th>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">ismi</th>
+<th class="">turu</th>
+<th class="">cinsi</th>
+<th class="">yasi</th>
 </tr></thead><tbody>
 <tr>
 <td class="pk">1</td>
@@ -2786,12 +2786,12 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <div class="dtname">EMPLOYEER</div>
 <div class="dtwrap"><table>
 <thead><tr>
-<th class="pk">employee_id<span class="kb pk">PK</span></th>
-<th class="">employee_name</th>
-<th class="">employee_surname</th>
-<th class="">employee_gender</th>
-<th class="">employee_department</th>
-<th class="">employee_age</th>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">surname</th>
+<th class="">gender</th>
+<th class="">department</th>
+<th class="">age</th>
 </tr></thead><tbody>
 <tr>
 <td class="pk">1001</td>
@@ -2878,11 +2878,11 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <div class="dtname">BILGISAYARDENIZZ</div>
 <div class="dtwrap"><table>
 <thead><tr>
-<th class="pk">product_id<span class="kb pk">PK</span></th>
-<th class="">product_name</th>
-<th class="">product_type</th>
-<th class="">product_color</th>
-<th class="">product_price</th>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">type</th>
+<th class="">color</th>
+<th class="">price</th>
 </tr></thead><tbody>
 <tr>
 <td class="pk">1</td>
@@ -2956,7 +2956,7 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 </tr>
 </tbody></table></div></div>
   </div>
-  <p class="tip"><span class="e">This is where you see why a primary key cannot repeat: HAYVANLAR has two rows of <code>KOPEK</code> (Karabas and Cici) but no two rows with <code>hayvan_no = 1</code>. When you want to point at one row, this column is what you have.</span><span class="t">Primary key'in neden tekrar edemediğini burada gör: HAYVANLAR'da iki tane <code>KOPEK</code> var (Karabas ve Cici) ama iki tane <code>hayvan_no = 1</code> yok. Bir satırı işaret etmek istediğinde elinde bu kolon var.</span></p>
+  <p class="tip"><span class="e">This is where you see why a primary key cannot repeat: HAYVANLAR has two rows of <code>KOPEK</code> (Karabas and Cici) but no two rows with <code>id = 1</code>. When you want to point at one row, this column is what you have.</span><span class="t">Primary key'in neden tekrar edemediğini burada gör: HAYVANLAR'da iki tane <code>KOPEK</code> var (Karabas ve Cici) ama iki tane <code>id = 1</code> yok. Bir satırı işaret etmek istediğinde elinde bu kolon var.</span></p>
   </div>
 </details>
 
@@ -2971,9 +2971,9 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <div class="dtname">SINGER</div>
 <div class="dtwrap"><table>
 <thead><tr>
-<th class="pk">singer_id<span class="kb pk">PK</span></th>
-<th class="">singer_name</th>
-<th class="">singer_age</th>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">age</th>
 </tr></thead><tbody>
 <tr>
 <td class="pk">1</td>
@@ -3031,9 +3031,9 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <div class="dtname">SONG</div>
 <div class="dtwrap"><table>
 <thead><tr>
-<th class="pk">song_id<span class="kb pk">PK</span></th>
-<th class="">song_name</th>
-<th class="">song_language</th>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
+<th class="">language</th>
 <th class="fk">singer_id<span class="kb fk">FK</span></th>
 </tr></thead><tbody>
 <tr>
@@ -3119,8 +3119,8 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <div class="dtname">CAMBLY_TEACHER</div>
 <div class="dtwrap"><table>
 <thead><tr>
-<th class="pk">teacher_id<span class="kb pk">PK</span></th>
-<th class="">teacher_name</th>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
 </tr></thead><tbody>
 <tr>
 <td class="pk">1</td>
@@ -3219,8 +3219,8 @@ CREATE TABLE CAMBLY_TEACHER_STUDENT (          <span class="e">-- the join table
 <div class="dtname">CAMBLY_STUDENT</div>
 <div class="dtwrap"><table>
 <thead><tr>
-<th class="pk">student_id<span class="kb pk">PK</span></th>
-<th class="">student_name</th>
+<th class="pk">id<span class="kb pk">PK</span></th>
+<th class="">name</th>
 </tr></thead><tbody>
 <tr>
 <td class="pk">1</td>
